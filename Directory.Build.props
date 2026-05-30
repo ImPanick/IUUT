@@ -1,0 +1,52 @@
+<Project>
+
+  <!--
+    IUUT shared MSBuild properties applied to every project.
+    Authority: .agent/CODE_STYLE.md §3, §14.
+    Amendments via .agent/AMENDMENT_PROCESS.md.
+  -->
+
+  <PropertyGroup>
+    <!-- Language / runtime -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Quality bar -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- CS1591 = missing XML doc on public type; downgrade since not every internal-public type needs it. -->
+
+    <!-- Repository metadata -->
+    <Company>ImPanick / IUUT contributors</Company>
+    <Authors>ImPanick and IUUT contributors</Authors>
+    <Product>Icarus Ultimate Utility Tool</Product>
+    <Copyright>Copyright (c) 2026 ImPanick and IUUT contributors</Copyright>
+    <RepositoryUrl>https://github.com/ImPanick/IUUT</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- Determinism -->
+    <Deterministic>true</Deterministic>
+
+    <!-- Source link (useful when we ship symbols) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+
+    <!-- Suppress noise from the WPF compatibility analyzer until we actually have WPF code -->
+    <DisableImplicitFrameworkReferences>false</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Make AGENTS.md visible from inside an IDE for any project -->
+    <None Include="$(MSBuildThisFileDirectory)AGENTS.md" Link="AGENTS.md" Visible="true" Pack="false" />
+    <None Include="$(MSBuildThisFileDirectory)CLAUDE.md" Link="CLAUDE.md" Visible="false" Pack="false" />
+  </ItemGroup>
+
+</Project>

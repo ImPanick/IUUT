@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    IUUT.App — WPF shell.
+    Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.1, §9.1; .agent/CODE_STYLE.md §7.
+
+    Scope: thin WPF UI. ALL business logic lives in IUUT.Core. ViewModels here
+    do binding-shape, not domain logic.
+
+    Publish (single-file, self-contained):
+      dotnet publish src/IUUT.App/IUUT.App.csproj -c Release -r win-x64 \
+        --self-contained true \
+        -p:PublishSingleFile=true \
+        -p:IncludeNativeLibrariesForSelfExtract=true
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>IUUT.App</RootNamespace>
+    <AssemblyName>IUUT</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Description>IUUT desktop application — WPF shell for Icarus save editing.</Description>
+
+    <!-- Single-file publish defaults; CI / release pipeline can override -->
+    <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
+    <SelfContained Condition="'$(Configuration)' == 'Release'">true</SelfContained>
+    <RuntimeIdentifier Condition="'$(Configuration)' == 'Release'">win-x64</RuntimeIdentifier>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IUUT.Core\IUUT.Core.csproj" />
+    <ProjectReference Include="..\IUUT.Catalog\IUUT.Catalog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- MVVM toolkit per CODE_STYLE §7 -->
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

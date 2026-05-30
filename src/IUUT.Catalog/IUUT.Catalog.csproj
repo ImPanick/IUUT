@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    IUUT.Catalog — embedded D_* data tables (talents, items, accolades, etc.).
+    Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §15; .agent/CODE_STYLE.md §1.
+
+    Scope: ships JSON catalog data as embedded resources for IUUT.Core to query.
+    Build-time generation via scripts/fetch-catalogs.ps1.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>IUUT.Catalog</RootNamespace>
+    <AssemblyName>IUUT.Catalog</AssemblyName>
+    <Description>Embedded D_* catalog data (talents, items, accolades, bestiary, meta resources) for IUUT.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Catalog JSON files are embedded resources -->
+    <EmbeddedResource Include="Embedded\**\*.json" />
+  </ItemGroup>
+
+</Project>

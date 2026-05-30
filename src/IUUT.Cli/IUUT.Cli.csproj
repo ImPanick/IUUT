@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    IUUT.Cli — optional headless CLI.
+    Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.2.
+
+    Scope: scripting / CI hooks. Not the primary UX (that's IUUT.App).
+    Commands like `iuut check`, `iuut backup-all` per gameplan §5 Phase 0.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>IUUT.Cli</RootNamespace>
+    <AssemblyName>iuut</AssemblyName>
+    <Description>Optional headless CLI for IUUT (scripting, CI, power users).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IUUT.Core\IUUT.Core.csproj" />
+    <ProjectReference Include="..\IUUT.Catalog\IUUT.Catalog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

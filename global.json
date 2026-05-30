@@ -1,0 +1,8 @@
+{
+  "//": "Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.1 (Locked decision: .NET 8). Amend via .agent/AMENDMENT_PROCESS.md §3 (Tier-0 — locked decision change).",
+  "sdk": {
+    "version": "8.0.100",
+    "rollForward": "latestFeature",
+    "allowPrerelease": false
+  }
+}

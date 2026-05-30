@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    IUUT.Core — domain library.
+    Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.2, §9.2; .agent/CODE_STYLE.md §1.
+
+    Scope: parsers, serializers, mutators, validation, presets, prospect-blob
+    codec, services. Zero UI dependencies. Referenced by IUUT.App, IUUT.Cli,
+    and IUUT.Core.Tests.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>IUUT.Core</RootNamespace>
+    <AssemblyName>IUUT.Core</AssemblyName>
+    <Description>Domain library for IUUT — Icarus save parsers, mutators, validation, and presets.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Make tests see internal types -->
+    <InternalsVisibleTo Include="IUUT.Core.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Logging abstractions (concrete logger configured by host) -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

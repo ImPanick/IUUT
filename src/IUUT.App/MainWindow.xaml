@@ -1,0 +1,30 @@
+<Window x:Class="IUUT.App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:IUUT.App"
+        mc:Ignorable="d"
+        Title="Icarus Ultimate Utility Tool (IUUT)"
+        Width="900"
+        Height="600"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="32">
+            <TextBlock Text="Icarus Ultimate Utility Tool"
+                       FontSize="28"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center" />
+            <TextBlock Text="Pre-development scaffold — implementation pending."
+                       FontSize="14"
+                       Foreground="Gray"
+                       HorizontalAlignment="Center"
+                       Margin="0,12,0,0" />
+            <TextBlock Text="See docs/IUUT-PROJECT-DOCUMENTATION.md §10 for the home-screen design."
+                       FontSize="12"
+                       Foreground="Gray"
+                       HorizontalAlignment="Center"
+                       Margin="0,4,0,0" />
+        </StackPanel>
+    </Grid>
+</Window>
