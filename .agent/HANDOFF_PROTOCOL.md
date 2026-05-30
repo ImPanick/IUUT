@@ -25,7 +25,21 @@ Reserved prefixes:
 - `governance/<short-description>` — amendments to `.agent/` (requires human approval).
 - `hotfix/<short-description>` — emergency fixes (requires `CONSTITUTION` IX rationale in PR body).
 
-`main` is the trunk. Direct commits to `main` are rejected (branch protection).
+### Branch model — `dev` integrates, `main` releases
+
+| Branch | Role | Who merges in | Protected |
+| --- | --- | --- | --- |
+| **`dev`** | **Integration trunk.** All feature branches branch from `dev` and PR back into `dev`. Day-to-day work lands here. | feature PRs (green CI + review) | yes |
+| **`main`** | **Release / stable.** Only receives merges from `dev` at release points; release tags (`vX.Y.Z`) are cut here, triggering `release.yml`. | `dev → main` PR (human-approved) | yes |
+
+- **Feature branches:** `git switch dev && git pull` → `git switch -c agent/<agent>/<task>`.
+  Open the PR **into `dev`**, not `main`.
+- **Promotion to `main`:** a human opens a `dev → main` PR at a release point; merging it
+  and tagging `vX.Y.Z` produces the signed, attested release (master doc §19.1).
+- **Bootstrap exception (one-time):** the governance + scaffold + DevOps + plan commits
+  were made directly on `main` because the gates that enforce this model are the very
+  thing those commits created. `dev` is cut from `main` immediately after; from then on,
+  direct pushes to either protected branch are rejected and this model is mandatory.
 
 ---
 
@@ -246,4 +260,5 @@ Releases are tagged `vX.Y.Z` per SemVer. Tag creation is human-only. Agents prop
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 1.1.0 | 2026-05-25 | Owner-directed branch-model amendment: `dev` is the integration trunk (feature branches PR into `dev`); `main` is release/stable (receives `dev → main` at release points, tags trigger `release.yml`). Documented the one-time bootstrap exception. |
 | 1.0.0 | 2026-05-25 | Adopted. Branch / commit / PR / hand-off conventions established. |

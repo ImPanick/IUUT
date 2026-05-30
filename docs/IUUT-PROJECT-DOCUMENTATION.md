@@ -6,7 +6,7 @@
 | --- | --- |
 | **Full name** | Icarus Ultimate Utility Tool |
 | **Short name / acronym** | IUUT |
-| **Document version** | 1.3.0 |
+| **Document version** | 1.3.1 |
 | **Status** | Pre-development — documentation-first phase |
 | **Target game** | Icarus (RocketWerkz, Unreal Engine 4, Windows) |
 | **Verified against** | Mendel update (Week 220, Feb 2026), `Profile.DataVersion` = 4 |
@@ -1518,6 +1518,11 @@ Run before each release or when `Profile.DataVersion` changes:
 
 ## 16. Development roadmap
 
+> **Operational build plan:** `docs/IMPLEMENTATION-PLAN.md` expands these phases into
+> dependency-ordered, PR-sized work packages (WP-0 … WP-34), marks the critical path to
+> the v0.1 MVP, and says exactly where to start. This section is the strategic view;
+> that doc is the execution view.
+
 ### Phase 0 — Foundation
 
 - [ ] Solution scaffold (Core, Catalog, App, Tests)
@@ -1808,6 +1813,7 @@ Re-fetch catalogs when DataVersion advances.
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.3.1 | 2026-05-25 | Added `docs/IMPLEMENTATION-PLAN.md` (work-package build roadmap) and pointer from §16. Adopted the `dev`-integration / `main`-release branch model (`.agent/HANDOFF_PROTOCOL.md` §1 → v1.1.0; `docs/CICD.md` §4). `dev` branch cut from `main`; protection to be enabled on both. |
 | 1.3.0 | 2026-05-25 | **Operator-execution guarantees.** Made the user-facing intent binding and verifiable: added §6.4 (two acquisition paths — pre-built signed download vs. build-from-source; integrity via `SHA256SUMS.txt` + Sigstore build-provenance attestation; no-installer / no-admin / no-registry guarantees; one-folder footprint `%AppData%\IUUT\` with `IUUT.portable` opt-in; clean removal). Rewrote §19 with the release pipeline and user verification steps. Added NG8 (no installer). Clarified §7.1 auto-link-then-manual-fallback flow. Fixed the §7.5.1 cache-path inconsistency (`%AppData%\IUUT\`, was `%AppData%\IcarusUltimateUtilityTool\`). New operator runbook `docs/INSTALL.md`; new `release.yml` CI. |
 | 1.2.0 | 2026-05-25 | **Ground-breaking: governance + scaffold + DevOps.** Repository initialized and pushed to github.com/ImPanick/IUUT. Added the multi-agent governance contract (`AGENTS.md`, `CLAUDE.md`, agent redirectors, `.agent/` with CONSTITUTION + 10 supporting docs) and its enforcement stack (`commit-msg` hook, `governance-lint.ps1`, PR template, Governance Check CI). Added the .NET 8 solution scaffold per §17 (IUUT.Core/Catalog/App/Cli + IUUT.Core.Tests) — builds green, smoke test passes, `dotnet format` clean. Added DevOps groundwork: `docs/DEVELOPMENT.md` + `docs/CICD.md` runbooks, Build & Test CI (`build.yml`), Dependabot, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `CODEOWNERS`, issue templates. §17 repo tree updated to reflect the real layout. `global.json` uses `rollForward: latestMajor` (target stays net8.0; build SDK may roll forward). |
 | 1.1.3 | 2026-05-25 | **Live-save validation pass.** Verified the entire `%LOCALAPPDATA%\Icarus\Saved\` tree against the docs. Findings applied: (a) **Genetics** is the canonical tree name; `Genetics_*` is the RowName prefix; the earlier `Construction_Genetics` name does not appear in any observed save (deprecated everywhere). (b) §8.3 talent prefix→tree table replaced with the correct prefix→recipe-category mapping derived from the live save (200+ distinct prefixes; only `Genetics_*` happens to match its tree 1:1); editors must fetch the tree grouping from `D_Talents`, not infer from prefix. (c) Talent-clamp claim rewritten with empirical post-load distribution (~71% rank 1 / ~9% rank 2 / ~10% rank 3 / ~10% rank 4 across the 1067-row union) — most player talents are 1-rank binary unlocks, the "Rank 4" clamp wording was misleading. (d) §7.6 backup rotation table rewritten: `MetaInventory.json` and `AssociatedProspects_Slot_*.json` have **zero** game-managed backups; Loadouts uses `.<N>.backup`; recovery flow (§12.1) now explicitly falls back to IUUT's own `.iuut-backup-*` for no-rotation files. (e) §8.9 prospect filenames clarified as arbitrary strings (Olympus.json, PGH-5.json, Kiara&Joseph.json, GUID-named); discovery via `Prospects\*.json` glob, not pattern match. flags_*.dat byte layout independently confirmed via live-file hex dump. |

@@ -112,6 +112,7 @@ pipeline and **[SECURITY.md](SECURITY.md)** for the disclosure policy.
 | [docs/IUUT-PROJECT-DOCUMENTATION.md](docs/IUUT-PROJECT-DOCUMENTATION.md) | Master spec — vision, scope, save model, architecture, features, roadmap |
 | [Icarus-Analysis.md](Icarus-Analysis.md) | Save-format field guide (empirically verified) |
 | [docs/INSTALL.md](docs/INSTALL.md) | **Operator guide** — get, verify, run, footprint, portable, removal |
+| [docs/IMPLEMENTATION-PLAN.md](docs/IMPLEMENTATION-PLAN.md) | **Build roadmap** — work packages, critical path, where to start |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Local developer runbook |
 | [docs/CICD.md](docs/CICD.md) | CI/CD, branch protection, versioning, releases |
 | [AGENTS.md](AGENTS.md) + [.agent/](.agent/) | Multi-agent governance contract |

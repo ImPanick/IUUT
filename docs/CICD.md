@@ -79,34 +79,39 @@ Single `build-test` job on `windows-latest` (WPF requires Windows):
 
 ---
 
-## 4. Branch protection (enable at ground-breaking)
+## 4. Branch protection (`dev` + `main`)
 
-The governance docs describe the **steady state**: `main` is protected, all work is
-PR-gated. To make that real, the repo owner enables branch protection on `main`
-in **GitHub → Settings → Branches → Add rule**:
+The branch model (`.agent/HANDOFF_PROTOCOL.md` §1): **`dev` is the integration trunk**
+(feature branches PR into `dev`); **`main` is release/stable** (`dev → main` at release
+points; tags trigger `release.yml`). Protect **both** in **GitHub → Settings → Branches**:
+
+For **`dev`** and **`main`** (same rule on each):
 
 - [x] Require a pull request before merging
-  - [x] Require approvals: **1** (a human for Tier-0 changes; see §6)
+  - [x] Require approvals: **1** (a human for Tier-0 / `dev → main`; see §6)
   - [x] Dismiss stale approvals on new commits
 - [x] Require status checks to pass before merging
-  - Required checks: **`Build, test, format`** (from Build & Test) and the
-    **Governance Check** jobs (`pr-body-check`, `commit-trailer-check`, `governance-lint`)
+  - Required checks: **`Build, test, format`** (Build & Test) + the **Governance Check**
+    jobs (`pr-body-check`, `commit-trailer-check`, `governance-lint`)
   - [x] Require branches to be up to date before merging
 - [x] Require conversation resolution before merging
 - [x] Require signed commits *(optional; enable if contributors can sign)*
-- [x] Do not allow bypassing the above settings *(applies rules to admins too)*
-- [x] Restrict who can push to matching branches *(no direct pushes)*
+- [x] Do not allow bypassing the above settings *(applies to admins too)*
+- [x] Restrict who can push *(no direct pushes; merges via PR only)*
+
+> Point `build.yml` and `governance-check.yml` triggers at both branches (the
+> workflows already run on PRs targeting their configured branches; add `dev` to the
+> `on.push`/`on.pull_request` branch lists when protection is enabled).
 
 ### Bootstrap-phase exception (why the first commits went straight to `main`)
 
-Branch protection and the CI gates cannot meaningfully protect a repository whose
-CI does not yet exist. The first commits — the governance contract, the solution
-scaffold, and this DevOps groundwork (the very workflows that *do* the gating) —
-are therefore made directly on `main` as a **bootstrap exception**. The bootstrap
-phase **ends the moment branch protection is enabled**, which should be done
-immediately after this groundwork lands. From that point, everyone — humans and
-agents alike — uses the branch + PR flow with no exceptions. This exception is a
-one-time, self-terminating bootstrap reality, not a standing license to push to main.
+Branch protection and the CI gates cannot meaningfully protect a repository whose CI
+does not yet exist. The bootstrap commits — governance contract, scaffold, DevOps
+groundwork, operator guarantees, and this implementation plan (the very workflows and
+rules that *do* the gating) — are made directly on `main`. **`dev` is then cut from
+`main`,** and protection is enabled on both. From that point the branch model is
+mandatory for everyone, humans and agents alike. This is a one-time, self-terminating
+bootstrap reality, not a standing license to push to a protected branch.
 
 ---
 
