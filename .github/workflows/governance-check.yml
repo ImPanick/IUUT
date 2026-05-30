@@ -1,0 +1,155 @@
+name: Governance Check
+
+# Enforces the IUUT multi-agent governance contract on every PR.
+# See AGENTS.md, .agent/CONSTITUTION.md, and .agent/AMENDMENT_PROCESS.md.
+#
+# This workflow:
+#   1. Validates the PR body against .github/PULL_REQUEST_TEMPLATE.md sections.
+#   2. Runs scripts/governance-lint.ps1 against the diff.
+#   3. Validates commit trailers on every commit in the PR.
+#
+# A failure on any of the above blocks merge.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-body-check:
+    name: PR body contract sections
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify required PR body sections
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = context.payload.pull_request.body || '';
+            const requiredHeadings = [
+              '## Summary',
+              '## Spec authorization',
+              '## Consultation',
+              '## Agent',
+              '## Files touched',
+              '## Test plan',
+              '## Definition-of-Done checklist',
+              '## Drift declarations',
+              '## Hand-off notes',
+            ];
+            const missing = requiredHeadings.filter(h => !body.includes(h));
+            if (missing.length > 0) {
+              core.setFailed(
+                `PR body is missing required sections from .github/PULL_REQUEST_TEMPLATE.md:\n` +
+                missing.map(m => `  - ${m}`).join('\n') +
+                `\n\nFill the template per .agent/HANDOFF_PROTOCOL.md §3.`
+              );
+              return;
+            }
+
+            // Verify Consultation section is non-empty (at least the two mandatory items).
+            const consultIdx = body.indexOf('## Consultation');
+            const agentIdx = body.indexOf('## Agent');
+            const consultSection = body.substring(consultIdx, agentIdx);
+            if (!consultSection.includes('AGENTS.md') ||
+                !consultSection.includes('.agent/CONSTITUTION.md')) {
+              core.setFailed(
+                'PR Consultation section must cite at minimum AGENTS.md and .agent/CONSTITUTION.md.\n' +
+                'See CONSTITUTION VIII (Consultation-mandatory).'
+              );
+              return;
+            }
+
+            // Verify Agent section names a registered agent.
+            const filesIdx = body.indexOf('## Files touched');
+            const agentSection = body.substring(agentIdx, filesIdx);
+            const knownAgents = ['claude-code', 'codex', 'cursor', 'antigravity', 'human-'];
+            const matched = knownAgents.some(a => agentSection.toLowerCase().includes(a));
+            if (!matched) {
+              core.setFailed(
+                'PR Agent section must name a registered agent from .agent/AGENT_REGISTRY.md §1.\n' +
+                'Recognized identifiers: ' + knownAgents.join(', ')
+              );
+              return;
+            }
+
+            core.info('PR body contract sections OK.');
+
+  commit-trailer-check:
+    name: Commit trailers
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR commits
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Validate trailers on every PR commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+          fail=0
+          for sha in $(git rev-list --reverse "$base..$head"); do
+            msg=$(git log -1 --format=%B "$sha")
+            short=$(git log -1 --format=%h "$sha")
+            subject=$(git log -1 --format=%s "$sha")
+            agent=$(echo "$msg" | grep -E '^Agent: [^/]+/[^[:space:]]+$' || true)
+            consulted=$(echo "$msg" | grep -E '^Consulted: ' || true)
+            override=$(echo "$msg" | grep -E '^Governance-Override: ' || true)
+            if [ -z "$agent" ]; then
+              echo "::error::Commit ${short} (${subject}) missing 'Agent: <name>/<version>' trailer."
+              fail=1
+            fi
+            if [ -z "$consulted" ] && [ -z "$override" ]; then
+              echo "::error::Commit ${short} (${subject}) missing 'Consulted: <doc>#<section>' trailer (and no Governance-Override: present)."
+              fail=1
+            fi
+            if [ -n "$consulted" ]; then
+              if ! echo "$consulted" | grep -q "AGENTS.md"; then
+                echo "::error::Commit ${short} (${subject}) Consulted trailer must include AGENTS.md."
+                fail=1
+              fi
+              if ! echo "$consulted" | grep -q ".agent/CONSTITUTION.md"; then
+                echo "::error::Commit ${short} (${subject}) Consulted trailer must include .agent/CONSTITUTION.md."
+                fail=1
+              fi
+            fi
+          done
+          if [ "$fail" -ne 0 ]; then
+            echo "::error::One or more commits violate trailer requirements; see .agent/HANDOFF_PROTOCOL.md §2."
+            exit 1
+          fi
+          echo "All commit trailers OK."
+
+  governance-lint:
+    name: Governance lint (PII + style)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Run governance-lint.ps1 against PR diff
+        shell: pwsh
+        run: |
+          $base = "${{ github.event.pull_request.base.sha }}"
+          $head = "${{ github.event.pull_request.head.sha }}"
+          $diff = git diff --name-only "$base..$head" | Where-Object { $_ -ne "" }
+          if (-not $diff) {
+            Write-Host "No changed files; skipping lint."
+            exit 0
+          }
+          $diff | Out-File -FilePath changed-files.txt -Encoding utf8 -NoNewline:$false
+          pwsh -File scripts/governance-lint.ps1 -DiffFiles changed-files.txt
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "::error::governance-lint.ps1 failed; see output above and .agent/SECURITY_PROTOCOL.md."
+            exit $LASTEXITCODE
+          }

@@ -1,0 +1,58 @@
+# IUUT — .gitignore
+# Governance: .agent/SECURITY_PROTOCOL.md prohibits committed PII; .agent/CODE_STYLE.md §12
+# pins the standard ignores below.
+
+# .NET build outputs
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio / Rider / VS Code user-specific
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Test outputs
+[Tt]est[Rr]esults/
+*.trx
+*.coverage
+*.coveragexml
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Local IUUT scratch
+*.iuut-backup-*
+*.iuut-tmp-*
+
+# IUUT user-state files that must NEVER be committed (PII risk per SECURITY_PROTOCOL §2)
+*steam-api-key*
+*.steam-credentials
+*loginusers.vdf
+
+# OS junk
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Local environment overrides (not committed)
+*.local.json
+appsettings.Development.json
+
+# Coverage / profiling
+*.profdata
+coverage*.json
+coverage*.xml
+
+# Misc
+*.swp
+*.bak
+*~

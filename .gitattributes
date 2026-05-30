@@ -1,0 +1,46 @@
+# IUUT — .gitattributes
+# Line-ending discipline per .agent/CODE_STYLE.md §12.
+# Source files use LF in the repo; save-file *outputs* are CRLF at runtime
+# (game convention), but those aren't tracked.
+
+* text=auto eol=lf
+
+# Source code
+*.cs        text eol=lf diff=csharp
+*.csproj    text eol=lf
+*.sln       text eol=lf
+*.props     text eol=lf
+*.targets   text eol=lf
+
+# Scripts
+*.ps1       text eol=lf
+*.sh        text eol=lf
+
+# Docs
+*.md        text eol=lf
+*.mdc       text eol=lf
+*.txt       text eol=lf
+
+# JSON (source-tracked JSON only — save-file outputs aren't committed)
+*.json      text eol=lf
+
+# Git hook scripts must be LF + executable
+.githooks/* text eol=lf
+
+# Fixtures (anonymized save snippets) — keep LF in repo even though game writes CRLF.
+fixtures/**/*.json text eol=lf
+
+# Binary fixtures
+fixtures/flags/*.dat binary
+fixtures/prospect-blobs/*.bin binary
+
+# Images / opaque
+*.png       binary
+*.jpg       binary
+*.exr       binary
+*.fog       binary
+
+# Linguist hints (helps GitHub categorize the repo)
+*.md        linguist-documentation
+.agent/**   linguist-documentation
+docs/**     linguist-documentation

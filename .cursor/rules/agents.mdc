@@ -1,0 +1,46 @@
+---
+description: Governance contract for any Cursor-driven agent action in IUUT. Always-on.
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# IUUT Governance — Cursor Rules
+
+This repository is governed by a binding multi-agent contract. **Before any code action**, you (the Cursor agent) must consult:
+
+1. `AGENTS.md` (repo root) — the universal contract.
+2. `.agent/CONSTITUTION.md` — articles I–X, immutable.
+3. `.agent/SCOPE_GUARDRAILS.md` — what you can and cannot do.
+4. `.agent/AGENT_WORKFLOW.md` — the ritual.
+5. `.agent/HANDOFF_PROTOCOL.md` — commit/PR conventions.
+6. `.agent/DEFINITION_OF_DONE.md` — acceptance bar.
+7. `.agent/CODE_STYLE.md`, `.agent/SECURITY_PROTOCOL.md`, `.agent/TESTING_CONTRACT.md` for code tasks.
+
+## Hard rules (summary; full normative text in `.agent/CONSTITUTION.md`)
+
+**Must:**
+- Add `Agent: cursor/<version>` and `Consulted: <doc>#<section>` trailers to every commit.
+- Round-trip parser changes against a fixture.
+- Backup → write → re-parse → restore-on-failure for save-file mutators.
+- Anonymize fixtures (no real Steam IDs, character names, paths).
+- Preserve unknown JSON fields on round-trip (forward compatibility).
+- Update the spec when you change behavior the spec describes.
+
+**Must not:**
+- Add telemetry, cloud upload, auth, or any unenumerated network call.
+- Hardcode usernames, paths, Steam IDs, character names.
+- Bypass the `commit-msg` hook without a `Governance-Override:` trailer.
+- Amend `.agent/CONSTITUTION.md` outside the amendment process.
+- Mark a task complete when tests fail.
+
+## When stuck
+
+Stop. Do not guess. Per `.agent/SCOPE_GUARDRAILS.md` §3: surface the contradiction, name the two interpretations, ask the human.
+
+## Reference docs (the spec you implement against)
+
+- `docs/IUUT-PROJECT-DOCUMENTATION.md` — master spec.
+- `Icarus-Analysis.md` — save-format field guide.
+
+Other agents (Claude Code, OpenAI Codex, Google Antigravity) operate here too. Read their commit trailers; respect their style; do not silently introduce a third pattern.

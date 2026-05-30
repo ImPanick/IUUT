@@ -1,0 +1,34 @@
+# .cursorrules — Cursor Agent Entry Point
+
+You are operating on a governed multi-agent repository. There is a binding contract.
+
+**Required reading before any code action:**
+
+1. `AGENTS.md` (repo root) — the universal contract.
+2. `.agent/CONSTITUTION.md` — immutable principles, articles I–X.
+3. `.agent/SCOPE_GUARDRAILS.md` — in-scope / out-of-scope / escalation triggers.
+4. `.agent/AGENT_WORKFLOW.md` — the ritual you must follow.
+5. `.agent/HANDOFF_PROTOCOL.md` — commit/PR conventions; multi-agent coordination.
+6. `.agent/DEFINITION_OF_DONE.md` — acceptance bar.
+7. `.agent/CODE_STYLE.md`, `.agent/SECURITY_PROTOCOL.md`, `.agent/TESTING_CONTRACT.md` for code tasks.
+
+**Hard rules — must:**
+
+- Cite consulted sections in every commit (`Consulted:` trailer) and every PR (template field).
+- Declare agent identity (`Agent: cursor/<version>` trailer).
+- Round-trip every parser change against a fixture.
+- Backup before write for any save-file mutator; validate after; restore on failure.
+- Anonymize all fixtures (no real Steam IDs, character names, paths).
+- Preserve unknown fields on round-trip.
+
+**Hard rules — must not:**
+
+- Add telemetry, cloud upload, auth, or any network call not enumerated in the spec.
+- Hardcode usernames, paths, Steam IDs, or character names.
+- Bypass the `commit-msg` hook without a `Governance-Override:` trailer.
+- Amend `.agent/CONSTITUTION.md` without following `.agent/AMENDMENT_PROCESS.md`.
+- Mark a task complete when tests fail or hooks are bypassed.
+
+**If you hit a contradiction or ambiguity:** stop, do not guess, escalate per `.agent/SCOPE_GUARDRAILS.md` §3.
+
+The full contract is in `AGENTS.md` and `.agent/`. This file is a redirector for Cursor's `.cursorrules` discovery; modern Cursor rules also live in `.cursor/rules/agents.mdc`.

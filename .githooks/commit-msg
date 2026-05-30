@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# IUUT governance — commit-msg hook
+#
+# Enforces the trailer requirements from .agent/HANDOFF_PROTOCOL.md §2:
+#   - Agent: <name>/<version>
+#   - Consulted: <doc>#<section>[, ...] (must include AGENTS.md and .agent/CONSTITUTION.md)
+#   - Co-Authored-By: <Name> <email>
+#
+# Override: a commit with `Governance-Override: <CONSTITUTION article ref> — <reason>`
+# trailer bypasses the Consulted check but still requires Agent + Co-Authored-By.
+#
+# Install: pwsh -File scripts/install-hooks.ps1
+# Disable (not recommended): git commit --no-verify
+#
+# Authority: CONSTITUTION VIII (Consultation-mandatory), X (Multi-agent coordination).
+
+set -euo pipefail
+
+msg_file="$1"
+msg=$(cat "$msg_file")
+
+# Strip comment lines (anything starting with '#' at column 0) — these are git's
+# own scratch lines and shouldn't count toward trailer matching.
+msg_no_comments=$(echo "$msg" | sed '/^#/d')
+
+fail=0
+errors=()
+
+# --- Mandatory: Agent ---
+if ! echo "$msg_no_comments" | grep -qE '^Agent: [^[:space:]/]+/[^[:space:]]+$'; then
+  errors+=("Missing or malformed 'Agent:' trailer.")
+  errors+=("  Required format: Agent: <name>/<version>   (e.g. Agent: claude-code/2.1.149)")
+  errors+=("  See .agent/HANDOFF_PROTOCOL.md §2 and .agent/AGENT_REGISTRY.md §1.")
+  fail=1
+fi
+
+# --- Mandatory: Co-Authored-By ---
+if ! echo "$msg_no_comments" | grep -qE '^Co-Authored-By: .+ <.+@.+>$'; then
+  errors+=("Missing or malformed 'Co-Authored-By:' trailer.")
+  errors+=("  Required format: Co-Authored-By: Name <email>")
+  fail=1
+fi
+
+# --- Mandatory: Consulted (unless Governance-Override is present) ---
+has_override=0
+if echo "$msg_no_comments" | grep -qE '^Governance-Override: .+'; then
+  has_override=1
+fi
+
+if [ "$has_override" -eq 0 ]; then
+  consulted=$(echo "$msg_no_comments" | grep -E '^Consulted: ' || true)
+  if [ -z "$consulted" ]; then
+    errors+=("Missing 'Consulted:' trailer.")
+    errors+=("  Required format: Consulted: <doc>#<section>[, <doc>#<section>...]")
+    errors+=("  Minimum:        Consulted: AGENTS.md, .agent/CONSTITUTION.md")
+    errors+=("  See CONSTITUTION VIII (Consultation-mandatory).")
+    fail=1
+  else
+    if ! echo "$consulted" | grep -q "AGENTS.md"; then
+      errors+=("'Consulted:' trailer must include 'AGENTS.md'.")
+      fail=1
+    fi
+    if ! echo "$consulted" | grep -q ".agent/CONSTITUTION.md"; then
+      errors+=("'Consulted:' trailer must include '.agent/CONSTITUTION.md'.")
+      fail=1
+    fi
+  fi
+else
+  echo "[governance hook] Governance-Override trailer present; skipping Consulted check."
+  echo "                  The override will be reviewed in PR per CONSTITUTION VIII.4."
+fi
+
+# --- Subject sanity ---
+subject=$(echo "$msg_no_comments" | head -n1)
+subject_len=${#subject}
+if [ "$subject_len" -gt 100 ]; then
+  errors+=("Subject line is ${subject_len} chars; soft limit is 70, hard limit is 100.")
+  fail=1
+fi
+
+# Allowed subject prefixes (informational warning, not a hard fail).
+allowed_types='^(feat|fix|refactor|test|docs|chore|governance|revert|wip|plan)(\([a-z0-9-]+\))?: '
+if ! echo "$subject" | grep -qE "$allowed_types"; then
+  echo "[governance hook] WARNING: subject does not match conventional commit prefix."
+  echo "                  Allowed: feat|fix|refactor|test|docs|chore|governance|revert|wip|plan"
+  echo "                  See .agent/HANDOFF_PROTOCOL.md §2."
+fi
+
+# --- Report ---
+if [ "$fail" -ne 0 ]; then
+  echo ""
+  echo "================================================================"
+  echo "  IUUT GOVERNANCE — COMMIT REJECTED"
+  echo "================================================================"
+  for e in "${errors[@]}"; do
+    echo "  $e"
+  done
+  echo ""
+  echo "  Fix the commit message and try again."
+  echo "  To bypass (only for emergencies): add a 'Governance-Override:'"
+  echo "  trailer naming the CONSTITUTION article that authorizes the bypass."
+  echo "  Bypassing without justification is itself a governance violation."
+  echo "================================================================"
+  exit 1
+fi
+
+echo "[governance hook] Commit message OK."
+exit 0
