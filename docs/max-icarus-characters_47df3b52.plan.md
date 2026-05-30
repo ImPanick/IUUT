@@ -28,7 +28,7 @@ isProject: false
 
 ## Survey of the save
 
-`[Characters.json](c:\Users\josep\AppData\Local\Icarus\Saved\PlayerData\76561198042982784\Characters.json)` is a two-level JSON: the outer object has one key, `"Characters.json"`, whose value is an array of three JSON-stringified character blobs. From the existing file:
+`[Characters.json](c:\Users\josep\AppData\Local\Icarus\Saved\PlayerData\00000000000000000\Characters.json)` is a two-level JSON: the outer object has one key, `"Characters.json"`, whose value is an array of three JSON-stringified character blobs. From the existing file:
 
 - Slot 1 — `PANICK`, XP `65,491`, 23 talents, XP_Debt `0`
 - Slot 2 — `IM PANICKING`, XP `57,356,316`, 1,051 talents, XP_Debt `0`

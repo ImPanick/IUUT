@@ -68,8 +68,8 @@ Observed INI files in config (graphics, input, engine): `Engine.ini`, `GameUserS
 
 ```text
 PlayerData\                          ← IUUT UI shows PersonaName, not folder name
-├── 76561198042982784\    ← on disk: SteamID64 (example → UI: "Joseph")
-├── 76561198123456789\    ← on disk: second account (→ UI: resolved name)
+├── 00000000000000000\    ← on disk: SteamID64 (example → UI: "Joseph")
+├── 00000000000000001\    ← on disk: second account (→ UI: resolved name)
 └── ...
 ```
 
@@ -124,7 +124,7 @@ The **first screen after save profile selection** is preset-driven, not a wall o
 ├──────────────────────────────────────────────────────────────────┤
 │  Save root:  C:\Users\...\AppData\Local\Icarus\Saved      [Browse]│
 │  Profile:    Joseph                                    [▼]         │
-│              76561198042982784 · 3 characters                    │
+│              00000000000000000 · 3 characters                    │
 │  Status:     ● 12/12 JSON files OK   ⚠ Return to Main Menu       │
 │  Steam:      ☁ Names resolved  — or —  📴 Offline (cached names) │
 ├──────────────────────────────────────────────────────────────────┤
@@ -810,7 +810,7 @@ Skip: `Genetics_Mutation_Reroute`, `Genetics_Reroute2`, `Genetics_Reroute3` (vis
 
 | Resource | Path |
 | --- | --- |
-| Live save (on disk) | `%LOCALAPPDATA%\Icarus\Saved\PlayerData\76561198042982784\` |
+| Live save (on disk) | `%LOCALAPPDATA%\Icarus\Saved\PlayerData\00000000000000000\` |
 | Live save (IUUT UI label) | **Joseph** — resolved via §7.5.1; SteamID64 shown as secondary line |
 | Field guide | `%LOCALAPPDATA%\Icarus\Saved\Icarus-Analysis.md` |
 | Master documentation | `Projects\IcarusUltimateUtilityTool\docs\IUUT-PROJECT-DOCUMENTATION.md` |

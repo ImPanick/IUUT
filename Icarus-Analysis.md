@@ -93,7 +93,7 @@ A complete example (truncated talent list):
 
 ```json
 {
-    "UserID": "76561198042982784",
+    "UserID": "00000000000000000",
     "MetaResources": [
         { "MetaRow": "Refund",         "Count": 31  },
         { "MetaRow": "Credits",        "Count": 5840 },
@@ -539,7 +539,7 @@ These files are *not* JSON and require either a binary parser or careful byte su
 ```text
 offset  size  field
 0       4     u32      length prefix = 18 (17 chars + NUL)
-4       17   ASCII     SteamID, e.g. "76561198042982784"
+4       17   ASCII     SteamID, e.g. "00000000000000000"
 21      1     u8       NUL terminator (0x00)
 22      4     u32      flag count N
 26      N*4  u32[]     unlocked flag IDs (little-endian)
