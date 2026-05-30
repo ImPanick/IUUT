@@ -13,7 +13,7 @@ name: Governance Check
 on:
   pull_request:
     types: [opened, synchronize, reopened, edited]
-    branches: [main]
+    branches: [main, dev]
 
 permissions:
   contents: read

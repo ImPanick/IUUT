@@ -99,9 +99,9 @@ For **`dev`** and **`main`** (same rule on each):
 - [x] Do not allow bypassing the above settings *(applies to admins too)*
 - [x] Restrict who can push *(no direct pushes; merges via PR only)*
 
-> Point `build.yml` and `governance-check.yml` triggers at both branches (the
-> workflows already run on PRs targeting their configured branches; add `dev` to the
-> `on.push`/`on.pull_request` branch lists when protection is enabled).
+> `build.yml` and `governance-check.yml` trigger on both `main` and `dev`, so PRs into
+> either branch are gated. Dependabot targets `dev` (`.github/dependabot.yml`), so
+> version bumps land on the integration branch.
 
 ### Bootstrap-phase exception (why the first commits went straight to `main`)
 

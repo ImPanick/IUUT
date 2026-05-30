@@ -11,6 +11,7 @@ updates:
   # NuGet packages across all projects
   - package-ecosystem: "nuget"
     directory: "/"
+    target-branch: "dev"        # bumps land on the integration branch (HANDOFF_PROTOCOL §1)
     schedule:
       interval: "weekly"
       day: "monday"
@@ -35,6 +36,7 @@ updates:
   # GitHub Actions used by our workflows
   - package-ecosystem: "github-actions"
     directory: "/"
+    target-branch: "dev"        # bumps land on the integration branch (HANDOFF_PROTOCOL §1)
     schedule:
       interval: "weekly"
       day: "monday"
