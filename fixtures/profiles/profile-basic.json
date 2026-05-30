@@ -1,0 +1,19 @@
+{
+	"UserID": "00000000000000000",
+	"MetaResources": [
+		{ "MetaRow": "Refund", "Count": 31 },
+		{ "MetaRow": "Credits", "Count": 5840 },
+		{ "MetaRow": "Exotic1", "Count": 37 },
+		{ "MetaRow": "Exotic_Red", "Count": 959 },
+		{ "MetaRow": "Biomass", "Count": 5 },
+		{ "MetaRow": "Licence", "Count": 0 },
+		{ "MetaRow": "Exotic_Uranium", "Count": 25 }
+	],
+	"UnlockedFlags": [ 5, 26, 1, 63, 60, 66, 67, 7, 24, 45, 86, 93 ],
+	"Talents": [
+		{ "RowName": "Workshop_Envirosuit", "Rank": 1 },
+		{ "RowName": "Prospect_OLY_Forest_Recon", "Rank": 1 }
+	],
+	"NextChrSlot": 4,
+	"DataVersion": 4
+}

@@ -1,0 +1,14 @@
+{
+	"UserID": "00000000000000000",
+	"MetaResources": [
+		{ "MetaRow": "Credits", "Count": 100 },
+		{ "MetaRow": "Exotic_Yellow", "Count": 7 }
+	],
+	"UnlockedFlags": [ 1, 2, 3 ],
+	"Talents": [
+		{ "RowName": "Workshop_Future_Widget", "Rank": 1 }
+	],
+	"NextChrSlot": 2,
+	"DataVersion": 5,
+	"FutureAccountField": { "SomethingNew": true, "Nested": [ 1, 2, 3 ] }
+}
