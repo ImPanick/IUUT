@@ -6,7 +6,7 @@
 | --- | --- |
 | **Full name** | Icarus Ultimate Utility Tool |
 | **Short name / acronym** | IUUT |
-| **Document version** | 1.3.1 |
+| **Document version** | 1.4.0 |
 | **Status** | Pre-development — documentation-first phase |
 | **Target game** | Icarus (RocketWerkz, Unreal Engine 4, Windows) |
 | **Verified against** | Mendel update (Week 220, Feb 2026), `Profile.DataVersion` = 4 |
@@ -727,7 +727,8 @@ flowchart TD
 | `Location` | string | Read-only display |
 | `UnlockedFlags` | int[] | Advanced edit with warning |
 | `MetaResources` | `{MetaRow, Count}[]` | Usually empty; editable if present |
-| `Cosmetic` | object | **Read-only display** |
+| `Cosmetic` | object | **Read-only display** — all integer indices (see below) |
+| `TimeLastPlayed` | int64 | Unix epoch seconds last played; **read-only**, preserve verbatim |
 
 #### Talent RowName prefixes (recipe/category, NOT tree)
 
@@ -775,21 +776,26 @@ Skip: `Genetics_Mutation_Reroute`, `Genetics_Reroute2`, `Genetics_Reroute3`
 
 #### Cosmetic block (read-only in IUUT)
 
+Verified against the full live save — **every value is an integer index** into an
+in-game cosmetic table, except `IsMale` (bool). There are **no** hex/RGBA colour
+strings; colours are integer palette indices. (See field guide §4.3 for the
+per-key table and a correction note on the earlier, incorrect field list.)
+
 ```json
 "Cosmetic": {
-    "IsMale": true,
     "Customization_Head": 12,
-    "Customization_Body": 4,
-    "Customization_HeadColors": "...",
-    "Customization_BodyColors": "...",
-    "Customization_HeadPaint": 0,
-    "Customization_BodyPaint": 0,
-    "Customization_Scar": 0,
-    "Customization_FacialHair": 0,
     "Customization_Hair": 7,
-    "Customization_HairColor": "...",
-    "Customization_EyeColor": "...",
-    "Customization_VoiceID": 3
+    "Customization_HairColor": 3,
+    "Customization_Body": 4,
+    "Customization_BodyColor": 1,
+    "Customization_SkinTone": 2,
+    "Customization_HeadTattoo": 0,
+    "Customization_HeadScar": 0,
+    "Customization_HeadFacialHair": 0,
+    "Customization_CapLogo": 0,
+    "IsMale": true,
+    "Customization_Voice": 3,
+    "Customization_EyeColor": 5
 }
 ```
 
@@ -814,17 +820,29 @@ Editable in-game natively. IUUT displays for reference only.
             "TimeCompleted": "2023.07.13-05.27.15",
             "ProspectID": "F9F6283642434EAEEA7CD489BC9C3F86"
         }
-    ]
+    ],
+    "PlayerTrackers": { /* progress counters keyed by tracker id */ },
+    "PlayerTaskListTrackers": { /* task-list progress keyed by id */ }
 }
 ```
 
-| Field | IUUT behaviour |
+**Three top-level keys** (verified against the live save):
+
+| Field | Type | IUUT behaviour |
+| --- | --- | --- |
+| `CompletedAccolades` | `{Accolade:{RowName,DataTableName}, TimeCompleted, ProspectID}[]` | The accolade log (below) |
+| `PlayerTrackers` | object | Per-tracker progress counters (e.g. cumulative stats). **Round-trip verbatim**; not edited by Lazy Max. |
+| `PlayerTaskListTrackers` | object | Task-list / mission-step progress. **Round-trip verbatim.** |
+
+| `CompletedAccolades` field | IUUT behaviour |
 | --- | --- |
 | `Accolade.RowName` | From `D_Accolades` catalog |
 | `TimeCompleted` | Format `YYYY.MM.DD-HH.MM.SS` — auto-generate on add |
 | `ProspectID` | Can use last-known GUID or empty string |
 
-**Lazy Max:** Append all catalog accolades not already present.
+**Lazy Max:** Append all catalog accolades not already present to `CompletedAccolades`;
+leave `PlayerTrackers` / `PlayerTaskListTrackers` untouched (preserved verbatim,
+CONSTITUTION VI).
 
 ---
 
@@ -844,11 +862,20 @@ Editable in-game natively. IUUT displays for reference only.
             },
             "NumPoints": 1046
         }
-    ]
+    ],
+    "FishTracking": [ /* per-fish scan/catch records — same shape family */ ]
 }
 ```
 
-**Lazy Max:** Set `NumPoints` to catalog max (or high value); add missing groups from catalog.
+**Two top-level keys** (verified against the live save):
+
+| Field | Type | IUUT behaviour |
+| --- | --- | --- |
+| `BestiaryTracking` | `{BestiaryGroup:{RowName,DataTableName}, NumPoints}[]` | Creature scan progress; the Bestiary editor target |
+| `FishTracking` | array | Fishing/aquatic scan records. **Round-trip verbatim** (CONSTITUTION VI); may be max'd by a future fishing-aware Lazy Max, otherwise left as-is. |
+
+**Lazy Max:** Set `NumPoints` to catalog max (or high value); add missing groups from
+catalog. `FishTracking` is preserved verbatim unless explicitly targeted.
 
 ---
 
@@ -1813,6 +1840,7 @@ Re-fetch catalogs when DataVersion advances.
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.4.0 | 2026-05-30 | **Full-save verification pass** against the complete extracted `Icarus\Saved\` tree. §8.3 Cosmetic block rewritten — real keys are 13 integer indices (+ `IsMale`); the documented string colour palettes / `*Paint` / `*Scar` / `*FacialHair` / `VoiceID` field names do **not** exist. Added `Characters[*].TimeLastPlayed` (int64). §8.4 Accolades: documented the two extra top-level keys `PlayerTrackers` + `PlayerTaskListTrackers`. §8.5 Bestiary: documented `FishTracking`. §8.1 blob codec re-verified end-to-end (incl. big-endian Adler-32). Profile, Characters container, MetaInventory, Loadouts, AssociatedProspects, Mounts, and Prospect headers confirmed accurate. See field guide §15 verification pass. |
 | 1.3.1 | 2026-05-25 | Added `docs/IMPLEMENTATION-PLAN.md` (work-package build roadmap) and pointer from §16. Adopted the `dev`-integration / `main`-release branch model (`.agent/HANDOFF_PROTOCOL.md` §1 → v1.1.0; `docs/CICD.md` §4). `dev` branch cut from `main`; protection to be enabled on both. |
 | 1.3.0 | 2026-05-25 | **Operator-execution guarantees.** Made the user-facing intent binding and verifiable: added §6.4 (two acquisition paths — pre-built signed download vs. build-from-source; integrity via `SHA256SUMS.txt` + Sigstore build-provenance attestation; no-installer / no-admin / no-registry guarantees; one-folder footprint `%AppData%\IUUT\` with `IUUT.portable` opt-in; clean removal). Rewrote §19 with the release pipeline and user verification steps. Added NG8 (no installer). Clarified §7.1 auto-link-then-manual-fallback flow. Fixed the §7.5.1 cache-path inconsistency (`%AppData%\IUUT\`, was `%AppData%\IcarusUltimateUtilityTool\`). New operator runbook `docs/INSTALL.md`; new `release.yml` CI. |
 | 1.2.0 | 2026-05-25 | **Ground-breaking: governance + scaffold + DevOps.** Repository initialized and pushed to github.com/ImPanick/IUUT. Added the multi-agent governance contract (`AGENTS.md`, `CLAUDE.md`, agent redirectors, `.agent/` with CONSTITUTION + 10 supporting docs) and its enforcement stack (`commit-msg` hook, `governance-lint.ps1`, PR template, Governance Check CI). Added the .NET 8 solution scaffold per §17 (IUUT.Core/Catalog/App/Cli + IUUT.Core.Tests) — builds green, smoke test passes, `dotnet format` clean. Added DevOps groundwork: `docs/DEVELOPMENT.md` + `docs/CICD.md` runbooks, Build & Test CI (`build.yml`), Dependabot, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `CODEOWNERS`, issue templates. §17 repo tree updated to reflect the real layout. `global.json` uses `rollForward: latestMajor` (target stays net8.0; build SDK may roll forward). |

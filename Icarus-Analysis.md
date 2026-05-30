@@ -200,7 +200,8 @@ Observed top-level keys on each character:
 | `Location` | string | Last terrain key, e.g. `Outpost006_Olympus`. |
 | `UnlockedFlags` | array of small ints | Character-level flag bits (separate from the account-level flags in Profile.json). |
 | `MetaResources` | array of `{MetaRow, Count}` | Per-character carry-over currencies (rarely populated; often empty). |
-| `Cosmetic` | object | Sex, head, body, hair, eye, makeup, scar, body-paint, voice, accessory IDs and a colour palette. See §4.3. |
+| `Cosmetic` | object | Appearance — **all integer indices** into in-game cosmetic tables (no colour strings). See §4.3. |
+| `TimeLastPlayed` | int64 | Unix epoch seconds this character was last played. Read-only display; preserve verbatim. |
 
 ### 4.2 Character talents
 
@@ -266,27 +267,54 @@ Genetics_Reduced_Threat
 
 ### 4.3 Cosmetic block
 
-Shape observed on every character:
+Exact shape observed on every character (verified against the live save, all
+3 characters). **Every value is an integer index** into an in-game cosmetic
+table, except `IsMale` (bool):
 
 ```json
 "Cosmetic": {
-    "IsMale": true,
     "Customization_Head": 12,
-    "Customization_Body": 4,
-    "Customization_HeadColors": "...",
-    "Customization_BodyColors": "...",
-    "Customization_HeadPaint": 0,
-    "Customization_BodyPaint": 0,
-    "Customization_Scar": 0,
-    "Customization_FacialHair": 0,
     "Customization_Hair": 7,
-    "Customization_HairColor": "...",
-    "Customization_EyeColor": "...",
-    "Customization_VoiceID": 3
+    "Customization_HairColor": 3,
+    "Customization_Body": 4,
+    "Customization_BodyColor": 1,
+    "Customization_SkinTone": 2,
+    "Customization_HeadTattoo": 0,
+    "Customization_HeadScar": 0,
+    "Customization_HeadFacialHair": 0,
+    "Customization_CapLogo": 0,
+    "IsMale": true,
+    "Customization_Voice": 3,
+    "Customization_EyeColor": 5
 }
 ```
 
-Most fields are integer indices into in-game cosmetic tables. The `*Colors` and `*Color` strings are hex/RGBA palettes. Don't randomise these unless you have a colour validator — the game asserts on out-of-range hex.
+| Key | Type | Meaning |
+| --- | --- | --- |
+| `IsMale` | bool | Body/voice base. |
+| `Customization_Head` | int | Head/face mesh index. |
+| `Customization_Hair` | int | Hair style index. |
+| `Customization_HairColor` | int | Hair colour **palette index** (not a hex string). |
+| `Customization_Body` | int | Body type index. |
+| `Customization_BodyColor` | int | Body/clothing colour palette index. |
+| `Customization_SkinTone` | int | Skin tone palette index. |
+| `Customization_HeadTattoo` | int | Face tattoo index (0 = none). |
+| `Customization_HeadScar` | int | Face scar index (0 = none). |
+| `Customization_HeadFacialHair` | int | Facial-hair index (0 = none). |
+| `Customization_CapLogo` | int | Cap/helmet logo index. |
+| `Customization_Voice` | int | Voice index. |
+| `Customization_EyeColor` | int | Eye colour palette index. |
+
+> **Correction (2026-05-30, verified against the full live save).** Earlier
+> drafts of this guide listed `Customization_HeadColors` / `Customization_BodyColors`
+> as **hex/RGBA colour strings**, plus `Customization_HeadPaint` / `BodyPaint`,
+> `Customization_Scar`, `Customization_FacialHair`, and `Customization_VoiceID`.
+> **None of those field names exist** in observed saves, and **there are no colour
+> strings** — every colour is an integer palette index (`Customization_HairColor`,
+> `Customization_BodyColor`, `Customization_EyeColor`). The real keys are the 13
+> above. There is no "out-of-range hex" assertion risk because there is no hex.
+
+IUUT shows these read-only (cosmetics are editable natively in-game).
 
 ---
 
@@ -496,6 +524,13 @@ Decompression is "strip 2 bytes, raw-deflate"; **recompression is not symmetric*
 5. Recompute and update `Hash` (SHA-1 of uncompressed), `UncompressedLength`, `TotalLength`, `DataLength`.
 
 **Implementation note:** Prefer .NET's `System.IO.Compression.ZLibStream` (available in .NET 6+), which handles the full zlib wrapper (header + deflate + Adler-32 trailer) in a single stream. Hand-rolling steps 1–3 with `DeflateStream` is error-prone — the Adler-32 trailer is the most-missed piece.
+
+> **Empirically re-verified (2026-05-30)** on a live prospect (`Womperton the Fourth.json`):
+> the `BinaryBlob` base64-decodes to exactly `TotalLength` bytes starting `78 9C`;
+> raw-inflating (skipping the 2 header bytes) yields exactly `UncompressedLength` bytes
+> beginning `…StateRecorderBlobs…ArrayProperty…`; `SHA-1(uncompressed)` equals
+> `ProspectBlob.Hash`; and the final 4 bytes equal the **big-endian Adler-32** of the
+> uncompressed payload. The codec above is correct end-to-end.
 
 ```mermaid
 flowchart LR
@@ -792,5 +827,25 @@ Given a corrupted save and an *uncorrupted* backup folder from the user, the ord
 | Date | Game build | `Profile.DataVersion` | Notes |
 | --- | --- | --- | --- |
 | 2026-02-?? | Week 220 — "Mendel" | `4` | Added **Genetics** tree (16 talents, RowName prefix `Genetics_`), `Biomass` MetaResource, husbandry overhaul. Confirmed working on this save format. (Earlier docs called this `Construction_Genetics` — that string is not present in any observed save.) |
+
+### Full-save verification pass (2026-05-30)
+
+The **entire** `Icarus\Saved\` tree was extracted from a live install and every JSON
+file type introspected against this guide. Corrections applied:
+
+- **Cosmetic block (§4.3) rewritten** — the real keys are 13 integer indices (+ `IsMale`
+  bool); the previously-documented string colour palettes / `*Paint` / `*Scar` /
+  `*FacialHair` / `VoiceID` fields **do not exist**.
+- **`Characters[*]` gains `TimeLastPlayed`** (int64, Unix epoch) — was undocumented.
+- **`Accolades.json` has 3 top-level keys**: `CompletedAccolades`, `PlayerTrackers`,
+  `PlayerTaskListTrackers` (the latter two were undocumented).
+- **`BestiaryData.json` has 2 top-level keys**: `BestiaryTracking` and `FishTracking`
+  (the latter undocumented).
+- **§8.1 blob codec re-verified end-to-end** (incl. big-endian Adler-32 trailer).
+- Confirmed accurate as-is: Profile, the Characters container shape, MetaInventory,
+  Loadouts, AssociatedProspects (nested-stringified), Mounts, and the Prospect
+  `ProspectInfo`/`ProspectBlob` header.
+
+Anything not listed as a correction was found to match this guide.
 
 If `DataVersion` ever advances, re-run §11 catalog fetches and diff `D_Talents` / `D_ItemsStatic` for new rows before trusting any whitelist-style validation.
