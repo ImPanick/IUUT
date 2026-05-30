@@ -1,5 +1,6 @@
 using System.Text.Json;
 using FluentAssertions;
+using IUUT.Core.Abstractions;
 using IUUT.Core.Io;
 using IUUT.Core.Tests.TestDoubles;
 using Xunit;
@@ -14,12 +15,15 @@ public sealed class SafeSaveWriterTests : IDisposable
     public SafeSaveWriterTests()
     {
         var backups = new BackupManager(FixedClock.Default);
-        _sut = new SafeSaveWriter(backups);
+        _sut = new SafeSaveWriter(backups, new SystemGuidProvider());
     }
 
     private static void AlwaysValid(string content) { _ = content; }
 
     private static void RequireValidJson(string content) => _ = JsonDocument.Parse(content);
+
+    private int TempArtifactCount() =>
+        Directory.GetFiles(_temp.Path, "*.iuut-tmp-*").Length;
 
     [Fact]
     public async Task WriteAsync_OnSuccess_WritesNewContentAndCreatesBackup()
@@ -49,7 +53,7 @@ public sealed class SafeSaveWriterTests : IDisposable
     }
 
     [Fact]
-    public async Task WriteAsync_OnValidationFailure_RestoresOriginalContent()
+    public async Task WriteAsync_OnValidationFailure_LeavesOriginalIntact()
     {
         var file = _temp.File("Profile.json");
         await File.WriteAllTextAsync(file, "{\"good\":true}");
@@ -59,18 +63,40 @@ public sealed class SafeSaveWriterTests : IDisposable
         result.Ok.Should().BeFalse();
         result.Error.Should().BeAssignableTo<JsonException>();
         (await File.ReadAllTextAsync(file)).Should().Be("{\"good\":true}",
-            "a failed write must restore the original from backup (CONSTITUTION III)");
+            "the live file is validated as a temp copy and only renamed in on success, so a "
+            + "failed write never replaces the original (CONSTITUTION III; CODE_STYLE §10)");
     }
 
     [Fact]
-    public async Task WriteAsync_NewFile_OnValidationFailure_DeletesPartialFile()
+    public async Task WriteAsync_NewFile_OnValidationFailure_DoesNotCreateFile()
     {
         var file = _temp.File("BrandNew.json");
 
         var result = await _sut.WriteAsync(file, "not json", RequireValidJson);
 
         result.Ok.Should().BeFalse();
-        File.Exists(file).Should().BeFalse("a new file that fails validation must not be left behind");
+        File.Exists(file).Should().BeFalse("a new file that fails validation must not be created");
+    }
+
+    [Fact]
+    public async Task WriteAsync_OnSuccess_LeavesNoTempArtifact()
+    {
+        var file = _temp.File("Profile.json");
+
+        await _sut.WriteAsync(file, "{\"x\":1}", RequireValidJson);
+
+        TempArtifactCount().Should().Be(0, "the temp file is renamed onto the target on success");
+    }
+
+    [Fact]
+    public async Task WriteAsync_OnFailure_LeavesNoTempArtifact()
+    {
+        var file = _temp.File("Profile.json");
+        await File.WriteAllTextAsync(file, "{\"good\":true}");
+
+        await _sut.WriteAsync(file, "not json", RequireValidJson);
+
+        TempArtifactCount().Should().Be(0, "the temp file is deleted when a write fails");
     }
 
     public void Dispose() => _temp.Dispose();

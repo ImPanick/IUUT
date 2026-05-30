@@ -105,7 +105,7 @@ Avoid abbreviations except: `IUUT`, `UI`, `IO`, `JSON`, `XML`, `GUID`, `SHA1`, `
 - **`System.Text.Json`** is the only JSON library. No Newtonsoft.
 - **Source-generated serializers** for hot-path types (`[JsonSerializable(typeof(ProfileModel))]`) when AOT becomes relevant; until then plain reflection-based is fine.
 - **Extension data** (`[JsonExtensionData] public Dictionary<string, JsonElement>? AdditionalData { get; set; }`) on every model that mirrors a save-file shape — non-negotiable per CONSTITUTION VI.
-- **Indentation** on serialize: tabs to match game output. (Custom `JsonSerializerOptions` with a `JavaScriptEncoder.UnsafeRelaxedJsonEscaping` to allow `&` and friends in character names.)
+- **Indentation** on serialize: indented output via `WriteIndented = true`. The game writes tabs but **tolerates spaces** (master doc §7.7), and the **net8.0** `JsonSerializerOptions` has no indent-character control (tab indentation needs .NET 9's `IndentCharacter`), so IUUT emits the BCL default **2-space** indent. This is an accepted, documented deviation — not a bug. Use the shared options in `IUUT.Core.Io.IcarusJson` (`JavaScriptEncoder.UnsafeRelaxedJsonEscaping` so `&` and similar in names are not escaped).
 - **UTF-8 without BOM** on every write. Use `JsonSerializer.SerializeAsync(stream, ...)` with the stream opened via `FileStream` (no BOM written). Never `File.WriteAllText` with the default encoding.
 - **Nested-stringified blobs** (`Characters.json`, `AssociatedProspects_Slot_N.json`) handled with a `NestedStringifiedConverter<T>` — never re-implement the pattern per file.
 
@@ -197,5 +197,6 @@ Avoid abbreviations except: `IUUT`, `UI`, `IO`, `JSON`, `XML`, `GUID`, `SHA1`, `
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 1.1.1 | 2026-05-30 | §5 indentation note corrected to net8.0 reality: tab indentation needs .NET 9's `IndentCharacter`, so IUUT emits 2-space (game tolerates spaces, master §7.7) via `IUUT.Core.Io.IcarusJson` — an accepted, documented deviation. (Alignment pass on WP-0..2.) |
 | 1.1.0 | 2026-05-25 | §1 `IUUT.Core` folder convention extended for WP-1: added `Abstractions/` (IClock, IGuidProvider) and `Io/` (SafeSaveWriter, BackupManager, IcarusJson); listed the already-documented `Exceptions/` and `Logging/` folders. Noted BackupManager lives in `Io/`. |
 | 1.0.0 | 2026-05-25 | Adopted. .NET 8 / WPF / STJ conventions established. |
