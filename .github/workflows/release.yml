@@ -1,0 +1,103 @@
+name: Release
+
+# Produces the signed, verifiable IUUT.exe release.
+# Triggered when a human pushes a SemVer tag (vX.Y.Z). Agents propose release
+# readiness; humans tag (.agent/HANDOFF_PROTOCOL.md §9).
+#
+# Output (attached to the GitHub Release):
+#   - IUUT.exe              self-contained single-file, win-x64
+#   - IUUT-portable.zip     the same exe + IUUT.portable marker + README
+#   - SHA256SUMS.txt        SHA-256 of both artifacts
+#   - a Sigstore build-provenance attestation (verifiable with `gh attestation verify`)
+#
+# Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.4, §19; docs/CICD.md §5.
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+      - "v[0-9]+.[0-9]+.[0-9]+-*"   # pre-release tags (e.g. v0.1.0-rc1)
+
+permissions:
+  contents: write        # create the GitHub Release + upload assets
+  id-token: write        # required for Sigstore attestation
+  attestations: write    # required for actions/attest-build-provenance
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+
+jobs:
+  release:
+    name: Build, attest, publish
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore + test (gate the release on green)
+        run: |
+          dotnet restore IcarusUltimateUtilityTool.sln
+          dotnet test IcarusUltimateUtilityTool.sln -c Release --logger "console;verbosity=minimal"
+
+      - name: Publish self-contained single-file IUUT.exe
+        run: >
+          dotnet publish src/IUUT.App/IUUT.App.csproj
+          -c Release -r win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+          -o publish
+
+      - name: Stage release artifacts
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item publish/IUUT.exe dist/IUUT.exe
+
+          # Portable bundle: exe + portable marker + a short README
+          New-Item -ItemType Directory -Force -Path portable | Out-Null
+          Copy-Item publish/IUUT.exe portable/IUUT.exe
+          New-Item -ItemType File -Force -Path portable/IUUT.portable | Out-Null
+          @"
+          IUUT portable mode.
+          The presence of the 'IUUT.portable' file next to IUUT.exe makes IUUT keep
+          all of its state in a 'IUUT-Data' folder beside the exe instead of in
+          %AppData%\IUUT. See docs/INSTALL.md section 6.
+          "@ | Set-Content -Path portable/README.txt -Encoding utf8
+          Compress-Archive -Path portable/* -DestinationPath dist/IUUT-portable.zip -Force
+
+      - name: Generate SHA256SUMS.txt
+        shell: pwsh
+        run: |
+          Push-Location dist
+          Get-ChildItem -File -Exclude SHA256SUMS.txt | ForEach-Object {
+            $h = (Get-FileHash $_.Name -Algorithm SHA256).Hash.ToLower()
+            "$h  $($_.Name)"
+          } | Set-Content -Path SHA256SUMS.txt -Encoding ascii
+          Get-Content SHA256SUMS.txt
+          Pop-Location
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: |
+            dist/IUUT.exe
+            dist/IUUT-portable.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/IUUT.exe
+            dist/IUUT-portable.zip
+            dist/SHA256SUMS.txt
+          generate_release_notes: true
+          fail_on_unmatched_files: true

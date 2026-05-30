@@ -73,12 +73,32 @@ when CI runs the equivalent trailer check. Don't skip it.
 | Test (filter) | `dotnet test --filter "FullyQualifiedName~ProfileParser"` |
 | Run the WPF app | `dotnet run --project src/IUUT.App` |
 | Run the CLI | `dotnet run --project src/IUUT.Cli -- check` |
+| Build your own release `IUUT.exe` | see below |
 | Format (apply) | `dotnet format IcarusUltimateUtilityTool.sln` |
 | Format (verify, CI-style) | `dotnet format IcarusUltimateUtilityTool.sln --verify-no-changes` |
 | Governance lint | `pwsh -File scripts/governance-lint.ps1 -StagedOnly` |
 
 The four gates CI enforces (mirror them locally before pushing): **build with no
 warnings**, **tests pass**, **format verifies clean**, **governance lint clean**.
+
+### Build your own self-contained `IUUT.exe`
+
+This is acquisition **Path B** for end users (master doc §6.4) and how you produce a
+local release artifact:
+
+```powershell
+dotnet publish src/IUUT.App/IUUT.App.csproj `
+  -c Release -r win-x64 `
+  --self-contained true `
+  -p:PublishSingleFile=true `
+  -p:IncludeNativeLibrariesForSelfExtract=true
+```
+
+Output: `src/IUUT.App/bin/Release/net8.0-windows/win-x64/publish/IUUT.exe` — a single
+~15–25 MB file with the .NET 8 runtime bundled; no install needed to run it. The
+canonical, attested release is built by `.github/workflows/release.yml` on a `vX.Y.Z`
+tag; `scripts/publish-release.ps1` is the local dry-run. See `docs/CICD.md` §5 and
+`docs/INSTALL.md`.
 
 ---
 

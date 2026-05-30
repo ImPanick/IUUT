@@ -20,11 +20,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Description>IUUT desktop application — WPF shell for Icarus save editing.</Description>
 
-    <!-- Single-file publish defaults; CI / release pipeline can override -->
+    <!-- Single-file publish defaults; CI / release pipeline can override.
+         Footprint: native libs self-extract on launch; at runtime IUUT pins
+         DOTNET_BUNDLE_EXTRACT_BASE_DIR to its own state folder so extraction
+         stays inside the one known footprint (master doc §6.4). -->
     <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
     <SelfContained Condition="'$(Configuration)' == 'Release'">true</SelfContained>
     <RuntimeIdentifier Condition="'$(Configuration)' == 'Release'">win-x64</RuntimeIdentifier>
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile Condition="'$(Configuration)' == 'Release'">true</EnableCompressionInSingleFile>
   </PropertyGroup>
 
   <ItemGroup>

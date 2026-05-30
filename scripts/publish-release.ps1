@@ -7,21 +7,28 @@
 
     SCAFFOLD STUB — not implemented yet (no .NET code to publish in pre-development).
 
-    Intended behavior:
+    NOTE: The CANONICAL, verifiable release is produced by .github/workflows/release.yml
+    on a vX.Y.Z tag (it is the only place the Sigstore build-provenance attestation can
+    be generated). This script is a LOCAL dry-run that produces the same artifacts +
+    checksums for inspection before tagging. See docs/IUUT-PROJECT-DOCUMENTATION.md §19
+    and docs/CICD.md §5.
+
+    Intended behavior (local dry-run):
       1. Verify clean working tree (`git status --porcelain`).
-      2. Verify the current commit is a SemVer tag (`vX.Y.Z`).
-      3. Run `dotnet test` — fail if any test fails.
-      4. Run `scripts/governance-lint.ps1` against the tagged tree.
-      5. dotnet publish IUUT.App with:
-           -c Release
-           -r win-x64
-           --self-contained true
+      2. Run `dotnet test` — fail if any test fails.
+      3. Run `scripts/governance-lint.ps1` against the tree.
+      4. dotnet publish IUUT.App with:
+           -c Release -r win-x64 --self-contained true
            -p:PublishSingleFile=true
            -p:IncludeNativeLibrariesForSelfExtract=true
-      6. Verify resulting IUUT.exe is 15-25 MB (per master doc §6.1 size target).
-      7. Verify the binary's manifest declares PerMonitorV2 DPI awareness.
-      8. Optionally code-sign if a signing cert is available.
-      9. Produce a portable zip with IUUT.exe + LICENSE + README.md.
+           -p:EnableCompressionInSingleFile=true
+      5. Verify resulting IUUT.exe is ~15-25 MB (per master doc §6.1 size target)
+         and that its manifest declares PerMonitorV2 DPI awareness + asInvoker.
+      6. Produce IUUT-portable.zip (IUUT.exe + IUUT.portable marker + README).
+      7. Generate SHA256SUMS.txt over both artifacts.
+      8. Print the `gh attestation verify` command users will run (attestation itself
+         is created by CI release.yml, not locally).
+      9. Authenticode code-signing is a FUTURE step, gated on obtaining a cert.
      10. Emit a release-notes draft (commit log since previous tag, grouped by `<type>`).
 
 .PARAMETER Configuration

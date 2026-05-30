@@ -19,9 +19,10 @@ Two GitHub Actions workflows gate every PR into `main`:
 | --- | --- | --- | --- |
 | **Governance Check** | `.github/workflows/governance-check.yml` | PR open/sync/edit | Validates PR-body contract sections, commit trailers, and runs `governance-lint.ps1` (PII + style). |
 | **Build & Test** | `.github/workflows/build.yml` | PR + push to main | Restore → build (warnings-as-errors) → test → `dotnet format --verify-no-changes`. |
+| **Release** | `.github/workflows/release.yml` | push of a `vX.Y.Z` tag | Build single-file `IUUT.exe` + portable zip → `SHA256SUMS.txt` → Sigstore build-provenance attestation → GitHub Release. |
 
-Both must be green to merge. Neither builds artifacts — release packaging is a
-separate, human-triggered process (§5).
+The first two gate every merge. Release runs only on a tag and produces the verifiable
+artifacts (§5).
 
 ```
    ┌──────────────┐     PR      ┌─────────────────────┐
@@ -127,20 +128,33 @@ Milestones map to master doc §16: `0.1` MVP (Lazy Max + backup + Main-Menu veri
 
 ### Release runbook
 
-1. Confirm `main` is green (both workflows).
+1. Confirm `main` is green (Governance Check + Build & Test).
 2. Open a `release-readiness` issue; an agent may assemble the checklist, a human signs off.
-3. Run the relevant items in `tests/MANUAL_CHECKLIST.md` (UI + game-load acceptance).
-4. Tag: `git tag vX.Y.Z && git push origin vX.Y.Z` (human only).
-5. `pwsh -File scripts/publish-release.ps1` produces the self-contained single-file
-   `IUUT.exe` (~15–25 MB) plus a portable zip. *(Script is a stub until first code release.)*
-6. Create the GitHub Release; attach `IUUT.exe` + portable zip; paste the generated
-   release notes (commit log since the previous tag, grouped by `<type>`).
+3. Run the relevant items in `tests/MANUAL_CHECKLIST.md` (UI + game-load + integrity/footprint).
+4. *(Optional)* Local dry-run: `pwsh -File scripts/publish-release.ps1` to inspect the
+   artifacts + checksums before tagging. *(Stub until first code release.)*
+5. **Tag (human only):** `git tag vX.Y.Z && git push origin vX.Y.Z`.
+6. **`release.yml` runs automatically** and produces, on the GitHub Release:
+   `IUUT.exe`, `IUUT-portable.zip`, `SHA256SUMS.txt`, generated release notes, and a
+   Sigstore build-provenance attestation.
 7. Update `CHANGELOG.md` (move `Unreleased` items under the new version heading).
 
-### Code signing (future)
+The artifacts are **verifiable by anyone** (no certificate needed): a checksum match
+plus `gh attestation verify IUUT.exe --repo ImPanick/IUUT` proves the binary is exactly
+what public CI built from the tagged commit. See master doc §19.2 and `docs/INSTALL.md` §4.
 
-Optional, reduces SmartScreen friction (master doc §19). When a cert is available,
-`publish-release.ps1` signs `IUUT.exe`. Not required for early releases.
+### Integrity model — "verified signed hashes"
+
+| Layer | Mechanism | Cost | Status |
+| --- | --- | --- | --- |
+| **Tamper detection** | `SHA256SUMS.txt` per release | free | active in `release.yml` |
+| **Provenance** | Sigstore attestation via `actions/attest-build-provenance` | free | active in `release.yml` |
+| **Reproducibility** | Acquisition Path B — build from source (master doc §6.4) | free | active |
+| **Publisher identity** | Authenticode code-signing of `IUUT.exe` | needs a code-signing cert | **future upgrade** |
+
+The first three ship now and fully satisfy "verified signed hashes from the repo."
+Authenticode (which removes most SmartScreen prompts) is added when a certificate is
+obtained — a `chore(ci)` change to `release.yml` plus a CI signing secret.
 
 ---
 

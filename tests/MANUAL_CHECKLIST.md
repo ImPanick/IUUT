@@ -90,6 +90,22 @@ Human-only test steps that automated CI cannot perform.
 - [ ] No console window appears for the WPF app.
 - [ ] First launch shows the legal disclaimer (master doc §4.1).
 
+## §11. Acquisition integrity (release artifacts)
+
+- [ ] `release.yml` produced `IUUT.exe`, `IUUT-portable.zip`, and `SHA256SUMS.txt` on the GitHub Release.
+- [ ] `(Get-FileHash IUUT.exe -Algorithm SHA256).Hash` matches the `IUUT.exe` line in `SHA256SUMS.txt`.
+- [ ] `gh attestation verify IUUT.exe --repo ImPanick/IUUT` passes (provenance ties the exe to the tagged build).
+- [ ] **Acquisition Path B parity:** a from-source `dotnet publish` build runs and behaves identically to the downloaded exe.
+
+## §12. No-install footprint & portable mode
+
+- [ ] Running `IUUT.exe` requires **no installer**, **no admin / UAC prompt**, and creates **no** Start-Menu entry or shortcut.
+- [ ] Default mode: the only folder created is `%AppData%\IUUT\` (cache, encrypted key, logs, settings). Confirm with a before/after diff of `%AppData%` and the registry.
+- [ ] No writes to the Windows registry, Program Files, or any machine-wide location.
+- [ ] Native single-file extraction lands under the IUUT state folder (`%AppData%\IUUT\runtime\`), **not** loose in `%TEMP%`.
+- [ ] **Portable mode:** with an `IUUT.portable` marker beside the exe, all state goes to `.\IUUT-Data\` and **nothing** is written to `%AppData%`. Verify on a USB stick.
+- [ ] **Clean removal:** deleting `IUUT.exe` + the one state folder leaves no IUUT trace; Icarus saves and their `.iuut-backup-*` files are untouched.
+
 ---
 
 ## Sign-off

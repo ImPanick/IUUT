@@ -27,6 +27,15 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 - **DevOps groundwork:** `docs/DEVELOPMENT.md` and `docs/CICD.md` runbooks, Build & Test
   CI workflow, Dependabot config, `CONTRIBUTING.md`, `SECURITY.md`, this changelog,
   `CODEOWNERS`, and issue templates.
+- **Operator-execution guarantees:** `docs/INSTALL.md` operator guide; `release.yml`
+  (single-file `IUUT.exe` + portable zip + `SHA256SUMS.txt` + Sigstore build-provenance
+  attestation on a `vX.Y.Z` tag); master doc §6.4 (two acquisition paths, no-installer /
+  no-admin / no-registry footprint, `%AppData%\IUUT\` default + `IUUT.portable` opt-in,
+  clean removal) and §19 release pipeline + user verification.
+
+### Fixed
+
+- Steam name-cache path inconsistency in master doc §7.5.1 (now `%AppData%\IUUT\`).
 
 ### Notes
 

@@ -21,6 +21,22 @@ Two equally-valid jobs, from one Windows desktop app:
 
 Three home-screen workflows: **Broken Save Recovery**, **Lazy Max**, and **Custom**.
 
+## Get IUUT
+
+Two ways to get the **same** single-file `IUUT.exe` — full guide in
+**[docs/INSTALL.md](docs/INSTALL.md)**:
+
+- **Download (recommended):** grab `IUUT.exe` + `SHA256SUMS.txt` from
+  [Releases](https://github.com/ImPanick/IUUT/releases), verify the hash and the
+  build-provenance attestation (`gh attestation verify`), then double-click.
+- **Build it yourself:** clone and run the `dotnet publish` command in
+  [docs/INSTALL.md §3](docs/INSTALL.md).
+
+**No install, no admin, no registry.** IUUT is one `.exe`; its only footprint is a
+single `%AppData%\IUUT\` folder (or a portable `IUUT-Data\` beside the exe). Removal =
+delete the exe + that folder. The save folder auto-links on launch; if it can't be
+found you point IUUT at it once.
+
 ## Quick facts
 
 | | |
@@ -95,6 +111,7 @@ pipeline and **[SECURITY.md](SECURITY.md)** for the disclosure policy.
 | --- | --- |
 | [docs/IUUT-PROJECT-DOCUMENTATION.md](docs/IUUT-PROJECT-DOCUMENTATION.md) | Master spec — vision, scope, save model, architecture, features, roadmap |
 | [Icarus-Analysis.md](Icarus-Analysis.md) | Save-format field guide (empirically verified) |
+| [docs/INSTALL.md](docs/INSTALL.md) | **Operator guide** — get, verify, run, footprint, portable, removal |
 | [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md) | Local developer runbook |
 | [docs/CICD.md](docs/CICD.md) | CI/CD, branch protection, versioning, releases |
 | [AGENTS.md](AGENTS.md) + [.agent/](.agent/) | Multi-agent governance contract |

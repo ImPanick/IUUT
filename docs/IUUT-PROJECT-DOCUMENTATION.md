@@ -6,7 +6,7 @@
 | --- | --- |
 | **Full name** | Icarus Ultimate Utility Tool |
 | **Short name / acronym** | IUUT |
-| **Document version** | 1.2.0 |
+| **Document version** | 1.3.0 |
 | **Status** | Pre-development — documentation-first phase |
 | **Target game** | Icarus (RocketWerkz, Unreal Engine 4, Windows) |
 | **Verified against** | Mendel update (Week 220, Feb 2026), `Profile.DataVersion` = 4 |
@@ -140,6 +140,7 @@ Every Icarus player — whether they crashed mid-update, lost a character to a s
 | NG5 | Auto-filling orbital stash during Lazy Max (user choice in Custom) |
 | NG6 | Enforcing Steam Cloud offline mode (recommendation only) |
 | NG7 | Renaming `PlayerData\<SteamID>\` folders on disk — **display names are UI-only**; folder names must stay SteamID64 |
+| NG8 | **An installer / setup wizard.** IUUT ships as a single double-click `.exe`. No MSI/EXE installer, no admin elevation, no registry writes, no Program Files install, no Start Menu / shortcut creation, no machine-wide changes. See §6.4. |
 
 ---
 
@@ -233,6 +234,69 @@ dotnet publish src/IUUT.App/IUUT.App.csproj `
   -p:IncludeNativeLibrariesForSelfExtract=true
 ```
 
+### 6.4 Acquisition & footprint (operator guarantees)
+
+These are **binding product guarantees**, not aspirations. The operator-facing
+runbook is `docs/INSTALL.md`.
+
+#### Two acquisition paths — pick one
+
+| Path | For whom | How |
+| --- | --- | --- |
+| **A — Pre-built signed download** | Most users | Download `IUUT.exe` from the GitHub **Releases** page, verify it against the published `SHA256SUMS.txt` and the GitHub build-provenance **attestation**, then double-click. No build tools needed. |
+| **B — Build from source** | Anyone who wants to compile it themselves | Clone the repo and run the §6.3 publish command. Produces a byte-for-byte equivalent self-contained `IUUT.exe` they built and can trust without relying on our release. |
+
+Both paths yield the **same** self-contained single-file `IUUT.exe`. Path B exists
+so no user is ever forced to trust a binary they didn't build.
+
+#### Integrity — "verified signed hashes"
+
+Each GitHub Release carries:
+
+- **`SHA256SUMS.txt`** — SHA-256 of `IUUT.exe` (and the portable zip).
+- **A Sigstore build-provenance attestation** generated in CI by
+  `actions/attest-build-provenance` — cryptographically ties the artifact to the
+  exact workflow run and commit that produced it. Users verify with
+  `gh attestation verify IUUT.exe --repo ImPanick/IUUT`.
+
+This gives integrity **and** provenance with no certificate cost. Authenticode
+code-signing (publisher identity, fewer SmartScreen prompts) is a **future upgrade**
+gated on obtaining a code-signing certificate — see §19.
+
+#### No-install, fire-and-forget
+
+| Guarantee | Detail |
+| --- | --- |
+| **No prerequisites** | .NET 8 runtime is bundled (self-contained). User installs nothing. |
+| **No installer** | Single `.exe`, double-click to run. No setup wizard (NG8). |
+| **No admin / no UAC** | Manifest requests `asInvoker`. IUUT never elevates. |
+| **No registry / no machine-wide changes** | IUUT writes nothing to the registry, Program Files, or any shared location. |
+| **Known, minimal footprint** | All app state lives in **one** folder (next section). Removal = delete the `.exe` and that one folder. |
+
+#### Application footprint (where IUUT writes)
+
+| Mode | App state location | Notes |
+| --- | --- | --- |
+| **Default** | `%AppData%\IUUT\` | Steam name cache (`steam-profile-cache.json`), DPAPI-encrypted API key (`steam-api-key.bin`), logs (`Logs\`), settings. The **only** folder IUUT creates on the system. |
+| **Portable** | `.\IUUT-Data\` (beside the `.exe`) | Activated when a file named `IUUT.portable` exists next to `IUUT.exe`. **Nothing** is written to `%AppData%`. True USB-stick fire-and-forget. |
+
+Two footprint notes that are *not* "stray files":
+
+- **Save backups** (`<File>.iuut-backup-<timestamp>`) are written **inside the game's
+  own `PlayerData\<SteamID>\` folder**, alongside the files being edited — by design,
+  per CONSTITUTION III. They are part of the save folder, not the system at large.
+- **Single-file native extraction:** .NET single-file WPF extracts a few native
+  libraries to a per-version temp directory on launch. IUUT pins this to a subfolder
+  of its own state directory (default `%AppData%\IUUT\runtime\`, or `.\IUUT-Data\runtime\`
+  in portable mode) via `DOTNET_BUNDLE_EXTRACT_BASE_DIR`, so it stays inside the one
+  known footprint and never litters the system temp.
+
+#### Clean removal
+
+There is nothing to "uninstall." To remove IUUT completely: delete `IUUT.exe` and
+the one state folder (`%AppData%\IUUT\` or the portable `.\IUUT-Data\`). Save files
+and the user's own data are untouched.
+
 ---
 
 ## 7. Icarus client file layout
@@ -251,7 +315,18 @@ Which expands per-user, e.g.:
 C:\Users\<WindowsUsername>\AppData\Local\Icarus\Saved\
 ```
 
-**Implementation:** `Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)` + `\Icarus\Saved\`. Never hardcode a username. Allow manual browse override in Settings.
+**Implementation:** `Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)` + `\Icarus\Saved\`. Never hardcode a username.
+
+**Auto-link, then manual fallback (operator guarantee):**
+
+1. On launch, IUUT resolves the path above automatically. If it exists, the save root
+   is linked with no user action — the user lands straight on the profile picker.
+2. If the path is **not found** (game installed elsewhere, non-standard layout, moved
+   `Saved\` folder), IUUT shows a clear "Couldn't find your Icarus saves — locate them"
+   prompt with a **Browse…** button. The user points it at their `Saved\` (or
+   `PlayerData\`) folder once; the chosen path is remembered in settings.
+3. The resolved/overridden root is always visible and re-`Browse`-able from the home
+   screen and Settings (F-001, F-002).
 
 ### 7.2 Top-level `Saved\` structure
 
@@ -420,7 +495,7 @@ Response field used: `response.players[0].personaname`
 }
 ```
 
-- Cache path: `%AppData%\IcarusUltimateUtilityTool\steam-profile-cache.json`
+- Cache path: `%AppData%\IUUT\steam-profile-cache.json` (in portable mode: `.\IUUT-Data\steam-profile-cache.json`) — see §6.4 footprint
 - Refresh on profile scan if entry missing or older than TTL (default 7 days)
 - **Refresh names** button in Settings / profile dropdown
 - Offline after first resolve: cached names still display
@@ -1576,13 +1651,46 @@ IcarusUltimateUtilityTool/
 
 ## 19. Packaging, distribution & releases
 
+See §6.4 for the binding acquisition/footprint guarantees and `docs/INSTALL.md`
+for the operator-facing runbook. This section covers how releases are produced.
+
 | Item | Detail |
 | --- | --- |
-| **Artifact** | `IUUT.exe` (self-contained) |
-| **Optional** | Portable zip with README |
-| **Distribution** | GitHub Releases |
-| **Versioning** | SemVer — `1.0.0` at public launch |
-| **Code signing** | Optional future — reduces SmartScreen warnings |
+| **Primary artifact** | `IUUT.exe` — self-contained, single-file, ~15–25 MB, no prerequisites |
+| **Secondary artifact** | `IUUT-portable.zip` — the same `.exe` plus an empty `IUUT.portable` marker and README, for fire-and-forget/USB use |
+| **Integrity** | `SHA256SUMS.txt` for every artifact + a Sigstore **build-provenance attestation** (CI, `actions/attest-build-provenance`) |
+| **Distribution** | GitHub **Releases** only — no third-party mirrors, no auto-update phone-home (CONSTITUTION V) |
+| **Build** | CI `release.yml` on a `vX.Y.Z` tag; reproducible from source via §6.3 (acquisition Path B) |
+| **Versioning** | SemVer — `1.0.0` at public launch (see `docs/CICD.md` §5) |
+| **Code signing** | **Future upgrade.** Authenticode (publisher identity, fewer SmartScreen prompts) once a code-signing certificate is obtained. Until then, integrity + provenance are provided by signed checksums + the build attestation. |
+
+### 19.1 Release pipeline (`release.yml`)
+
+Triggered when a human pushes a `vX.Y.Z` tag (agents propose readiness, humans tag —
+`.agent/HANDOFF_PROTOCOL.md` §9):
+
+1. Build + test green (mirrors `build.yml`).
+2. `dotnet publish` the self-contained single-file `IUUT.exe` (win-x64).
+3. Produce `IUUT-portable.zip` (exe + `IUUT.portable` marker + README).
+4. Generate `SHA256SUMS.txt` over both artifacts.
+5. `actions/attest-build-provenance` attests both artifacts (Sigstore).
+6. Create the GitHub Release, attaching `IUUT.exe`, `IUUT-portable.zip`,
+   `SHA256SUMS.txt`, and the release notes (commit log since the previous tag,
+   grouped by `<type>`).
+
+### 19.2 How users verify (mirrors `docs/INSTALL.md`)
+
+```powershell
+# 1. Checksum
+(Get-FileHash .\IUUT.exe -Algorithm SHA256).Hash
+#    compare against the IUUT.exe line in SHA256SUMS.txt
+
+# 2. Provenance (requires GitHub CLI)
+gh attestation verify .\IUUT.exe --repo ImPanick/IUUT
+```
+
+A passing verification proves the `.exe` is exactly what the public CI built from the
+tagged commit — no tampering, no substitution.
 
 ---
 
@@ -1700,6 +1808,7 @@ Re-fetch catalogs when DataVersion advances.
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.3.0 | 2026-05-25 | **Operator-execution guarantees.** Made the user-facing intent binding and verifiable: added §6.4 (two acquisition paths — pre-built signed download vs. build-from-source; integrity via `SHA256SUMS.txt` + Sigstore build-provenance attestation; no-installer / no-admin / no-registry guarantees; one-folder footprint `%AppData%\IUUT\` with `IUUT.portable` opt-in; clean removal). Rewrote §19 with the release pipeline and user verification steps. Added NG8 (no installer). Clarified §7.1 auto-link-then-manual-fallback flow. Fixed the §7.5.1 cache-path inconsistency (`%AppData%\IUUT\`, was `%AppData%\IcarusUltimateUtilityTool\`). New operator runbook `docs/INSTALL.md`; new `release.yml` CI. |
 | 1.2.0 | 2026-05-25 | **Ground-breaking: governance + scaffold + DevOps.** Repository initialized and pushed to github.com/ImPanick/IUUT. Added the multi-agent governance contract (`AGENTS.md`, `CLAUDE.md`, agent redirectors, `.agent/` with CONSTITUTION + 10 supporting docs) and its enforcement stack (`commit-msg` hook, `governance-lint.ps1`, PR template, Governance Check CI). Added the .NET 8 solution scaffold per §17 (IUUT.Core/Catalog/App/Cli + IUUT.Core.Tests) — builds green, smoke test passes, `dotnet format` clean. Added DevOps groundwork: `docs/DEVELOPMENT.md` + `docs/CICD.md` runbooks, Build & Test CI (`build.yml`), Dependabot, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `CODEOWNERS`, issue templates. §17 repo tree updated to reflect the real layout. `global.json` uses `rollForward: latestMajor` (target stays net8.0; build SDK may roll forward). |
 | 1.1.3 | 2026-05-25 | **Live-save validation pass.** Verified the entire `%LOCALAPPDATA%\Icarus\Saved\` tree against the docs. Findings applied: (a) **Genetics** is the canonical tree name; `Genetics_*` is the RowName prefix; the earlier `Construction_Genetics` name does not appear in any observed save (deprecated everywhere). (b) §8.3 talent prefix→tree table replaced with the correct prefix→recipe-category mapping derived from the live save (200+ distinct prefixes; only `Genetics_*` happens to match its tree 1:1); editors must fetch the tree grouping from `D_Talents`, not infer from prefix. (c) Talent-clamp claim rewritten with empirical post-load distribution (~71% rank 1 / ~9% rank 2 / ~10% rank 3 / ~10% rank 4 across the 1067-row union) — most player talents are 1-rank binary unlocks, the "Rank 4" clamp wording was misleading. (d) §7.6 backup rotation table rewritten: `MetaInventory.json` and `AssociatedProspects_Slot_*.json` have **zero** game-managed backups; Loadouts uses `.<N>.backup`; recovery flow (§12.1) now explicitly falls back to IUUT's own `.iuut-backup-*` for no-rotation files. (e) §8.9 prospect filenames clarified as arbitrary strings (Olympus.json, PGH-5.json, Kiara&Joseph.json, GUID-named); discovery via `Prospects\*.json` glob, not pattern match. flags_*.dat byte layout independently confirmed via live-file hex dump. |
 | 1.1.2 | 2026-05-25 | **Correctness pass.** §8.11 `flags_*.dat` byte layout corrected — length prefix includes NUL; offsets/total now reconcile to 82 bytes. §8.9 ProspectBlob recompression spec added (raw deflate + `78 9C` header + big-endian Adler-32 trailer); recommend `ZLibStream` over `DeflateStream`. §12.1 recovery walker switched from fixed `.backup` / `.backup_<N>` list to glob `<File>.*backup*` + parse/mtime ranking (handles observed `.<N>.backup` Loadouts convention); F-021/F-022 updated. Clamp-on-load behaviour and `1067`-talent count flagged as single-observation / account-specific. Backup naming standardized on `<File>.iuut-backup-<YYYYMMDD-HHMMSS>` across all five docs. `Exotic_Uranium` MetaRow promoted to empirically-verified in field guide §3.2 (live save confirms Count=25). Field guide §3.2 Profile.json example synced to live save snapshot (Credits 5840, 12 UnlockedFlags including 93, 7 MetaResources). Game title standardized to **Icarus** (no "Surviving" prefix) across README, master doc, field guide, gameplan. |
