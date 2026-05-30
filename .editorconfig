@@ -114,6 +114,14 @@ end_of_line = lf
 [src/IUUT.Core/Models/*.cs]
 dotnet_diagnostic.CA1707.severity = none
 
+# ---------- IUUT.Core services ----------
+# Services are dependency-injected instances per master doc §9.2 (several gain
+# constructor dependencies as the app grows — e.g. SaveDiscoveryService gains the
+# Steam name resolver in WP-6). CA1822 ("member can be static") does not fit the
+# DI service pattern. Authority: .agent/CODE_STYLE.md §3.
+[src/IUUT.Core/Services/*.cs]
+dotnet_diagnostic.CA1822.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab
