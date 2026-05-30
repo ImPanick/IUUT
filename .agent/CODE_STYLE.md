@@ -35,15 +35,22 @@ Do not invent new top-level projects without amending master doc §17 first.
 
 ```
 IUUT.Core/
+├── Abstractions/    # Cross-cutting seams: IClock, IGuidProvider (+ System* impls)
+├── Io/              # Safe file I/O: SafeSaveWriter, BackupManager, IcarusJson
 ├── Models/          # POCOs mirroring save-file JSON
 ├── Parsers/         # JSON → Models
 ├── Serializers/     # Models → JSON
 ├── ProspectBlob/    # zlib + base64 + SHA-1 + Adler-32 + FProperty
-├── Services/        # SaveDiscoveryService, BackupManager, etc.
+├── Services/        # SaveDiscoveryService, HealthScanService, etc.
 ├── Presets/         # LazyMaxService, RecoveryService, CustomEditService
 ├── Validation/      # ValidationEngine
-└── Catalog/         # Catalog loaders (reads embedded resources from IUUT.Catalog)
+├── Catalog/         # Catalog loaders (reads embedded resources from IUUT.Catalog)
+├── Exceptions/      # IUUT.Core.Exceptions.*Exception types
+└── Logging/         # SafeFormatter + sanitization helpers (SECURITY_PROTOCOL §4)
 ```
+
+`BackupManager` is described as a "service" in master doc §9.2; it lives in `Io/`
+because its nature is file I/O. It is still registered/consumed as a service.
 
 ---
 
@@ -190,4 +197,5 @@ Avoid abbreviations except: `IUUT`, `UI`, `IO`, `JSON`, `XML`, `GUID`, `SHA1`, `
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 1.1.0 | 2026-05-25 | §1 `IUUT.Core` folder convention extended for WP-1: added `Abstractions/` (IClock, IGuidProvider) and `Io/` (SafeSaveWriter, BackupManager, IcarusJson); listed the already-documented `Exceptions/` and `Logging/` folders. Noted BackupManager lives in `Io/`. |
 | 1.0.0 | 2026-05-25 | Adopted. .NET 8 / WPF / STJ conventions established. |
