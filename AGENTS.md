@@ -45,8 +45,10 @@ Read these in order. Do not skip. Do not skim.
 | 11 | `.agent/AGENT_REGISTRY.md` | Who else has touched / may touch this repo |
 | 12 | `docs/IUUT-PROJECT-DOCUMENTATION.md` | Master spec — read sections relevant to your task |
 | 13 | `Icarus-Analysis.md` | Field guide — read sections relevant to your task |
+| 14 | `docs/DEVELOPMENT.md` | **Code tasks:** how to build, test, run, and follow the change lifecycle locally |
+| 15 | `docs/CICD.md` | **Code tasks:** the CI/CD pipeline, branch protection, and release process your work flows through |
 
-For doc-only tasks you may stop at row 13. For code tasks you read everything.
+For doc-only tasks you may stop at row 13. For code tasks you read everything (rows 14–15 are the operational runbooks).
 
 ---
 

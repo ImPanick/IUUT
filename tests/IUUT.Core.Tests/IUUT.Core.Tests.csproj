@@ -16,6 +16,11 @@
     <RootNamespace>IUUT.Core.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <!-- CA1707: test method names use the mandated MethodName_Condition_ExpectedResult
+         convention (underscores) per .agent/TESTING_CONTRACT.md §7 and CODE_STYLE §2.
+         Suppress here so the governance-required naming does not fight the analyzer.
+         CA1515: test classes are intentionally public for the xUnit discoverer. -->
+    <NoWarn>$(NoWarn);CA1707;CA1515</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

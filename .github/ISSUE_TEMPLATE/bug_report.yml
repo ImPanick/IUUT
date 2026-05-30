@@ -1,0 +1,59 @@
+name: "Bug report"
+description: "Something in IUUT behaves incorrectly."
+title: "[bug] <short summary>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before filing:** never paste a real SteamID64, character name, or personal
+        file path. Anonymize per `.agent/SECURITY_PROTOCOL.md` §3
+        (SteamID → `00000000000000000`, names → `Char1`/`TestUser`).
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: A clear description of the incorrect behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps. Include the relevant save-file shape if applicable (anonymized).
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: IUUT version / commit
+      placeholder: "e.g. v0.1.0 or commit ec5e5e0"
+    validations:
+      required: true
+  - type: input
+    id: game-version
+    attributes:
+      label: Icarus build / DataVersion
+      description: If save-related. The Mendel baseline is DataVersion 4.
+      placeholder: "e.g. Mendel (Week 220), DataVersion 4"
+  - type: input
+    id: os
+    attributes:
+      label: Windows version
+      placeholder: "e.g. Windows 11 23H2 x64"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / errors
+      description: Paste relevant log lines (scrub any PII first).
+      render: text

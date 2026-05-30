@@ -1,0 +1,54 @@
+name: "Governance question / escalation"
+description: "A contradiction, ambiguity, or scope question that must be resolved before work proceeds (see .agent/SCOPE_GUARDRAILS.md §3)."
+title: "[governance] <short summary>"
+labels: ["governance-question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when you hit an escalation trigger per `.agent/SCOPE_GUARDRAILS.md` §3
+        (spec contradiction, spec gap, save-behavior surprise, DataVersion change,
+        multi-agent conflict, constitution ambiguity, PII discovery, etc.).
+        **Do not guess and proceed** — that is the exact failure this process prevents.
+  - type: input
+    id: trigger
+    attributes:
+      label: Escalation trigger
+      description: Which SCOPE_GUARDRAILS §3 trigger applies?
+      placeholder: "e.g. Spec contradiction; Spec gap; DataVersion change"
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: What were you trying to do?
+      description: The task that surfaced this question.
+    validations:
+      required: true
+  - type: textarea
+    id: contradiction
+    attributes:
+      label: The contradiction / gap / surprise
+      description: Quote the doc sections or observations in tension. Cite by doc + section.
+    validations:
+      required: true
+  - type: textarea
+    id: interpretations
+    attributes:
+      label: Interpretations considered
+      description: List the two or more readings you considered, and (optionally) which you'd recommend and why.
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: Agent
+      description: Who is asking? (e.g. claude-code/2.1.149, human-handle)
+    validations:
+      required: true
+  - type: input
+    id: branch
+    attributes:
+      label: Blocked branch (if any)
+      description: The branch parked as wip-blocked awaiting this answer.
+      placeholder: "agent/<agent>/<task-slug>"

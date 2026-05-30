@@ -1,8 +1,8 @@
 {
-  "//": "Authority: docs/IUUT-PROJECT-DOCUMENTATION.md §6.1 (Locked decision: .NET 8). Amend via .agent/AMENDMENT_PROCESS.md §3 (Tier-0 — locked decision change).",
+  "//": "Locked decision Q1 (master doc §6.1) is the TARGET framework (net8.0), enforced per-project via <TargetFramework>. This pins the BUILD SDK floor at 8.0 but rolls forward across majors so a newer installed SDK (e.g. 9.x) can build the net8.0 output. CI pins 8.0.x explicitly via setup-dotnet for reproducibility. Changing the target framework (not this rollForward) is the Tier-0 change — see .agent/AMENDMENT_PROCESS.md §3.",
   "sdk": {
     "version": "8.0.100",
-    "rollForward": "latestFeature",
+    "rollForward": "latestMajor",
     "allowPrerelease": false
   }
 }

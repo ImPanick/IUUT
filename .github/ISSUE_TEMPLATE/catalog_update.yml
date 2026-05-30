@@ -1,0 +1,43 @@
+name: "Catalog update"
+description: "A game update changed D_* data (new talents, items, DataVersion bump)."
+title: "[catalog] <build name> — <short summary>"
+labels: ["catalog-update"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when the game ships an update that changes data tables IUUT mirrors
+        (`D_Talents`, `D_ItemsStatic`, `D_Accolades`, `D_BestiaryData`, `D_MetaResources`).
+        Per CONSTITUTION VI, IUUT round-trips unknown rows safely, but the embedded catalog
+        and any DataVersion-dependent behavior should be refreshed.
+  - type: input
+    id: build
+    attributes:
+      label: Game build
+      placeholder: "e.g. Week 221 — <name>"
+    validations:
+      required: true
+  - type: input
+    id: dataversion
+    attributes:
+      label: New Profile.DataVersion
+      description: Baseline is 4 (Mendel). Has it advanced?
+      placeholder: "e.g. 5"
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: Observed data changes
+      description: New/changed/removed RowNames, MetaRows, etc. Cite source (live save, Eureka Endeavors).
+    validations:
+      required: true
+  - type: checkboxes
+    id: revalidate
+    attributes:
+      label: Re-validation triggered (SCOPE_GUARDRAILS §3.5)
+      options:
+        - label: Re-fetch catalogs (scripts/fetch-catalogs.ps1)
+        - label: Re-verify clamp / write behavior against a live save on the new build
+        - label: Update Icarus-Analysis.md §15 known-versions table
+        - label: Update master doc DataVersion references

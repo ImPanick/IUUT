@@ -1,0 +1,37 @@
+# CODEOWNERS — review routing for IUUT
+#
+# These owners are auto-requested for review on matching paths. Combined with
+# branch protection (docs/CICD.md §4), this ensures the governance gates in
+# .agent/SCOPE_GUARDRAILS.md §2 and .agent/AMENDMENT_PROCESS.md cannot be bypassed.
+#
+# Syntax: <path-glob> <owner> [<owner>...]
+
+# Default owner for everything
+*                                   @ImPanick
+
+# --- Tier-0 / immutable: require the owner's eyes ---
+/.agent/CONSTITUTION.md             @ImPanick
+/.agent/AMENDMENT_PROCESS.md        @ImPanick
+/.agent/AGENT_REGISTRY.md           @ImPanick
+
+# --- Locked decisions live in the master doc §6.1; protect the whole spec ---
+/docs/IUUT-PROJECT-DOCUMENTATION.md @ImPanick
+
+# --- Save-format source of truth ---
+/Icarus-Analysis.md                 @ImPanick
+
+# --- Enforcement plumbing: weakening these is a governance violation ---
+/.githooks/                         @ImPanick
+/.github/workflows/                 @ImPanick
+/.github/PULL_REQUEST_TEMPLATE.md   @ImPanick
+/scripts/governance-lint.ps1        @ImPanick
+/scripts/install-hooks.ps1          @ImPanick
+
+# --- Build / solution invariants ---
+/Directory.Build.props              @ImPanick
+/global.json                        @ImPanick
+/IcarusUltimateUtilityTool.sln      @ImPanick
+/LICENSE                            @ImPanick
+
+# --- Canonical test fixtures (governance-tier per SCOPE_GUARDRAILS §2.9) ---
+/fixtures/canonical/                @ImPanick

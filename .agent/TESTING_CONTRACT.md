@@ -149,7 +149,7 @@ Avoid: `Test1`, `ItWorks`, `RoundTripTest` (which round trip?).
 
 ## §8. CI invocation
 
-`.github/workflows/governance-check.yml` covers governance; a sibling `.github/workflows/test.yml` (to be added when the first code lands) covers the test suite. CI failure on either workflow blocks merge.
+`.github/workflows/governance-check.yml` covers governance; `.github/workflows/build.yml` (Build & Test) covers restore → build → test → format. CI failure on either workflow blocks merge. See `docs/CICD.md` §1–§3 for the full pipeline.
 
 Local invocation:
 

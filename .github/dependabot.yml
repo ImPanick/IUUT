@@ -1,0 +1,47 @@
+# Dependabot configuration for IUUT.
+#
+# Governance note: any dependency *addition* (a brand-new package) is an
+# out-of-scope action requiring escalation per .agent/SCOPE_GUARDRAILS.md §2.6.
+# Dependabot only proposes *version bumps* of already-approved packages and
+# action versions — those are in scope. Review each bump against
+# .agent/SECURITY_PROTOCOL.md §8 (license / provenance) before merging.
+
+version: 2
+updates:
+  # NuGet packages across all projects
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "agent:dependabot"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      # Bundle low-risk patch/minor bumps to reduce PR churn
+      microsoft-extensions:
+        patterns:
+          - "Microsoft.Extensions.*"
+      test-stack:
+        patterns:
+          - "xunit*"
+          - "Microsoft.NET.Test.Sdk"
+          - "FluentAssertions"
+          - "coverlet.*"
+
+  # GitHub Actions used by our workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "ci"
+      - "agent:dependabot"
+    commit-message:
+      prefix: "chore(ci)"

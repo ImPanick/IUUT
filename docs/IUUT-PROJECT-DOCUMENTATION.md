@@ -6,7 +6,7 @@
 | --- | --- |
 | **Full name** | Icarus Ultimate Utility Tool |
 | **Short name / acronym** | IUUT |
-| **Document version** | 1.1.3 |
+| **Document version** | 1.2.0 |
 | **Status** | Pre-development — documentation-first phase |
 | **Target game** | Icarus (RocketWerkz, Unreal Engine 4, Windows) |
 | **Verified against** | Mendel update (Week 220, Feb 2026), `Profile.DataVersion` = 4 |
@@ -100,7 +100,7 @@ Throughout IUUT documentation and UI, these terms are distinct:
 | Term | Meaning | Example |
 | --- | --- | --- |
 | **Save profile** | The Steam account whose Icarus saves are being edited — **always shown by resolved PersonaName in UI** | **Joseph** |
-| **SteamID64** | On-disk folder name under `PlayerData\`; secondary label in UI only | `76561198042982784` |
+| **SteamID64** | On-disk folder name under `PlayerData\`; secondary label in UI only | `00000000000000000` |
 | **`Profile.json`** | Game save file (currencies, workshop unlocks) — not the same as "save profile" | File on disk |
 
 **UI rule:** Any label reading **Profile:** in wireframes and mockups refers to the **save profile** (PersonaName), never the raw SteamID64 alone.
@@ -341,7 +341,7 @@ flowchart TD
 
 | Layer | Behaviour |
 | --- | --- |
-| **Windows folder** | Stays `PlayerData\76561198042982784\` — **never renamed** |
+| **Windows folder** | Stays `PlayerData\00000000000000000\` — **never renamed** |
 | **Profile.json UserID** | Stays SteamID64 — **never edited** by resolver |
 | **IUUT UI labels** | Show `PersonaName` as primary label |
 | **IUUT logs / backups** | Include both PersonaName + SteamID64 for clarity |
@@ -366,7 +366,7 @@ Steam stores persona names for accounts on the machine:
 Example structure (Valve KeyValues format):
 
 ```text
-"76561198042982784"
+"00000000000000000"
 {
     "AccountName"   "josep"
     "PersonaName"   "Joseph"
@@ -411,7 +411,7 @@ Response field used: `response.players[0].personaname`
 {
   "version": 1,
   "entries": {
-    "76561198042982784": {
+    "00000000000000000": {
       "personaName": "Joseph",
       "resolvedAt": "2026-05-25T14:30:00Z",
       "source": "steam-api"
@@ -431,14 +431,14 @@ Response field used: `response.players[0].personaname`
 
 ```text
 Joseph                          ← primary (PersonaName)
-76561198042982784 · 3 chars     ← secondary (SteamID64 + metadata)
+00000000000000000 · 3 chars     ← secondary (SteamID64 + metadata)
 ```
 
 **Home screen header:**
 
 ```text
 Profile:  Joseph  [▼]
-          76561198042982784
+          00000000000000000
 ```
 
 **Offline / unresolved states:**
@@ -448,7 +448,7 @@ Profile:  Joseph  [▼]
 | Cached name available | PersonaName |
 | Local vdf only | PersonaName (source: local) |
 | API success | PersonaName (source: online) |
-| No internet, no cache | `76561198042982784` + tooltip *"Connect to resolve Steam name"* |
+| No internet, no cache | `00000000000000000` + tooltip *"Connect to resolve Steam name"* |
 | Private profile | SteamID64 + *"Private profile"* |
 
 ##### Settings (Steam resolver)
@@ -562,7 +562,7 @@ flowchart TD
 
 ```json
 {
-    "UserID": "76561198042982784",
+    "UserID": "00000000000000000",
     "MetaResources": [
         { "MetaRow": "Refund", "Count": 31 },
         { "MetaRow": "Credits", "Count": 5840 },
@@ -1095,7 +1095,7 @@ flowchart TD
 ├──────────────────────────────────────────────────────────────────┤
 │  Save root:  C:\Users\...\AppData\Local\Icarus\Saved      [Browse]│
 │  Profile:    Joseph                                    [▼]         │
-│              76561198042982784 · 3 characters                    │
+│              00000000000000000 · 3 characters                    │
 │  Health:     ● 12/12 JSON OK                                     │
 │  Game:       ○ Not running (safest)  — or —  ⚠ Main Menu only   │
 │  Steam:      ☁ Names resolved online  — or —  📴 Offline (cached)  │
@@ -1513,32 +1513,45 @@ Run before each release or when `Profile.DataVersion` changes:
 IcarusUltimateUtilityTool/
 ├── README.md
 ├── LICENSE
+├── CONTRIBUTING.md  SECURITY.md  CHANGELOG.md
+├── AGENTS.md  CLAUDE.md  .cursorrules        ← multi-agent governance entry points
+├── .cursor/rules/agents.mdc  .antigravity/rules.md
+├── .agent/                                   ← binding governance contract (CONSTITUTION etc.)
+├── .github/
+│   ├── workflows/governance-check.yml        ← CI: PR body + trailers + PII lint
+│   ├── workflows/build.yml                   ← CI: restore/build/test/format
+│   ├── PULL_REQUEST_TEMPLATE.md
+│   ├── ISSUE_TEMPLATE/                        ← bug, feature, governance-question, catalog-update
+│   ├── CODEOWNERS
+│   └── dependabot.yml
+├── .githooks/commit-msg                      ← trailer-enforcing git hook
+├── .editorconfig  Directory.Build.props  global.json
 ├── IcarusUltimateUtilityTool.sln
 ├── docs/
-│   └── IUUT-PROJECT-DOCUMENTATION.md      ← This document
+│   ├── IUUT-PROJECT-DOCUMENTATION.md          ← This document (master spec)
+│   ├── DEVELOPMENT.md                         ← local dev runbook
+│   ├── CICD.md                                ← pipeline, branch protection, releases
+│   └── *.plan.md                              ← POC + legacy plans
+├── Icarus-Analysis.md                         ← save-format field guide
 ├── src/
 │   ├── IUUT.Core/
-│   │   ├── Models/
-│   │   ├── Parsers/
-│   │   ├── Serializers/
-│   │   ├── Services/
-│   │   │   └── SteamProfileResolverService.cs
-│   │   ├── Presets/
-│   │   ├── Validation/
-│   │   └── ProspectBlob/
+│   │   ├── Models/  Parsers/  Serializers/
+│   │   ├── Services/        (incl. SteamProfileResolverService)
+│   │   ├── Presets/  Validation/  ProspectBlob/
+│   │   ├── Catalog/  Exceptions/  Logging/
 │   ├── IUUT.Catalog/
 │   │   └── Embedded/
 │   ├── IUUT.App/
-│   │   ├── Views/
-│   │   ├── ViewModels/
-│   │   ├── Controls/
-│   │   └── App.xaml
+│   │   ├── Views/  ViewModels/  Controls/
+│   │   ├── App.xaml  MainWindow.xaml  app.manifest
 │   └── IUUT.Cli/
 ├── tests/
-│   └── IUUT.Core.Tests/
-├── catalogs/                               ← Generated, embedded at build
-├── fixtures/                               ← Anonymized test saves
+│   ├── IUUT.Core.Tests/   (Unit/ Integration/ Regression/ Snapshot/)
+│   └── MANUAL_CHECKLIST.md
+├── catalogs/                                  ← Generated, embedded at build
+├── fixtures/                                  ← Anonymized test saves (13 category folders)
 └── scripts/
+    ├── governance-lint.ps1  install-hooks.ps1
     ├── fetch-catalogs.ps1
     └── publish-release.ps1
 ```
@@ -1687,6 +1700,7 @@ Re-fetch catalogs when DataVersion advances.
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.2.0 | 2026-05-25 | **Ground-breaking: governance + scaffold + DevOps.** Repository initialized and pushed to github.com/ImPanick/IUUT. Added the multi-agent governance contract (`AGENTS.md`, `CLAUDE.md`, agent redirectors, `.agent/` with CONSTITUTION + 10 supporting docs) and its enforcement stack (`commit-msg` hook, `governance-lint.ps1`, PR template, Governance Check CI). Added the .NET 8 solution scaffold per §17 (IUUT.Core/Catalog/App/Cli + IUUT.Core.Tests) — builds green, smoke test passes, `dotnet format` clean. Added DevOps groundwork: `docs/DEVELOPMENT.md` + `docs/CICD.md` runbooks, Build & Test CI (`build.yml`), Dependabot, `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md`, `CODEOWNERS`, issue templates. §17 repo tree updated to reflect the real layout. `global.json` uses `rollForward: latestMajor` (target stays net8.0; build SDK may roll forward). |
 | 1.1.3 | 2026-05-25 | **Live-save validation pass.** Verified the entire `%LOCALAPPDATA%\Icarus\Saved\` tree against the docs. Findings applied: (a) **Genetics** is the canonical tree name; `Genetics_*` is the RowName prefix; the earlier `Construction_Genetics` name does not appear in any observed save (deprecated everywhere). (b) §8.3 talent prefix→tree table replaced with the correct prefix→recipe-category mapping derived from the live save (200+ distinct prefixes; only `Genetics_*` happens to match its tree 1:1); editors must fetch the tree grouping from `D_Talents`, not infer from prefix. (c) Talent-clamp claim rewritten with empirical post-load distribution (~71% rank 1 / ~9% rank 2 / ~10% rank 3 / ~10% rank 4 across the 1067-row union) — most player talents are 1-rank binary unlocks, the "Rank 4" clamp wording was misleading. (d) §7.6 backup rotation table rewritten: `MetaInventory.json` and `AssociatedProspects_Slot_*.json` have **zero** game-managed backups; Loadouts uses `.<N>.backup`; recovery flow (§12.1) now explicitly falls back to IUUT's own `.iuut-backup-*` for no-rotation files. (e) §8.9 prospect filenames clarified as arbitrary strings (Olympus.json, PGH-5.json, Kiara&Joseph.json, GUID-named); discovery via `Prospects\*.json` glob, not pattern match. flags_*.dat byte layout independently confirmed via live-file hex dump. |
 | 1.1.2 | 2026-05-25 | **Correctness pass.** §8.11 `flags_*.dat` byte layout corrected — length prefix includes NUL; offsets/total now reconcile to 82 bytes. §8.9 ProspectBlob recompression spec added (raw deflate + `78 9C` header + big-endian Adler-32 trailer); recommend `ZLibStream` over `DeflateStream`. §12.1 recovery walker switched from fixed `.backup` / `.backup_<N>` list to glob `<File>.*backup*` + parse/mtime ranking (handles observed `.<N>.backup` Loadouts convention); F-021/F-022 updated. Clamp-on-load behaviour and `1067`-talent count flagged as single-observation / account-specific. Backup naming standardized on `<File>.iuut-backup-<YYYYMMDD-HHMMSS>` across all five docs. `Exotic_Uranium` MetaRow promoted to empirically-verified in field guide §3.2 (live save confirms Count=25). Field guide §3.2 Profile.json example synced to live save snapshot (Credits 5840, 12 UnlockedFlags including 93, 7 MetaResources). Game title standardized to **Icarus** (no "Surviving" prefix) across README, master doc, field guide, gameplan. |
 | 1.1.1 | 2026-05-25 | Terminology §2.4; all UI/wireframe **Profile:** labels use PersonaName. Save profile ≠ Profile.json. |

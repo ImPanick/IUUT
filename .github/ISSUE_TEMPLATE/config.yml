@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Read the contract first
+    url: https://github.com/ImPanick/IUUT/blob/main/AGENTS.md
+    about: IUUT is a governed multi-agent repo. Read AGENTS.md and .agent/ before filing.
+  - name: Security / privacy report
+    url: https://github.com/ImPanick/IUUT/blob/main/SECURITY.md
+    about: Do NOT open a public issue for a vulnerability or leaked PII. Follow SECURITY.md.
+  - name: Developer setup & build
+    url: https://github.com/ImPanick/IUUT/blob/main/docs/DEVELOPMENT.md
+    about: Prerequisites, build/test/run commands, and the change lifecycle.

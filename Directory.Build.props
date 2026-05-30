@@ -17,7 +17,11 @@
     <WarningsAsErrors />
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
-    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+    <!-- 'Recommended' = the curated, high-signal analyzer set. 'AllEnabledByDefault'
+         (every rule incl. localization/CA1303, CA2007 everywhere, etc.) was rejected
+         as too noisy for breaking ground; revisit per .agent/AMENDMENT_PROCESS.md if a
+         stricter bar is wanted later. TreatWarningsAsErrors below keeps the gate hard. -->
+    <AnalysisMode>Recommended</AnalysisMode>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>

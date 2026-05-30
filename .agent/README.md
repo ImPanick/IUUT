@@ -40,8 +40,13 @@ If you are a human: this is the operating system for multi-agent work on IUUT. T
 | --- | --- | --- |
 | Commit-time | `commit-msg` hook validates trailers | `.githooks/commit-msg` |
 | Pre-PR | Governance lint scans for PII + style + completeness | `scripts/governance-lint.ps1` |
-| CI | Re-runs lint + validates PR body | `.github/workflows/governance-check.yml` |
+| CI (governance) | Re-runs lint + validates PR body + commit trailers | `.github/workflows/governance-check.yml` |
+| CI (build) | Restore → build (warnings-as-errors) → test → format | `.github/workflows/build.yml` |
+| Review routing | Owner auto-requested on governance + locked-decision paths | `.github/CODEOWNERS` |
 | Review | Human required for CONSTITUTION + locked-decision changes | `AMENDMENT_PROCESS.md` |
+
+**Operational runbooks** (how to actually build/test/release — reference, not contract):
+`docs/DEVELOPMENT.md` (local dev) and `docs/CICD.md` (pipeline + branch protection + releases).
 
 To wire the local hook after cloning:
 

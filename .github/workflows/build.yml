@@ -1,0 +1,67 @@
+name: Build & Test
+
+# Builds and tests the IUUT solution on every PR and every push to main.
+# Runs on windows-latest because IUUT.App targets net8.0-windows (WPF).
+#
+# Gates (all must pass — see .agent/DEFINITION_OF_DONE.md §1, §3 and
+# .agent/CODE_STYLE.md §14):
+#   1. Restore + build with TreatWarningsAsErrors (analyzers gate via Directory.Build.props)
+#   2. dotnet test (xUnit)
+#   3. dotnet format --verify-no-changes (style gate)
+#
+# The target framework is net8.0 (locked decision Q1, master doc §6.1). We
+# install the .NET 8 SDK explicitly so the net8.0 targeting pack is present;
+# global.json rollForward=latestMajor lets a newer runner SDK build it too.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+  DOTNET_NOLOGO: "1"
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "1"
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    name: Build, test, format
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore IcarusUltimateUtilityTool.sln
+
+      - name: Build (Release, warnings as errors)
+        run: dotnet build IcarusUltimateUtilityTool.sln -c Release --no-restore
+
+      - name: Test
+        run: dotnet test IcarusUltimateUtilityTool.sln -c Release --no-build --logger "console;verbosity=minimal" --collect:"XPlat Code Coverage"
+
+      - name: Verify formatting (dotnet format)
+        run: dotnet format IcarusUltimateUtilityTool.sln --verify-no-changes --no-restore
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: "**/TestResults/**/coverage.cobertura.xml"
+          if-no-files-found: ignore
+          retention-days: 14

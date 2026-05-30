@@ -1,0 +1,42 @@
+name: "Feature request"
+description: "Propose a new capability or change. Note: features must trace to the spec."
+title: "[feature] <short summary>"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Per `.agent/CONSTITUTION.md` IV (Honest scope), IUUT does not implement features
+        absent from the spec. A feature request is the first step toward a **spec change**.
+        If accepted, it becomes a `docs/IUUT-PROJECT-DOCUMENTATION.md` amendment, then code.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What user problem does this solve? Which persona (master doc §5) does it serve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed capability
+      description: What should IUUT do? Be concrete.
+    validations:
+      required: true
+  - type: input
+    id: spec-area
+    attributes:
+      label: Relevant spec area
+      description: Which master-doc section would this extend or amend?
+      placeholder: "e.g. §11 Feature specification; §8 Save data model"
+  - type: textarea
+    id: scope-check
+    attributes:
+      label: Scope / safety check
+      description: |
+        Does this require anything in SCOPE_GUARDRAILS §2 (network call, telemetry, auth,
+        new dependency, save-write-protocol change)? If so, say so — those need human approval.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
