@@ -1,0 +1,16 @@
+{
+	"CompletedAccolades": [
+		{
+			"Accolade": { "RowName": "TutorialCompleted", "DataTableName": "D_Accolades" },
+			"TimeCompleted": "2020.01.01-00.00.00",
+			"ProspectID": ""
+		},
+		{
+			"Accolade": { "RowName": "FirstProspect", "DataTableName": "D_Accolades" },
+			"TimeCompleted": "2020.01.02-12.30.00",
+			"ProspectID": "00000000000000000000000000000000"
+		}
+	],
+	"PlayerTrackers": { "ExampleCounter": 5, "AnotherCounter": 0 },
+	"PlayerTaskListTrackers": { "ExampleTask": 1 }
+}

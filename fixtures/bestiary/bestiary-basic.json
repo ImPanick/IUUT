@@ -1,0 +1,21 @@
+{
+	"BestiaryTracking": [
+		{
+			"BestiaryGroup": { "RowName": "Forest_Wolf", "DataTableName": "D_BestiaryData" },
+			"NumPoints": 1046
+		},
+		{
+			"BestiaryGroup": { "RowName": "Arctic_Moa", "DataTableName": "D_BestiaryData" },
+			"NumPoints": 50
+		}
+	],
+	"FishTracking": [
+		{
+			"FishRow": { "RowName": "Fish_Example", "DataTableName": "D_FishData" },
+			"MaxQuality": 3,
+			"MaxWeight": 1200,
+			"MaxLength": 45,
+			"CaughtCount": 7
+		}
+	]
+}
