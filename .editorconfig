@@ -106,6 +106,14 @@ end_of_line = lf
 indent_size = 2
 end_of_line = lf
 
+# ---------- IUUT.Core save-mirroring DTOs ----------
+# Models mirror the game's JSON keys verbatim, which contain underscores
+# (e.g. XP_Debt, Customization_Head, Customization_HairColor). CA1707
+# ("identifiers should not contain underscores") does not apply to these
+# serialization DTOs. Authority: .agent/CODE_STYLE.md §5.
+[src/IUUT.Core/Models/*.cs]
+dotnet_diagnostic.CA1707.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab
