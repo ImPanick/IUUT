@@ -156,13 +156,14 @@ foreach ($f in $files) {
             }
         }
 
-        # 3. BOM-emitting encoder
-        foreach ($p in $bomEncoderPatterns) {
-            if ($line -match $p) {
-                # Skip the lint script itself, the field guide, and governance docs
-                # that explicitly cite the banned pattern as a counter-example.
-                $isCounterExample = ($f -match '(?i)Icarus-Analysis\.md|\.agent[/\\].+\.md|docs[/\\].+\.md|AGENTS\.md|CLAUDE\.md|scripts[/\\]governance-lint\.ps1|max-icarus-characters_47df3b52\.plan\.md')
-                if (-not $isCounterExample) {
+        # 3. BOM-emitting encoder — applies to CODE only (.cs / .ps1 / .psm1).
+        #    Markdown and other docs legitimately cite the banned pattern as a
+        #    "don't do this" counter-example, so they are exempt. The lint script
+        #    itself documents the pattern and is also exempt.
+        $isCodeFile = ($ext -in @('.cs', '.ps1', '.psm1')) -and ($f -notmatch '(?i)scripts[/\\]governance-lint\.ps1')
+        if ($isCodeFile) {
+            foreach ($p in $bomEncoderPatterns) {
+                if ($line -match $p) {
                     Add-Violation $f $lineNo 'BOM-ENCODER' "BOM-emitting UTF-8 encoder detected. Use 'new UTF8Encoding(false)' or '(New-Object System.Text.UTF8Encoding `$false)' per Icarus-Analysis §10."
                 }
             }
