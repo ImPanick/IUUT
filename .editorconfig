@@ -147,6 +147,12 @@ dotnet_diagnostic.CA1822.severity = none
 [src/IUUT.Core/Editing/*.cs]
 dotnet_diagnostic.CA1822.severity = none
 
+# ---------- IUUT.Core game-tuning subsystem ----------
+# Same DI-service rationale: GameTuningService / GameTuningCatalog (Engine.ini tuning, Phase 7)
+# are injected instances even when an individual method is stateless.
+[src/IUUT.Core/GameTuning/*.cs]
+dotnet_diagnostic.CA1822.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab
