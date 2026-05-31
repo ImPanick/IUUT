@@ -13,6 +13,55 @@
 
 ---
 
+## 0. Resume point (live build status)
+
+> Updated **2026-05-31** after WP-11. This block is the cold-start handoff: a new
+> agent (or a compacted session) resumes from here without prior chat context.
+> Keep it current — overwrite it at the end of each WP.
+
+**Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
+(owner-authorized, pre-critical; no branch protection yet). Latest: `59dc191`.
+
+**Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog). Source projects build clean;
+**127 tests** pass. Roadmap order continues below (§4).
+
+**Next: WP-12 — `LazyMaxService`** (headline feature; ports `icarus_max.ps1`):
+- Characters: talents = **runtime account-union @ max** + 16 Genetics, `XP ≥ 80M`,
+  `XP_Debt = 0`, revive. (Union is computed from the live save at runtime — does **not**
+  need the catalog.)
+- Profile: max all `MetaResources`; unlock all `Workshop_*`/`Prospect_*` (from the
+  talents catalog). Accolades: append all catalog rows not present. Bestiary: max
+  `NumPoints` per catalog group.
+- Mutations go through `ValidationEngine` (gate) → `SafeSaveWriter` (atomic).
+
+**The ritual (every WP, before commit):** `dotnet build -c Release` (0 warn — warnings
+are errors) → `dotnet test` → `dotnet format --verify-no-changes` (exit 0) →
+`pwsh scripts/governance-lint.ps1 -StagedOnly` → commit with the three trailers
+(`Agent:` / `Consulted:` / `Co-Authored-By:`, enforced by the commit-msg hook) →
+`git push origin dev`.
+
+**Hard-won gotchas (each cost a red build this session):**
+- `dotnet build` does **not** enforce IDE1006 naming; `dotnet format` does. Private
+  `const` → PascalCase; private `static readonly` → `_camelCase` (CODE_STYLE §2).
+- XML-doc `<see cref>` to an overloaded method → CS0419 (→ error). Use `Method()`.
+- `.csproj` XML comments cannot contain `--` (MSB4025).
+- Model classes mirror game JSON keys verbatim (underscores fine — CA1707 exempted for
+  `src/IUUT.Core/Models/*.cs` in `.editorconfig`). Services are CA1822-exempt. SHA-1
+  interop hashing needs a `CA5350` pragma + justification (game format, not security).
+- Embedded-resource file names must avoid `-` (use `metaresources.json`).
+
+**Data / environment:** SDK is .NET 9.x building `net8.0` (`global.json`
+`rollForward: latestMajor`). Catalogs seeded from a real save (`items.json` partial — only
+owned items; enrich via `scripts/fetch-catalogs.ps1` before the Phase 4 stash UI).
+**Never commit real save data / Steam IDs / persona names / personal paths** (CONSTITUTION
+VII). The reference save was analyzed only under `%TEMP%\iuut-scratch` (outside the repo);
+fixtures in the repo are anonymized.
+
+**Test doubles available:** `TempDir`, `FixedClock`, `Fixtures`, `ProspectBlobFactory`,
+plus fakes — reuse them for WP-12.
+
+---
+
 ## 1. The shape of the work
 
 ```
