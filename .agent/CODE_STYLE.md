@@ -64,7 +64,8 @@ because its nature is file I/O. It is still registered/consumed as a service.
 | Public methods | PascalCase | `LoadProfile` |
 | Async methods | PascalCase + `Async` suffix | `ResolvePersonaNameAsync` |
 | Private fields | `_camelCase` | `_backupManager` |
-| Constants | PascalCase | `DefaultBackupRoot` |
+| Private **static readonly** fields | `_camelCase` (same as instance fields — **not** PascalCase) | `_utf8NoBom`, `_emptyMap` |
+| Constants (`const`) | PascalCase | `DefaultBackupRoot` |
 | Local variables | camelCase | `var profilePath = ...` |
 | Test methods | `MethodName_Condition_ExpectedResult` | `ParseProfile_WithUnknownMetaRow_PreservesKey` |
 | Test classes | `<ClassUnderTest>Tests` | `ProfileParserTests` |
@@ -197,6 +198,7 @@ Avoid abbreviations except: `IUUT`, `UI`, `IO`, `JSON`, `XML`, `GUID`, `SHA1`, `
 
 | Version | Date | Change |
 | --- | --- | --- |
+| 1.1.2 | 2026-05-30 | §2 naming table: made explicit that private **static readonly** fields use `_camelCase` (not PascalCase), matching `.editorconfig`. Prevents the recurring IDE1006 mismatch. |
 | 1.1.1 | 2026-05-30 | §5 indentation note corrected to net8.0 reality: tab indentation needs .NET 9's `IndentCharacter`, so IUUT emits 2-space (game tolerates spaces, master §7.7) via `IUUT.Core.Io.IcarusJson` — an accepted, documented deviation. (Alignment pass on WP-0..2.) |
 | 1.1.0 | 2026-05-25 | §1 `IUUT.Core` folder convention extended for WP-1: added `Abstractions/` (IClock, IGuidProvider) and `Io/` (SafeSaveWriter, BackupManager, IcarusJson); listed the already-documented `Exceptions/` and `Logging/` folders. Noted BackupManager lives in `Io/`. |
 | 1.0.0 | 2026-05-25 | Adopted. .NET 8 / WPF / STJ conventions established. |
