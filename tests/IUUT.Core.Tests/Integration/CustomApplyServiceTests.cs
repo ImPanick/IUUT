@@ -165,5 +165,27 @@ public sealed class CustomApplyServiceTests : IDisposable
         plan.Validation.Errors.Should().Contain(i => i.Code == "profile-userid-mismatch");
     }
 
+    [Fact]
+    public async Task PreviewBundleAsync_CharacterEditViaService_MarksOnlyCharactersChanged_AndApplies()
+    {
+        var characters = new CharacterEditService();
+        var bundle = await _service.LoadAsync(_dir);
+        var character = bundle!.Characters.Single();
+        characters.SetExperience(character, 80_000_000);
+        characters.SetTalentRank(character, "Survival_Tier1", 4);
+
+        var plan = await _service.PreviewBundleAsync(_dir, bundle);
+
+        plan.CanApply.Should().BeTrue();
+        plan.ChangedFiles.Should().ContainSingle().Which.FileName.Should().Be("Characters.json");
+
+        var report = await _service.ApplyAsync(plan);
+        report.Applied.Should().BeTrue();
+
+        var reloaded = CharactersParser.Parse(Read("Characters.json")).Single();
+        reloaded.XP.Should().Be(80_000_000);
+        reloaded.Talents.Should().Contain(t => t.RowName == "Survival_Tier1" && t.Rank == 4);
+    }
+
     public void Dispose() => _temp.Dispose();
 }

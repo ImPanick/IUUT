@@ -12,6 +12,9 @@
         <DataTemplate DataType="{x:Type vm:AccountEditorViewModel}">
             <views:AccountEditorView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CharacterEditorViewModel}">
+            <views:CharacterEditorView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:PlaceholderEditorViewModel}">
             <views:PlaceholderEditorView />
         </DataTemplate>

@@ -74,9 +74,10 @@ public partial class App : Application
         services.AddSingleton<RecoveryAdvisor>();
         services.AddSingleton<RecoveryService>();
 
-        // --- Custom editor pipeline (master §10.3, §11.6) ---------------------
+        // --- Custom editor pipeline (master §10.3, §11.5, §11.6) --------------
         services.AddSingleton<CustomApplyService>();
         services.AddSingleton<AccountEditService>();
+        services.AddSingleton<CharacterEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

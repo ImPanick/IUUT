@@ -1,0 +1,168 @@
+<UserControl x:Class="IUUT.App.Views.CharacterEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!-- Characters & Talents editor (master §11.5). DataContext = CharacterEditorViewModel. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header + character selector -->
+        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="🧬  Characters &amp; Talents" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Edit XP · debt · revive · rename and talent ranks for “{0}”.}"
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                </StackPanel>
+                <Button Grid.Row="0" Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="12,4" />
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock Text="CHARACTER" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <ComboBox MinWidth="260" ItemsSource="{Binding Characters}"
+                              SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
+                              DisplayMemberPath="DisplayLabel" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Detail: fields (left) + talents (right) -->
+        <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Grid.Style>
+                <Style TargetType="Grid">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasSelection}" Value="False">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Grid.Style>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Fields -->
+            <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="18" Margin="0,0,12,0"
+                    DataContext="{Binding SelectedCharacter}">
+                <StackPanel>
+                    <TextBlock Text="NAME" Style="{StaticResource LabelText}" />
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="0,4,0,12" />
+
+                    <TextBlock Text="EXPERIENCE" Style="{StaticResource LabelText}" />
+                    <TextBox Text="{Binding Experience, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="0,4,0,12" />
+
+                    <TextBlock Text="XP DEBT" Style="{StaticResource LabelText}" />
+                    <TextBox Text="{Binding Debt, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="0,4,0,12" />
+
+                    <CheckBox Content="Dead (uncheck to revive)" IsChecked="{Binding IsDead, Mode=TwoWay}" Margin="0,0,0,6" />
+                    <CheckBox Content="Abandoned in prospect" IsChecked="{Binding IsAbandoned, Mode=TwoWay}" Margin="0,0,0,12" />
+
+                    <Border Padding="10" CornerRadius="4" Background="{StaticResource DataBackdropBrush}">
+                        <StackPanel>
+                            <TextBlock Style="{StaticResource MonoText}" Text="{Binding ChrSlot, StringFormat=Slot: {0}}" />
+                            <TextBlock Style="{StaticResource MonoText}" Text="{Binding Location, StringFormat=Location: {0}}" TextTrimming="CharacterEllipsis" Margin="0,2,0,0" />
+                            <TextBlock Style="{StaticResource MonoText}" Text="{Binding LastProspectId, StringFormat=Prospect: {0}}" TextTrimming="CharacterEllipsis" Margin="0,2,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,14,0,0">
+                        <Button Content="Max XP" Command="{Binding DataContext.MaxExperienceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Padding="12,4" Margin="0,0,6,0" />
+                        <Button Content="Max talents" Command="{Binding DataContext.MaxTalentsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                Padding="12,4" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Talents -->
+            <Border Grid.Column="1" Style="{StaticResource GlassCard}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Style="{StaticResource LabelText}" Margin="4,2,0,8"
+                               DataContext="{Binding SelectedCharacter}"
+                               Text="{Binding TalentCount, StringFormat=TALENTS ({0})}" />
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding SelectedCharacter.Talents}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,5" Padding="12,7" CornerRadius="4"
+                                            Background="{StaticResource DataBackdropBrush}"
+                                            BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                                <TextBlock Text="{Binding RowName}" Style="{StaticResource MonoText}" Margin="0,1,0,0" />
+                                            </StackPanel>
+                                            <Slider Grid.Column="1" Width="130" VerticalAlignment="Center"
+                                                    Minimum="0" Maximum="4" TickFrequency="1" IsSnapToTickEnabled="True"
+                                                    Value="{Binding Rank, Mode=TwoWay}" />
+                                            <TextBlock Grid.Column="2" Width="20" Margin="10,0,0,0" VerticalAlignment="Center"
+                                                       TextAlignment="Center" Style="{StaticResource BodyText}"
+                                                       Text="{Binding Rank}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Empty state -->
+        <Border Grid.Row="1" Margin="0,12,0,0" Padding="24">
+            <Border.Style>
+                <Style TargetType="Border" BasedOn="{StaticResource GlassCard}">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasSelection}" Value="False">
+                            <Setter Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="No character selected" Style="{StaticResource BodyText}" HorizontalAlignment="Center" />
+                <TextBlock Text="Pick a save profile with characters, then choose one above."
+                           Style="{StaticResource MutedText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,4,0,0" />
+            </StackPanel>
+        </Border>
+
+        <!-- Status + apply -->
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
+                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
+            <Button Grid.Column="1" Content="💾  Apply character changes" Click="OnApply"
+                    Padding="18,8" FontWeight="SemiBold" />
+        </Grid>
+    </Grid>
+</UserControl>
