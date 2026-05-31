@@ -15,24 +15,36 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-11. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-12. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: `59dc191`.
+(owner-authorized, pre-critical; no branch protection yet). Latest: `<bump after push>`.
 
-**Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog). Source projects build clean;
-**127 tests** pass. Roadmap order continues below (§4).
+**Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`).
+Source projects build clean; **141 tests** pass. Roadmap order continues below (§4).
 
-**Next: WP-12 — `LazyMaxService`** (headline feature; ports `icarus_max.ps1`):
-- Characters: talents = **runtime account-union @ max** + 16 Genetics, `XP ≥ 80M`,
-  `XP_Debt = 0`, revive. (Union is computed from the live save at runtime — does **not**
-  need the catalog.)
-- Profile: max all `MetaResources`; unlock all `Workshop_*`/`Prospect_*` (from the
-  talents catalog). Accolades: append all catalog rows not present. Bestiary: max
-  `NumPoints` per catalog group.
-- Mutations go through `ValidationEngine` (gate) → `SafeSaveWriter` (atomic).
+**WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
+pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`
+(gate) → `SafeSaveWriter` (atomic). Public consts are the maxing knobs:
+`MaxTalentRank=4`, `MinMaxedExperience=80_000_000`, `WorkshopUnlockRank=1`,
+`MaxedMetaResourceCount=1_000_000`, `MaxedBestiaryPoints=10_000`. Characters: runtime
+talent union (excl. `*Reroute*`) + 16 Genetics @ 4, `XP≥80M`, `XP_Debt=0`,
+`IsDead/IsAbandoned=false`. Profile: currencies `Math.Max`→1M + 7 catalog rows, all
+`Workshop_*`/`Prospect_*` (310) @ rank 1. Accolades: append 212 missing (`IClock`
+timestamp `yyyy.MM.dd-HH.mm.ss`, empty ProspectID). Bestiary: `NumPoints`→10k + 78
+catalog groups, `FishTracking` untouched. Existing records mutated in place so
+`AdditionalData` round-trips (CONSTITUTION VI). The currency/bestiary magnitudes are
+engineering picks within the docs' "high value, game clamps" latitude — change the
+consts if a different number is wanted.
+
+**Next: WP-13 — WPF Home shell** (`IUUT.App`): the app window + navigation + the Home
+screen that surfaces discovered saves (`SaveDiscoveryService`), Steam display names
+(`SteamProfileResolverService`), game-running banner (`GameProcessDetector`), and the
+Lazy Max entry point. Wires DI: `AppPaths` → `GameCatalogs.LoadEmbedded()` →
+`LazyMaxService` → (WP-14) apply pipeline. No save mutation lands until WP-14
+(Preview-diff/Apply) wires `MaxAll` through `ValidationEngine` + `SafeSaveWriter`.
 
 **The ritual (every WP, before commit):** `dotnet build -c Release` (0 warn — warnings
 are errors) → `dotnet test` → `dotnet format --verify-no-changes` (exit 0) →
