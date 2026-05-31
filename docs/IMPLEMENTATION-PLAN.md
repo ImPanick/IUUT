@@ -46,6 +46,18 @@ Lazy Max entry point. Wires DI: `AppPaths` → `GameCatalogs.LoadEmbedded()` →
 `LazyMaxService` → (WP-14) apply pipeline. No save mutation lands until WP-14
 (Preview-diff/Apply) wires `MaxAll` through `ValidationEngine` + `SafeSaveWriter`.
 
+**Parked decisions (owner notes, 2026-05-31):**
+- **UI presentation is deliberately provisional.** WP-13 builds a *functional* shell that
+  proves the wiring (DI + a tested Core `HomeService` feeding a thin ViewModel); the
+  *exact* visual presentation of the app is one of the **last** things we settle (Phase 6
+  polish, master §10). Don't over-invest in XAML styling now — keep logic in Core so the
+  view can be reskinned freely later.
+- **"Engine Mods / Buff FPS" is a tracked future feature** (post-v1.0, master §20.1):
+  on/off toggle cards that merge/remove owned `[/script/...]` cvar fragments in
+  `Engine.ini`, with duplicate-cvar de-dup, seeded from a user-run live-client cvar dump
+  (`scripts/dump-cvars.ps1`), backed by its own INI backup/atomic/rollback flow. No WP
+  allocated yet; do not start until the v1 save-editing scope is complete.
+
 **The ritual (every WP, before commit):** `dotnet build -c Release` (0 warn — warnings
 are errors) → `dotnet test` → `dotnet format --verify-no-changes` (exit 0) →
 `pwsh scripts/governance-lint.ps1 -StagedOnly` → commit with the three trailers

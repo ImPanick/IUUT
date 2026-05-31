@@ -1738,15 +1738,52 @@ tagged commit — no tampering, no substitution.
 
 ## 20. Future scope
 
-### 20.1 Engine Mods tab (`Config\WindowsNoEditor\`)
+### 20.1 Engine Mods tab (`Config\WindowsNoEditor\Engine.ini`)
 
-**Motivation:** QoL tweaks like disabling swamp zone fog.
+**Motivation:** Performance + QoL tweaks — the headline being **"Buff FPS"** (a curated
+set of UE4 render/scalability cvars that raise frame-rate on weaker machines), plus
+visual QoL like disabling swamp-zone fog. Icarus is UE4, so most knobs are standard
+Unreal cvars — but cap/behaviour can be **game-dependent**, so the catalog must be
+validated against the live Icarus client, not assumed from generic UE4 docs.
 
-**Blocker:** Must research which INI keys / cvars the UE4 client accepts.
+**Model — toggle-owned INI fragments.** Each card is a named **on/off toggle** that owns
+a small fragment of `Engine.ini`: one or more sectioned cvar lines, e.g.
 
-**Planned UX:** Toggle cards ("Reduce fog in swamp biomes") backed by vetted INI snippets.
+```ini
+[/script/engine.renderersettings]
+r.ViewDistanceScale=0.7
+[SystemSettings]
+r.Streaming.PoolSize=3072
+```
 
-**Risk:** Bad INI → game may fail to launch. Separate backup + validation flow.
+- **Toggle ON** → merge the fragment in: create the `[section]` if absent, otherwise
+  append the toggle's keys under the existing section (multiple toggles share a section
+  rather than duplicating it).
+- **Toggle OFF** → remove **only** the lines that toggle owns, and drop a section that
+  becomes empty. Other toggles' lines in a shared section are left intact.
+- **Duplicate-cvar guard** — before writing, detect a cvar key that already appears
+  (whether IUUT-authored or hand-edited by the user): warn, and de-duplicate to a single
+  authoritative line rather than silently stacking conflicting values. Last-writer
+  semantics mirror how UE4 itself resolves repeated keys.
+- Toggle state is reconstructable from the file (which fragments are present), so IUUT
+  reflects manual edits made outside the tool.
+
+**cvar catalog sourcing (game-dependent).** We seed the catalog from what we already know
+about UE4 cvars, then **scrape the live client** for the authoritative, Icarus-specific
+list. A small operator-runnable helper (`scripts/dump-cvars.ps1` / in-game console
+`DumpConsoleCommands` → log, or `cvarList`) lets the user dump every cvar from a live run
+on their own machine and hand the output back; IUUT curates that raw dump into a small set
+of **vetted, reversible** performance/QoL fragments (never the raw firehose). This keeps
+the network boundary intact (CONSTITUTION V) — the scrape is a local, user-initiated step,
+not a phone-home.
+
+**Safety.** `Engine.ini` is **not** a save file, but a bad INI can stop the game from
+launching — so it gets its own backup + validation flow, reusing the same discipline as
+the save writer (timestamped backup → write temp → re-read → atomic rename; §13.3). An INI
+writer (not the JSON `SafeSaveWriter`) handles the format; the backup/atomic/rollback
+contract (CONSTITUTION III) is identical.
+
+**Status.** Out of scope for v1 (NG3); post-v1.0. Tracked here; no WP allocated yet.
 
 ### 20.2 Prospect blob FProperty parser
 
