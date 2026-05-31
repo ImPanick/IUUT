@@ -187,5 +187,27 @@ public sealed class CustomApplyServiceTests : IDisposable
         reloaded.Talents.Should().Contain(t => t.RowName == "Survival_Tier1" && t.Rank == 4);
     }
 
+    [Fact]
+    public async Task PreviewBundleAsync_AccoladeAndBestiaryEditViaService_MarksBothChanged_AndApplies()
+    {
+        var editor = new AccoladeBestiaryEditService(FixedClock.Default);
+        var bundle = await _service.LoadAsync(_dir);
+        editor.AddAccolade(bundle!.Accolades, "Accolade_FirstSteps");
+        editor.SetBestiaryPoints(bundle.Bestiary, "Bestiary_Wolf", 10_000);
+
+        var plan = await _service.PreviewBundleAsync(_dir, bundle);
+
+        plan.CanApply.Should().BeTrue();
+        plan.ChangedFiles.Select(f => f.FileName).Should().BeEquivalentTo("Accolades.json", "BestiaryData.json");
+
+        var report = await _service.ApplyAsync(plan);
+        report.Applied.Should().BeTrue();
+
+        AccoladesParser.Parse(Read("Accolades.json")).CompletedAccolades
+            .Should().Contain(a => a.Accolade.RowName == "Accolade_FirstSteps");
+        BestiaryParser.Parse(Read("BestiaryData.json")).BestiaryTracking
+            .Should().Contain(b => b.BestiaryGroup.RowName == "Bestiary_Wolf" && b.NumPoints == 10_000);
+    }
+
     public void Dispose() => _temp.Dispose();
 }

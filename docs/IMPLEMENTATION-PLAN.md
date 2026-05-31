@@ -40,15 +40,19 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   `CurrentEditor` panel swapped by implicit DataTemplate, via `CustomApplyService.LoadAsync`/
   `PreviewBundleAsync`): **Account & Currencies WIRED** (per-currency edit + "Max all" + "Unlock all
   blueprints", `AccountEditService`); **Characters & Talents WIRED** (character picker → name/XP/debt/
-  dead/abandoned + per-talent rank slider + "Max XP"/"Max talents", `CharacterEditService`); other
-  categories show a placeholder editor pending their UI); **Game Tuner** (own tile, fully wired:
+  dead/abandoned + per-talent rank slider + "Max XP"/"Max talents", `CharacterEditService`);
+  **Accolades & Bestiary WIRED** (catalog accolade checklist + grant/revoke all; creature-group scan
+  points + "Max all", `AccoladeBestiaryEditService`); other categories show a placeholder editor
+  pending their UI); **Game Tuner** (own tile, fully wired:
   toggles + slider/number-box clamped to stable-max → Engine.ini). DI uses **`ValidateOnBuild`**
   (whole graph validated at startup). Visual QA is **owner-run** (smoke-launch confirms render; the
   harness can't screenshot a WPF GUI).
 
 **NEXT: wire the remaining Custom categories** to their already-built Core services, following the
-Account / Characters vertical (load → edit → confirm → `PreviewBundleAsync` → `ApplyAsync`).
-Recommended next: Accolades & Bestiary (`AccoladeBestiaryEditService`). Canonical plan below.
+Account / Characters / Accolades vertical (load → edit → confirm → `PreviewBundleAsync` →
+`ApplyAsync`). Remaining: Orbital Stash (`StashEditService` — needs the deferred `items.json`
+enrichment for a friendly picker), Loadouts, Prospects, Mounts, Engine Flags, Advanced/Raw. The
+lighter ones (Mounts, Engine Flags) are good single passes. Canonical plan below.
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;

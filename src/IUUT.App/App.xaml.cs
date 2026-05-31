@@ -78,6 +78,7 @@ public partial class App : Application
         services.AddSingleton<CustomApplyService>();
         services.AddSingleton<AccountEditService>();
         services.AddSingleton<CharacterEditService>();
+        services.AddSingleton<AccoladeBestiaryEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

@@ -19,6 +19,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly CustomApplyService _apply;
     private readonly AccountEditService _account;
     private readonly CharacterEditService _character;
+    private readonly AccoladeBestiaryEditService _accoladeBestiary;
     private readonly GameCatalogs _catalogs;
 
     private HomeSaveSlot? _selectedSlot;
@@ -33,17 +34,20 @@ public sealed class CustomViewModel : ObservableObject
         CustomApplyService apply,
         AccountEditService account,
         CharacterEditService character,
+        AccoladeBestiaryEditService accoladeBestiary,
         GameCatalogs catalogs)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(account);
         ArgumentNullException.ThrowIfNull(character);
+        ArgumentNullException.ThrowIfNull(accoladeBestiary);
         ArgumentNullException.ThrowIfNull(catalogs);
         _home = home;
         _apply = apply;
         _account = account;
         _character = character;
+        _accoladeBestiary = accoladeBestiary;
         _catalogs = catalogs;
 
         Slots = [];
@@ -152,6 +156,8 @@ public sealed class CustomViewModel : ObservableObject
                 new AccountEditorViewModel(_apply, _account, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("characters", not null) =>
                 new CharacterEditorViewModel(_apply, _character, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("accolades", not null) =>
+                new AccoladeBestiaryEditorViewModel(_apply, _accoladeBestiary, _catalogs, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
         };
     }
