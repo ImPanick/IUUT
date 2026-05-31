@@ -115,14 +115,14 @@
                 </StackPanel>
             </Button>
 
-            <Button Style="{StaticResource ModeTile}" Margin="8,0,0,0" IsEnabled="False"
-                    ToolTip="Arrives with the Custom UI.">
+            <Button Style="{StaticResource ModeTile}" Margin="8,0,0,0" Command="{Binding OpenCustomCommand}">
                 <StackPanel>
                     <TextBlock Text="🎛" FontSize="26" />
                     <TextBlock Text="Custom Editor" Style="{StaticResource TitleText}" Margin="0,10,0,4" />
                     <TextBlock Text="Fine-grained control — currencies, talents, stash and more."
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" />
-                    <TextBlock Text="SOON" Style="{StaticResource LabelText}" Margin="0,12,0,0" />
+                    <TextBlock Text="OPEN →" Style="{StaticResource LabelText}"
+                               Foreground="{StaticResource IonCoreBrush}" Margin="0,12,0,0" />
                 </StackPanel>
             </Button>
         </UniformGrid>

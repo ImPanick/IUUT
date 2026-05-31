@@ -40,6 +40,7 @@ public sealed class HomeViewModel : ObservableObject
         Slots = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         OpenRecoveryCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.RecoveryKey));
+        OpenCustomCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.CustomKey));
     }
 
     /// <summary>Discovered save profiles for the dropdown.</summary>
@@ -50,6 +51,9 @@ public sealed class HomeViewModel : ObservableObject
 
     /// <summary>Opens the Broken Save Recovery page.</summary>
     public IRelayCommand OpenRecoveryCommand { get; }
+
+    /// <summary>Opens the Custom editor page.</summary>
+    public IRelayCommand OpenCustomCommand { get; }
 
     /// <summary>The save root being scanned (editable; Browse updates it).</summary>
     public string SaveRoot

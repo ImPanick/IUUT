@@ -30,12 +30,18 @@ SHA-1 load check passes) + `MountsModel`/`MountEditService` + **`FlagsFileCodec`
 
 **UI pass IN PROGRESS (`src/IUUT.App/`):** the Glass Console is being unparked.
 - **Done:** navigation **shell** (in-window page swap — `INavigationService`/`ShellViewModel`,
-  Home extracted to `Views/HomeView`, DataTemplate page rendering, Back/Home nav bar) + the
-  **Recovery screen** (`RecoveryViewModel`/`RecoveryView` wired to `RecoveryPlanner`/`RecoveryService`/
-  `RecoveryAdvisor`: pick save → Scan → per-file plan + advisories → confirm → Repair → report).
-  DI now uses `ValidateOnBuild` (whole graph validated at startup). Owner-run visual QA pending.
-- **Remaining UI:** Custom shell + category screens (Account/Characters/Accolades-Bestiary/Stash),
-  Settings, Advanced/Raw viewer, Troubleshooting modal, Game Tuning tab, Home polish.
+  Home extracted to `Views/HomeView`, DataTemplate page rendering, Back/Home nav bar); the
+  **Recovery screen** (wired to `RecoveryPlanner`/`RecoveryService`/`RecoveryAdvisor`: pick save →
+  Scan → per-file plan + advisories → confirm → Repair → report); and the **Custom editor shell**
+  (`CustomViewModel`/`CustomView`: profile selector + category sidebar → editor panel, incl. a new
+  **Game Tuning** category per owner request). All three tiles on Home now navigate. DI uses
+  `ValidateOnBuild` (whole graph validated at startup). Owner-run visual QA pending.
+- **Remaining UI:** wire the Custom **category editors** to their (already-built) Core services
+  (Account/Characters/Accolades-Bestiary/Stash/…), Settings, Advanced/Raw viewer, Troubleshooting
+  modal, Game Tuning tab content, and a **polish pass**.
+- **Polish backlog (owner-noted, screenshots 2026-05-31):** general "not great"/spacing pass; the
+  **Recovery header title+subtitle overlap** (two TextBlocks stacked in one grid cell — split into
+  rows); revisit glass contrast/typography. Take note, don't act mid-feature.
 - **Then:** **WP-15** MVP manual test (real save, in-game verify), **WP-33** release hardening
   (release.yml, SHA256SUMS + attestation, portable zip, INSTALL verify), **WP-34** tag v1.0.0, and
   the post-v1.0 **Phase 7 Game Tuning** Core (GT-1..GT-6). Every save-file Core exists + is tested.

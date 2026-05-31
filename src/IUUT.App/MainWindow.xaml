@@ -31,6 +31,9 @@
         <DataTemplate DataType="{x:Type vm:RecoveryViewModel}">
             <views:RecoveryView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:CustomViewModel}">
+            <views:CustomView />
+        </DataTemplate>
     </ui:FluentWindow.Resources>
 
     <Grid>

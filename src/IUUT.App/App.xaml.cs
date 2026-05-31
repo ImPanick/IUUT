@@ -77,6 +77,7 @@ public partial class App : Application
         services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<RecoveryViewModel>();
+        services.AddSingleton<CustomViewModel>();
         services.AddSingleton<MainWindow>();
 
         // ValidateOnBuild constructs every registration at startup, so a broken DI graph

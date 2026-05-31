@@ -18,6 +18,9 @@ public sealed class ShellViewModel : ObservableObject, INavigationService
     /// <summary>The Broken Save Recovery page key.</summary>
     public const string RecoveryKey = "Recovery";
 
+    /// <summary>The Custom editor page key.</summary>
+    public const string CustomKey = "Custom";
+
     private readonly IServiceProvider _services;
     private readonly Stack<string> _back = new();
 
@@ -91,6 +94,7 @@ public sealed class ShellViewModel : ObservableObject, INavigationService
     {
         HomeKey => _services.GetRequiredService<HomeViewModel>(),
         RecoveryKey => _services.GetRequiredService<RecoveryViewModel>(),
+        CustomKey => _services.GetRequiredService<CustomViewModel>(),
         _ => throw new ArgumentOutOfRangeException(nameof(key), key, "Unknown page key."),
     };
 }
