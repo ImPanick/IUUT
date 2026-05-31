@@ -8,23 +8,112 @@
         Title="Icarus Ultimate Utility Tool (IUUT)"
         Width="900"
         Height="600"
+        MinWidth="700"
+        MinHeight="480"
         WindowStartupLocation="CenterScreen">
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="32">
-            <TextBlock Text="Icarus Ultimate Utility Tool"
-                       FontSize="28"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center" />
-            <TextBlock Text="Pre-development scaffold — implementation pending."
-                       FontSize="14"
-                       Foreground="Gray"
-                       HorizontalAlignment="Center"
-                       Margin="0,12,0,0" />
-            <TextBlock Text="See docs/IUUT-PROJECT-DOCUMENTATION.md §10 for the home-screen design."
-                       FontSize="12"
-                       Foreground="Gray"
-                       HorizontalAlignment="Center"
-                       Margin="0,4,0,0" />
-        </StackPanel>
+
+    <!--
+        Provisional Home shell (master doc §10.2). Layout is intentionally plain — the
+        final presentation is a Phase-6 deliverable (plan §0). All data comes from
+        HomeViewModel; no domain logic lives here.
+    -->
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0"
+                   Text="Icarus Ultimate Utility Tool"
+                   FontSize="24"
+                   FontWeight="SemiBold" />
+
+        <!-- Info panel -->
+        <Border Grid.Row="1"
+                Margin="0,12,0,0"
+                Padding="12"
+                BorderBrush="#DDDDDD"
+                BorderThickness="1"
+                CornerRadius="4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- Save root -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Save root:" VerticalAlignment="Center" Margin="0,0,8,4" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SaveRoot, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" Margin="0,0,8,4" />
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0,0,0,4">
+                    <Button Content="Browse…" Click="OnBrowse" Padding="10,2" Margin="0,0,6,0" />
+                    <Button Content="Reload" Command="{Binding LoadCommand}" Padding="10,2" />
+                </StackPanel>
+
+                <!-- Profile dropdown -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Profile:" VerticalAlignment="Center" Margin="0,4,8,4" />
+                <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                          ItemsSource="{Binding Slots}"
+                          SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
+                          DisplayMemberPath="DisplayLabel"
+                          Margin="0,4,0,4" />
+
+                <!-- Selected profile detail -->
+                <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
+                            Orientation="Horizontal"
+                            DataContext="{Binding SelectedSlot}"
+                            Margin="0,0,0,4">
+                    <TextBlock Text="{Binding SteamId64}" Foreground="Gray" />
+                    <TextBlock Text="  ·  " Foreground="Gray" />
+                    <TextBlock Text="{Binding CharacterCount, StringFormat={}{0} characters, TargetNullValue=character count unknown}"
+                               Foreground="Gray" />
+                </StackPanel>
+
+                <!-- Game-state banner (warn only; never blocks — §14) -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Game:" VerticalAlignment="Center" Margin="0,4,8,0" />
+                <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
+                           Text="{Binding GameStatus}"
+                           TextWrapping="Wrap"
+                           VerticalAlignment="Center"
+                           Margin="0,4,0,0">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="#2E7D32" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding GameRunning}" Value="True">
+                                    <Setter Property="Foreground" Value="#C62828" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!-- Preset cards -->
+        <UniformGrid Grid.Row="2" Columns="3" Margin="0,16,0,16">
+            <Button Content="🚑  Broken Save Recovery" Margin="0,0,8,0" IsEnabled="False"
+                    FontSize="15" ToolTip="Arrives in Phase 2 (WP-16..18)." />
+            <Button Content="⚡  Lazy Max" Margin="4,0,4,0" Command="{Binding LazyMaxCommand}"
+                    FontSize="15" FontWeight="SemiBold" />
+            <Button Content="🎛  Custom" Margin="8,0,0,0" IsEnabled="False"
+                    FontSize="15" ToolTip="Arrives in Phase 3 (WP-19..22)." />
+        </UniformGrid>
+
+        <!-- Status bar -->
+        <Border Grid.Row="3" Padding="8,6" Background="#F5F5F5" CornerRadius="4">
+            <TextBlock Text="{Binding StatusMessage}" TextWrapping="Wrap" Foreground="#444444" />
+        </Border>
     </Grid>
 </Window>

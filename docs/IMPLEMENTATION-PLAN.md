@@ -15,15 +15,16 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-12. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-13. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest feature commit: `8cacbac` (WP-12).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-13 (see `git log` on `dev`).
 
-**Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`).
-Source projects build clean; **141 tests** pass. Roadmap order continues below (§4).
+**Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`) +
+**WP-13** (WPF Home shell). Solution builds clean (Debug + Release); **146 tests** pass.
+Roadmap order continues below (§4).
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`
@@ -39,12 +40,23 @@ catalog groups, `FishTracking` untouched. Existing records mutated in place so
 engineering picks within the docs' "high value, game clamps" latitude — change the
 consts if a different number is wanted.
 
-**Next: WP-13 — WPF Home shell** (`IUUT.App`): the app window + navigation + the Home
-screen that surfaces discovered saves (`SaveDiscoveryService`), Steam display names
-(`SteamProfileResolverService`), game-running banner (`GameProcessDetector`), and the
-Lazy Max entry point. Wires DI: `AppPaths` → `GameCatalogs.LoadEmbedded()` →
-`LazyMaxService` → (WP-14) apply pipeline. No save mutation lands until WP-14
-(Preview-diff/Apply) wires `MaxAll` through `ValidationEngine` + `SafeSaveWriter`.
+**WP-13 as built** (`IUUT.Core/Services/Home*.cs`, `IUUT.App/`): the testable logic is
+`HomeService` — composes `SaveDiscoveryService` + `SteamProfileResolverService` (offline-
+first) + `GameProcessDetector` into a `HomeState` (`SaveRootFound`, `Slots` of
+`HomeSaveSlot` with PersonaName label / char count / health flags, warn-only `Game`
+banner). The WPF shell wires DI in `App.xaml.cs` (`ServiceCollection`: foundation +
+catalogs + `LazyMaxService` + the Home chain + VM + window), a thin `HomeViewModel`
+(CommunityToolkit.Mvvm `ObservableObject`, explicit props/commands — no source-gen),
+and a provisional `MainWindow` (save-root + Browse, PersonaName dropdown, game banner,
+3 preset cards). Presentation is intentionally plain (see parked decision below).
+
+**Next: WP-14 — Preview-diff → Apply pipeline** (master §13.3) [CP]: the first save
+mutation. Wire `LazyMaxService.MaxAll` into an apply flow — parse the four files →
+`MaxAll` → **diff/preview** (show the per-file `LazyMaxResult` counts, F-034) →
+`ValidationEngine` gate (block on errors, confirm on warnings) → `SafeSaveWriter`
+(backup → temp → re-parse → atomic rename) per file → report. Needs `BackupManager` +
+`SafeSaveWriter` (register `IGuidProvider` is already in DI) and the parsers/serializers
+for Profile/Characters/Accolades/Bestiary. Hook the `HomeViewModel.LazyMaxCommand` to it.
 
 **Parked decisions (owner notes, 2026-05-31):**
 - **UI presentation is deliberately provisional.** WP-13 builds a *functional* shell that
