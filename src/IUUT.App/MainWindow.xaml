@@ -105,7 +105,7 @@
         <UniformGrid Grid.Row="2" Columns="3" Margin="0,16,0,16">
             <Button Content="🚑  Broken Save Recovery" Margin="0,0,8,0" IsEnabled="False"
                     FontSize="15" ToolTip="Arrives in Phase 2 (WP-16..18)." />
-            <Button Content="⚡  Lazy Max" Margin="4,0,4,0" Command="{Binding LazyMaxCommand}"
+            <Button Content="⚡  Lazy Max" Margin="4,0,4,0" Click="OnLazyMax"
                     FontSize="15" FontWeight="SemiBold" />
             <Button Content="🎛  Custom" Margin="8,0,0,0" IsEnabled="False"
                     FontSize="15" ToolTip="Arrives in Phase 3 (WP-19..22)." />

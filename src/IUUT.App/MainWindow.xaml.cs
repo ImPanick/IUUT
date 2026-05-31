@@ -26,6 +26,41 @@ public partial class MainWindow : Window
 
     private async void OnLoaded(object sender, RoutedEventArgs e) => await _viewModel.LoadAsync();
 
+    private async void OnLazyMax(object sender, RoutedEventArgs e)
+    {
+        var plan = await _viewModel.PreviewSelectedAsync();
+        if (plan is null || !plan.CanApply)
+        {
+            return; // the view-model already set an explanatory status message.
+        }
+
+        var result = plan.Result;
+        var warnings = plan.Validation.Warnings.ToList();
+        var warningLine = warnings.Count > 0
+            ? "\n\n⚠ " + string.Join("\n⚠ ", warnings.Select(w => w.Message))
+            : string.Empty;
+
+        var message =
+            $"Apply Lazy Max to “{_viewModel.SelectedSlot?.DisplayLabel}”?\n\n" +
+            $"This updates {plan.Files.Count} files (a timestamped backup of each is created first):\n" +
+            $"  • Characters maxed: {result?.CharactersMaxed}\n" +
+            $"  • Account currencies: {result?.MetaResourcesMaxed};  workshop/prospect unlocks: {result?.WorkshopUnlocksTotal}\n" +
+            $"  • Accolades added: {result?.AccoladesAdded}\n" +
+            $"  • Bestiary groups: {result?.BestiaryGroupsTotal}\n\n" +
+            "Make sure Icarus is closed, or sitting on the Main Menu, before applying." +
+            warningLine;
+
+        var confirm = MessageBox.Show(this, message, "Confirm Lazy Max", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+        if (confirm == MessageBoxResult.Yes)
+        {
+            await _viewModel.ApplyAsync(plan);
+        }
+        else
+        {
+            _viewModel.NotifyCancelled();
+        }
+    }
+
     private void OnBrowse(object sender, RoutedEventArgs e)
     {
         var dialog = new OpenFolderDialog

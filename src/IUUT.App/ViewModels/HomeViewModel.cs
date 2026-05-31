@@ -7,31 +7,34 @@ namespace IUUT.App.ViewModels;
 
 /// <summary>
 /// Binding-shape for the Home screen (master doc §10.2). Holds no domain logic — it
-/// drives <see cref="HomeService"/> and exposes its <see cref="HomeState"/> for the view
-/// (CODE_STYLE §7). Save mutation (Lazy Max apply) is deferred to the WP-14 pipeline.
+/// drives <see cref="HomeService"/> + <see cref="LazyMaxApplyService"/> and exposes their
+/// results for the view (CODE_STYLE §7). The confirmation dialog itself lives in the view
+/// (it is UI), so this stays free of WPF references.
 /// </summary>
 public sealed class HomeViewModel : ObservableObject
 {
     private readonly HomeService _home;
+    private readonly LazyMaxApplyService _apply;
 
     private string _saveRoot;
-    private bool _isLoading;
+    private bool _isBusy;
     private bool _saveRootFound;
     private HomeSaveSlot? _selectedSlot;
     private bool _gameRunning;
     private string _gameStatus = "Game state unknown — reload to scan.";
     private string _statusMessage = "Ready.";
 
-    /// <summary>Creates the Home view-model over the Home orchestration service.</summary>
-    public HomeViewModel(HomeService home)
+    /// <summary>Creates the Home view-model over the Home and Lazy Max apply services.</summary>
+    public HomeViewModel(HomeService home, LazyMaxApplyService apply)
     {
         ArgumentNullException.ThrowIfNull(home);
+        ArgumentNullException.ThrowIfNull(apply);
         _home = home;
+        _apply = apply;
         _saveRoot = HomeService.DefaultSaveRoot;
 
         Slots = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
-        LazyMaxCommand = new RelayCommand(OnLazyMax, () => SelectedSlot is not null);
     }
 
     /// <summary>Discovered save profiles for the dropdown.</summary>
@@ -40,9 +43,6 @@ public sealed class HomeViewModel : ObservableObject
     /// <summary>Reloads the Home state from <see cref="SaveRoot"/>.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
 
-    /// <summary>Entry point to Lazy Max for the selected profile (apply lands in WP-14).</summary>
-    public IRelayCommand LazyMaxCommand { get; }
-
     /// <summary>The save root being scanned (editable; Browse updates it).</summary>
     public string SaveRoot
     {
@@ -50,11 +50,11 @@ public sealed class HomeViewModel : ObservableObject
         set => SetProperty(ref _saveRoot, value);
     }
 
-    /// <summary>True while a load is in flight (drives the busy indicator / disables actions).</summary>
-    public bool IsLoading
+    /// <summary>True while a load or apply is in flight (drives the busy indicator / disables actions).</summary>
+    public bool IsBusy
     {
-        get => _isLoading;
-        private set => SetProperty(ref _isLoading, value);
+        get => _isBusy;
+        private set => SetProperty(ref _isBusy, value);
     }
 
     /// <summary>Whether the current <see cref="SaveRoot"/> contains a <c>PlayerData\</c> folder.</summary>
@@ -68,13 +68,7 @@ public sealed class HomeViewModel : ObservableObject
     public HomeSaveSlot? SelectedSlot
     {
         get => _selectedSlot;
-        set
-        {
-            if (SetProperty(ref _selectedSlot, value))
-            {
-                LazyMaxCommand.NotifyCanExecuteChanged();
-            }
-        }
+        set => SetProperty(ref _selectedSlot, value);
     }
 
     /// <summary>Whether Icarus is currently running (drives the warn-only banner colour).</summary>
@@ -101,12 +95,12 @@ public sealed class HomeViewModel : ObservableObject
     /// <summary>Loads profiles + names + game state for <see cref="SaveRoot"/> into the view-model.</summary>
     public async Task LoadAsync()
     {
-        if (IsLoading)
+        if (IsBusy)
         {
             return;
         }
 
-        IsLoading = true;
+        IsBusy = true;
         try
         {
             var state = await _home.LoadAsync(SaveRoot);
@@ -138,12 +132,80 @@ public sealed class HomeViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
-            IsLoading = false;
+            IsBusy = false;
         }
     }
 
-    private void OnLazyMax() =>
-        StatusMessage = SelectedSlot is null
-            ? "Select a save profile first."
-            : $"Lazy Max for “{SelectedSlot.DisplayLabel}” — preview & apply arrives in WP-14.";
+    /// <summary>
+    /// Builds (but does not apply) a Lazy Max plan for the selected profile. The view shows the
+    /// plan for confirmation, then calls <see cref="ApplyAsync"/>. Returns <c>null</c> when no
+    /// profile is selected or the preview failed.
+    /// </summary>
+    public async Task<LazyMaxPlan?> PreviewSelectedAsync()
+    {
+        if (SelectedSlot is null)
+        {
+            StatusMessage = "Select a save profile first.";
+            return null;
+        }
+
+        if (IsBusy)
+        {
+            return null;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var plan = await _apply.PreviewAsync(SelectedSlot.FolderPath);
+            StatusMessage = plan.CanApply
+                ? $"Lazy Max preview ready for “{SelectedSlot.DisplayLabel}” — confirm to apply."
+                : "Cannot apply Lazy Max: " + string.Join("; ", plan.Validation.Errors.Select(error => error.Message));
+            return plan;
+        }
+#pragma warning disable CA1031 // UI boundary: any failure must surface as a message, never crash the shell.
+        catch (Exception ex)
+        {
+            StatusMessage = $"Lazy Max preview failed: {ex.Message}";
+            return null;
+        }
+#pragma warning restore CA1031
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    /// <summary>Applies a confirmed <paramref name="plan"/> and refreshes the Home state afterwards.</summary>
+    public async Task ApplyAsync(LazyMaxPlan plan)
+    {
+        ArgumentNullException.ThrowIfNull(plan);
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var report = await _apply.ApplyAsync(plan);
+            StatusMessage = report.Message ?? (report.Applied ? "Lazy Max applied." : "Lazy Max failed.");
+        }
+#pragma warning disable CA1031 // UI boundary: any failure must surface as a message, never crash the shell.
+        catch (Exception ex)
+        {
+            StatusMessage = $"Lazy Max apply failed: {ex.Message}";
+        }
+#pragma warning restore CA1031
+        finally
+        {
+            IsBusy = false;
+        }
+
+        // Reflect the new character counts / state.
+        await LoadAsync();
+    }
+
+    /// <summary>Sets the status bar to a user-cancelled message (called by the view when the confirm dialog is dismissed).</summary>
+    public void NotifyCancelled() => StatusMessage = "Lazy Max cancelled — nothing was changed.";
 }

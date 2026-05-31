@@ -15,16 +15,16 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-13. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-14. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-13 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-14 (see `git log` on `dev`).
 
 **Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`) +
-**WP-13** (WPF Home shell). Solution builds clean (Debug + Release); **146 tests** pass.
-Roadmap order continues below (§4).
+**WP-13** (WPF Home shell) + **WP-14** (Preview→Apply pipeline — first real save mutation).
+Solution builds clean (Debug + Release); **153 tests** pass. Roadmap order continues below (§4).
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`
@@ -50,13 +50,26 @@ catalogs + `LazyMaxService` + the Home chain + VM + window), a thin `HomeViewMod
 and a provisional `MainWindow` (save-root + Browse, PersonaName dropdown, game banner,
 3 preset cards). Presentation is intentionally plain (see parked decision below).
 
-**Next: WP-14 — Preview-diff → Apply pipeline** (master §13.3) [CP]: the first save
-mutation. Wire `LazyMaxService.MaxAll` into an apply flow — parse the four files →
-`MaxAll` → **diff/preview** (show the per-file `LazyMaxResult` counts, F-034) →
-`ValidationEngine` gate (block on errors, confirm on warnings) → `SafeSaveWriter`
-(backup → temp → re-parse → atomic rename) per file → report. Needs `BackupManager` +
-`SafeSaveWriter` (register `IGuidProvider` is already in DI) and the parsers/serializers
-for Profile/Characters/Accolades/Bestiary. Hook the `HomeViewModel.LazyMaxCommand` to it.
+**WP-14 as built** (`IUUT.Core/Io/ISafeSaveWriter.cs`, `IUUT.Core/Services/LazyMax*Apply*.cs`,
+`IUUT.App`): `LazyMaxApplyService` does `PreviewAsync` (read+parse the four files → `MaxAll`
+→ `ValidationEngine` profile+character gate + read/parse-error issues → serialize → a
+`LazyMaxPlan` carrying per-file new content, the `LazyMaxResult` counts, and `CanApply`) and
+`ApplyAsync` (write each file via `ISafeSaveWriter` in recovery order — Profile, Characters,
+Accolades, Bestiary — with a post-write re-parse, stopping at the first failure; each file
+backed up). `SafeSaveWriter` now implements the new `ISafeSaveWriter` seam so apply ordering
+is unit-testable with a fake. The app wires `BackupManager` + `ISafeSaveWriter` +
+`LazyMaxApplyService`; `HomeViewModel` exposes `PreviewSelectedAsync`/`ApplyAsync`; the Lazy
+Max card runs preview → a `MessageBox` confirm listing the 4 files + counts (F-034) → apply.
+The MessageBox lives in the view (code-behind) so the VM stays WPF-free.
+
+**Next: WP-15 — v0.1 MVP manual test** (master §16 Phase 1 milestone): drive the real flow
+end-to-end against a *backed-up* live save — launch the app, pick the profile, Lazy Max →
+confirm → apply, then load Icarus from the Main Menu and verify talents/XP/currencies/
+accolades/bestiary took and the game is stable. This is a human-in-the-loop validation step
+(operator runs it; agents prepare the checklist). Capture results in the plan, then Phase 2
+(Broken Save Recovery, WP-16..18) begins. NOTE: automatic cross-file rollback on a
+mid-sequence apply failure is deliberately *not* implemented yet — per-file backups + the
+report's backup list are the current recovery path; revisit if WP-15 shows it's needed.
 
 **Parked decisions (owner notes, 2026-05-31):**
 - **UI presentation is deliberately provisional.** WP-13 builds a *functional* shell that

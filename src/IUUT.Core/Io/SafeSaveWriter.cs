@@ -10,7 +10,7 @@ namespace IUUT.Core.Io;
 /// live save file can never contain unvalidated or partially-written content. No
 /// save-file mutator may write to disk except through this type.
 /// </summary>
-public sealed class SafeSaveWriter
+public sealed class SafeSaveWriter : ISafeSaveWriter
 {
     // UTF-8 WITHOUT BOM — the game writes no BOM and a BOM is a deviation
     // (Icarus-Analysis §10 rule 4, master doc §7.7). The shared framework UTF-8

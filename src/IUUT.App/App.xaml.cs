@@ -2,6 +2,7 @@ using System.Windows;
 using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
+using IUUT.Core.Io;
 using IUUT.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -42,9 +43,12 @@ public partial class App : Application
             AppContext.BaseDirectory,
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)));
 
-        // --- Catalogs + headline feature (resolved by the WP-14 apply pipeline) ---
+        // --- Catalogs + headline feature + apply pipeline (master §13.3) ------
         services.AddSingleton(_ => GameCatalogs.LoadEmbedded());
         services.AddSingleton<LazyMaxService>();
+        services.AddSingleton<BackupManager>();
+        services.AddSingleton<ISafeSaveWriter, SafeSaveWriter>();
+        services.AddSingleton<LazyMaxApplyService>();
 
         // --- Home screen dependencies (master doc §10.2) ----------------------
         services.AddSingleton<IRunningProcesses, SystemRunningProcesses>();
