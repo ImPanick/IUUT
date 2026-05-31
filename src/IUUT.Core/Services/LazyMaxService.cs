@@ -75,6 +75,9 @@ public sealed class LazyMaxService
         "Genetics_Reduced_Threat",
     ];
 
+    /// <summary>The 16 functional <c>Genetics_*</c> rows overlaid on every maxed character (field guide §4.2.1).</summary>
+    public static IReadOnlyList<string> GeneticsTalents => _geneticsTalents;
+
     private readonly GameCatalogs _catalogs;
     private readonly IClock _clock;
 

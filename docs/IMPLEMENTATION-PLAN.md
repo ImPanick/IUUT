@@ -15,12 +15,19 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-18. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-22. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-18 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-22 (see `git log` on `dev`).
+
+**Phase 3 Core done (WP-19..22, `src/IUUT.Core/Editing/`):** `CustomApplyService` (per-category
+load → edit-delegate → validate → minimal-write Preview/Apply) + pure edit services —
+`AccountEditService` (currencies/flags/workshop), `CharacterEditService` (XP/debt/toggles/rename/
+talent-rank/MaxTalents), `AccoladeBestiaryEditService` (grant/remove accolade, set/remove
+bestiary points). All pure-model + tested. The **Custom WPF shell/nav/category screens are
+parked** with the UI pass. **196 tests.**
 
 **Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`) +
 **WP-13** (Home shell) + **WP-14** (Preview→Apply) + **WP-U1** (Glass Console UI) +
@@ -45,8 +52,10 @@ post-restore cross-file incoherence (via `ValidationEngine`); advisories ride in
 Deliberately NOT done: auto-rebuilding a corrupt prospect blob (hash-consistent ≠ valid world);
 fsync-for-power-loss durability (tracked, Appendix E).
 
-**Now:** Phase 2's UI is parked → next roadmap path is **Phase 3 — Custom core (WP-19..22)**
-unless owner redirects. (Recovery is wired into the app when we do the UI polish pass.)
+**Now:** Phases 2 + 3 Core are done (UIs parked). Next roadmap path is **Phase 4 — Orbital
+Stash (WP-23..25)**: `MetaInventory`/`Loadouts` editing + `DatabaseGUID` generation/sync — this
+is also where the deferred **`items.json` catalog enrichment** gets completed. Then Phase 5
+(Prospects/Mounts/flags, WP-26..30) and Phase 6 (polish/release — where all the parked UI lands).
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
