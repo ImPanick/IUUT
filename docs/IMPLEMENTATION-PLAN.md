@@ -20,7 +20,7 @@
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: `<bump after push>`.
+(owner-authorized, pre-critical; no branch protection yet). Latest feature commit: `8cacbac` (WP-12).
 
 **Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`).
 Source projects build clean; **141 tests** pass. Roadmap order continues below (§4).
