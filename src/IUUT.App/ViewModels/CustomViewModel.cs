@@ -24,6 +24,8 @@ public sealed class CustomViewModel : ObservableObject
     private readonly MountEditService _mount;
     private readonly StashEditService _stash;
     private readonly LoadoutCrossReference _loadoutCrossReference;
+    private readonly FlagsEditService _flags;
+    private readonly ProspectEditService _prospect;
     private readonly GameCatalogs _catalogs;
 
     private HomeSaveSlot? _selectedSlot;
@@ -43,6 +45,8 @@ public sealed class CustomViewModel : ObservableObject
         MountEditService mount,
         StashEditService stash,
         LoadoutCrossReference loadoutCrossReference,
+        FlagsEditService flags,
+        ProspectEditService prospect,
         GameCatalogs catalogs)
     {
         ArgumentNullException.ThrowIfNull(home);
@@ -54,6 +58,8 @@ public sealed class CustomViewModel : ObservableObject
         ArgumentNullException.ThrowIfNull(mount);
         ArgumentNullException.ThrowIfNull(stash);
         ArgumentNullException.ThrowIfNull(loadoutCrossReference);
+        ArgumentNullException.ThrowIfNull(flags);
+        ArgumentNullException.ThrowIfNull(prospect);
         ArgumentNullException.ThrowIfNull(catalogs);
         _home = home;
         _apply = apply;
@@ -64,6 +70,8 @@ public sealed class CustomViewModel : ObservableObject
         _mount = mount;
         _stash = stash;
         _loadoutCrossReference = loadoutCrossReference;
+        _flags = flags;
+        _prospect = prospect;
         _catalogs = catalogs;
 
         Slots = [];
@@ -180,6 +188,12 @@ public sealed class CustomViewModel : ObservableObject
                 new LoadoutsViewerViewModel(_files, _loadoutCrossReference, slot.FolderPath, slot.DisplayLabel),
             ("mounts", not null) =>
                 new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
+            ("flags", not null) =>
+                new FlagEditorViewModel(_files, _flags, slot.FolderPath, slot.DisplayLabel),
+            ("prospects", not null) =>
+                new ProspectsEditorViewModel(_files, _prospect, slot.FolderPath, slot.DisplayLabel),
+            ("raw", not null) =>
+                new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
         };
     }

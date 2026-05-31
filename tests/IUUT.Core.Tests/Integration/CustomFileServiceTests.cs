@@ -14,7 +14,8 @@ public sealed class CustomFileServiceTests : IDisposable
 {
     private readonly TempDir _temp = new();
     private readonly CustomFileService _service = new(
-        new SafeSaveWriter(new BackupManager(FixedClock.Default), new SystemGuidProvider()));
+        new SafeSaveWriter(new BackupManager(FixedClock.Default), new SystemGuidProvider()),
+        new BackupManager(FixedClock.Default));
 
     [Fact]
     public async Task LoadMountsAsync_MissingFile_ReturnsNull()
@@ -73,6 +74,78 @@ public sealed class CustomFileServiceTests : IDisposable
 
         loadouts.Should().NotBeNull();
         loadouts!.Loadouts.Should().ContainSingle(l => l.ChrSlot == 1 && l.LoadoutGuid == "L1");
+    }
+
+    [Fact]
+    public async Task SaveFlagsAsync_PersistsEdit_AndBacksUp()
+    {
+        const string steamId = "11111111111111111";
+        var path = Path.Combine(_temp.Path, $"flags_{steamId}.dat");
+        File.WriteAllBytes(path, FlagsFileCodec.Write(new FlagsFileModel { SteamId = steamId, Flags = { 1, 2, 3 } }));
+
+        var flags = await _service.LoadFlagsAsync(_temp.Path);
+        flags!.Flags.Add(99);
+
+        var ok = await _service.SaveFlagsAsync(_temp.Path, flags);
+
+        ok.Should().BeTrue();
+        var reloaded = FlagsFileCodec.Read(File.ReadAllBytes(path));
+        reloaded.Flags.Should().Contain(99).And.Contain(1);
+        Directory.GetFiles(_temp.Path, $"flags_{steamId}.dat{BackupManager.BackupInfix}*").Should().NotBeEmpty();
+        File.Exists(path + ".iuut-tmp").Should().BeFalse("the temp is cleaned up");
+    }
+
+    [Fact]
+    public async Task LoadFlagsAsync_NoFlagsFile_ReturnsNull()
+    {
+        (await _service.LoadFlagsAsync(_temp.Path)).Should().BeNull();
+    }
+
+    [Fact]
+    public async Task SaveAssociatedProspectsAsync_PersistsUnstick()
+    {
+        var file = Path.Combine(_temp.Path, "AssociatedProspects_Slot_1.json");
+        File.WriteAllText(file, AssociatedProspectsSerializer.Serialize(new AssociatedProspectsModel
+        {
+            ContainerKey = "AssociatedProspects_Slot_1.json",
+            Prospects = { new AssociatedProspect { ProspectId = "P1" }, new AssociatedProspect { ProspectId = "P2" } },
+        }));
+
+        _service.ResolveAssociatedProspectFiles(_temp.Path).Should().ContainSingle();
+        var model = await _service.LoadAssociatedProspectsAsync(file);
+        new ProspectEditService().Unstick(model!, "P1").Should().BeTrue();
+
+        var result = await _service.SaveAssociatedProspectsAsync(file, model!);
+
+        result.Ok.Should().BeTrue();
+        AssociatedProspectsParser.Parse(File.ReadAllText(file)).Prospects.Should().ContainSingle(p => p.ProspectId == "P2");
+    }
+
+    [Fact]
+    public async Task SaveJsonTextAsync_RejectsMalformed_AcceptsValid()
+    {
+        var file = Path.Combine(_temp.Path, "Profile.json");
+        File.WriteAllText(file, "{\"a\":1}");
+
+        (await _service.SaveJsonTextAsync(file, "{not json")).Ok.Should().BeFalse();
+        File.ReadAllText(file).Should().Be("{\"a\":1}", "a rejected write leaves the original");
+
+        (await _service.SaveJsonTextAsync(file, "{\"a\":2}")).Ok.Should().BeTrue();
+        (await _service.ReadTextAsync(file)).Should().Be("{\"a\":2}");
+    }
+
+    [Fact]
+    public void ListJsonFiles_IncludesTopLevelAndLoadoutSubfolder()
+    {
+        File.WriteAllText(Path.Combine(_temp.Path, "Profile.json"), "{}");
+        var loadout = Directory.CreateDirectory(Path.Combine(_temp.Path, "Loadout")).FullName;
+        File.WriteAllText(Path.Combine(loadout, "Loadouts.json"), "{}");
+
+        var files = _service.ListJsonFiles(_temp.Path);
+
+        files.Should().HaveCount(2);
+        files.Should().Contain(f => f.EndsWith("Profile.json", StringComparison.Ordinal));
+        files.Should().Contain(f => f.EndsWith("Loadouts.json", StringComparison.Ordinal));
     }
 
     public void Dispose() => _temp.Dispose();

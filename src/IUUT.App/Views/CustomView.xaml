@@ -27,6 +27,15 @@
         <DataTemplate DataType="{x:Type vm:MountEditorViewModel}">
             <views:MountEditorView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FlagEditorViewModel}">
+            <views:FlagEditorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProspectsEditorViewModel}">
+            <views:ProspectsEditorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RawEditorViewModel}">
+            <views:RawEditorView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:PlaceholderEditorViewModel}">
             <views:PlaceholderEditorView />
         </DataTemplate>

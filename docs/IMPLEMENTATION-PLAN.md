@@ -45,19 +45,25 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   points + "Max all", `AccoladeBestiaryEditService`); **Orbital Stash WIRED** (viewer + remove with
   loadout-reference warning; add deferred for items.json picker); **Loadouts WIRED** (read-only
   viewer + dangling-reference diagnostics, `LoadoutCrossReference`); **Mounts WIRED** (name/level,
-  `MountEditService`) — the auxiliary text files (Mounts/MetaInventory/Loadouts) load+save via
-  **`CustomFileService`** (backup+atomic via `ISafeSaveWriter`); other categories placeholder pending
-  UI; **Game Tuner** (own tile, fully wired:
+  `MountEditService`); **Engine Flags WIRED** (add/remove raw flag IDs, binary `flags_*.dat` via
+  `FlagsEditService`); **Prospects WIRED** (per-slot unstick, `ProspectEditService`); **Advanced/Raw
+  WIRED** (view/edit any save JSON, validated on save) — **all 9 categories live.** The auxiliary
+  files load+save via **`CustomFileService`** (JSON via `ISafeSaveWriter`; binary flags via its own
+  backup+atomic byte write reusing `BackupManager`); **Game Tuner** (own tile, fully wired:
   toggles + slider/number-box clamped to stable-max → Engine.ini). DI uses **`ValidateOnBuild`**
   (whole graph validated at startup). Visual QA is **owner-run** (smoke-launch confirms render; the
   harness can't screenshot a WPF GUI).
 
-**NEXT: the last three Custom categories.** Remaining: **Engine Flags** (binary `flags_<SteamID>.dat`
-via `FlagsFileCodec` — needs a binary-safe write path; `ISafeSaveWriter` is string-only, so add a
-`SaveFlagsAsync` that does its own backup+atomic byte write, e.g. on `CustomFileService` reusing
-`BackupManager`); **Prospects** (per-slot `AssociatedProspects_Slot_N.json` unstick via
-`ProspectEditService` — multi-file discovery); **Advanced/Raw** (generic JSON viewer + export/import
-for any save file). Then: Stash "add item" once `items.json` is enriched. Canonical plan below.
+**NEXT: the Custom editor is feature-complete (all 9 categories wired).** Remaining work is polish +
+verification, not new editors:
+- **Stash "add item"** — deferred until `items.json` is enriched (`scripts/fetch-catalogs.ps1`) so the
+  picker shows friendly names; the viewer/remove path is live now.
+- **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
+  spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
+  (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).
+- **Troubleshooting / FAQ modal** (parked) sourced from master Appendix E + `RecoveryAdvisor`.
+- **WP-15 bulk in-game test** (parked) — drive every editor against a *backed-up* live save, load
+  Icarus, verify the edits took and the game is stable. Then WP-33/34 release + tag.
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;

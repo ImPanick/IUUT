@@ -26,12 +26,15 @@ public sealed class CustomFileService
     public static readonly string LoadoutsFile = Path.Combine("Loadout", "Loadouts.json");
 
     private readonly ISafeSaveWriter _writer;
+    private readonly BackupManager _backups;
 
-    /// <summary>Creates the service over the safe writer.</summary>
-    public CustomFileService(ISafeSaveWriter writer)
+    /// <summary>Creates the service over the safe writer + backup manager (the latter for binary files).</summary>
+    public CustomFileService(ISafeSaveWriter writer, BackupManager backups)
     {
         ArgumentNullException.ThrowIfNull(writer);
+        ArgumentNullException.ThrowIfNull(backups);
         _writer = writer;
+        _backups = backups;
     }
 
     /// <summary>Loads <c>Mounts.json</c>; <c>null</c> if missing/unreadable/unparseable.</summary>
@@ -67,6 +70,196 @@ public sealed class CustomFileService
     /// <summary>Loads <c>Loadout\Loadouts.json</c> (read-only); <c>null</c> if missing/unreadable/unparseable.</summary>
     public Task<LoadoutsModel?> LoadLoadoutsAsync(string saveFolder, CancellationToken cancellationToken = default) =>
         LoadJsonAsync(LoadoutsPath(saveFolder), LoadoutsParser.Parse, cancellationToken);
+
+    // --- Engine flags (binary flags_<SteamID>.dat) ----------------------------
+
+    /// <summary>The save folder's <c>flags_*.dat</c> path, or <c>null</c> if none is present.</summary>
+    public string? ResolveFlagsPath(string saveFolder)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        return Directory.Exists(saveFolder)
+            ? Directory.EnumerateFiles(saveFolder, "flags_*.dat").OrderBy(f => f, StringComparer.OrdinalIgnoreCase).FirstOrDefault()
+            : null;
+    }
+
+    /// <summary>Loads the binary flags file; <c>null</c> if missing/unreadable/structurally invalid.</summary>
+    public async Task<FlagsFileModel?> LoadFlagsAsync(string saveFolder, CancellationToken cancellationToken = default)
+    {
+        var path = ResolveFlagsPath(saveFolder);
+        if (path is null)
+        {
+            return null;
+        }
+
+        try
+        {
+            return FlagsFileCodec.Read(await File.ReadAllBytesAsync(path, cancellationToken).ConfigureAwait(false));
+        }
+        catch (IOException)
+        {
+            return null;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return null;
+        }
+        catch (InvalidDataException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Safely writes the binary flags file: backup → temp byte write → re-decode (validate) → atomic
+    /// rename. Returns whether it succeeded (the original is untouched on any failure).
+    /// </summary>
+    public async Task<bool> SaveFlagsAsync(string saveFolder, FlagsFileModel flags, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(flags);
+        var path = ResolveFlagsPath(saveFolder);
+        if (path is null)
+        {
+            return false;
+        }
+
+        var bytes = FlagsFileCodec.Write(flags);
+        _ = FlagsFileCodec.Read(bytes); // sanity: what we wrote decodes
+        var temp = path + ".iuut-tmp";
+
+        try
+        {
+            if (File.Exists(path))
+            {
+                _backups.CreateBackup(path);
+            }
+
+            await File.WriteAllBytesAsync(temp, bytes, cancellationToken).ConfigureAwait(false);
+            _ = FlagsFileCodec.Read(await File.ReadAllBytesAsync(temp, cancellationToken).ConfigureAwait(false)); // validate temp
+            File.Move(temp, path, overwrite: true);
+            return true;
+        }
+        catch (IOException)
+        {
+            return false;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return false;
+        }
+        catch (InvalidDataException)
+        {
+            return false;
+        }
+        finally
+        {
+            TryDelete(temp);
+        }
+    }
+
+    // --- Prospect associations (per-slot AssociatedProspects_Slot_N.json) ------
+
+    /// <summary>The save folder's <c>AssociatedProspects_Slot_*.json</c> files, sorted by name.</summary>
+    public IReadOnlyList<string> ResolveAssociatedProspectFiles(string saveFolder)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        return Directory.Exists(saveFolder)
+            ? Directory.EnumerateFiles(saveFolder, "AssociatedProspects_Slot_*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase).ToList()
+            : [];
+    }
+
+    /// <summary>Loads one <c>AssociatedProspects_Slot_N.json</c> by full path; <c>null</c> if unreadable/unparseable.</summary>
+    public Task<AssociatedProspectsModel?> LoadAssociatedProspectsAsync(string filePath, CancellationToken cancellationToken = default) =>
+        LoadJsonAsync(filePath, AssociatedProspectsParser.Parse, cancellationToken);
+
+    /// <summary>Safely writes one <c>AssociatedProspects_Slot_N.json</c> (backup + re-parse + atomic).</summary>
+    public Task<SafeSaveResult> SaveAssociatedProspectsAsync(string filePath, AssociatedProspectsModel model, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(filePath);
+        ArgumentNullException.ThrowIfNull(model);
+        return _writer.WriteAsync(
+            filePath,
+            AssociatedProspectsSerializer.Serialize(model),
+            static content => { _ = AssociatedProspectsParser.Parse(content); },
+            cancellationToken);
+    }
+
+    // --- Advanced / raw JSON --------------------------------------------------
+
+    /// <summary>The save folder's JSON files (top level + the <c>Loadout</c> subfolder), sorted by name.</summary>
+    public IReadOnlyList<string> ListJsonFiles(string saveFolder)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        if (!Directory.Exists(saveFolder))
+        {
+            return [];
+        }
+
+        var files = new List<string>(Directory.EnumerateFiles(saveFolder, "*.json"));
+        var loadoutDir = Path.Combine(saveFolder, "Loadout");
+        if (Directory.Exists(loadoutDir))
+        {
+            files.AddRange(Directory.EnumerateFiles(loadoutDir, "*.json"));
+        }
+
+        return files.OrderBy(f => f, StringComparer.OrdinalIgnoreCase).ToList();
+    }
+
+    /// <summary>Reads any file's text; <c>null</c> if missing/unreadable.</summary>
+    public async Task<string?> ReadTextAsync(string filePath, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(filePath);
+        if (!File.Exists(filePath))
+        {
+            return null;
+        }
+
+        try
+        {
+            return await File.ReadAllTextAsync(filePath, cancellationToken).ConfigureAwait(false);
+        }
+        catch (IOException)
+        {
+            return null;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return null;
+        }
+    }
+
+    /// <summary>Safely writes raw JSON text (backup + JSON re-parse + atomic). Rejects malformed JSON.</summary>
+    public Task<SafeSaveResult> SaveJsonTextAsync(string filePath, string content, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(filePath);
+        ArgumentNullException.ThrowIfNull(content);
+        return _writer.WriteAsync(
+            filePath,
+            content,
+            static text =>
+            {
+                using (JsonDocument.Parse(text))
+                {
+                }
+            },
+            cancellationToken);
+    }
+
+    private static void TryDelete(string path)
+    {
+        try
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+        }
+        catch (IOException)
+        {
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
+    }
 
     private static string MountsPath(string saveFolder)
     {

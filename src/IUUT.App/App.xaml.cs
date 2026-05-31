@@ -83,6 +83,8 @@ public partial class App : Application
         services.AddSingleton<MountEditService>();
         services.AddSingleton<StashEditService>();
         services.AddSingleton<LoadoutCrossReference>();
+        services.AddSingleton<FlagsEditService>();
+        services.AddSingleton<ProspectEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

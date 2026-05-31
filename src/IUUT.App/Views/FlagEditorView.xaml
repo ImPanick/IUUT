@@ -1,0 +1,73 @@
+<UserControl x:Class="IUUT.App.Views.FlagEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!-- Engine Flags editor (master §8.11). DataContext = FlagEditorViewModel. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="🚩  Engine Flags" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="Advanced — raw engine unlock flag IDs in the binary flags file. IDs have no friendly names; edit only if you know the value."
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                    <TextBlock Text="{Binding SteamId, StringFormat=flags file SteamID: {0}}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
+                </StackPanel>
+                <Button Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="12,4" />
+            </Grid>
+        </Border>
+
+        <!-- Flags list + add -->
+        <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,2,4,10">
+                    <TextBlock Text="ADD FLAG ID" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <TextBox Width="160" VerticalAlignment="Center" Margin="0,0,8,0"
+                             Text="{Binding NewFlagText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Content="Add" Command="{Binding AddFlagCommand}" Padding="14,4" Margin="0,0,8,0" />
+                    <Button Content="Remove selected" Command="{Binding RemoveSelectedCommand}" Padding="14,4" />
+                </StackPanel>
+                <Border Grid.Row="1" CornerRadius="4" Background="{StaticResource DataBackdropBrush}"
+                        BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                    <ListBox ItemsSource="{Binding Flags}" SelectedItem="{Binding SelectedFlag, Mode=TwoWay}"
+                             Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" Margin="6,4" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Status + apply -->
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
+                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
+            <Button Grid.Column="1" Content="💾  Apply to flags file" Click="OnApply"
+                    Padding="18,8" FontWeight="SemiBold" />
+        </Grid>
+    </Grid>
+</UserControl>
