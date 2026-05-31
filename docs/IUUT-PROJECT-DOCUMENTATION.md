@@ -1783,7 +1783,15 @@ the save writer (timestamped backup → write temp → re-read → atomic rename
 writer (not the JSON `SafeSaveWriter`) handles the format; the backup/atomic/rollback
 contract (CONSTITUTION III) is identical.
 
-**Status.** Out of scope for v1 (NG3); post-v1.0. Tracked here; no WP allocated yet.
+**Detailed spec → `docs/GAME-TUNING.md`** — the concrete, publicly-known UE console-variable
+recipes (Fog/volumetrics via `[ConsoleVariables]` `r.Fog`/`r.VolumetricFog`/`r.VolumetricCloud`,
+`sg.*` quality scalars, FPS via `t.MaxFPS` + `[/Script/Engine.Engine]`, net via
+`[/Script/Engine.Player]`/`[/Script/Engine.NetDriver]`), the toggle-card presets, the
+backup/atomic INI-write safety, the validate-against-a-live-cvar-dump process, and the build
+phasing (GT-1..GT-6).
+
+**Status.** Out of scope for v1 (NG3); post-v1.0. Tracked as **Phase 7** in
+`docs/IMPLEMENTATION-PLAN.md`; spec in `docs/GAME-TUNING.md`. Documentation only — no code yet.
 
 ### 20.2 Prospect blob FProperty parser
 
@@ -1925,6 +1933,7 @@ already covers).
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.5.0 | 2026-05-31 | **Recovery + Game-Tuning documentation.** Added **Appendix E** (save-corruption causes → on-disk signal → remedy; what IUUT's writes prevent vs. need special handling; backed by the recovery audit + research). Expanded §20.1 (Engine Mods) and added **`docs/GAME-TUNING.md`** — the publicly-known UE console-variable spec (Fog/volumetrics, `sg.*` scalars, FPS, net) with toggle-card presets, INI backup/atomic-write safety, validate-against-a-live-dump process, and the GT-1..GT-6 phasing (tracked as IMPLEMENTATION-PLAN Phase 7). Documentation only. |
 | 1.4.1 | 2026-05-30 | **Game-process detection corrected to pattern-based** (§14, §9.2). The shipping exe name is not fixed — it encodes version + expansion and changes per patch/DLC (`Icarus-Win64-Shipping` → `Icarus-3.0.12.152317-Shipping-DangerousHorizons`). Detection now matches "name starts `Icarus` + contains `Shipping`" rather than a literal. gameplan §0.4/§1.1, IMPLEMENTATION-PLAN WP-7, and MANUAL_CHECKLIST updated. (WP-7 `GameProcessDetector`.) |
 | 1.4.0 | 2026-05-30 | **Full-save verification pass** against the complete extracted `Icarus\Saved\` tree. §8.3 Cosmetic block rewritten — real keys are 13 integer indices (+ `IsMale`); the documented string colour palettes / `*Paint` / `*Scar` / `*FacialHair` / `VoiceID` field names do **not** exist. Added `Characters[*].TimeLastPlayed` (int64). §8.4 Accolades: documented the two extra top-level keys `PlayerTrackers` + `PlayerTaskListTrackers`. §8.5 Bestiary: documented `FishTracking`. §8.1 blob codec re-verified end-to-end (incl. big-endian Adler-32). Profile, Characters container, MetaInventory, Loadouts, AssociatedProspects, Mounts, and Prospect headers confirmed accurate. See field guide §15 verification pass. |
 | 1.3.1 | 2026-05-25 | Added `docs/IMPLEMENTATION-PLAN.md` (work-package build roadmap) and pointer from §16. Adopted the `dev`-integration / `main`-release branch model (`.agent/HANDOFF_PROTOCOL.md` §1 → v1.1.0; `docs/CICD.md` §4). `dev` branch cut from `main`; protection to be enabled on both. |

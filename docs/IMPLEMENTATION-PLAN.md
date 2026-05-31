@@ -267,6 +267,19 @@ Legend: **[CP]** = on the critical path to the v0.1 MVP. Deps in parentheses.
 | **WP-33** | Release hardening: `release.yml` end-to-end, SHA256SUMS + attestation, portable zip, INSTALL verification, full MANUAL_CHECKLIST | Master §19; docs/CICD.md §5. |
 | **WP-34** | **Tag `v1.0.0`** + GitHub Release | Public launch. |
 
+### Phase 7 — Game Tuning (Engine Mods) → **post-v1.0**
+Engine.ini console-variable toggles ("Buff FPS", fog/volumetric/quality/net tuning). **Full
+spec: `docs/GAME-TUNING.md`** (NG3 / master §20.1). Documentation only so far — no code. Core
+(GT-1..GT-4) needs no game; GT-5 is UI; GT-6 is operator-run validation against a live client.
+| WP | Deliverable | Notes |
+| --- | --- | --- |
+| **GT-1** | `EngineIni` reader/writer (sections/keys, preserve unknown lines+comments, atomic backup-and-write) | GAME-TUNING §6; CONSTITUTION III |
+| **GT-2** | Embedded tuning catalog (vetted cards → owned `[ConsoleVariables]`/`[/Script/...]` fragments) + `scripts/dump-cvars.ps1` | GAME-TUNING §4,§5,§7 |
+| **GT-3** | Toggle engine (merge/remove owned fragments, shared-section append, duplicate-cvar de-dup, reconstruct state) | GAME-TUNING §3 |
+| **GT-4** | INI validation/lint + "Reset Game Tuning" restore | GAME-TUNING §6 |
+| **GT-5** | Game Tuning UI tab (toggle cards) — with the parked UI pass | GAME-TUNING §8; UI-DESIGN-CONCEPT |
+| **GT-6** | Manual validation on a live build (cvar dump → mark Verified) | GAME-TUNING §7 |
+
 ---
 
 ## 4. Critical path (the spine to a runnable product)
