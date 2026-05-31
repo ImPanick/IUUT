@@ -34,6 +34,9 @@
         <DataTemplate DataType="{x:Type vm:CustomViewModel}">
             <views:CustomView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:GameTunerViewModel}">
+            <views:GameTunerView />
+        </DataTemplate>
     </ui:FluentWindow.Resources>
 
     <Grid>

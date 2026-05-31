@@ -32,13 +32,16 @@ SHA-1 load check passes) + `MountsModel`/`MountEditService` + **`FlagsFileCodec`
 - **Done:** navigation **shell** (in-window page swap — `INavigationService`/`ShellViewModel`,
   Home extracted to `Views/HomeView`, DataTemplate page rendering, Back/Home nav bar); the
   **Recovery screen** (wired to `RecoveryPlanner`/`RecoveryService`/`RecoveryAdvisor`: pick save →
-  Scan → per-file plan + advisories → confirm → Repair → report); and the **Custom editor shell**
-  (`CustomViewModel`/`CustomView`: profile selector + category sidebar → editor panel, incl. a new
-  **Game Tuning** category per owner request). All three tiles on Home now navigate. DI uses
-  `ValidateOnBuild` (whole graph validated at startup). Owner-run visual QA pending.
+  Scan → per-file plan + advisories → confirm → Repair → report); the **Custom editor shell**
+  (`CustomViewModel`/`CustomView`: profile selector + category sidebar → editor panel); and the
+  **Game Tuner** — its own Home tile (⚙, next to Custom; moved OUT of the Custom sidebar) backed by
+  the **Phase 7 Game Tuning Core, pulled forward** (`EngineIni` codec + `GameTuningCatalog` w/
+  stable-max caps + `GameTuningService`). `GameTunerView`: per setting a toggle, or toggle + slider +
+  **free-text number box clamped to the stable max**, applied to Engine.ini (backed up, atomic).
+  **All four Home tiles navigate.** DI uses `ValidateOnBuild`. Owner-run visual QA pending.
 - **Remaining UI:** wire the Custom **category editors** to their (already-built) Core services
   (Account/Characters/Accolades-Bestiary/Stash/…), Settings, Advanced/Raw viewer, Troubleshooting
-  modal, Game Tuning tab content, and a **polish pass**.
+  modal, and a **polish pass**. (Game Tuner is functional; GT-6 live-cvar verification still owner-run.)
 - **Polish backlog (owner-noted, screenshots 2026-05-31):** general "not great"/spacing pass; the
   **Recovery header title+subtitle overlap** (two TextBlocks stacked in one grid cell — split into
   rows); revisit glass contrast/typography. Take note, don't act mid-feature.

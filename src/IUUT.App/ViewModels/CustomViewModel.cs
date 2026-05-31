@@ -156,13 +156,6 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
-            Glyph = "⚙",
-            Label = "Game Tuning",
-            Description = "Engine.ini performance/visual cvar toggles — \"Buff FPS\", fog/volumetrics, quality scalars, FPS + net.",
-            Status = "Future — Phase 7 (docs/GAME-TUNING.md). Bundled/sideloaded, offline; not yet built.",
-        },
-        new()
-        {
             Glyph = "🧾",
             Label = "Advanced / Raw",
             Description = "Raw JSON viewer and export/import for any save file.",

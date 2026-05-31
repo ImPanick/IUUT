@@ -41,6 +41,7 @@ public sealed class HomeViewModel : ObservableObject
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         OpenRecoveryCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.RecoveryKey));
         OpenCustomCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.CustomKey));
+        OpenGameTunerCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.GameTunerKey));
     }
 
     /// <summary>Discovered save profiles for the dropdown.</summary>
@@ -54,6 +55,9 @@ public sealed class HomeViewModel : ObservableObject
 
     /// <summary>Opens the Custom editor page.</summary>
     public IRelayCommand OpenCustomCommand { get; }
+
+    /// <summary>Opens the Game Tuner (Engine.ini) page.</summary>
+    public IRelayCommand OpenGameTunerCommand { get; }
 
     /// <summary>The save root being scanned (editable; Browse updates it).</summary>
     public string SaveRoot

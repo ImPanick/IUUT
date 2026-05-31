@@ -1,0 +1,96 @@
+<UserControl x:Class="IUUT.App.Views.GameTunerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!-- Game Tuner (master §20.1, docs/GAME-TUNING.md). DataContext = GameTunerViewModel. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="⚙  Game Tuner" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="Engine.ini performance &amp; visual tweaks — toggle effects off, set quality/FPS. Standard Unreal cvars; restart Icarus to apply. A backup is taken before any write."
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                    <TextBlock Text="{Binding EngineIniPath}" Style="{StaticResource MonoText}" Margin="0,6,0,0" TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+                <Button Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="14,4" />
+            </Grid>
+        </Border>
+
+        <!-- Settings list -->
+        <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding Settings}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,0,0,8" Padding="14,10" CornerRadius="4"
+                                    Background="{StaticResource DataBackdropBrush}"
+                                    BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
+                                        <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" />
+                                        <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,2,0,0" />
+                                    </StackPanel>
+
+                                    <CheckBox Grid.Column="1" IsChecked="{Binding Enabled, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,16,0" />
+
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsNumber}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                        <Slider Width="150" VerticalAlignment="Center"
+                                                Minimum="{Binding Minimum}" Maximum="{Binding Maximum}"
+                                                Value="{Binding Value, Mode=TwoWay}"
+                                                TickFrequency="{Binding Step}" IsSnapToTickEnabled="True"
+                                                IsEnabled="{Binding Enabled}" />
+                                        <TextBox Width="62" Margin="10,0,4,0" VerticalAlignment="Center"
+                                                 Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                                                 IsEnabled="{Binding Enabled}" />
+                                        <TextBlock Text="{Binding Unit}" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Status + apply -->
+        <Grid Grid.Row="2" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
+                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
+            <Button Grid.Column="1" Content="⚙  Apply to Engine.ini" Click="OnApply" Padding="18,8" FontWeight="SemiBold" />
+        </Grid>
+    </Grid>
+</UserControl>

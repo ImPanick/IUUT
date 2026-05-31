@@ -3,6 +3,7 @@ using IUUT.App.Navigation;
 using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
+using IUUT.Core.GameTuning;
 using IUUT.Core.Io;
 using IUUT.Core.Recovery;
 using IUUT.Core.Services;
@@ -72,12 +73,17 @@ public partial class App : Application
         services.AddSingleton<RecoveryAdvisor>();
         services.AddSingleton<RecoveryService>();
 
+        // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
+        services.AddSingleton<GameTuningCatalog>();
+        services.AddSingleton<GameTuningService>();
+
         // --- UI shell + pages -------------------------------------------------
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
         services.AddSingleton<HomeViewModel>();
         services.AddSingleton<RecoveryViewModel>();
         services.AddSingleton<CustomViewModel>();
+        services.AddSingleton<GameTunerViewModel>();
         services.AddSingleton<MainWindow>();
 
         // ValidateOnBuild constructs every registration at startup, so a broken DI graph

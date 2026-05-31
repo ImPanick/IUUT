@@ -21,6 +21,9 @@ public sealed class ShellViewModel : ObservableObject, INavigationService
     /// <summary>The Custom editor page key.</summary>
     public const string CustomKey = "Custom";
 
+    /// <summary>The Game Tuner page key.</summary>
+    public const string GameTunerKey = "GameTuner";
+
     private readonly IServiceProvider _services;
     private readonly Stack<string> _back = new();
 
@@ -95,6 +98,7 @@ public sealed class ShellViewModel : ObservableObject, INavigationService
         HomeKey => _services.GetRequiredService<HomeViewModel>(),
         RecoveryKey => _services.GetRequiredService<RecoveryViewModel>(),
         CustomKey => _services.GetRequiredService<CustomViewModel>(),
+        GameTunerKey => _services.GetRequiredService<GameTunerViewModel>(),
         _ => throw new ArgumentOutOfRangeException(nameof(key), key, "Unknown page key."),
     };
 }
