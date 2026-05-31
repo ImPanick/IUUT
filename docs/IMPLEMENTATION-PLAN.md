@@ -15,12 +15,20 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-22. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-23/25. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-22 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-23/25 (see `git log` on `dev`).
+
+**Phase 4 Core done (WP-23 + WP-25, `src/IUUT.Core/...`):** `MetaInventoryModel`/`MetaItem`/
+`ItemDynamicProperty` + parser/serializer + `StashEditService` (mint 32-hex-uppercase
+`DatabaseGUID`, add/remove; uniqueness via `ValidationEngine.ValidateUniqueDatabaseGuids`);
+`LoadoutsModel`/`LoadoutEntry` + parser/serializer + `LoadoutCrossReference` (item GUIDs
+referenced by loadouts, warn-before-remove, dangling refs). Rich sub-blocks round-trip verbatim
+(CONSTITUTION VI). **WP-24 stash grid UI parked.** `items.json` catalog enrichment still deferred
+(needed only for the stash UI's item picker, not the Core). **205 tests.**
 
 **Phase 3 Core done (WP-19..22, `src/IUUT.Core/Editing/`):** `CustomApplyService` (per-category
 load → edit-delegate → validate → minimal-write Preview/Apply) + pure edit services —
@@ -52,10 +60,12 @@ post-restore cross-file incoherence (via `ValidationEngine`); advisories ride in
 Deliberately NOT done: auto-rebuilding a corrupt prospect blob (hash-consistent ≠ valid world);
 fsync-for-power-loss durability (tracked, Appendix E).
 
-**Now:** Phases 2 + 3 Core are done (UIs parked). Next roadmap path is **Phase 4 — Orbital
-Stash (WP-23..25)**: `MetaInventory`/`Loadouts` editing + `DatabaseGUID` generation/sync — this
-is also where the deferred **`items.json` catalog enrichment** gets completed. Then Phase 5
-(Prospects/Mounts/flags, WP-26..30) and Phase 6 (polish/release — where all the parked UI lands).
+**Now:** Phases 2 + 3 + 4 Core are done (UIs parked). Next roadmap path is **Phase 5 —
+Prospects & Mounts (WP-26..30)**: `AssociatedProspects_Slot_N` (unstick), prospect header editor,
+the `ProspectBlobCodec` (zlib decode/verify/re-encode + big-endian Adler-32 round-trip — the
+trickiest Core piece), `Mounts.json` JSON-field editor, and the `flags_*.dat` 82-byte binary
+editor. Then Phase 6 (polish/release — where all the parked UI lands: Home polish, Recovery
+screen, Custom screens, Stash grid, Troubleshooting modal, Game Tuning tab).
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
