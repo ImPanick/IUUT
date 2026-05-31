@@ -28,7 +28,8 @@ Human-only test steps that automated CI cannot perform.
 ## §3. Game-state banner
 
 - [ ] **Game closed:** banner is hidden (or shows green `Safest`).
-- [ ] **Game on Main Menu** (`Icarus-Win64-Shipping.exe` running, on title screen): amber banner `OK — tested`.
+- [ ] **Game on Main Menu** (the Icarus shipping process running — e.g. `Icarus-3.0.12.152317-Shipping-DangerousHorizons`, on title screen): amber banner `OK — tested`.
+- [ ] **Detection is patch-proof:** verify the banner still triggers after a game update changes the exe's version/expansion suffix (match is `Icarus*…Shipping…`, not the literal old name).
 - [ ] **Game in any other screen:** yellow banner `Untested — your risk`.
 - [ ] **Game in a prospect:** red banner `Strong warning`.
 - [ ] In all cases, save operations are **warn-only**, never hard-blocked (CONSTITUTION IX).

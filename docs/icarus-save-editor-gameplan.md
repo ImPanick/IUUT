@@ -108,11 +108,11 @@ Inside each SteamID64 folder lives the full save set (`Profile.json`, `Character
 | **Character Selection / Workshop / other menus** | ⚠️ Warn: untested — edits may not persist |
 | **Inside a prospect (in-world)** | 🛑 Strong warn — likely won't stick or may corrupt |
 
-**UI copy (persistent banner when `Icarus-Win64-Shipping.exe` detected):**
+**UI copy (persistent banner when the Icarus shipping process is detected — matched by pattern, since the exe name carries version+expansion, e.g. `Icarus-3.0.12.152317-Shipping-DangerousHorizons`):**
 
 > Recommended: fully close Icarus before saving. If the game is open, stay on the **Main Menu** only. Workshop and other screens are untested — you accept the risk.
 
-Detect process via `Icarus-Win64-Shipping.exe`. Never hard-block saves based on game state — warn only.
+Detect the game by **process-name pattern** — name starts with `Icarus` and contains `Shipping` (case-insensitive). The exe name is **not** fixed: it encodes the version and expansion and changes every patch/DLC (`Icarus-Win64-Shipping` on older builds → `Icarus-3.0.12.152317-Shipping-DangerousHorizons` currently). Never hard-block saves based on game state — warn only.
 
 ### 0.5 Home screen — three entry presets
 

@@ -6,7 +6,7 @@
 | --- | --- |
 | **Full name** | Icarus Ultimate Utility Tool |
 | **Short name / acronym** | IUUT |
-| **Document version** | 1.4.0 |
+| **Document version** | 1.4.1 |
 | **Status** | Pre-development — documentation-first phase |
 | **Target game** | Icarus (RocketWerkz, Unreal Engine 4, Windows) |
 | **Verified against** | Mendel update (Week 220, Feb 2026), `Profile.DataVersion` = 4 |
@@ -1139,7 +1139,7 @@ flowchart TB
 | `LazyMaxService` | Apply core max to 4 files atomically (with backup) |
 | `CustomEditService` | Category-scoped mutations with dirty tracking |
 | `ValidationEngine` | Pre/post save checks; block on hard fail |
-| `GameProcessDetector` | Detect `Icarus-Win64-Shipping.exe`; drive warning banner |
+| `GameProcessDetector` | Detect the Icarus shipping process by **pattern** (name starts `Icarus` + contains `Shipping`); drive warning banner |
 | `ProspectBlobCodec` | base64 → zlib → deflate → SHA-1 verify/re-encode |
 
 ### 9.3 Session model
@@ -1504,7 +1504,17 @@ No single algorithm — user-driven edits across categories with shared Preview 
 | Game on other menu | Yellow "Untested — your risk" | Warn only |
 | Game in prospect | Red "Strong warning" | Warn only — likely won't persist |
 
-**Process detection:** `Icarus-Win64-Shipping.exe`
+**Process detection (pattern-based — the exe name is NOT fixed):** the shipping
+executable name encodes the **version** and **expansion**, which change with every
+patch/DLC. Observed examples:
+
+- `Icarus-Win64-Shipping.exe` (older builds)
+- `Icarus-3.0.12.152317-Shipping-DangerousHorizons.exe` (current — version `3.0.12.152317`, expansion `DangerousHorizons`)
+
+**Match rule:** a running process whose name **starts with `Icarus`** AND **contains
+`Shipping`** (case-insensitive). Never match on the exact literal `Icarus-Win64-Shipping`
+— that breaks on the next patch. The launcher and other `Icarus*` processes that do
+**not** contain `Shipping` are intentionally not matched.
 
 **Never hard-block** saves based on game state — warn and let user decide.
 
@@ -1840,6 +1850,7 @@ Re-fetch catalogs when DataVersion advances.
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.4.1 | 2026-05-30 | **Game-process detection corrected to pattern-based** (§14, §9.2). The shipping exe name is not fixed — it encodes version + expansion and changes per patch/DLC (`Icarus-Win64-Shipping` → `Icarus-3.0.12.152317-Shipping-DangerousHorizons`). Detection now matches "name starts `Icarus` + contains `Shipping`" rather than a literal. gameplan §0.4/§1.1, IMPLEMENTATION-PLAN WP-7, and MANUAL_CHECKLIST updated. (WP-7 `GameProcessDetector`.) |
 | 1.4.0 | 2026-05-30 | **Full-save verification pass** against the complete extracted `Icarus\Saved\` tree. §8.3 Cosmetic block rewritten — real keys are 13 integer indices (+ `IsMale`); the documented string colour palettes / `*Paint` / `*Scar` / `*FacialHair` / `VoiceID` field names do **not** exist. Added `Characters[*].TimeLastPlayed` (int64). §8.4 Accolades: documented the two extra top-level keys `PlayerTrackers` + `PlayerTaskListTrackers`. §8.5 Bestiary: documented `FishTracking`. §8.1 blob codec re-verified end-to-end (incl. big-endian Adler-32). Profile, Characters container, MetaInventory, Loadouts, AssociatedProspects, Mounts, and Prospect headers confirmed accurate. See field guide §15 verification pass. |
 | 1.3.1 | 2026-05-25 | Added `docs/IMPLEMENTATION-PLAN.md` (work-package build roadmap) and pointer from §16. Adopted the `dev`-integration / `main`-release branch model (`.agent/HANDOFF_PROTOCOL.md` §1 → v1.1.0; `docs/CICD.md` §4). `dev` branch cut from `main`; protection to be enabled on both. |
 | 1.3.0 | 2026-05-25 | **Operator-execution guarantees.** Made the user-facing intent binding and verifiable: added §6.4 (two acquisition paths — pre-built signed download vs. build-from-source; integrity via `SHA256SUMS.txt` + Sigstore build-provenance attestation; no-installer / no-admin / no-registry guarantees; one-folder footprint `%AppData%\IUUT\` with `IUUT.portable` opt-in; clean removal). Rewrote §19 with the release pipeline and user verification steps. Added NG8 (no installer). Clarified §7.1 auto-link-then-manual-fallback flow. Fixed the §7.5.1 cache-path inconsistency (`%AppData%\IUUT\`, was `%AppData%\IcarusUltimateUtilityTool\`). New operator runbook `docs/INSTALL.md`; new `release.yml` CI. |

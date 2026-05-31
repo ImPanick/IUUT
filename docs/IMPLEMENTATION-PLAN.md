@@ -70,7 +70,7 @@ Legend: **[CP]** = on the critical path to the v0.1 MVP. Deps in parentheses.
 | **WP-4** | `Accolades.json` + `BestiaryData.json` models/parsers | Field guide; simple flat JSON. |
 | **WP-5** [CP] | `SaveDiscoveryService` (enumerate `PlayerData\`, metadata) + manual path override | Master §7.1; auto-link then Browse fallback. |
 | **WP-6** | `SteamProfileResolverService` (cache → `loginusers.vdf` → Web API → fallback) | Master §7.5.1. The **only** network code; offline-first. |
-| **WP-7** | `GameProcessDetector` (`Icarus-Win64-Shipping.exe`) | Master §14; warn-only. |
+| **WP-7** | `GameProcessDetector` — pattern match (name starts `Icarus` + contains `Shipping`; the exe carries version+expansion, e.g. `Icarus-3.0.12.152317-Shipping-DangerousHorizons`) | Master §14; warn-only. |
 | **WP-8** | `HealthScanService` (parse all + prospect SHA-1) | Master §11.3. |
 | **WP-9** | `ValidationEngine` (hard fails §13.1 / soft warns §13.2) | Gates every write. |
 | **WP-10** | App-state/footprint plumbing: `%AppData%\IUUT\` + `IUUT.portable` + `DOTNET_BUNDLE_EXTRACT_BASE_DIR`; settings store | Master §6.4. |
