@@ -104,5 +104,31 @@ public sealed class RecoveryServiceTests : IDisposable
         report.PartialRecovery.Should().BeFalse();
     }
 
+    [Fact]
+    public async Task ExecuteAsync_DestinationInsideProfileFolder_Throws()
+    {
+        Write("Profile.json", ProfileSerializer.Serialize(new ProfileModel { UserId = SteamId }));
+        var plan = _planner.Plan(_profileDir);
+
+        var act = async () => await _service.ExecuteAsync(plan, Path.Combine(_profileDir, "backups"));
+
+        await act.Should().ThrowAsync<ArgumentException>("the master backup must not live inside the folder it snapshots");
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_MasterBackup_ExcludesIuutTempArtifacts()
+    {
+        Write("Profile.json", "{ broken");
+        Write("Profile.json.backup", ProfileSerializer.Serialize(new ProfileModel { UserId = SteamId }));
+        Write("Profile.json.iuut-tmp-deadbeef", "leftover temp content");
+
+        var plan = _planner.Plan(_profileDir);
+        var report = await _service.ExecuteAsync(plan, _backupDir);
+
+        using var zip = ZipFile.OpenRead(report.MasterBackupZipPath!);
+        zip.Entries.Should().NotContain(e => e.FullName.Contains(".iuut-tmp-"), "transient temp files are not part of the snapshot");
+        zip.Entries.Should().Contain(e => e.FullName == "Profile.json", "the corrupt save itself is captured");
+    }
+
     public void Dispose() => _temp.Dispose();
 }

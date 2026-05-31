@@ -31,7 +31,10 @@ public sealed class BackupChainWalker
             foreach (var path in EnumerateBackups(directory, fileName))
             {
                 var isIuut = Path.GetFileName(path).Contains(BackupManager.BackupInfix, StringComparison.Ordinal);
-                var clean = TryRead(path, out var content) && IsCleanSafe(isClean, content);
+                // An empty or whitespace-only backup is never a valid restore source.
+                var clean = TryRead(path, out var content)
+                    && !string.IsNullOrWhiteSpace(content)
+                    && IsCleanSafe(isClean, content);
                 candidates.Add(new BackupCandidate
                 {
                     Path = path,
@@ -58,6 +61,7 @@ public sealed class BackupChainWalker
         var gameClean = all
             .Where(c => !c.IsIuutBackup && c.IsClean)
             .OrderByDescending(c => c.LastModifiedUtc)
+            .ThenBy(c => c.Path, StringComparer.Ordinal) // stable tiebreak when mtimes are equal
             .ToList();
 
         if (gameClean.Count > 0)
@@ -70,6 +74,7 @@ public sealed class BackupChainWalker
         var iuutClean = all
             .Where(c => c.IsIuutBackup && c.IsClean)
             .OrderByDescending(c => c.LastModifiedUtc)
+            .ThenBy(c => c.Path, StringComparer.Ordinal) // stable tiebreak when mtimes are equal
             .ToList();
 
         return iuutClean.Count > 0

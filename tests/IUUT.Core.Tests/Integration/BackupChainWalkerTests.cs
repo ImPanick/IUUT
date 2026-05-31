@@ -120,5 +120,31 @@ public sealed class BackupChainWalkerTests : IDisposable
         result.Candidates.Should().ContainSingle();
     }
 
+    [Fact]
+    public void Scan_EmptyOrWhitespaceBackup_IsNeverChosen()
+    {
+        var file = Write("Profile.json", "{ corrupt", 0);
+        Write("Profile.json.backup", "", 5);                          // empty, newest
+        var valid = Write("Profile.json.backup_1", "{\"a\":1}", 1);   // valid, older
+
+        var result = _walker.Scan(file, ParsesJson);
+
+        result.Chosen!.Path.Should().Be(valid, "a zero-byte backup is not a valid restore source");
+    }
+
+    [Fact]
+    public void Scan_EqualMtimes_PicksDeterministically()
+    {
+        var file = Write("Mounts.json", "{ corrupt", 0);
+        var a = Write("Mounts.json.backup", "{\"x\":1}", 3);
+        Write("Mounts.json.backup_1", "{\"x\":2}", 3);                // identical mtime
+
+        var first = _walker.Scan(file, ParsesJson).Chosen!.Path;
+        var second = _walker.Scan(file, ParsesJson).Chosen!.Path;
+
+        first.Should().Be(second, "selection must be stable across runs");
+        first.Should().Be(a, "ties break by ordinal path; 'Mounts.json.backup' sorts before '.backup_1'");
+    }
+
     public void Dispose() => _temp.Dispose();
 }

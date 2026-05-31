@@ -58,22 +58,64 @@ public sealed class RecoveryService
         };
     }
 
-    private string CreateMasterBackup(string profileFolder, string destinationDirectory)
+    private string? CreateMasterBackup(string profileFolder, string destinationDirectory)
     {
-        Directory.CreateDirectory(destinationDirectory);
-        var folderName = Path.GetFileName(Path.TrimEndingDirectorySeparator(profileFolder));
-        var stamp = _clock.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
-
-        var zipPath = Path.Combine(destinationDirectory, $"{folderName}.iuut-recovery-{stamp}.zip");
-        var n = 2;
-        while (File.Exists(zipPath))
+        // The zip must live OUTSIDE the folder it snapshots, or it would try to include itself.
+        var folderFull = Path.GetFullPath(profileFolder);
+        var destFull = Path.GetFullPath(destinationDirectory);
+        if (destFull == folderFull ||
+            destFull.StartsWith(folderFull + Path.DirectorySeparatorChar, StringComparison.Ordinal))
         {
-            zipPath = Path.Combine(destinationDirectory, $"{folderName}.iuut-recovery-{stamp}-{n}.zip");
-            n++;
+            throw new ArgumentException(
+                "The master-backup directory must be outside the profile folder.", nameof(destinationDirectory));
         }
 
-        ZipFile.CreateFromDirectory(profileFolder, zipPath, CompressionLevel.Optimal, includeBaseDirectory: false);
-        return zipPath;
+        try
+        {
+            Directory.CreateDirectory(destinationDirectory);
+            var folderName = Path.GetFileName(Path.TrimEndingDirectorySeparator(profileFolder));
+            var stamp = _clock.UtcNow.ToString("yyyyMMdd-HHmmss", CultureInfo.InvariantCulture);
+
+            var zipPath = Path.Combine(destinationDirectory, $"{folderName}.iuut-recovery-{stamp}.zip");
+            var n = 2;
+            while (File.Exists(zipPath))
+            {
+                zipPath = Path.Combine(destinationDirectory, $"{folderName}.iuut-recovery-{stamp}-{n}.zip");
+                n++;
+            }
+
+            using var archive = ZipFile.Open(zipPath, ZipArchiveMode.Create);
+            foreach (var file in Directory.EnumerateFiles(profileFolder, "*", SearchOption.AllDirectories))
+            {
+                var name = Path.GetFileName(file);
+                // Never snapshot IUUT's own transient temp files or recovery zips — only the save data.
+                if (name.Contains(".iuut-tmp-", StringComparison.Ordinal) ||
+                    name.Contains(".iuut-recovery-", StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var entryName = Path.GetRelativePath(profileFolder, file).Replace('\\', '/');
+                try
+                {
+                    archive.CreateEntryFromFile(file, entryName, CompressionLevel.Optimal);
+                }
+                catch (IOException)
+                {
+                    // A file locked mid-recovery is skipped rather than aborting the whole snapshot.
+                }
+            }
+
+            return zipPath;
+        }
+        catch (IOException)
+        {
+            return null; // recovery still proceeds; per-file SafeSaveWriter backups remain the safety net
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return null;
+        }
     }
 
     private async Task<RecoveryFileResult> ApplyAsync(RecoveryFileAction action, CancellationToken cancellationToken)
