@@ -75,7 +75,19 @@ csharp_style_namespace_declarations = file_scoped:warning
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_prefer_top_level_statements = false:silent
 
-# Naming — _camelCase private fields per CODE_STYLE §2
+# Naming (per CODE_STYLE §2). Rules are evaluated in order; the first matching
+# symbol spec wins, so the const rule must precede the private-field rule.
+
+# Constants (any accessibility) → PascalCase, e.g. DefaultBackupRoot.
+dotnet_naming_rule.constants_pascal_case.severity = warning
+dotnet_naming_rule.constants_pascal_case.symbols = constant_fields
+dotnet_naming_rule.constants_pascal_case.style = pascal_case
+dotnet_naming_symbols.constant_fields.applicable_kinds = field
+dotnet_naming_symbols.constant_fields.required_modifiers = const
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+# Private (non-const) fields → _camelCase, e.g. _backupManager. Static-readonly
+# private fields follow the same _camelCase convention as instance fields.
 dotnet_naming_rule.private_fields_with_underscore.severity = warning
 dotnet_naming_rule.private_fields_with_underscore.symbols = private_fields
 dotnet_naming_rule.private_fields_with_underscore.style = underscore_prefix
