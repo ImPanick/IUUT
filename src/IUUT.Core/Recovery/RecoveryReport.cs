@@ -18,6 +18,13 @@ public sealed record RecoveryReport
     /// <summary>True when some files could only be partially recovered or not recovered at all (F-024).</summary>
     public required bool PartialRecovery { get; init; }
 
+    /// <summary>
+    /// Human-readable guidance for causes recovery can't fix alone (Appendix E): Steam Cloud
+    /// overwrite, cloud-sync conflicted copies, antivirus/CFA blocks, schema incompatibility,
+    /// cross-file incoherence. Empty when none apply.
+    /// </summary>
+    public required IReadOnlyList<string> Advisories { get; init; }
+
     /// <summary>Files that were restored or template-repaired.</summary>
     public int ChangedCount => Files.Count(f => f.Changed);
 

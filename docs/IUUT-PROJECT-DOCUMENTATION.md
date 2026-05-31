@@ -1869,6 +1869,44 @@ See §8.3. Tree name = **Genetics**; RowName prefix = `Genetics_`. Sixteen funct
 
 Re-fetch catalogs when DataVersion advances.
 
+### Appendix E — Save-corruption causes & remedies
+
+Why Icarus/JSON saves break, how IUUT detects it, and how recovery (WP-16..18) +
+`RecoveryAdvisor` respond. Ordered by likelihood × severity for a single-player Windows
+user. Sources: this repo's field guide (first-party), Steam/Reddit reports, Steam Cloud &
+atomic-write docs (URLs in the research notes; community claims marked where unverified).
+
+| # | Cause | On-disk signal | IUUT remedy | Prevented by IUUT writes? |
+| --- | --- | --- | --- | --- |
+| 1 | **Crash/force-quit during save flush** | zero-byte / truncated JSON; prospect `ProspectBlob.Hash` SHA-1 mismatch | restore newest *clean-parsing* backup (prospects: first clean from chain, not blindly newest) | **Yes** — atomic temp→validate→rename + always-backup |
+| 2 | **Editing while the game is running** | live file silently reverted, or a torn interleaved write | warn-if-running gate (`GameProcessDetector`); restore backup if torn | **Yes** — never write while `Icarus*Shipping` is detected |
+| 3 | **Power loss / BSOD during write** | zero-byte/truncated file after reboot | restore newest clean backup | **Mostly** — atomic rename; full power-loss safety needs fsync (see note) |
+| 4 | **Antivirus / Controlled Folder Access** | write fails / `UnauthorizedAccessException`; save silently stale | **`RecoveryAdvisor`** surfaces "allow IUUT under Controlled Folder Access"; a blocked write is never reported as success | Partly — can't unblock the *game*, but never lies about a failed write |
+| 5 | **Steam Cloud sync conflict** | no conflict file — only the benign `steam_autocloud.vdf` manifest; a known-good save looks rolled back after launching elsewhere | **`RecoveryAdvisor`** detects `steam_autocloud.vdf` → "disable Steam Cloud for Icarus before restoring, then re-enable" | No — threat is *post-restore overwrite*, not a torn write |
+| 6 | **Game patch bumps save schema (`DataVersion`)** | **byte-valid** JSON the new build won't load (`DataVersion` ≠ expected) | **`RecoveryAdvisor`** classifies this as *incompatibility, not corruption* — IUUT refuses to "repair" an intact file | No — but never destroys a valid save |
+| 7 | **Manual bad hand-edit / wrong file copied** | malformed JSON; un-parseable inner `Characters.json` blob; dup `ChrSlot`/GUID | restore IUUT's own pre-edit backup; re-edit via the validated editor | **Yes** — backup + round-trip-parse-before-replace + `ValidationEngine` |
+| 8 | **Disk full / bad sectors** | zero-byte/truncated on a full volume; bytes failing SHA-1/parse | restore newest clean backup | Partly — atomic rename leaves the old file intact on a failed write |
+| 9 | **OneDrive/Dropbox syncing the save folder** | `… (conflicted copy …)` / `…-PCNAME` sibling files; locked-file errors | **`RecoveryAdvisor`** detects conflicted-copy siblings → "move the save folder out of the synced location" | Partly — can't stop a third-party sync client locking |
+| 10 | **Encoding — UTF-8 *with* BOM / wrong EOL** | `EF BB BF` prefix the game didn't write; LF/space deviations | rewrite UTF-8 **no-BOM** | **Yes** — `SafeSaveWriter` always writes UTF-8 without BOM |
+
+**Icarus-specific recovery facts (first-party, field guide §8.3/§10/§13):** the game keeps
+rolling `<File>.backup`/`.backup_1..10` (clean shutdown), **but `Loadout\Loadouts.json` uses
+`.<N>.backup`** and **`MetaInventory.json` / `AssociatedProspects_*` have *zero* game
+backups** — so the walker globs `<File>.*backup*` (not a fixed list) and IUUT's own backup is
+the only net for the no-rotation files. For prospects, prefer the first *clean* backup over
+the newest (the freshest may be the bad in-memory flush). `ProspectBlob.Hash` (SHA-1 of the
+uncompressed blob) is the built-in world-corruption detector.
+
+**Why we do NOT auto-rebuild a corrupt prospect blob:** recomputing the SHA-1 over corrupt
+bytes yields a hash-*consistent* but logically-broken world the game may crash on. A prospect
+with a bad blob and no clean backup is `Unrecoverable` by design → restore from backup.
+
+**fsync note (cause 3):** `SafeSaveWriter` uses temp→validate→atomic-rename, which protects
+against torn writes and crashes. Full power-loss durability would additionally require flushing
+the temp file (and its directory) to disk before the rename; tracked as a future hardening item
+(not yet implemented — most corruption in practice is cause 1/2/7, which the current design
+already covers).
+
 ---
 
 ## 23. Related documents

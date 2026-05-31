@@ -26,13 +26,24 @@
 **WP-13** (Home shell) + **WP-14** (Preview→Apply) + **WP-U1** (Glass Console UI) +
 **Phase 2 Core: WP-16** (`BackupChainWalker`) + **WP-17** (`TemplateRepairService` +
 `RecoveryPlanner`) + **WP-18** (`RecoveryService` — master backup zip → restore/template →
-report). Solution builds clean (Debug + Release); **169 tests** pass. Order continues below (§4).
+report) + a **recovery audit + corruption-research** follow-up (hardening + `RecoveryAdvisor`).
+Solution builds clean (Debug + Release); **179 tests** pass. Order continues below (§4).
 
 **WP-16..18 as built** (`src/IUUT.Core/Recovery/`): `BackupChainWalker` (glob `<File>.*backup*`,
 rank clean+mtime, prospect second-newest, IUUT fallback) → `RecoveryPlanner` (health-scan +
 walk + template, sorted into §12.1 restore order, `PartialRecovery` flag) → `RecoveryService`
 (full-folder backup zip first, then restore/template via `ISafeSaveWriter`, per-file `RecoveryReport`).
 Pure Core; the **WPF Recovery screen is parked** with the rest of the UI polish.
+
+**Recovery audit + corruption research (post-WP-18, master Appendix E):** adversarially audited
+the subsystem and researched real-world corruption causes. Hardened the walker (deterministic
+mtime tiebreak, empty-backup guard) and the master zip (excludes IUUT temp/zip artifacts,
+rejects dest-inside-folder, degrades instead of crashing). Added **`RecoveryAdvisor`** — surfaces
+causes recovery can't fix alone: Steam Cloud overwrite, OneDrive/Dropbox conflicted copies,
+antivirus/Controlled-Folder-Access write blocks, `DataVersion` incompatibility-vs-corruption, and
+post-restore cross-file incoherence (via `ValidationEngine`); advisories ride in `RecoveryReport`.
+Deliberately NOT done: auto-rebuilding a corrupt prospect blob (hash-consistent ≠ valid world);
+fsync-for-power-loss durability (tracked, Appendix E).
 
 **Now:** Phase 2's UI is parked → next roadmap path is **Phase 3 — Custom core (WP-19..22)**
 unless owner redirects. (Recovery is wired into the app when we do the UI polish pass.)

@@ -18,14 +18,17 @@ public sealed class RecoveryService
 {
     private readonly ISafeSaveWriter _writer;
     private readonly IClock _clock;
+    private readonly RecoveryAdvisor _advisor;
 
-    /// <summary>Creates the recovery executor over the save writer and a clock (for the backup-zip stamp).</summary>
-    public RecoveryService(ISafeSaveWriter writer, IClock clock)
+    /// <summary>Creates the recovery executor over the save writer, a clock (backup-zip stamp), and the advisor.</summary>
+    public RecoveryService(ISafeSaveWriter writer, IClock clock, RecoveryAdvisor advisor)
     {
         ArgumentNullException.ThrowIfNull(writer);
         ArgumentNullException.ThrowIfNull(clock);
+        ArgumentNullException.ThrowIfNull(advisor);
         _writer = writer;
         _clock = clock;
+        _advisor = advisor;
     }
 
     /// <summary>
@@ -49,12 +52,22 @@ public sealed class RecoveryService
             results.Add(await ApplyAsync(action, cancellationToken).ConfigureAwait(false));
         }
 
+        var advisories = new List<string>();
+        if (zipPath is null)
+        {
+            advisories.Add(
+                "The full-folder master backup could not be created; only per-file backups protect this recovery.");
+        }
+
+        advisories.AddRange(_advisor.Advise(plan.ProfileFolder, results));
+
         return new RecoveryReport
         {
             ProfileFolder = plan.ProfileFolder,
             MasterBackupZipPath = zipPath,
             Files = results,
             PartialRecovery = plan.PartialRecovery || results.Any(r => r.Failed),
+            Advisories = advisories,
         };
     }
 

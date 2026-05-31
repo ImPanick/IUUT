@@ -29,7 +29,8 @@ public sealed class RecoveryServiceTests : IDisposable
         _backupDir = Path.Combine(_temp.Path, "iuut-backups");
         _service = new RecoveryService(
             new SafeSaveWriter(new BackupManager(FixedClock.Default), new SystemGuidProvider()),
-            FixedClock.Default);
+            FixedClock.Default,
+            new RecoveryAdvisor());
     }
 
     private void Write(string name, string content) => File.WriteAllText(Path.Combine(_profileDir, name), content);
