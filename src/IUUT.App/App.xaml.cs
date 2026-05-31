@@ -4,6 +4,7 @@ using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
 using IUUT.Core.Io;
+using IUUT.Core.Recovery;
 using IUUT.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -63,6 +64,14 @@ public partial class App : Application
             sp.GetRequiredService<IClock>()));
         services.AddSingleton<HomeService>();
 
+        // --- Broken Save Recovery (master §11.3, §12.1) -----------------------
+        services.AddSingleton<HealthScanService>();
+        services.AddSingleton<BackupChainWalker>();
+        services.AddSingleton<TemplateRepairService>();
+        services.AddSingleton<RecoveryPlanner>();
+        services.AddSingleton<RecoveryAdvisor>();
+        services.AddSingleton<RecoveryService>();
+
         // --- UI shell + pages -------------------------------------------------
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
@@ -70,6 +79,12 @@ public partial class App : Application
         services.AddSingleton<RecoveryViewModel>();
         services.AddSingleton<MainWindow>();
 
-        return services.BuildServiceProvider();
+        // ValidateOnBuild constructs every registration at startup, so a broken DI graph
+        // (e.g. a page view-model's service) fails fast here rather than on first navigation.
+        return services.BuildServiceProvider(new ServiceProviderOptions
+        {
+            ValidateOnBuild = true,
+            ValidateScopes = true,
+        });
     }
 }

@@ -28,11 +28,17 @@ the big-endian Adler-32 trailer via `ZLibStream` — round-trip-verified, re-sta
 SHA-1 load check passes) + `MountsModel`/`MountEditService` + **`FlagsFileCodec`** (the 82-byte
 `flags_*.dat` binary, FString-prefixed SteamID + LE u32 flags) + `FlagsEditService`. **221 tests.**
 
-**What's LEFT (all non-Core):** the entire **UI pass** (all parked: Home polish, Recovery screen,
-Custom screens incl. Stash grid, Troubleshooting modal, Settings UI, Advanced/Raw viewer, Game
-Tuning tab) + **WP-15 MVP manual test** + **WP-33 release hardening** (release.yml, SHA256SUMS +
-attestation, portable zip, INSTALL verify) + **WP-34 tag v1.0.0** + the future **Phase 7 Game
-Tuning** Core (GT-1..GT-6, post-v1.0). Core editing for every save file now exists and is tested.
+**UI pass IN PROGRESS (`src/IUUT.App/`):** the Glass Console is being unparked.
+- **Done:** navigation **shell** (in-window page swap — `INavigationService`/`ShellViewModel`,
+  Home extracted to `Views/HomeView`, DataTemplate page rendering, Back/Home nav bar) + the
+  **Recovery screen** (`RecoveryViewModel`/`RecoveryView` wired to `RecoveryPlanner`/`RecoveryService`/
+  `RecoveryAdvisor`: pick save → Scan → per-file plan + advisories → confirm → Repair → report).
+  DI now uses `ValidateOnBuild` (whole graph validated at startup). Owner-run visual QA pending.
+- **Remaining UI:** Custom shell + category screens (Account/Characters/Accolades-Bestiary/Stash),
+  Settings, Advanced/Raw viewer, Troubleshooting modal, Game Tuning tab, Home polish.
+- **Then:** **WP-15** MVP manual test (real save, in-game verify), **WP-33** release hardening
+  (release.yml, SHA256SUMS + attestation, portable zip, INSTALL verify), **WP-34** tag v1.0.0, and
+  the post-v1.0 **Phase 7 Game Tuning** Core (GT-1..GT-6). Every save-file Core exists + is tested.
 
 **Phase 4 Core done (WP-23 + WP-25, `src/IUUT.Core/...`):** `MetaInventoryModel`/`MetaItem`/
 `ItemDynamicProperty` + parser/serializer + `StashEditService` (mint 32-hex-uppercase
