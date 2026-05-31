@@ -15,19 +15,27 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-U1. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-18. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-U1 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-18 (see `git log` on `dev`).
 
 **Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`) +
-**WP-13** (Home shell) + **WP-14** (Preview→Apply — first real save mutation) + **WP-U1**
-(Glass Console UI: WPF-UI `FluentWindow` chrome + theme + restyled Home). Solution builds
-clean (Debug + Release); **153 tests** pass. Roadmap order continues below (§4).
+**WP-13** (Home shell) + **WP-14** (Preview→Apply) + **WP-U1** (Glass Console UI) +
+**Phase 2 Core: WP-16** (`BackupChainWalker`) + **WP-17** (`TemplateRepairService` +
+`RecoveryPlanner`) + **WP-18** (`RecoveryService` — master backup zip → restore/template →
+report). Solution builds clean (Debug + Release); **169 tests** pass. Order continues below (§4).
 
-**Now:** Phase 2 — Broken Save Recovery (**WP-16 → WP-18**), Core-first.
+**WP-16..18 as built** (`src/IUUT.Core/Recovery/`): `BackupChainWalker` (glob `<File>.*backup*`,
+rank clean+mtime, prospect second-newest, IUUT fallback) → `RecoveryPlanner` (health-scan +
+walk + template, sorted into §12.1 restore order, `PartialRecovery` flag) → `RecoveryService`
+(full-folder backup zip first, then restore/template via `ISafeSaveWriter`, per-file `RecoveryReport`).
+Pure Core; the **WPF Recovery screen is parked** with the rest of the UI polish.
+
+**Now:** Phase 2's UI is parked → next roadmap path is **Phase 3 — Custom core (WP-19..22)**
+unless owner redirects. (Recovery is wired into the app when we do the UI polish pass.)
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
