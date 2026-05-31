@@ -15,16 +15,22 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-14. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-U1. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-14 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-U1 (see `git log` on `dev`).
 
 **Done:** Phase 0 (WP-0 … WP-10) + **WP-11** (catalog) + **WP-12** (`LazyMaxService`) +
-**WP-13** (WPF Home shell) + **WP-14** (Preview→Apply pipeline — first real save mutation).
-Solution builds clean (Debug + Release); **153 tests** pass. Roadmap order continues below (§4).
+**WP-13** (Home shell) + **WP-14** (Preview→Apply — first real save mutation) + **WP-U1**
+(Glass Console UI: WPF-UI `FluentWindow` chrome + theme + restyled Home). Solution builds
+clean (Debug + Release); **153 tests** pass. Roadmap order continues below (§4).
+
+**Two open threads (owner's pick which is next):** **(a)** WP-15 — v0.1 MVP manual test
+(owner-run: apply Lazy Max to a backed-up live save, verify in-game); **(b)** continue the
+UI — propagate the Glass Console to the next screen, or polish Home (line icons, embedded
+display font, real per-tile blur). Phase 2 (Recovery, WP-16..18) is the other roadmap path.
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`
@@ -72,11 +78,14 @@ mid-sequence apply failure is deliberately *not* implemented yet — per-file ba
 report's backup list are the current recovery path; revisit if WP-15 shows it's needed.
 
 **Parked decisions (owner notes, 2026-05-31):**
-- **UI presentation is deliberately provisional.** WP-13 builds a *functional* shell that
-  proves the wiring (DI + a tested Core `HomeService` feeding a thin ViewModel); the
-  *exact* visual presentation of the app is one of the **last** things we settle (Phase 6
-  polish, master §10). Don't over-invest in XAML styling now — keep logic in Core so the
-  view can be reskinned freely later.
+- **UI direction chosen — "Glass Console" (WP-U1 done).** The owner pulled UI forward
+  (reversing the Phase-6 deferral). Design system: `docs/UI-DESIGN-CONCEPT.md` (frosted
+  glass, dark orbit background, amber + ion-cyan accents, frameless custom chrome); live
+  HTML mockup: `docs/ui-concept/iuut-glass-console-mockup.html`. **Build route = WPF-UI**
+  (lepoco, **MIT**, v4.3.0) for `FluentWindow` custom chrome + themed dark controls; our
+  `Theme/GlassTheme.xaml` layers the tokens/glass on top. All logic stays in Core/VMs, so
+  screens are *born styled* as their feature WPs land. Visual QA is **owner-run** (WPF GUI —
+  the harness can't screenshot it; a build-time smoke launch confirms it renders).
 - **"Engine Mods / Buff FPS" is a tracked future feature** (post-v1.0, master §20.1):
   on/off toggle cards that merge/remove owned `[/script/...]` cvar fragments in
   `Engine.ini`, with duplicate-cvar de-dup, seeded from a user-run live-client cvar dump

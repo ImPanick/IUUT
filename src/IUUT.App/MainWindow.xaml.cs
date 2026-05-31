@@ -6,11 +6,12 @@ using Microsoft.Win32;
 namespace IUUT.App;
 
 /// <summary>
-/// The provisional Home window (master doc §10.2). Thin shell: it binds to
-/// <see cref="HomeViewModel"/>, triggers the initial load, and hosts the folder-Browse
-/// dialog. Final presentation is deferred to Phase 6 (plan §0).
+/// The "Glass Console" Home window (master doc §10.2; docs/UI-DESIGN-CONCEPT.md). A WPF-UI
+/// <c>FluentWindow</c> for frameless custom chrome; binds to <see cref="HomeViewModel"/>,
+/// triggers the initial load, and hosts the folder-Browse + Lazy Max confirm dialogs. The
+/// base type is fully qualified so <c>MessageBox</c> still resolves to <c>System.Windows</c>.
 /// </summary>
-public partial class MainWindow : Window
+public partial class MainWindow : Wpf.Ui.Controls.FluentWindow
 {
     private readonly HomeViewModel _viewModel;
 

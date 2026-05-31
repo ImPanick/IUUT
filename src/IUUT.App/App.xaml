@@ -1,12 +1,19 @@
 <Application x:Class="IUUT.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:local="clr-namespace:IUUT.App">
     <Application.Resources>
         <!--
-            Application-wide resource dictionary.
-            Authority: .agent/CODE_STYLE.md §7 — styles live here, not inline.
-            Implementation per master doc §10 lands in development phases.
+            "Glass Console" theme (docs/UI-DESIGN-CONCEPT.md): WPF-UI Dark theme + control
+            styles, then our token/glass overlay. Styles live here, not inline (CODE_STYLE §7).
         -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+                <ResourceDictionary Source="pack://application:,,,/Theme/GlassTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
