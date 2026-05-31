@@ -55,6 +55,10 @@ unless owner redirects. (Recovery is wired into the app when we do the UI polish
   that's all it is for now: replace emoji with line-based sci-fi icons, embed the OFL display
   font for the wordmark, add real per-tile `BlurEffect`, subtle gradient drift. Revisit after
   the Core features land.
+- **Troubleshooting / FAQ modal — PARKED to backlog (owner, 2026-05-31).** An in-app
+  FAQ-style help modal that guides the user through fixes, sourced from **master Appendix E**
+  (corruption causes → remedies) + live `RecoveryAdvisor` advisories. Goes in with the UI pass,
+  next to the (also-parked) WPF Recovery screen — both render the recovery Core we already built.
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`

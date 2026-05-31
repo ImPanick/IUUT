@@ -141,6 +141,12 @@ dotnet_diagnostic.CA1822.severity = none
 [src/IUUT.Core/Recovery/*.cs]
 dotnet_diagnostic.CA1822.severity = none
 
+# ---------- IUUT.Core editing subsystem ----------
+# Same DI-service rationale: the Custom-mode editing types (CustomApplyService and the
+# per-category edit services — WP-19..22) are injected instances even when a method is stateless.
+[src/IUUT.Core/Editing/*.cs]
+dotnet_diagnostic.CA1822.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab
