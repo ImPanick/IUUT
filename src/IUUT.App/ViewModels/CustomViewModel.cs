@@ -17,9 +17,13 @@ public sealed class CustomViewModel : ObservableObject
 {
     private readonly HomeService _home;
     private readonly CustomApplyService _apply;
+    private readonly CustomFileService _files;
     private readonly AccountEditService _account;
     private readonly CharacterEditService _character;
     private readonly AccoladeBestiaryEditService _accoladeBestiary;
+    private readonly MountEditService _mount;
+    private readonly StashEditService _stash;
+    private readonly LoadoutCrossReference _loadoutCrossReference;
     private readonly GameCatalogs _catalogs;
 
     private HomeSaveSlot? _selectedSlot;
@@ -32,22 +36,34 @@ public sealed class CustomViewModel : ObservableObject
     public CustomViewModel(
         HomeService home,
         CustomApplyService apply,
+        CustomFileService files,
         AccountEditService account,
         CharacterEditService character,
         AccoladeBestiaryEditService accoladeBestiary,
+        MountEditService mount,
+        StashEditService stash,
+        LoadoutCrossReference loadoutCrossReference,
         GameCatalogs catalogs)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
+        ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(account);
         ArgumentNullException.ThrowIfNull(character);
         ArgumentNullException.ThrowIfNull(accoladeBestiary);
+        ArgumentNullException.ThrowIfNull(mount);
+        ArgumentNullException.ThrowIfNull(stash);
+        ArgumentNullException.ThrowIfNull(loadoutCrossReference);
         ArgumentNullException.ThrowIfNull(catalogs);
         _home = home;
         _apply = apply;
+        _files = files;
         _account = account;
         _character = character;
         _accoladeBestiary = accoladeBestiary;
+        _mount = mount;
+        _stash = stash;
+        _loadoutCrossReference = loadoutCrossReference;
         _catalogs = catalogs;
 
         Slots = [];
@@ -158,6 +174,12 @@ public sealed class CustomViewModel : ObservableObject
                 new CharacterEditorViewModel(_apply, _character, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("accolades", not null) =>
                 new AccoladeBestiaryEditorViewModel(_apply, _accoladeBestiary, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("stash", not null) =>
+                new StashViewerViewModel(_files, _stash, _loadoutCrossReference, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("loadouts", not null) =>
+                new LoadoutsViewerViewModel(_files, _loadoutCrossReference, slot.FolderPath, slot.DisplayLabel),
+            ("mounts", not null) =>
+                new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
         };
     }

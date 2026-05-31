@@ -42,17 +42,22 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   blueprints", `AccountEditService`); **Characters & Talents WIRED** (character picker → name/XP/debt/
   dead/abandoned + per-talent rank slider + "Max XP"/"Max talents", `CharacterEditService`);
   **Accolades & Bestiary WIRED** (catalog accolade checklist + grant/revoke all; creature-group scan
-  points + "Max all", `AccoladeBestiaryEditService`); other categories show a placeholder editor
-  pending their UI); **Game Tuner** (own tile, fully wired:
+  points + "Max all", `AccoladeBestiaryEditService`); **Orbital Stash WIRED** (viewer + remove with
+  loadout-reference warning; add deferred for items.json picker); **Loadouts WIRED** (read-only
+  viewer + dangling-reference diagnostics, `LoadoutCrossReference`); **Mounts WIRED** (name/level,
+  `MountEditService`) — the auxiliary text files (Mounts/MetaInventory/Loadouts) load+save via
+  **`CustomFileService`** (backup+atomic via `ISafeSaveWriter`); other categories placeholder pending
+  UI; **Game Tuner** (own tile, fully wired:
   toggles + slider/number-box clamped to stable-max → Engine.ini). DI uses **`ValidateOnBuild`**
   (whole graph validated at startup). Visual QA is **owner-run** (smoke-launch confirms render; the
   harness can't screenshot a WPF GUI).
 
-**NEXT: wire the remaining Custom categories** to their already-built Core services, following the
-Account / Characters / Accolades vertical (load → edit → confirm → `PreviewBundleAsync` →
-`ApplyAsync`). Remaining: Orbital Stash (`StashEditService` — needs the deferred `items.json`
-enrichment for a friendly picker), Loadouts, Prospects, Mounts, Engine Flags, Advanced/Raw. The
-lighter ones (Mounts, Engine Flags) are good single passes. Canonical plan below.
+**NEXT: the last three Custom categories.** Remaining: **Engine Flags** (binary `flags_<SteamID>.dat`
+via `FlagsFileCodec` — needs a binary-safe write path; `ISafeSaveWriter` is string-only, so add a
+`SaveFlagsAsync` that does its own backup+atomic byte write, e.g. on `CustomFileService` reusing
+`BackupManager`); **Prospects** (per-slot `AssociatedProspects_Slot_N.json` unstick via
+`ProspectEditService` — multi-file discovery); **Advanced/Raw** (generic JSON viewer + export/import
+for any save file). Then: Stash "add item" once `items.json` is enriched. Canonical plan below.
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;

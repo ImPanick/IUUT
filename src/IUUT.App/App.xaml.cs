@@ -76,9 +76,13 @@ public partial class App : Application
 
         // --- Custom editor pipeline (master §10.3, §11.5, §11.6) --------------
         services.AddSingleton<CustomApplyService>();
+        services.AddSingleton<CustomFileService>();
         services.AddSingleton<AccountEditService>();
         services.AddSingleton<CharacterEditService>();
         services.AddSingleton<AccoladeBestiaryEditService>();
+        services.AddSingleton<MountEditService>();
+        services.AddSingleton<StashEditService>();
+        services.AddSingleton<LoadoutCrossReference>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();
