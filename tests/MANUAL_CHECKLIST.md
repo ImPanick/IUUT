@@ -72,7 +72,7 @@ Human-only test steps that automated CI cannot perform.
 
 ## §8. Privacy / logging
 
-- [ ] Log files in `%LocalAppData%\IUUT\Logs\` contain no real SteamID64.
+- [ ] Log files in `%AppData%\IUUT\Logs\` contain no real SteamID64. (One state folder — master §6.4.)
 - [ ] No character names in logs (PersonaName in UI is fine; not in logs).
 - [ ] No full file paths with username — paths are relative-from-save-root or use `%USERPROFILE%` placeholders.
 - [ ] No outbound network calls observed in network capture other than the optional Steam Web API call (`api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/`).
