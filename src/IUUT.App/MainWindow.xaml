@@ -4,7 +4,8 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 xmlns:local="clr-namespace:IUUT.App"
+                 xmlns:vm="clr-namespace:IUUT.App.ViewModels"
+                 xmlns:views="clr-namespace:IUUT.App.Views"
                  mc:Ignorable="d"
                  Title="Icarus Ultimate Utility Tool (IUUT)"
                  Width="980"
@@ -18,171 +19,51 @@
                  Background="{StaticResource OrbitBackgroundBrush}">
 
     <!--
-        Provisional → "Glass Console" Home (docs/UI-DESIGN-CONCEPT.md). Frameless custom
-        chrome via WPF-UI FluentWindow + TitleBar; orbit background painted in-window; glass
-        tiles over it. All data is bound from HomeViewModel — no logic here.
+        Glass Console navigation shell (UI-DESIGN-CONCEPT §8). Frameless WPF-UI chrome + the
+        in-window orbit background; a content region swaps page view-models (Home/Recovery/…)
+        via implicit DataTemplates. No logic here — DataContext is the ShellViewModel.
     -->
 
+    <ui:FluentWindow.Resources>
+        <DataTemplate DataType="{x:Type vm:HomeViewModel}">
+            <views:HomeView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:RecoveryViewModel}">
+            <views:RecoveryView />
+        </DataTemplate>
+    </ui:FluentWindow.Resources>
+
     <Grid>
-        <!-- L0: faint instrument glows over the orbit base (behind everything) -->
+        <!-- L0: faint instrument glows over the orbit base (behind every page) -->
         <Rectangle Fill="{StaticResource IonGlowBrush}" IsHitTestVisible="False" />
         <Rectangle Fill="{StaticResource AmberGlowBrush}" IsHitTestVisible="False" />
 
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!-- Custom title bar (self-drawn min/max/close) -->
             <ui:TitleBar Grid.Row="0" Title="IUUT · Icarus Ultimate Utility Tool" />
 
-            <Grid Grid.Row="1" Margin="20,6,20,16">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <!-- Nav bar — hidden on Home, shown on sub-pages -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,4,20,0">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding CanGoBack}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Button Content="← Back" Command="{Binding BackCommand}" Margin="0,0,8,0" />
+                <Button Content="⌂ Home" Command="{Binding HomeCommand}" />
+            </StackPanel>
 
-                <!-- ===== Info panel ===== -->
-                <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
-                        <!-- Save root -->
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="SAVE ROOT" Style="{StaticResource LabelText}"
-                                   VerticalAlignment="Center" Margin="0,0,12,6" />
-                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SaveRoot, UpdateSourceTrigger=PropertyChanged}"
-                                 VerticalAlignment="Center" Margin="0,0,10,6" />
-                        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0,0,0,6">
-                            <Button Content="Browse…" Click="OnBrowse" Margin="0,0,6,0" />
-                            <Button Content="Reload" Command="{Binding LoadCommand}" />
-                        </StackPanel>
-
-                        <!-- Profile -->
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="PROFILE" Style="{StaticResource LabelText}"
-                                   VerticalAlignment="Center" Margin="0,6,12,6" />
-                        <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
-                                  ItemsSource="{Binding Slots}"
-                                  SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
-                                  DisplayMemberPath="DisplayLabel"
-                                  Margin="0,6,0,6" />
-
-                        <!-- Selected profile detail -->
-                        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal"
-                                    DataContext="{Binding SelectedSlot}" Margin="0,0,0,6">
-                            <TextBlock Text="{Binding SteamId64}" Style="{StaticResource MonoText}" />
-                            <TextBlock Text="  ·  " Style="{StaticResource MonoText}" />
-                            <TextBlock Style="{StaticResource MonoText}"
-                                       Text="{Binding CharacterCount, StringFormat={}{0} characters, TargetNullValue=character count unknown}" />
-                        </StackPanel>
-
-                        <!-- Channel lights -->
-                        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,8,0,0">
-                            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
-                                <Ellipse VerticalAlignment="Center" Margin="0,0,7,0">
-                                    <Ellipse.Style>
-                                        <Style TargetType="Ellipse" BasedOn="{StaticResource ChannelDot}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding SaveRootFound}" Value="False">
-                                                    <Setter Property="Fill" Value="{StaticResource StateDangerBrush}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Ellipse.Style>
-                                </Ellipse>
-                                <TextBlock Text="Save path" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
-                                <Ellipse Style="{StaticResource ChannelDot}" VerticalAlignment="Center" Margin="0,0,7,0" />
-                                <TextBlock Text="Backups on" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse VerticalAlignment="Center" Margin="0,0,7,0">
-                                    <Ellipse.Style>
-                                        <Style TargetType="Ellipse" BasedOn="{StaticResource ChannelDot}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding GameRunning}" Value="True">
-                                                    <Setter Property="Fill" Value="{StaticResource StateWarnBrush}" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Ellipse.Style>
-                                </Ellipse>
-                                <TextBlock Text="{Binding GameStatus}" Style="{StaticResource MutedText}"
-                                           VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- ===== Mode tiles ===== -->
-                <UniformGrid Grid.Row="1" Columns="3" Margin="0,16">
-                    <Button Style="{StaticResource ModeTile}" Margin="0,0,8,0" IsEnabled="False"
-                            ToolTip="Arrives in Phase 2 (WP-16..18).">
-                        <StackPanel>
-                            <TextBlock Text="🚑" FontSize="26" />
-                            <TextBlock Text="Broken Save Recovery" Style="{StaticResource TitleText}" Margin="0,10,0,4" />
-                            <TextBlock Text="Scan, diagnose and repair a corrupt or non-loading save."
-                                       Style="{StaticResource MutedText}" TextWrapping="Wrap" />
-                            <TextBlock Text="PHASE 2" Style="{StaticResource LabelText}" Margin="0,12,0,0" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Style="{StaticResource ModeTileAmber}" Margin="4,0" Click="OnLazyMax">
-                        <StackPanel>
-                            <TextBlock Text="⚡" FontSize="26" />
-                            <TextBlock Text="Lazy Max" Style="{StaticResource TitleText}" Margin="0,10,0,4" />
-                            <TextBlock Text="One click: max talents, currencies, accolades and bestiary."
-                                       Style="{StaticResource MutedText}" TextWrapping="Wrap" />
-                            <TextBlock Text="ONE-CLICK · BACKED UP" Style="{StaticResource LabelText}"
-                                       Foreground="{StaticResource AmberCoreBrush}" Margin="0,12,0,0" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Style="{StaticResource ModeTile}" Margin="8,0,0,0" IsEnabled="False"
-                            ToolTip="Arrives in Phase 3 (WP-19..22).">
-                        <StackPanel>
-                            <TextBlock Text="🎛" FontSize="26" />
-                            <TextBlock Text="Custom Editor" Style="{StaticResource TitleText}" Margin="0,10,0,4" />
-                            <TextBlock Text="Fine-grained control — currencies, talents, stash and more."
-                                       Style="{StaticResource MutedText}" TextWrapping="Wrap" />
-                            <TextBlock Text="PHASE 3" Style="{StaticResource LabelText}" Margin="0,12,0,0" />
-                        </StackPanel>
-                    </Button>
-                </UniformGrid>
-
-                <!-- ===== Status bar ===== -->
-                <StackPanel Grid.Row="2">
-                    <Rectangle Height="1" Margin="0,0,0,9">
-                        <Rectangle.Fill>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#0046D6F2" Offset="0" />
-                                <GradientStop Color="#8021B6E6" Offset="0.5" />
-                                <GradientStop Color="#0046D6F2" Offset="1" />
-                            </LinearGradientBrush>
-                        </Rectangle.Fill>
-                    </Rectangle>
-                    <Grid>
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse Style="{StaticResource ChannelDot}" VerticalAlignment="Center" Margin="0,0,7,0" />
-                            <TextBlock Text="Catalogs loaded" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
-                        </StackPanel>
-                        <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource MonoText}"
-                                   HorizontalAlignment="Right" VerticalAlignment="Center" />
-                    </Grid>
-                </StackPanel>
-            </Grid>
+            <ContentControl Grid.Row="2" Content="{Binding CurrentPage}" Margin="20,8,20,16" />
         </Grid>
     </Grid>
 </ui:FluentWindow>

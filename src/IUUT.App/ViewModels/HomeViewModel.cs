@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IUUT.App.Navigation;
 using IUUT.Core.Services;
 
 namespace IUUT.App.ViewModels;
@@ -15,6 +16,7 @@ public sealed class HomeViewModel : ObservableObject
 {
     private readonly HomeService _home;
     private readonly LazyMaxApplyService _apply;
+    private readonly INavigationService _navigation;
 
     private string _saveRoot;
     private bool _isBusy;
@@ -24,17 +26,20 @@ public sealed class HomeViewModel : ObservableObject
     private string _gameStatus = "Game state unknown — reload to scan.";
     private string _statusMessage = "Ready.";
 
-    /// <summary>Creates the Home view-model over the Home and Lazy Max apply services.</summary>
-    public HomeViewModel(HomeService home, LazyMaxApplyService apply)
+    /// <summary>Creates the Home view-model over the Home + Lazy Max services and the navigation shell.</summary>
+    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
+        ArgumentNullException.ThrowIfNull(navigation);
         _home = home;
         _apply = apply;
+        _navigation = navigation;
         _saveRoot = HomeService.DefaultSaveRoot;
 
         Slots = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
+        OpenRecoveryCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.RecoveryKey));
     }
 
     /// <summary>Discovered save profiles for the dropdown.</summary>
@@ -42,6 +47,9 @@ public sealed class HomeViewModel : ObservableObject
 
     /// <summary>Reloads the Home state from <see cref="SaveRoot"/>.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
+
+    /// <summary>Opens the Broken Save Recovery page.</summary>
+    public IRelayCommand OpenRecoveryCommand { get; }
 
     /// <summary>The save root being scanned (editable; Browse updates it).</summary>
     public string SaveRoot

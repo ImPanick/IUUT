@@ -1,4 +1,5 @@
 using System.Windows;
+using IUUT.App.Navigation;
 using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
@@ -62,8 +63,11 @@ public partial class App : Application
             sp.GetRequiredService<IClock>()));
         services.AddSingleton<HomeService>();
 
-        // --- UI ---------------------------------------------------------------
+        // --- UI shell + pages -------------------------------------------------
+        services.AddSingleton<ShellViewModel>();
+        services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
         services.AddSingleton<HomeViewModel>();
+        services.AddSingleton<RecoveryViewModel>();
         services.AddSingleton<MainWindow>();
 
         return services.BuildServiceProvider();
