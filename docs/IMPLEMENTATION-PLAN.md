@@ -90,6 +90,11 @@ couple of real edit flows are clickable, then **WP-33/34** release hardening + t
   FAQ-style help modal that guides the user through fixes, sourced from **master Appendix E**
   (corruption causes → remedies) + live `RecoveryAdvisor` advisories. Goes in with the UI pass,
   next to the (also-parked) WPF Recovery screen — both render the recovery Core we already built.
+- **Feature roadmap — `docs/FEATURE-ROADMAP.md` (owner, 2026-05-31).** Vision of IUUT as an
+  offline community-tools superset (Intel Maps + talent/workshop/recipe/loadout/prospect planners,
+  master §20.5). **Gated** on four owner decisions (network/CONSTITUTION V, data licensing,
+  footprint, positioning) — no WP until resolved. Recommendation: build the low-risk *first-party*
+  planners (catalog data we already ship) first; Intel Maps is a separate, legally-gated track.
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`

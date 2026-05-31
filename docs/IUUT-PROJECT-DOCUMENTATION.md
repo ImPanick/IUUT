@@ -1805,6 +1805,21 @@ Full stat/talent editing inside `RecorderBlob.BinaryData`.
 
 Auto-select the `PlayerData\` profile matching the currently logged-in Steam user (registry + `loginusers.vdf` `MostRecent` flag). Complements §7.5.1 display name resolution.
 
+### 20.5 Offline community-tools superset (Intel Maps + planners)
+
+Grow IUUT toward the "Ultimate" in its name: an **offline-first** home for what players get from
+separate community sites — interactive maps (caves/missions/POIs, à la icarusintel.com), plus
+talent/workshop/recipe/loadout/prospect planners. **Detailed spec → `docs/FEATURE-ROADMAP.md`.**
+
+**Hard gates (documented, unresolved):** (1) **CONSTITUTION V** — IUUT makes no content fetch;
+data ships as bundled/user-sideloaded **offline data packs**, and in-app syncing would need a
+constitution amendment. (2) **Licensing** — community map data (e.g. icarusintel) is contributor-
+curated and unlicensed; **no scrape-and-redistribute** — only first-party extraction or
+permissioned + attributed reuse (SECURITY_PROTOCOL §8 extends to data assets). (3) **Footprint** —
+map imagery stays in optional packs, never the single-file exe (§6.4). (4) **Positioning** — a
+deliberate scope expansion (§2.3) for the owner to ratify. **Status:** roadmap; do the low-risk
+first-party planners first; Intel Maps is a separate gated track. No WP until the gates are resolved.
+
 ---
 
 ## 21. Glossary
@@ -1933,6 +1948,7 @@ already covers).
 
 | Version | Date | Changes |
 | --- | --- | --- |
+| 1.6.0 | 2026-05-31 | **Feature roadmap (offline community-tools superset).** Added **`docs/FEATURE-ROADMAP.md`** and §20.5 — the vision of IUUT as an offline-first home for community tools (Intel Maps à la icarusintel.com + talent/workshop/recipe/loadout/prospect planners), with the four hard gates surfaced as open owner decisions: CONSTITUTION V (no in-app content fetch → bundled/sideloaded data packs; sync needs an amendment), data licensing (no scrape-and-redistribute of community-curated data — first-party extraction or permissioned + attributed only), footprint (maps as optional packs, never the single-file exe), and positioning (a deliberate scope expansion to ratify). Recommends doing the low-risk first-party planners first; Intel Maps is a separate gated track. Documentation only; no WP allocated. |
 | 1.5.0 | 2026-05-31 | **Recovery + Game-Tuning documentation.** Added **Appendix E** (save-corruption causes → on-disk signal → remedy; what IUUT's writes prevent vs. need special handling; backed by the recovery audit + research). Expanded §20.1 (Engine Mods) and added **`docs/GAME-TUNING.md`** — the publicly-known UE console-variable spec (Fog/volumetrics, `sg.*` scalars, FPS, net) with toggle-card presets, INI backup/atomic-write safety, validate-against-a-live-dump process, and the GT-1..GT-6 phasing (tracked as IMPLEMENTATION-PLAN Phase 7). Documentation only. |
 | 1.4.1 | 2026-05-30 | **Game-process detection corrected to pattern-based** (§14, §9.2). The shipping exe name is not fixed — it encodes version + expansion and changes per patch/DLC (`Icarus-Win64-Shipping` → `Icarus-3.0.12.152317-Shipping-DangerousHorizons`). Detection now matches "name starts `Icarus` + contains `Shipping`" rather than a literal. gameplan §0.4/§1.1, IMPLEMENTATION-PLAN WP-7, and MANUAL_CHECKLIST updated. (WP-7 `GameProcessDetector`.) |
 | 1.4.0 | 2026-05-30 | **Full-save verification pass** against the complete extracted `Icarus\Saved\` tree. §8.3 Cosmetic block rewritten — real keys are 13 integer indices (+ `IsMale`); the documented string colour palettes / `*Paint` / `*Scar` / `*FacialHair` / `VoiceID` field names do **not** exist. Added `Characters[*].TimeLastPlayed` (int64). §8.4 Accolades: documented the two extra top-level keys `PlayerTrackers` + `PlayerTaskListTrackers`. §8.5 Bestiary: documented `FishTracking`. §8.1 blob codec re-verified end-to-end (incl. big-endian Adler-32). Profile, Characters container, MetaInventory, Loadouts, AssociatedProspects, Mounts, and Prospect headers confirmed accurate. See field guide §15 verification pass. |
