@@ -134,6 +134,13 @@ dotnet_diagnostic.CA1707.severity = none
 [src/IUUT.Core/Services/*.cs]
 dotnet_diagnostic.CA1822.severity = none
 
+# ---------- IUUT.Core recovery subsystem ----------
+# Same DI-service rationale as Services above: the Broken Save Recovery types
+# (BackupChainWalker, TemplateRepairService, RecoveryPlanner, RecoveryService —
+# WP-16..18) are injected instances even when an individual method is stateless.
+[src/IUUT.Core/Recovery/*.cs]
+dotnet_diagnostic.CA1822.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab

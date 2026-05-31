@@ -27,10 +27,15 @@
 (Glass Console UI: WPF-UI `FluentWindow` chrome + theme + restyled Home). Solution builds
 clean (Debug + Release); **153 tests** pass. Roadmap order continues below (§4).
 
-**Two open threads (owner's pick which is next):** **(a)** WP-15 — v0.1 MVP manual test
-(owner-run: apply Lazy Max to a backed-up live save, verify in-game); **(b)** continue the
-UI — propagate the Glass Console to the next screen, or polish Home (line icons, embedded
-display font, real per-tile blur). Phase 2 (Recovery, WP-16..18) is the other roadmap path.
+**Now:** Phase 2 — Broken Save Recovery (**WP-16 → WP-18**), Core-first.
+
+**Parked (owner, 2026-05-31):**
+- **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
+  not run now. Don't block Phase 2 on it.
+- **Polish Home — PARKED to backlog.** The Glass Console Home is a good **template** but
+  that's all it is for now: replace emoji with line-based sci-fi icons, embed the OFL display
+  font for the wordmark, add real per-tile `BlurEffect`, subtle gradient drift. Revisit after
+  the Core features land.
 
 **WP-12 as built** (`src/IUUT.Core/Services/LazyMaxService.cs`, `LazyMaxResult.cs`):
 pure in-memory mutation, no I/O — caller does parse → `MaxAll` → `ValidationEngine`
