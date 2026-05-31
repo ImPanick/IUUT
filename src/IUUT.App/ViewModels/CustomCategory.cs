@@ -3,6 +3,9 @@ namespace IUUT.App.ViewModels;
 /// <summary>One entry in the Custom editor's category sidebar (master doc §10.3).</summary>
 public sealed record CustomCategory
 {
+    /// <summary>Stable key used to select the editor (independent of the display label).</summary>
+    public required string Key { get; init; }
+
     /// <summary>Sidebar icon glyph.</summary>
     public required string Glyph { get; init; }
 

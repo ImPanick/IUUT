@@ -14,7 +14,8 @@ namespace IUUT.Core.Editing;
 /// loads + parses the four core files, runs the edit, validates, and serializes — writing
 /// nothing — and returns only the files whose content actually changed. Apply writes those
 /// through <see cref="ISafeSaveWriter"/> (backup + re-parse) in recovery order. This is the
-/// granular sibling of the Lazy Max apply pipeline; the WPF Custom shell/nav is parked.
+/// granular sibling of the Lazy Max apply pipeline. Interactive editors instead use
+/// <see cref="LoadAsync"/> (parse → mutate in place) then <see cref="PreviewBundleAsync"/>.
 /// </summary>
 public sealed class CustomApplyService
 {
@@ -33,6 +34,17 @@ public sealed class CustomApplyService
     }
 
     /// <summary>
+    /// Loads the four core files for an interactive editor. Returns <c>null</c> when any file is
+    /// missing or unparseable (the editor should treat the save as not loadable). The returned
+    /// models are mutable — edit them in place, then call <see cref="PreviewBundleAsync"/>.
+    /// </summary>
+    public async Task<SaveEditBundle?> LoadAsync(string saveFolder, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        return await LoadBundleAsync(saveFolder, new List<ValidationIssue>(), cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Loads the four core files, applies <paramref name="edit"/> in memory, validates, and
     /// returns the changed files + outcome. <see cref="SaveEditPlan.CanApply"/> is false when a
     /// file is missing/unparseable or validation found a blocking error.
@@ -46,6 +58,48 @@ public sealed class CustomApplyService
         ArgumentNullException.ThrowIfNull(edit);
 
         var issues = new List<ValidationIssue>();
+        var bundle = await LoadBundleAsync(saveFolder, issues, cancellationToken).ConfigureAwait(false);
+        if (bundle is null)
+        {
+            return Unloadable(saveFolder, issues);
+        }
+
+        // Canonical "before" snapshot (serialized from the parsed models, so only a real edit
+        // — not formatting — counts as a change), then mutate the same models in place.
+        var before = Snapshot(bundle);
+        edit(bundle);
+        return BuildPlan(saveFolder, before, bundle, issues);
+    }
+
+    /// <summary>
+    /// Previews an already-edited <paramref name="bundle"/> (loaded via <see cref="LoadAsync"/> and
+    /// mutated by an interactive editor) against the current on-disk save: re-reads the originals as
+    /// the canonical "before", diffs, validates, and returns only the changed files. Writes nothing.
+    /// </summary>
+    public async Task<SaveEditPlan> PreviewBundleAsync(
+        string saveFolder,
+        SaveEditBundle bundle,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        ArgumentNullException.ThrowIfNull(bundle);
+
+        var issues = new List<ValidationIssue>();
+        var original = await LoadBundleAsync(saveFolder, issues, cancellationToken).ConfigureAwait(false);
+        if (original is null)
+        {
+            return Unloadable(saveFolder, issues);
+        }
+
+        var before = Snapshot(original);
+        return BuildPlan(saveFolder, before, bundle, issues);
+    }
+
+    private static async Task<SaveEditBundle?> LoadBundleAsync(
+        string saveFolder,
+        List<ValidationIssue> issues,
+        CancellationToken cancellationToken)
+    {
         var profile = await ReadParseAsync(saveFolder, ProfileFile, ProfileParser.Parse, issues, cancellationToken).ConfigureAwait(false);
         var characters = await ReadParseAsync(saveFolder, CharactersFile, CharactersParser.Parse, issues, cancellationToken).ConfigureAwait(false);
         var accolades = await ReadParseAsync(saveFolder, AccoladesFile, AccoladesParser.Parse, issues, cancellationToken).ConfigureAwait(false);
@@ -53,42 +107,33 @@ public sealed class CustomApplyService
 
         if (profile is null || characters is null || accolades is null || bestiary is null)
         {
-            return new SaveEditPlan
-            {
-                SaveFolder = saveFolder,
-                ChangedFiles = [],
-                Validation = ValidationResult.FromIssues(issues),
-                CanApply = false,
-            };
+            return null;
         }
 
-        // Canonical "before" snapshots (serialized from the parsed models, so only a real edit
-        // — not formatting — counts as a change).
-        var before = new[]
-        {
-            ProfileSerializer.Serialize(profile),
-            CharactersSerializer.Serialize(characters),
-            AccoladesSerializer.Serialize(accolades),
-            BestiarySerializer.Serialize(bestiary),
-        };
-
-        var bundle = new SaveEditBundle
+        return new SaveEditBundle
         {
             Profile = profile,
             Characters = characters,
             Accolades = accolades,
             Bestiary = bestiary,
         };
-        edit(bundle);
+    }
 
-        var after = new[]
-        {
-            ProfileSerializer.Serialize(bundle.Profile),
-            CharactersSerializer.Serialize(bundle.Characters),
-            AccoladesSerializer.Serialize(bundle.Accolades),
-            BestiarySerializer.Serialize(bundle.Bestiary),
-        };
+    private static string[] Snapshot(SaveEditBundle bundle) =>
+    [
+        ProfileSerializer.Serialize(bundle.Profile),
+        CharactersSerializer.Serialize(bundle.Characters),
+        AccoladesSerializer.Serialize(bundle.Accolades),
+        BestiarySerializer.Serialize(bundle.Bestiary),
+    ];
 
+    private static SaveEditPlan BuildPlan(
+        string saveFolder,
+        string[] before,
+        SaveEditBundle edited,
+        List<ValidationIssue> issues)
+    {
+        var after = Snapshot(edited);
         var names = new[] { ProfileFile, CharactersFile, AccoladesFile, BestiaryFile };
         var changed = new List<PlannedFileWrite>();
         for (var i = 0; i < names.Length; i++)
@@ -107,8 +152,8 @@ public sealed class CustomApplyService
         var folderSteamId = Path.GetFileName(Path.TrimEndingDirectorySeparator(saveFolder));
         var validation = ValidationResult.Combine(
             ValidationResult.FromIssues(issues),
-            ValidationEngine.ValidateProfile(bundle.Profile, folderSteamId),
-            ValidationEngine.ValidateCharacters(bundle.Characters, bundle.Profile));
+            ValidationEngine.ValidateProfile(edited.Profile, folderSteamId),
+            ValidationEngine.ValidateCharacters(edited.Characters, edited.Profile));
 
         return new SaveEditPlan
         {
@@ -118,6 +163,14 @@ public sealed class CustomApplyService
             CanApply = !validation.HasErrors,
         };
     }
+
+    private static SaveEditPlan Unloadable(string saveFolder, List<ValidationIssue> issues) => new()
+    {
+        SaveFolder = saveFolder,
+        ChangedFiles = [],
+        Validation = ValidationResult.FromIssues(issues),
+        CanApply = false,
+    };
 
     /// <summary>Applies a confirmed <paramref name="plan"/>'s changed files; refuses when it cannot apply, and stops at the first failed write.</summary>
     public async Task<SaveEditApplyReport> ApplyAsync(SaveEditPlan plan, CancellationToken cancellationToken = default)

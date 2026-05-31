@@ -3,7 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:IUUT.App.ViewModels"
+             xmlns:views="clr-namespace:IUUT.App.Views"
              mc:Ignorable="d">
+
+    <!-- Editor panels are picked by the view-model type of CurrentEditor. -->
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type vm:AccountEditorViewModel}">
+            <views:AccountEditorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PlaceholderEditorViewModel}">
+            <views:PlaceholderEditorView />
+        </DataTemplate>
+    </UserControl.Resources>
 
     <!-- Custom editor shell (master §10.3): profile selector + category sidebar → editor panel. -->
     <Grid>
@@ -49,18 +61,7 @@
                 </ListBox>
             </Border>
 
-            <Border Grid.Column="1" Style="{StaticResource GlassCard}" Padding="24">
-                <StackPanel DataContext="{Binding SelectedCategory}" VerticalAlignment="Top">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Glyph}" FontSize="26" Margin="0,0,12,0" VerticalAlignment="Center" />
-                        <TextBlock Text="{Binding Label}" Style="{StaticResource TitleText}" VerticalAlignment="Center" />
-                    </StackPanel>
-                    <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,14,0,0" />
-                    <Border Margin="0,18,0,0" Padding="12" CornerRadius="4" Background="{StaticResource DataBackdropBrush}">
-                        <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{StaticResource IonCoreBrush}" FontSize="12" />
-                    </Border>
-                </StackPanel>
-            </Border>
+            <ContentControl Grid.Column="1" Content="{Binding CurrentEditor}" />
         </Grid>
 
         <!-- Status -->

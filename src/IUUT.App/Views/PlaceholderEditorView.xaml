@@ -1,0 +1,22 @@
+<UserControl x:Class="IUUT.App.Views.PlaceholderEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!-- Placeholder editor for an un-wired category (or before a profile is chosen). -->
+    <Border Style="{StaticResource GlassCard}" Padding="24">
+        <StackPanel VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Glyph}" FontSize="26" Margin="0,0,12,0" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding Label}" Style="{StaticResource TitleText}" VerticalAlignment="Center" />
+            </StackPanel>
+            <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,14,0,0" />
+            <Border Margin="0,18,0,0" Padding="12" CornerRadius="4" Background="{StaticResource DataBackdropBrush}">
+                <TextBlock Text="{Binding Status}" TextWrapping="Wrap" Foreground="{StaticResource IonCoreBrush}" FontSize="12" />
+            </Border>
+            <TextBlock Text="{Binding Hint}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,14,0,0" />
+        </StackPanel>
+    </Border>
+</UserControl>

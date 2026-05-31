@@ -3,6 +3,7 @@ using IUUT.App.Navigation;
 using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
+using IUUT.Core.Editing;
 using IUUT.Core.GameTuning;
 using IUUT.Core.Io;
 using IUUT.Core.Recovery;
@@ -72,6 +73,10 @@ public partial class App : Application
         services.AddSingleton<RecoveryPlanner>();
         services.AddSingleton<RecoveryAdvisor>();
         services.AddSingleton<RecoveryService>();
+
+        // --- Custom editor pipeline (master §10.3, §11.6) ---------------------
+        services.AddSingleton<CustomApplyService>();
+        services.AddSingleton<AccountEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

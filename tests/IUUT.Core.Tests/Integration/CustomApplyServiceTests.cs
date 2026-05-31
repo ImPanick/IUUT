@@ -106,5 +106,64 @@ public sealed class CustomApplyServiceTests : IDisposable
         plan.Validation.Errors.Should().Contain(i => i.Code == "file-missing");
     }
 
+    [Fact]
+    public async Task LoadAsync_ParsesTheFourFiles()
+    {
+        var bundle = await _service.LoadAsync(_dir);
+
+        bundle.Should().NotBeNull();
+        bundle!.Profile.UserId.Should().Be(SteamId);
+        bundle.Characters.Should().ContainSingle(c => c.CharacterName == "A");
+    }
+
+    [Fact]
+    public async Task LoadAsync_MissingFile_ReturnsNull()
+    {
+        File.Delete(Path.Combine(_dir, "Characters.json"));
+
+        var bundle = await _service.LoadAsync(_dir);
+
+        bundle.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task PreviewBundleAsync_EditedBundle_MarksOnlyChangedFiles_AndApplies()
+    {
+        var bundle = await _service.LoadAsync(_dir);
+        bundle!.Profile.MetaResources.Add(new MetaResource { MetaRow = "Credits", Count = 1234 });
+
+        var plan = await _service.PreviewBundleAsync(_dir, bundle);
+
+        plan.CanApply.Should().BeTrue();
+        plan.ChangedFiles.Should().ContainSingle().Which.FileName.Should().Be("Profile.json");
+
+        var report = await _service.ApplyAsync(plan);
+        report.Applied.Should().BeTrue();
+        ProfileParser.Parse(Read("Profile.json")).MetaResources.Should().ContainSingle(m => m.MetaRow == "Credits" && m.Count == 1234);
+    }
+
+    [Fact]
+    public async Task PreviewBundleAsync_UnmutatedBundle_HasNoChanges()
+    {
+        var bundle = await _service.LoadAsync(_dir);
+
+        var plan = await _service.PreviewBundleAsync(_dir, bundle!);
+
+        plan.CanApply.Should().BeTrue();
+        plan.HasChanges.Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task PreviewBundleAsync_EditIntroducingValidationError_CannotApply()
+    {
+        var bundle = await _service.LoadAsync(_dir);
+        bundle!.Profile.UserId = "99999999999999999";
+
+        var plan = await _service.PreviewBundleAsync(_dir, bundle);
+
+        plan.CanApply.Should().BeFalse();
+        plan.Validation.Errors.Should().Contain(i => i.Code == "profile-userid-mismatch");
+    }
+
     public void Dispose() => _temp.Dispose();
 }

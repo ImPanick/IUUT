@@ -1,35 +1,48 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IUUT.Core.Catalog;
+using IUUT.Core.Editing;
 using IUUT.Core.Services;
 
 namespace IUUT.App.ViewModels;
 
 /// <summary>
 /// The Custom editor shell (master doc §10.3): a save-profile selector + a category sidebar whose
-/// selection swaps the editor panel. This is the navigation frame; the individual category editors
-/// are wired to their Core services in follow-up steps (each has a tested service ready — see the
-/// per-category <see cref="CustomCategory.Status"/>).
+/// selection swaps the <see cref="CurrentEditor"/> panel. Wired categories get their interactive
+/// editor (e.g. Account &amp; Currencies); the rest show a placeholder until their UI lands (each
+/// already has a tested Core service — see <see cref="CustomCategory.Status"/>).
 /// </summary>
 public sealed class CustomViewModel : ObservableObject
 {
     private readonly HomeService _home;
+    private readonly CustomApplyService _apply;
+    private readonly AccountEditService _account;
+    private readonly GameCatalogs _catalogs;
 
     private HomeSaveSlot? _selectedSlot;
     private CustomCategory? _selectedCategory;
+    private object? _currentEditor;
     private bool _isBusy;
     private string _statusMessage = "Pick a save profile, then choose a category.";
 
-    /// <summary>Creates the Custom shell over the Home service (for the save list).</summary>
-    public CustomViewModel(HomeService home)
+    /// <summary>Creates the Custom shell over the Home service + the edit pipeline.</summary>
+    public CustomViewModel(HomeService home, CustomApplyService apply, AccountEditService account, GameCatalogs catalogs)
     {
         ArgumentNullException.ThrowIfNull(home);
+        ArgumentNullException.ThrowIfNull(apply);
+        ArgumentNullException.ThrowIfNull(account);
+        ArgumentNullException.ThrowIfNull(catalogs);
         _home = home;
+        _apply = apply;
+        _account = account;
+        _catalogs = catalogs;
 
         Slots = [];
         Categories = BuildCategories();
         _selectedCategory = Categories.Count > 0 ? Categories[0] : null;
         LoadSavesCommand = new AsyncRelayCommand(LoadSavesAsync);
+        UpdateEditor();
     }
 
     /// <summary>Discovered save profiles.</summary>
@@ -45,14 +58,33 @@ public sealed class CustomViewModel : ObservableObject
     public HomeSaveSlot? SelectedSlot
     {
         get => _selectedSlot;
-        set => SetProperty(ref _selectedSlot, value);
+        set
+        {
+            if (SetProperty(ref _selectedSlot, value))
+            {
+                UpdateEditor();
+            }
+        }
     }
 
     /// <summary>The selected category (drives the editor panel).</summary>
     public CustomCategory? SelectedCategory
     {
         get => _selectedCategory;
-        set => SetProperty(ref _selectedCategory, value);
+        set
+        {
+            if (SetProperty(ref _selectedCategory, value))
+            {
+                UpdateEditor();
+            }
+        }
+    }
+
+    /// <summary>The editor for the selected category (swapped via implicit DataTemplate in the view).</summary>
+    public object? CurrentEditor
+    {
+        get => _currentEditor;
+        private set => SetProperty(ref _currentEditor, value);
     }
 
     /// <summary>True while the save list is loading.</summary>
@@ -96,17 +128,37 @@ public sealed class CustomViewModel : ObservableObject
         }
     }
 
+    private void UpdateEditor()
+    {
+        var category = SelectedCategory;
+        if (category is null)
+        {
+            CurrentEditor = null;
+            return;
+        }
+
+        var slot = SelectedSlot;
+        CurrentEditor = (category.Key, slot) switch
+        {
+            ("account", not null) =>
+                new AccountEditorViewModel(_apply, _account, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
+        };
+    }
+
     private static IReadOnlyList<CustomCategory> BuildCategories() =>
     [
         new()
         {
+            Key = "account",
             Glyph = "💰",
             Label = "Account & Currencies",
-            Description = "Orbital currencies, account unlock flags, and the workshop/prospect blueprint checklist.",
-            Status = "Core ready — AccountEditService. Editor UI coming next.",
+            Description = "Orbital currencies and the workshop/prospect blueprint checklist.",
+            Status = "Wired — AccountEditService.",
         },
         new()
         {
+            Key = "characters",
             Glyph = "🧬",
             Label = "Characters & Talents",
             Description = "Per-character XP, debt, revive, rename, and per-talent rank (with a per-character max).",
@@ -114,6 +166,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "accolades",
             Glyph = "🏅",
             Label = "Accolades & Bestiary",
             Description = "Grant or remove accolades; set a creature group's scan points.",
@@ -121,6 +174,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "stash",
             Glyph = "📦",
             Label = "Orbital Stash",
             Description = "MetaInventory items: durability/stack, repair, replace, add, remove — with fresh GUIDs.",
@@ -128,6 +182,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "loadouts",
             Glyph = "🎒",
             Label = "Loadouts",
             Description = "Per-prospect loadouts; cross-reference item GUIDs with the stash.",
@@ -135,6 +190,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "prospects",
             Glyph = "🗺",
             Label = "Prospects",
             Description = "Unstick a stuck character's prospect association; edit world headers (world blob preserved).",
@@ -142,6 +198,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "mounts",
             Glyph = "🐎",
             Label = "Mounts",
             Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
@@ -149,6 +206,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "flags",
             Glyph = "🚩",
             Label = "Engine Flags",
             Description = "The binary flags_*.dat engine unlock flag IDs.",
@@ -156,6 +214,7 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "raw",
             Glyph = "🧾",
             Label = "Advanced / Raw",
             Description = "Raw JSON viewer and export/import for any save file.",

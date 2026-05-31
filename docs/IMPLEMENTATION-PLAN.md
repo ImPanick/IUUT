@@ -36,14 +36,18 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
 - **UI (`src/IUUT.App/`, Glass Console on WPF-UI `FluentWindow`):** navigation **shell**
   (`ShellViewModel` + `INavigationService`, in-window page swap; pages resolved by key from DI;
   rendered by implicit DataTemplate VM→View); **Home** (4 tiles, all navigate); **Recovery** (wired);
-  **Custom editor SHELL** (`CustomViewModel`/`CustomView` — profile selector + category sidebar →
-  editor panel; **categories are PLACEHOLDERS**, not yet wired); **Game Tuner** (own tile, fully wired:
-  toggles + slider/number-box clamped to stable-max → Engine.ini). DI uses **`ValidateOnBuild`**
+  **Custom editor** (`CustomViewModel`/`CustomView` — profile selector + category sidebar →
+  `CurrentEditor` panel swapped by implicit DataTemplate: **Account & Currencies WIRED**
+  (per-currency edit + "Max all" + "Unlock all blueprints", via `CustomApplyService.LoadAsync`/
+  `PreviewBundleAsync` + `AccountEditService`); other categories show a placeholder editor pending
+  their UI); **Game Tuner** (own tile, fully wired: toggles + slider/number-box clamped to
+  stable-max → Engine.ini). DI uses **`ValidateOnBuild`**
   (whole graph validated at startup). Visual QA is **owner-run** (smoke-launch confirms render; the
   harness can't screenshot a WPF GUI).
 
-**NEXT (current work): give the Custom editor categories real content** — wire each to its
-already-built Core service. Canonical plan in the "Custom editor wiring" note below.
+**NEXT: wire the remaining Custom categories** to their already-built Core services, following the
+Account & Currencies vertical (load → edit → confirm → `PreviewBundleAsync` → `ApplyAsync`).
+Recommended next: Characters & Talents (`CharacterEditService`). Canonical plan below.
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
