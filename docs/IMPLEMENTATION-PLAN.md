@@ -15,12 +15,24 @@
 
 ## 0. Resume point (live build status)
 
-> Updated **2026-05-31** after WP-23/25. This block is the cold-start handoff: a new
+> Updated **2026-05-31** after WP-30. This block is the cold-start handoff: a new
 > agent (or a compacted session) resumes from here without prior chat context.
 > Keep it current — overwrite it at the end of each WP.
 
 **Branch / remote:** all work commits directly to `dev` and pushes to `origin/dev`
-(owner-authorized, pre-critical; no branch protection yet). Latest: WP-23/25 (see `git log` on `dev`).
+(owner-authorized, pre-critical; no branch protection yet). Latest: WP-30 (see `git log` on `dev`).
+
+**🎉 ALL CORE PHASES DONE (Phase 0 → Phase 5).** Phase 5 (WP-26..30): `AssociatedProspects`
+(unstick) + `ProspectFileModel` (header) + **`ProspectBlobCodec`** (zlib decode/re-encode with
+the big-endian Adler-32 trailer via `ZLibStream` — round-trip-verified, re-stamps so the game's
+SHA-1 load check passes) + `MountsModel`/`MountEditService` + **`FlagsFileCodec`** (the 82-byte
+`flags_*.dat` binary, FString-prefixed SteamID + LE u32 flags) + `FlagsEditService`. **221 tests.**
+
+**What's LEFT (all non-Core):** the entire **UI pass** (all parked: Home polish, Recovery screen,
+Custom screens incl. Stash grid, Troubleshooting modal, Settings UI, Advanced/Raw viewer, Game
+Tuning tab) + **WP-15 MVP manual test** + **WP-33 release hardening** (release.yml, SHA256SUMS +
+attestation, portable zip, INSTALL verify) + **WP-34 tag v1.0.0** + the future **Phase 7 Game
+Tuning** Core (GT-1..GT-6, post-v1.0). Core editing for every save file now exists and is tested.
 
 **Phase 4 Core done (WP-23 + WP-25, `src/IUUT.Core/...`):** `MetaInventoryModel`/`MetaItem`/
 `ItemDynamicProperty` + parser/serializer + `StashEditService` (mint 32-hex-uppercase
@@ -60,12 +72,12 @@ post-restore cross-file incoherence (via `ValidationEngine`); advisories ride in
 Deliberately NOT done: auto-rebuilding a corrupt prospect blob (hash-consistent ≠ valid world);
 fsync-for-power-loss durability (tracked, Appendix E).
 
-**Now:** Phases 2 + 3 + 4 Core are done (UIs parked). Next roadmap path is **Phase 5 —
-Prospects & Mounts (WP-26..30)**: `AssociatedProspects_Slot_N` (unstick), prospect header editor,
-the `ProspectBlobCodec` (zlib decode/verify/re-encode + big-endian Adler-32 round-trip — the
-trickiest Core piece), `Mounts.json` JSON-field editor, and the `flags_*.dat` 82-byte binary
-editor. Then Phase 6 (polish/release — where all the parked UI lands: Home polish, Recovery
-screen, Custom screens, Stash grid, Troubleshooting modal, Game Tuning tab).
+**Now:** Core is feature-complete (Phases 0–5). The remaining roadmap is **Phase 6 — Polish &
+release** (WP-31..34) — almost entirely the parked **UI pass** plus release ops — and the
+post-v1.0 **Phase 7 — Game Tuning** (`docs/GAME-TUNING.md`). Recommended sequencing for the UI
+pass: build the DI wiring + one screen at a time on the Glass Console template (each Core
+subsystem already has a tested service to bind), do **WP-15** (the bulk in-game test) once a
+couple of real edit flows are clickable, then **WP-33/34** release hardening + tag.
 
 **Parked (owner, 2026-05-31):**
 - **WP-15 (v0.1 MVP manual test) — PARKED.** Folded into one big bulk in-game test later;
