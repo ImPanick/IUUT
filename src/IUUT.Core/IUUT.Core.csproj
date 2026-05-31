@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Embedded D_* catalog data (master doc §6.2, §9.1: Core reads IUUT.Catalog) -->
+    <ProjectReference Include="..\IUUT.Catalog\IUUT.Catalog.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- Logging abstractions (concrete logger configured by host) -->
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
   </ItemGroup>

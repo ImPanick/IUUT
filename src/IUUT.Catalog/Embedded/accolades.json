@@ -1,0 +1,855 @@
+{
+  "catalogVersion": "2026-02-mendel",
+  "dataTable": "D_Accolades",
+  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "rows": [
+    {
+      "rowName": "AllBlueprintsUnlockedTier1",
+      "displayName": null
+    },
+    {
+      "rowName": "AllBlueprintsUnlockedTier2",
+      "displayName": null
+    },
+    {
+      "rowName": "AllBlueprintsUnlockedTier3",
+      "displayName": null
+    },
+    {
+      "rowName": "AllBlueprintsUnlockedTier4",
+      "displayName": null
+    },
+    {
+      "rowName": "AluminumMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "AluminumMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "AluminumMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "ArrowsFired100",
+      "displayName": null
+    },
+    {
+      "rowName": "ArrowsFired1000",
+      "displayName": null
+    },
+    {
+      "rowName": "ArrowsFired5000",
+      "displayName": null
+    },
+    {
+      "rowName": "AxeKills250",
+      "displayName": null
+    },
+    {
+      "rowName": "AxeKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "BearsKilled20",
+      "displayName": null
+    },
+    {
+      "rowName": "BoarsKilled20",
+      "displayName": null
+    },
+    {
+      "rowName": "BoneCollected100",
+      "displayName": null
+    },
+    {
+      "rowName": "BoneCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "BoneCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "BowKills250",
+      "displayName": null
+    },
+    {
+      "rowName": "BowKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "BowKills500",
+      "displayName": null
+    },
+    {
+      "rowName": "BuildIce",
+      "displayName": null
+    },
+    {
+      "rowName": "CaveWormsKilled10",
+      "displayName": null
+    },
+    {
+      "rowName": "CaveWormsKilled100",
+      "displayName": null
+    },
+    {
+      "rowName": "CaveWormsKilled500",
+      "displayName": null
+    },
+    {
+      "rowName": "CoalMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "CoalMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "CoalMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "CollectAllPlants",
+      "displayName": null
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "CopperMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "CopperMined10000",
+      "displayName": null
+    },
+    {
+      "rowName": "CopperMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "CopperMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "CopperMined5000",
+      "displayName": null
+    },
+    {
+      "rowName": "Cozy250",
+      "displayName": null
+    },
+    {
+      "rowName": "CraftLegWeapon",
+      "displayName": null
+    },
+    {
+      "rowName": "CreaturesSkinned100",
+      "displayName": null
+    },
+    {
+      "rowName": "CreaturesSkinned20",
+      "displayName": null
+    },
+    {
+      "rowName": "CreaturesSkinned500",
+      "displayName": null
+    },
+    {
+      "rowName": "CreditsEarned10000",
+      "displayName": null
+    },
+    {
+      "rowName": "CriticalHitKills250",
+      "displayName": null
+    },
+    {
+      "rowName": "CriticalHitKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "CriticalHitKills500",
+      "displayName": null
+    },
+    {
+      "rowName": "DaisyEscortSuccess",
+      "displayName": null
+    },
+    {
+      "rowName": "DeerKilled10",
+      "displayName": null
+    },
+    {
+      "rowName": "DefeatLavaHunter",
+      "displayName": null
+    },
+    {
+      "rowName": "DestroyDrone",
+      "displayName": null
+    },
+    {
+      "rowName": "DispatchSurvivedLaser",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveled10",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveled100",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveled25",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveled50",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveled500",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledArctic10",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledArctic25",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledCaves1",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledCaves2",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledCaves5",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledDesert10",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledDesert25",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledDesert50",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledForest10",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledForest100",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledForest25",
+      "displayName": null
+    },
+    {
+      "rowName": "DistanceTraveledForest50",
+      "displayName": null
+    },
+    {
+      "rowName": "DownedCount1",
+      "displayName": null
+    },
+    {
+      "rowName": "Electroshock",
+      "displayName": null
+    },
+    {
+      "rowName": "ELY1Complete",
+      "displayName": null
+    },
+    {
+      "rowName": "EquipFullArmour",
+      "displayName": null
+    },
+    {
+      "rowName": "FindEden",
+      "displayName": null
+    },
+    {
+      "rowName": "FirearmKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "FiresExtinguished50",
+      "displayName": null
+    },
+    {
+      "rowName": "FirstDropPromStory",
+      "displayName": null
+    },
+    {
+      "rowName": "FishKilled10",
+      "displayName": null
+    },
+    {
+      "rowName": "FoodConsumed100",
+      "displayName": null
+    },
+    {
+      "rowName": "FoodConsumed1000",
+      "displayName": null
+    },
+    {
+      "rowName": "FoodConsumed500",
+      "displayName": null
+    },
+    {
+      "rowName": "ForestScanComplete",
+      "displayName": null
+    },
+    {
+      "rowName": "FurCollected100",
+      "displayName": null
+    },
+    {
+      "rowName": "FurCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "FurCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "GlassBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "GlassBuildingsCrafted50",
+      "displayName": null
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted100",
+      "displayName": null
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted50",
+      "displayName": null
+    },
+    {
+      "rowName": "Introduction",
+      "displayName": null
+    },
+    {
+      "rowName": "IronMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "IronMined10000",
+      "displayName": null
+    },
+    {
+      "rowName": "IronMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "IronMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "IronMined5000",
+      "displayName": null
+    },
+    {
+      "rowName": "ItemsAltered1",
+      "displayName": null
+    },
+    {
+      "rowName": "KilledByABear",
+      "displayName": null
+    },
+    {
+      "rowName": "KillFishWithBow",
+      "displayName": null
+    },
+    {
+      "rowName": "KnifeKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "LandEly",
+      "displayName": null
+    },
+    {
+      "rowName": "LavaSwim",
+      "displayName": null
+    },
+    {
+      "rowName": "LeatherCollected100",
+      "displayName": null
+    },
+    {
+      "rowName": "LeatherCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "LeatherCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "LionsKilled20",
+      "displayName": null
+    },
+    {
+      "rowName": "Lose80percHealth",
+      "displayName": null
+    },
+    {
+      "rowName": "MammothBossKilled",
+      "displayName": null
+    },
+    {
+      "rowName": "MammothsKilled20",
+      "displayName": null
+    },
+    {
+      "rowName": "MeatCollected100",
+      "displayName": null
+    },
+    {
+      "rowName": "MeatCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "MeatCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "MineAllOres",
+      "displayName": null
+    },
+    {
+      "rowName": "OffenderAudiolog",
+      "displayName": null
+    },
+    {
+      "rowName": "OrderHorse",
+      "displayName": null
+    },
+    {
+      "rowName": "OxiteMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "OxiteMined10000",
+      "displayName": null
+    },
+    {
+      "rowName": "OxiteMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "OxiteMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "OxiteMined5000",
+      "displayName": null
+    },
+    {
+      "rowName": "PetHome",
+      "displayName": null
+    },
+    {
+      "rowName": "PickaxeKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "PickupBasicResource",
+      "displayName": null
+    },
+    {
+      "rowName": "PlatinumMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "PlatinumMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "PlatinumMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "PlayersKilled1",
+      "displayName": null
+    },
+    {
+      "rowName": "PrimeMeatCollected100",
+      "displayName": null
+    },
+    {
+      "rowName": "PrimeMeatCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "PrimeMeatCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "RabbitsKilled20",
+      "displayName": null
+    },
+    {
+      "rowName": "ReachBottomOfTalentTree",
+      "displayName": null
+    },
+    {
+      "rowName": "ReachMaxLevel",
+      "displayName": null
+    },
+    {
+      "rowName": "ReviveCount1",
+      "displayName": null
+    },
+    {
+      "rowName": "RideRaptor",
+      "displayName": null
+    },
+    {
+      "rowName": "SandwormBossKilled",
+      "displayName": null
+    },
+    {
+      "rowName": "ShadowedUnlockG15",
+      "displayName": null
+    },
+    {
+      "rowName": "SilicaMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "SilicaMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "SilicaMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "SilicaMined5000",
+      "displayName": null
+    },
+    {
+      "rowName": "SneakAttackKills250",
+      "displayName": null
+    },
+    {
+      "rowName": "SneakAttackKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "SpearKills250",
+      "displayName": null
+    },
+    {
+      "rowName": "SpearKills50",
+      "displayName": null
+    },
+    {
+      "rowName": "SpearKills500",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneBuildingsCrafted100",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneBuildingsCrafted50",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneBuildingsCrafted500",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneMined10000",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "StoneMined50000",
+      "displayName": null
+    },
+    {
+      "rowName": "StruckByLightning1",
+      "displayName": null
+    },
+    {
+      "rowName": "SuitUp",
+      "displayName": null
+    },
+    {
+      "rowName": "SulfurMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "SulfurMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "SulfurMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "SulfurMined5000",
+      "displayName": null
+    },
+    {
+      "rowName": "Tamed10",
+      "displayName": null
+    },
+    {
+      "rowName": "TameHostile",
+      "displayName": null
+    },
+    {
+      "rowName": "TameSlinker",
+      "displayName": null
+    },
+    {
+      "rowName": "TempestFavor",
+      "displayName": null
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted50",
+      "displayName": null
+    },
+    {
+      "rowName": "ThumperActivations1",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvived10",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvived15",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvived20",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvived5",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvived50",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedArctic5",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedCaves10",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedCaves5",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedDesert10",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedDesert5",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedForest10",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedForest15",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedForest20",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedForest5",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedForest50",
+      "displayName": null
+    },
+    {
+      "rowName": "TitaniumMined1000",
+      "displayName": null
+    },
+    {
+      "rowName": "TitaniumMined200",
+      "displayName": null
+    },
+    {
+      "rowName": "TitaniumMined500",
+      "displayName": null
+    },
+    {
+      "rowName": "TreesFelled100",
+      "displayName": null
+    },
+    {
+      "rowName": "TreesFelled50",
+      "displayName": null
+    },
+    {
+      "rowName": "TreesFelled500",
+      "displayName": null
+    },
+    {
+      "rowName": "TutorialCompleted",
+      "displayName": null
+    },
+    {
+      "rowName": "UnlockBPT5",
+      "displayName": null
+    },
+    {
+      "rowName": "UnlockManu",
+      "displayName": null
+    },
+    {
+      "rowName": "USeSledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "ViewMeteor",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsComplete100",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsComplete1000",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsComplete250",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsComplete500",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsComplete5000",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsHit1000",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsHit10000",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsHit2500",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsHit500",
+      "displayName": null
+    },
+    {
+      "rowName": "VoxelsHit5000",
+      "displayName": null
+    },
+    {
+      "rowName": "WolfBossKilled",
+      "displayName": null
+    },
+    {
+      "rowName": "WolvesKilled10",
+      "displayName": null
+    },
+    {
+      "rowName": "WolvesKilled100",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodBuildingsCrafted100",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodBuildingsCrafted1000",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodBuildingsCrafted20",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodBuildingsCrafted50",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodBuildingsCrafted500",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodCollected1000",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodCollected10000",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodCollected250",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodCollected500",
+      "displayName": null
+    },
+    {
+      "rowName": "WoodCollected5000",
+      "displayName": null
+    }
+  ]
+}

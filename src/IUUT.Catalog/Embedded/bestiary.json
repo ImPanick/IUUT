@@ -1,0 +1,319 @@
+{
+  "catalogVersion": "2026-02-mendel",
+  "dataTable": "D_BestiaryData",
+  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "rows": [
+    {
+      "rowName": "Alpha_Wolf_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Arctic_Bat",
+      "displayName": null
+    },
+    {
+      "rowName": "Arctic_Moa",
+      "displayName": null
+    },
+    {
+      "rowName": "Arctic_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Baby_Deer",
+      "displayName": null
+    },
+    {
+      "rowName": "BatDog",
+      "displayName": null
+    },
+    {
+      "rowName": "Bear",
+      "displayName": null
+    },
+    {
+      "rowName": "Bear_Cub",
+      "displayName": null
+    },
+    {
+      "rowName": "Bee",
+      "displayName": null
+    },
+    {
+      "rowName": "Blueback",
+      "displayName": null
+    },
+    {
+      "rowName": "Buffalo",
+      "displayName": null
+    },
+    {
+      "rowName": "Cattle",
+      "displayName": null
+    },
+    {
+      "rowName": "Caveworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Chamios",
+      "displayName": null
+    },
+    {
+      "rowName": "Chamios_Variant",
+      "displayName": null
+    },
+    {
+      "rowName": "Chew",
+      "displayName": null
+    },
+    {
+      "rowName": "Cougar",
+      "displayName": null
+    },
+    {
+      "rowName": "Crocodile",
+      "displayName": null
+    },
+    {
+      "rowName": "Deer_Variant",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Deer",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Striker",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Wolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Dog",
+      "displayName": null
+    },
+    {
+      "rowName": "Drone",
+      "displayName": null
+    },
+    {
+      "rowName": "Elephant",
+      "displayName": null
+    },
+    {
+      "rowName": "Flightless_Tank",
+      "displayName": null
+    },
+    {
+      "rowName": "Forest_Deer",
+      "displayName": null
+    },
+    {
+      "rowName": "Forest_Wolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Gas_Flyer",
+      "displayName": null
+    },
+    {
+      "rowName": "GhostCrocodile",
+      "displayName": null
+    },
+    {
+      "rowName": "Horse",
+      "displayName": null
+    },
+    {
+      "rowName": "Horse_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "IceMammoth_WorldSpawn",
+      "displayName": null
+    },
+    {
+      "rowName": "Jaguar",
+      "displayName": null
+    },
+    {
+      "rowName": "Kea",
+      "displayName": null
+    },
+    {
+      "rowName": "Kiwi",
+      "displayName": null
+    },
+    {
+      "rowName": "Komodo",
+      "displayName": null
+    },
+    {
+      "rowName": "Landshark_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Blueback",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Hunter_Spawns",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Komodo",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Mammoth",
+      "displayName": null
+    },
+    {
+      "rowName": "MiniHippo",
+      "displayName": null
+    },
+    {
+      "rowName": "Moa",
+      "displayName": null
+    },
+    {
+      "rowName": "Needler",
+      "displayName": null
+    },
+    {
+      "rowName": "Orka",
+      "displayName": null
+    },
+    {
+      "rowName": "Polar_Bear",
+      "displayName": null
+    },
+    {
+      "rowName": "Polar_Bear_Cub",
+      "displayName": null
+    },
+    {
+      "rowName": "Predator_Bird",
+      "displayName": null
+    },
+    {
+      "rowName": "Pronghorn",
+      "displayName": null
+    },
+    {
+      "rowName": "Rabbit",
+      "displayName": null
+    },
+    {
+      "rowName": "Rabbit_Variant",
+      "displayName": null
+    },
+    {
+      "rowName": "Raptor_Desert",
+      "displayName": null
+    },
+    {
+      "rowName": "Roat",
+      "displayName": null
+    },
+    {
+      "rowName": "RockDog",
+      "displayName": null
+    },
+    {
+      "rowName": "Sandworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Scorpion_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Slinker",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Leopard",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Striker",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Wolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Spider",
+      "displayName": null
+    },
+    {
+      "rowName": "Storca",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Bird",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Quadruped",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Teenage_Caveworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Tundra_Deer",
+      "displayName": null
+    },
+    {
+      "rowName": "Tundra_Monkey",
+      "displayName": null
+    },
+    {
+      "rowName": "Tusker",
+      "displayName": null
+    },
+    {
+      "rowName": "Wild_Boar",
+      "displayName": null
+    },
+    {
+      "rowName": "Wooly_Zebra",
+      "displayName": null
+    },
+    {
+      "rowName": "Yeti",
+      "displayName": null
+    },
+    {
+      "rowName": "Zebra",
+      "displayName": null
+    }
+  ]
+}

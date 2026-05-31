@@ -1,0 +1,371 @@
+{
+  "catalogVersion": "2026-02-mendel",
+  "dataTable": "D_ItemsStatic",
+  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "rows": [
+    {
+      "rowName": "Basic_Quiver",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Larkwell_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Larkwell_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Shengong_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Envirosuit_Tier2",
+      "displayName": null
+    },
+    {
+      "rowName": "Explorers_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunters_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_LavaHunter_FlameThrower",
+      "displayName": null
+    },
+    {
+      "rowName": "Medic_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Antibiotic_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Antiparasitic_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Antipoison_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Ballistic",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Bleed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Backpack_Larkwell_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Blood_Thinning_Vaccine_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Blood_Thinning_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Electroshock",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Explosive",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Piercing",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Arms_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Arms_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Chest_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Chest_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Feet_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Feet_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Head_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Head_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Legs_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Carbon_Legs_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Creature_Scanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_B",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_C",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_D",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Fishfinder",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Hammer_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Hammer_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Heated_Canteen_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Animal_Highlighting",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Caving",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Consumption",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Extremes",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Fall_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Fishing",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_ItemWear",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Night",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Taming",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Temperature",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_WorldBoss",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Wounds",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Oxygen_Tank_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Platinum",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Titanium",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Rhubarb_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Scanner_DeepOre",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Sickle_Inaris_00",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Sickle_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Strawberry_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_WildTea_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Mining_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "None",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Carrier",
+      "displayName": null
+    },
+    {
+      "rowName": "Tech_Backpack",
+      "displayName": null
+    }
+  ]
+}

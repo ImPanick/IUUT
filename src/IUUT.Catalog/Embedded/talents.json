@@ -1,0 +1,5515 @@
+{
+  "catalogVersion": "2026-02-mendel",
+  "dataTable": "D_Talents",
+  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "rows": [
+    {
+      "rowName": "Advanced_Alteration_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Alteration_Melee_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Aquarium",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Armor_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Armor_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Cloth_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Cloth_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Cloth_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Cloth_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Cloth_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Fishing_Trap",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Kitchen_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Kitchen_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Kitchen_Sink",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Kitchen_Storage",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Leather_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Leather_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Leather_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Leather_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Leather_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Lure_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_OEI",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Ranged_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Advanced_Rug_Set",
+      "displayName": null
+    },
+    {
+      "rowName": "Alteration_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Aluminium_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Aluminium_Screw",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Casing",
+      "displayName": null
+    },
+    {
+      "rowName": "Animal_Bed",
+      "displayName": null
+    },
+    {
+      "rowName": "Animal_Bed_Nesting",
+      "displayName": null
+    },
+    {
+      "rowName": "Animal_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "AnimalFeedPack",
+      "displayName": null
+    },
+    {
+      "rowName": "Antibiotic_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Antibiotic_Pill",
+      "displayName": null
+    },
+    {
+      "rowName": "Antibiotic_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Antiparasitic_Pill",
+      "displayName": null
+    },
+    {
+      "rowName": "Antiparasitic_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Antiparastic_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Antipoison_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Antipoison_Pill",
+      "displayName": null
+    },
+    {
+      "rowName": "AntiPoison_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "AntiRadiation_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "AntiRadiation_Transfusion",
+      "displayName": null
+    },
+    {
+      "rowName": "Anvil_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Anvil_Bench_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Anvil_Bench_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Aquarium",
+      "displayName": null
+    },
+    {
+      "rowName": "Armor_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Armor_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Armor_Piercing_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Armor_Stand",
+      "displayName": null
+    },
+    {
+      "rowName": "AssaultRifle_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Bandage_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Bandage_Cooling",
+      "displayName": null
+    },
+    {
+      "rowName": "Bandage_Heat",
+      "displayName": null
+    },
+    {
+      "rowName": "Barbed_Wire",
+      "displayName": null
+    },
+    {
+      "rowName": "Barn_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Ceiling_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Fishing_Rod",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Fishing_Trap",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Lure_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Oxite_Dissolver",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Rug_Set",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Tackle_Box",
+      "displayName": null
+    },
+    {
+      "rowName": "Basic_Wall_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Battery_CaveLight",
+      "displayName": null
+    },
+    {
+      "rowName": "Battery_Latern",
+      "displayName": null
+    },
+    {
+      "rowName": "Battery_Shelf_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Battery_Shelf_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Battery_Spotlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Bed_Roll",
+      "displayName": null
+    },
+    {
+      "rowName": "Bed_Wood",
+      "displayName": null
+    },
+    {
+      "rowName": "Beehive",
+      "displayName": null
+    },
+    {
+      "rowName": "Beehive_Breeder",
+      "displayName": null
+    },
+    {
+      "rowName": "Beehive_Expansion_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Beehive_Expansion_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Beehive_Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Beer",
+      "displayName": null
+    },
+    {
+      "rowName": "binoculars",
+      "displayName": null
+    },
+    {
+      "rowName": "BioFuel_Barrel_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Biofuel_Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Biofuel_Generator",
+      "displayName": null
+    },
+    {
+      "rowName": "Biofuel_Lamp",
+      "displayName": null
+    },
+    {
+      "rowName": "Biofuel_Radar",
+      "displayName": null
+    },
+    {
+      "rowName": "Biofuel_Water_Pump",
+      "displayName": null
+    },
+    {
+      "rowName": "Blood_Thinning_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Blood_Thinning_Pill",
+      "displayName": null
+    },
+    {
+      "rowName": "Blood_Thinning_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "BoltAction_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Arm_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Chest_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Feet_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Head_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Leg_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Bone_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Accuracy",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Arrow_Double_Craft",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Arrow_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Bleed_Arrows_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Cheap_Arrows1",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Craft_Master",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Craft_Master_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Crafted_Arrow_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Critical_Multiplier1",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Critical_Multiplier2",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Double_Arrows",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Durability_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Homing_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Increase_Aim_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Movement_Speed1",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Pinning_Shot",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Projectile_Damage1",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Projectile_Damage2",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Reduced_Reload_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Reduced_Stamina_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Bow_Slowing_Shot",
+      "displayName": null
+    },
+    {
+      "rowName": "Brazier",
+      "displayName": null
+    },
+    {
+      "rowName": "Brick_Sign_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Brownbear_Arm_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Brownbear_Chest_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Brownbear_Feet_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Brownbear_Head_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Brownbear_Leg_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Brutalist_Decorations",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Concrete_Cost",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Concrete_Cost_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Concrete_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Concrete_Weight_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Deployable_Crafting",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Hedgehog_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Lightning_Rod_Crafting",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Lightning_Rod_Health",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_RepairTool",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Stone_Cost",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Stone_Furnace_Smelting",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Stone_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Stone_Weight_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Storage_Increase",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Storage_Increase_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Cost",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Cost_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Fire_Resist",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Health",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Storm_Resistance",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Building_Wood_Weight_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Butcher_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Campfire",
+      "displayName": null
+    },
+    {
+      "rowName": "Canteen",
+      "displayName": null
+    },
+    {
+      "rowName": "Carbon_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Carbon_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Carbon_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Carpentry_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Carpentry_Bench_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Carved_Wood_Set",
+      "displayName": null
+    },
+    {
+      "rowName": "Cave_Scanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Cement_Mixer",
+      "displayName": null
+    },
+    {
+      "rowName": "Chainsaw",
+      "displayName": null
+    },
+    {
+      "rowName": "Charging_Station",
+      "displayName": null
+    },
+    {
+      "rowName": "Charging_Station_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Chemistry_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Chicken_Coop",
+      "displayName": null
+    },
+    {
+      "rowName": "Clay_Brick_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Clay_Brick_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Clay_Brick_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Clay_Brick_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Cloth_Arms_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Cloth_Chest_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Cloth_Feet_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Cloth_Head_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Cloth_Legs_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Sledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Cold_Steel_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Combat_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Sign_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Composite_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Composter",
+      "displayName": null
+    },
+    {
+      "rowName": "Composter_Electric",
+      "displayName": null
+    },
+    {
+      "rowName": "Compound_Bow",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Frame",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Furnace",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Halfpitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Concrete_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Cooking_Station",
+      "displayName": null
+    },
+    {
+      "rowName": "Cooler_Large",
+      "displayName": null
+    },
+    {
+      "rowName": "Copper_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Copper_Wire",
+      "displayName": null
+    },
+    {
+      "rowName": "Crafting_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "CreatureComforts",
+      "displayName": null
+    },
+    {
+      "rowName": "Crossbow",
+      "displayName": null
+    },
+    {
+      "rowName": "Crude_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Crude_Oil_Pipes",
+      "displayName": null
+    },
+    {
+      "rowName": "Crude_Oil_Refiner",
+      "displayName": null
+    },
+    {
+      "rowName": "Crushed_Bone",
+      "displayName": null
+    },
+    {
+      "rowName": "Decorations_DLC_1_Geodes",
+      "displayName": null
+    },
+    {
+      "rowName": "Decorations_DLC_1_Paintings",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Freeze",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Mining_Drill_Biofuel",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Mining_Drill_Electric",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Mining_Drill_Oil",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Mining_Ice_Borer",
+      "displayName": null
+    },
+    {
+      "rowName": "Deep_Ore_Scanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Dehumidifier",
+      "displayName": null
+    },
+    {
+      "rowName": "Dirt_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Dirt_Foundation",
+      "displayName": null
+    },
+    {
+      "rowName": "Dirt_Mound",
+      "displayName": null
+    },
+    {
+      "rowName": "Dirt_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Dough_Bread",
+      "displayName": null
+    },
+    {
+      "rowName": "Dough_Flatbread",
+      "displayName": null
+    },
+    {
+      "rowName": "Dressing_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Dropship_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Drying_Rack",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Armour_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Dehumidifier",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Fireplace",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Furnace",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Oxite_Dissolver",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Stove",
+      "displayName": null
+    },
+    {
+      "rowName": "Electronics",
+      "displayName": null
+    },
+    {
+      "rowName": "Enzyme_Cannon",
+      "displayName": null
+    },
+    {
+      "rowName": "Epoxy",
+      "displayName": null
+    },
+    {
+      "rowName": "Exotic_Delivery_Interface",
+      "displayName": null
+    },
+    {
+      "rowName": "Exotic_Harvester",
+      "displayName": null
+    },
+    {
+      "rowName": "Exotic_Processor",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Arctic_Hero",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Aura_Oxygen_Consumption",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Base_Health",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Base_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Desert_Hero",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Fall_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Forest_Hero",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Healing_Revive",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Increased_Exposure_Decay",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Jump_Stamina",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Movespeed_End_Drop",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Nocturnal1",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Nocturnal2",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Party_Xp",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Reduced_Exposure",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Reduced_Hunger",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Reduced_Oxygen",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Reduced_Thirst",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Reduced_Tree_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Revive_Regeneration",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Solo_Xp",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Sprain_Chance",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Sprain_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Storm_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Swim_Oxygen",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Swim_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Exploration_Weight_Capacity",
+      "displayName": null
+    },
+    {
+      "rowName": "Explosive_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Exposed_Ceiling_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Exposed_Ceiling_Light_Foggy",
+      "displayName": null
+    },
+    {
+      "rowName": "Exposed_Wall_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Exposed_Wall_Light_Foggy",
+      "displayName": null
+    },
+    {
+      "rowName": "Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Fabricator",
+      "displayName": null
+    },
+    {
+      "rowName": "Farm_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Farming_Cart_Attachments",
+      "displayName": null
+    },
+    {
+      "rowName": "Farming_Carts",
+      "displayName": null
+    },
+    {
+      "rowName": "Fertility_Serum",
+      "displayName": null
+    },
+    {
+      "rowName": "Fertilizer_Quality",
+      "displayName": null
+    },
+    {
+      "rowName": "Fertilizer_Resistance",
+      "displayName": null
+    },
+    {
+      "rowName": "Fertilizer_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Fire_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Fire_Extinguisher",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Bullet_Spread",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Cheap_Pistol_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Cheap_Rifle_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Cheap_Shotgun_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Damage_Pistol",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Damage_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Damage_Shotgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Double_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Gun_Critical_Multiplier",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Gun_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Gun_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Gun_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_No_Consume",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Reload_Pistol",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Reload_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Reload_Shotgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Firearm_Second_Wind",
+      "displayName": null
+    },
+    {
+      "rowName": "Firepit",
+      "displayName": null
+    },
+    {
+      "rowName": "Fireplace",
+      "displayName": null
+    },
+    {
+      "rowName": "Firewhacker",
+      "displayName": null
+    },
+    {
+      "rowName": "Fish_Wall_Mount",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Damage_Reduction",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Exposure_Resistance",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Fish_Carry_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Fish_Food_Buff",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Fish_Length",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Fish_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Freshwater_Quality",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Golden_Zone_Size",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Golden_Zone_Size_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Lure_wear_Rate",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Minigame_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Oxygen_Consumption",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Quaility_In_Storm",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Rare_Unique_Chance",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Rod_Crafting_Cost",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Saltwater_Quaility",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Uncommon_Chance",
+      "displayName": null
+    },
+    {
+      "rowName": "Fishing_Water_Comsumption",
+      "displayName": null
+    },
+    {
+      "rowName": "FlameThrower",
+      "displayName": null
+    },
+    {
+      "rowName": "Flamethrower_Turret",
+      "displayName": null
+    },
+    {
+      "rowName": "Flare_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "FlareGun",
+      "displayName": null
+    },
+    {
+      "rowName": "Flares",
+      "displayName": null
+    },
+    {
+      "rowName": "FlashLight",
+      "displayName": null
+    },
+    {
+      "rowName": "Flint_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Floor_Torch",
+      "displayName": null
+    },
+    {
+      "rowName": "Flour",
+      "displayName": null
+    },
+    {
+      "rowName": "Flow_Meter",
+      "displayName": null
+    },
+    {
+      "rowName": "Flower_Pot_Set",
+      "displayName": null
+    },
+    {
+      "rowName": "Food_Trough",
+      "displayName": null
+    },
+    {
+      "rowName": "Food_Trough_Large",
+      "displayName": null
+    },
+    {
+      "rowName": "Food_Trough_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Concrete_Gate",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Concrete_Platform",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Concrete_Spikes",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Concrete_Walkway",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Concrete_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Stone_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Wood_Gate",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Wood_Spikes",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Wood_Walkway",
+      "displayName": null
+    },
+    {
+      "rowName": "Fortification_Wood_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Frag_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Fuel_Pipes",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Arms_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Chest_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Curtain",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Feet_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Head_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Fur_Legs_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Gas_Fireplace",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Bone_InstantChance",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Bone_Yield",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Bone_Yield_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Corpse_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Corpse_Movement_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Leather_Yield",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Meat_Yield",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Meat_Yield_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Gathering_Polarbear_Recipe",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_Experience",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_GenotypeMutation",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_GenotypeMutation2",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_GestationBuff",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_GestationSpeed",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_Lineage",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_MaternalBuff",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_PhenotypeMutation",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_PhenotypeMutation2",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_RecoverySpeed",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_Reduced_Threat",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_SireBuff",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_Twins",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_WildBloodline",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_WildGenome",
+      "displayName": null
+    },
+    {
+      "rowName": "Genetics_WildPhenome",
+      "displayName": null
+    },
+    {
+      "rowName": "Ghillie_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Ghillie_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Ghillie_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Ghillie_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Ghillie_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Bottle_Beer",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Bottle_Wine",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Jar",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Jar_Jam",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Glass_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Glassworking_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Gold_Decorations",
+      "displayName": null
+    },
+    {
+      "rowName": "Gold_Wire",
+      "displayName": null
+    },
+    {
+      "rowName": "Growth_Fertilizer",
+      "displayName": null
+    },
+    {
+      "rowName": "Gunpowder",
+      "displayName": null
+    },
+    {
+      "rowName": "Health_Elixir",
+      "displayName": null
+    },
+    {
+      "rowName": "Health_Enhancement_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Health_Remedy",
+      "displayName": null
+    },
+    {
+      "rowName": "Heater_Large",
+      "displayName": null
+    },
+    {
+      "rowName": "Heavy_Obsidian_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Heavy_Obsidian_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Heavy_Obsidian_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Heavy_Obsidian_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Heavy_Obsidian_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Herbalism_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Hitching_Post",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_CropPlot",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Decorations",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Butchery",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Herbalism",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Sink",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Storage",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Kitchen_Stove",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Pitchfork",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Refridgerator",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Retaining_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Sewing_Machine",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Silo",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Spawn_Blocker",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Stove",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Watertank",
+      "displayName": null
+    },
+    {
+      "rowName": "Homestead_Well",
+      "displayName": null
+    },
+    {
+      "rowName": "Honey_Mead",
+      "displayName": null
+    },
+    {
+      "rowName": "Honeycomb_Products",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunter_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunter_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunter_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunter_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunter_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunting_BonesDamage",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunting_Cold_Hearted",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunting_Knife_Skinning_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunting_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Hunting_See_World_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_ForagingYield",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_JuvenileThreat",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_MountSpeed",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_ParentDamage",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_RidingEfficiency",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_RidingExposureResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_SaddleCost",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_Stamina",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_StaminaRecharge",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameCarryingCapacity",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameColdTolerance",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameHealth",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameHeatTolerance",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameSpeedAura",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameTempTolerance",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TameUpkeep",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_TamingCosts",
+      "displayName": null
+    },
+    {
+      "rowName": "Husbandry_Threat",
+      "displayName": null
+    },
+    {
+      "rowName": "Hydro_Crop_Plot",
+      "displayName": null
+    },
+    {
+      "rowName": "Ice_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Ice_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Ice_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Ice_Mammoth_Attachment",
+      "displayName": null
+    },
+    {
+      "rowName": "IceBox",
+      "displayName": null
+    },
+    {
+      "rowName": "Icebox_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Impact_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Incendiary_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Industrial_Decorations",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Crate_Medium",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Crate_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Cupboard",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Half_Pitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Ladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Interior_Wood_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Bucket",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Half_Pitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Hammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Ladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Shears",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Sign_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Sledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Iron_Wood_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Jackhammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Jerrycan",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Butchery_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Corner_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Sink",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Storage",
+      "displayName": null
+    },
+    {
+      "rowName": "Kitchen_Stove",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Critical_Multiplier",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Fast_Aim",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Faster_Melee",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Felling_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Increased_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Increased_Sneak",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Instant_Kill",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Instant_Skin",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Melee_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Pin_Throw",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Range_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Range_Damage2",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Range_Distance",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Range_Distance2",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Skin_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Smith1",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Smith1_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Smith2",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Stamina_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Knife_Use_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Landing_Pad",
+      "displayName": null
+    },
+    {
+      "rowName": "Landmine",
+      "displayName": null
+    },
+    {
+      "rowName": "Lantern",
+      "displayName": null
+    },
+    {
+      "rowName": "Large_Advanced_Aquarium",
+      "displayName": null
+    },
+    {
+      "rowName": "Laser_Attachments",
+      "displayName": null
+    },
+    {
+      "rowName": "Laser_Pistol",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Hunter_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Arms_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Chest_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Curtain_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Curtain_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Feet_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Head_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Leather_Legs_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Lightning_Rod_Platinum",
+      "displayName": null
+    },
+    {
+      "rowName": "LightningRod_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Limestone_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Limestone_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Limestone_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Limestone_Fertilizer",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Bow",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Crossbow",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Pick",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Shield",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Sledge",
+      "displayName": null
+    },
+    {
+      "rowName": "Lithium_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Longbow",
+      "displayName": null
+    },
+    {
+      "rowName": "lron_Crop_Plot",
+      "displayName": null
+    },
+    {
+      "rowName": "Machete",
+      "displayName": null
+    },
+    {
+      "rowName": "Machine_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Manufacturer",
+      "displayName": null
+    },
+    {
+      "rowName": "Masonry_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Masonry_Bench_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Masonry_Bench_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Material_Processor",
+      "displayName": null
+    },
+    {
+      "rowName": "Medical_Scanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Medicine_Bag",
+      "displayName": null
+    },
+    {
+      "rowName": "Medicine_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Melee_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Crate_Medium",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Crate_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Cupboard",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Grate_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Grate_Stair",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Oxite_Dissolver",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Rain_Catcher",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Sledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Metal_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Milk_Bottle",
+      "displayName": null
+    },
+    {
+      "rowName": "Milk_Bucket",
+      "displayName": null
+    },
+    {
+      "rowName": "MinerArmor",
+      "displayName": null
+    },
+    {
+      "rowName": "Mining_Laser",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Communicator_Norex",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Communicator_T2",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Communicator_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Communicator_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Radio",
+      "displayName": null
+    },
+    {
+      "rowName": "Mortar_And_Pestle",
+      "displayName": null
+    },
+    {
+      "rowName": "Nailgun",
+      "displayName": null
+    },
+    {
+      "rowName": "National_Flags",
+      "displayName": null
+    },
+    {
+      "rowName": "Natural_Oil_Refiner",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Sledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Obsidian_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Barrel",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Can",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Compounds",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Epoxy",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Plastics",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Power_Plant",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Synthetics",
+      "displayName": null
+    },
+    {
+      "rowName": "Organic_Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Oxite_Dissolver",
+      "displayName": null
+    },
+    {
+      "rowName": "Oxygen_Bladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Oxygen_Tank",
+      "displayName": null
+    },
+    {
+      "rowName": "Pistol_Handgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Pistol_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Pistol_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Pistol_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Crossbow",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Hammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Sheath",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Platinum_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "PlatinumWeave_Curtain",
+      "displayName": null
+    },
+    {
+      "rowName": "Poison_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Poison_Paste",
+      "displayName": null
+    },
+    {
+      "rowName": "Polarbear_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Polarbear_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Polarbear_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "PolarBear_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Polarbear_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Polymerizer",
+      "displayName": null
+    },
+    {
+      "rowName": "Portable_Beacon",
+      "displayName": null
+    },
+    {
+      "rowName": "Portable_Biofuel_Generator",
+      "displayName": null
+    },
+    {
+      "rowName": "PotBellyStove",
+      "displayName": null
+    },
+    {
+      "rowName": "Pouch_General",
+      "displayName": null
+    },
+    {
+      "rowName": "Powerbank",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Campfire_Fuel",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_CropPlot_Crop_Yield",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_CropPlot_Fertilizer_Consumption",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_CropPlot_Growth_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_CropPlot_Item_Spoil_Time",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Crops_Yield",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Dried_Meat_Buff_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Food_Buff_Duration",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Food_Decay",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Food_Rotten",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Food_Rotten2",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Foraging_Buff",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_FruitAndVege_Buff_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Gunpowder_Recipe",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Max_Stamina",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Melee_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Produce_Shotgun_Recipe",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Canyon_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Fisher",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Igloo",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Extraction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Defence",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Recon",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_A_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_A_Extraction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_B_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_B_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_C_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_C_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_3",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_4",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_5",
+      "displayName": null
+    },
+    {
+      "rowName": "Pump_Jack",
+      "displayName": null
+    },
+    {
+      "rowName": "Radar",
+      "displayName": null
+    },
+    {
+      "rowName": "Radiation_Protection_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Radiation_Tracker",
+      "displayName": null
+    },
+    {
+      "rowName": "Rain_Reservoir",
+      "displayName": null
+    },
+    {
+      "rowName": "Ranch_Gate",
+      "displayName": null
+    },
+    {
+      "rowName": "Ranch_Sign",
+      "displayName": null
+    },
+    {
+      "rowName": "Ranged_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Raw_Wood_Sign",
+      "displayName": null
+    },
+    {
+      "rowName": "Recovery_Beacon_Tracker",
+      "displayName": null
+    },
+    {
+      "rowName": "Recurve_Bow",
+      "displayName": null
+    },
+    {
+      "rowName": "Red_Exotic_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Refined_Lithium",
+      "displayName": null
+    },
+    {
+      "rowName": "Refined_Wood_Rod",
+      "displayName": null
+    },
+    {
+      "rowName": "Refrigerator",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Glass_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Glass_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Glass_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Ladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Wood_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Reinforced_Wood_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_BonesDamage",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Extinguish_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Fire_Resistance",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Flapper_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Flapper_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Flapper_Stamina_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Hammer_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Hammer_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Hammer_Speed_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Instant_Repair_Building",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Stamina_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Storm_Resistant",
+      "displayName": null
+    },
+    {
+      "rowName": "Repair_Throw_Flapper",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Crop_Decay",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Crop_Grow_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Encumbrance_Penalty",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Exotic_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Exotic_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Food_Benefit",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Food_Buff_Slot",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Food_Hunger",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Increased_Harvesting",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Increased_Metals",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Increased_Stone",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Increased_Wood",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Increased_Wood_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Instant_Tree",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Inventory_Capacity",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Inventory_Capacity_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Metal_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Oxite_Miner",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Secondary_Fibre",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Secondary_Voxel",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Stone_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Voxel_Instant",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Wood_Pickup",
+      "displayName": null
+    },
+    {
+      "rowName": "Resources_Wood_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Rifle_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Rustic_Decoration_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Arctic",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Arctic_Survival",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Desert",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Mammoth",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Raptor",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Standard_Bag",
+      "displayName": null
+    },
+    {
+      "rowName": "Salting_Station",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Brick_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Brick_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Brick_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Scoria_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Seed_Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Seed_Pouch",
+      "displayName": null
+    },
+    {
+      "rowName": "Seed_Pouch_T2",
+      "displayName": null
+    },
+    {
+      "rowName": "Shaped_Ruby",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Bone",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Carbon",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Composite",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Platinum",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Steel",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Titanium",
+      "displayName": null
+    },
+    {
+      "rowName": "Shield_Wooden",
+      "displayName": null
+    },
+    {
+      "rowName": "Shotgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Shotgun_Casing",
+      "displayName": null
+    },
+    {
+      "rowName": "Shotgun_Shell_Buckshot",
+      "displayName": null
+    },
+    {
+      "rowName": "Shotgun_Shell_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Shroud_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "SilkWeave_Curtain",
+      "displayName": null
+    },
+    {
+      "rowName": "Single_Ceiling_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Single_Wall_Light",
+      "displayName": null
+    },
+    {
+      "rowName": "Skinning_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Slug_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Slug_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Slug_Trophies",
+      "displayName": null
+    },
+    {
+      "rowName": "Small_Crop_Plot",
+      "displayName": null
+    },
+    {
+      "rowName": "Smoke_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Snare_Trap",
+      "displayName": null
+    },
+    {
+      "rowName": "Solar_Panel",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Animal_Healthbar",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Base_Maintenance",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Bow_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Buildable_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Consumables",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Crafting_Basics",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Damage_Reduction",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Detection",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Extra_Resources",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Felling_Rewards",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Firearm_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Health",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Health_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Hedgehog_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Hunting_Resources",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Hunting_Resources_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Knife_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Longer_Food_Buffs",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Melee_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Mining_Rewards",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Resource_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Spear_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Sprain_Reduction",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Stamina",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Stamina_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Solo_Weight_Capacity",
+      "displayName": null
+    },
+    {
+      "rowName": "SpawnBlocker_T2",
+      "displayName": null
+    },
+    {
+      "rowName": "SpawnBlocker_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "SpawnBlocker_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Aim_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Bleed_Hits",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Cheap_Crafting1",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Cheap_Crafting1_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Cheap_Crafting2",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Cheap_Crafting2_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Critical_Damage2",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Critical_Multiplier1",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Damage_Reduction",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Fast_Aim",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Faster_Melee",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Melee_Damage1",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Melee_Damage2",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Range_Damage1",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Range_Damage2",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Range_Distance1",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Range_Distance2",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Stamina_Battery",
+      "displayName": null
+    },
+    {
+      "rowName": "Spear_Stamina_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Specialist_Alteration_Melee_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Specialist_Armor_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Specialist_Ranged_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "SplineTool_Water",
+      "displayName": null
+    },
+    {
+      "rowName": "Splint",
+      "displayName": null
+    },
+    {
+      "rowName": "SpotLight",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Base_Stamina",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Base_Stamina_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Blueprint_Ghillie",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Damage_Stamina_Regen",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Detection_Range",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Large_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Medium_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Small_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Sneak_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Stalking_Storm_Stealth",
+      "displayName": null
+    },
+    {
+      "rowName": "Stamina_Enhancement_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Bloom",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Hammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Roof",
+      "displayName": null
+    },
+    {
+      "rowName": "Steel_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Brick_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Brick_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Brick_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Brick_Fireplace",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Cairn",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Diagonal",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Frame",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Furnace",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Half_Pitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Sign_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Statue_Set",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Stone_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Strength_Enhancement_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Sugar",
+      "displayName": null
+    },
+    {
+      "rowName": "Sustenence_Enhancement_Tonic",
+      "displayName": null
+    },
+    {
+      "rowName": "Suture_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Synthentic_Enzymes",
+      "displayName": null
+    },
+    {
+      "rowName": "Synthetic_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "T3_Cleaning_Device",
+      "displayName": null
+    },
+    {
+      "rowName": "T3_Smoker",
+      "displayName": null
+    },
+    {
+      "rowName": "T3_Windmill",
+      "displayName": null
+    },
+    {
+      "rowName": "T4_Assault_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "T4_Assault_Rifle_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "T4_Shotgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Talent_Leather_Breakdown",
+      "displayName": null
+    },
+    {
+      "rowName": "Talent_Leather_Rope",
+      "displayName": null
+    },
+    {
+      "rowName": "Talent_Wood_Sticks",
+      "displayName": null
+    },
+    {
+      "rowName": "Taxidermy_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Terraforming_Dust",
+      "displayName": null
+    },
+    {
+      "rowName": "Tesla_Coil",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Half_Pitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Ladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Wall_Angle",
+      "displayName": null
+    },
+    {
+      "rowName": "Thatch_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Thermos",
+      "displayName": null
+    },
+    {
+      "rowName": "Thumper",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Crossbow",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Hammer",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Plate",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Sickle",
+      "displayName": null
+    },
+    {
+      "rowName": "Titanium_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Crafting",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Crafting_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Crafting2",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Durability_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Felling_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Stamina_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Axe_Swing_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Cheaper_Pickaxe1",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Cheaper_Pickaxe1_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Cheaper_Pickaxe2",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Combat_Axes",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Combat_Axes2",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Durability_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Free_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Melee_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Radius",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Stamina_Usage",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Stamina_Usage_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Pickaxe_Swing_Speed",
+      "displayName": null
+    },
+    {
+      "rowName": "Tools_Sickle_Durability",
+      "displayName": null
+    },
+    {
+      "rowName": "Trail_Beacon",
+      "displayName": null
+    },
+    {
+      "rowName": "Trophy_Bench",
+      "displayName": null
+    },
+    {
+      "rowName": "Turret_Pistol",
+      "displayName": null
+    },
+    {
+      "rowName": "Updated_Armor_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Updated_Melee_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Updated_Ranged_Attachment_Pack",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Arrow",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Bolt",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Collector",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Conversion",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Converter",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Generator",
+      "displayName": null
+    },
+    {
+      "rowName": "Vapour_Condenser",
+      "displayName": null
+    },
+    {
+      "rowName": "Vitamins",
+      "displayName": null
+    },
+    {
+      "rowName": "Volatile_Substance",
+      "displayName": null
+    },
+    {
+      "rowName": "Wall_Torch",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Barrel",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Barrel_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Borer",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Can_T3",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Pump",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Purifier_T1",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Purifier_T2",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Purifier_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Sprinkler",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Trough",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Trough_Large",
+      "displayName": null
+    },
+    {
+      "rowName": "Water_Trough_T4",
+      "displayName": null
+    },
+    {
+      "rowName": "Waterbomb",
+      "displayName": null
+    },
+    {
+      "rowName": "WaterGenerator",
+      "displayName": null
+    },
+    {
+      "rowName": "Watering_Can",
+      "displayName": null
+    },
+    {
+      "rowName": "Waterskin",
+      "displayName": null
+    },
+    {
+      "rowName": "Weapon_Rack",
+      "displayName": null
+    },
+    {
+      "rowName": "Wind_Turbine",
+      "displayName": null
+    },
+    {
+      "rowName": "Wine",
+      "displayName": null
+    },
+    {
+      "rowName": "Wire_Tool",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Advanced",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Basic",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Beam",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Bow",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Burner",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Cart",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Chair",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Composter",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Crate_Medium",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Crate_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Cupboard",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Door",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Flare",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Floor",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Floor_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Half_Pitch",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Halfpiece",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Hedgehog_Medium",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Ladder",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Rag_Torch",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Railing",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Ramp",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Roof_Corner",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Sign_Small",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Spear",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Stairs",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Table",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_TrapDoor",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Trim",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Wall",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Wall_Angled",
+      "displayName": null
+    },
+    {
+      "rowName": "Wood_Window",
+      "displayName": null
+    },
+    {
+      "rowName": "Wooden_Fishing_Rod",
+      "displayName": null
+    },
+    {
+      "rowName": "Worklamp_Directional",
+      "displayName": null
+    },
+    {
+      "rowName": "Worklamp_OmniDirectional",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antibiotic_Vaccine_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antibiotic_Vaccine_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antibiotic_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antiparasitic_Vaccine_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antiparasitic_Vaccine_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antiparasitic_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antipoison_Vaccine_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antipoison_Vaccine_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Antipoison_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Archery_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Larkwell_Ballistic",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Larkwell_Bleed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Larkwell_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Larkwell_Tazer",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Printed_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Printed_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Printed_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Arrow_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_AssaultRifle_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Knife_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Axe_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Chef",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Explorers",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Farmers",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Medic",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Tech",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bandage_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Beehive_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Blood_Thinning_Vaccine_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Blood_Thinning_Vaccine_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Blood_Thinning_Vaccine_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bow_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Campfire_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Canteen_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Arms_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Arms_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Chest_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Chest_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Feet_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Feet_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Helmet_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Helmet_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Legs_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Carbon_Legs_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_CHAC_Pistol",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_CHAC_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_CHAC_Shotgun",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Coal_Fuel",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crate_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Bull",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Carrier",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cat_A1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cat_A2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cat_A3",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cat_B",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cat_C",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Chicken",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Cow",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_A1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_A2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_B1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_B2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_C1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_C2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_D1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_D2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Dog_E",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Horse_A1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Horse_A2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Horse_A3",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Overrider",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Pig",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Pig_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Ram",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Rooster",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Saddle_Quick_Tame",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Creature_Sheep",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crop_Plot",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crossbow_Inaris_A",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crossbow_Inaris_B",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crossbow_Inaris_C",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Crossbow_Inaris_D",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dressing_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dropship_Beacon",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_3",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_5",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_6",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_7",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Inaris",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Larkwell_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Larkwell_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Shengong2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Firewhacker_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Furnace_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hammer_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hammer_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hammer_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hammer_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Heated_Canteen_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hydrazine_Canister",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hydrazine_Cooker",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Hydrazine_Heater",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Shengong_Beta_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Alpha_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Alpha_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Alpha_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Alpha_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Alpha_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Black_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Black_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Black_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Black_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Armor_Black_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Backpack_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Backpack_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Bolt_Electroshock",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Bolt_Explosive",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Bolt_Piercing",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Larkwell_Bolt_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Biofuel",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_CreatureScanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Extractor",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Fishfinder",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Power_Source",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Radar",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Scanner",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Mining_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Carry_Weight",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Caving",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_ColdResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Consumption",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_ExposureResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Extremes",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Fall_Damage",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Fire_Resistance",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Fishing",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_HeatResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_ItemWear",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Melee",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Movement",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_New_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_New_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Night",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Oxygen",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_PlayerTracker",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Poison_Resistence",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Slots",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Slots2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_StaminaRegen",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_TamedDamage",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Taming",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Temp",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Water",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_World_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Wounds",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Oxygen_Gel",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Oxygen_Tank_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Oxygen_Tank_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Inaris_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Inaris_Delta_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Delta_1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Delta_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pickaxe_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Pistol_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Printed_Cot",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Purification_Tablet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Aluminium",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Clay",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Copper",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Dirt",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Gold",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Limestone",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Obsidian",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Oxite",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Platinum",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Scoria",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Silica",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Stone",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Sulfur",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Sulfur_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Synthetic_Enzymes",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Titanium",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Wood",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Rifle_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Avocado",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Beans",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Berry",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Bramble",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Carrot",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Cocao",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Coconut",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Coffee",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Corn",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Fiber",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_GreenTea",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Kumara",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Lily",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Mushroom",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Potato",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Pumpkin",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Reed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Rhubarb",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Squash",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Strawberry",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_SugarCane",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_SugarCane_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Tomato",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Watermelon",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Wheat",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_WildTea",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Yeast",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Shotgun_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Inaris_00",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Inaris_01",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Inaris_02",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Inaris_03",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sickle_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sniper_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Soda_Consumable",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Spear_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Splint_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Stamina_Gel",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Super_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Survival_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Workshop_Repair",
+      "displayName": null
+    },
+    {
+      "rowName": "Yield_Fertilizer",
+      "displayName": null
+    }
+  ]
+}

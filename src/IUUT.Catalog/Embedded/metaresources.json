@@ -1,0 +1,35 @@
+{
+  "catalogVersion": "2026-02-mendel",
+  "dataTable": "D_MetaResources",
+  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "rows": [
+    {
+      "rowName": "Biomass",
+      "displayName": "Biomass"
+    },
+    {
+      "rowName": "Credits",
+      "displayName": "Ren Credits"
+    },
+    {
+      "rowName": "Exotic_Red",
+      "displayName": "Red Exotic"
+    },
+    {
+      "rowName": "Exotic_Uranium",
+      "displayName": "Uranium Exotic"
+    },
+    {
+      "rowName": "Exotic1",
+      "displayName": "Exotic"
+    },
+    {
+      "rowName": "Licence",
+      "displayName": "Faction Licence"
+    },
+    {
+      "rowName": "Refund",
+      "displayName": "Refund Tokens"
+    }
+  ]
+}
