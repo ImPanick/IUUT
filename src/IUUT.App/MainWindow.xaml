@@ -41,6 +41,9 @@
     </ui:FluentWindow.Resources>
 
     <Grid>
+        <!-- Faint 1px "chart" grid backdrop behind everything (opaque panels sit on top) -->
+        <Rectangle Fill="{StaticResource GridBackdropBrush}" IsHitTestVisible="False" />
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -48,7 +51,11 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ui:TitleBar Grid.Row="0" Title="IUUT · Icarus Ultimate Utility Tool" />
+            <ui:TitleBar Grid.Row="0" Title="IUUT · Icarus Ultimate Utility Tool">
+                <ui:TitleBar.Icon>
+                    <ui:ImageIcon Source="{StaticResource AppGlyphImage}" Width="16" Height="16" />
+                </ui:TitleBar.Icon>
+            </ui:TitleBar>
 
             <!-- Nav bar — hidden on Home, shown on sub-pages -->
             <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="20,4,20,0">

@@ -139,9 +139,10 @@ must still degrade to Consolas gracefully.
   ~3.5%) on raised panels/rows/tiles to suggest a milled edge; optional 1px bottom inner shadow at
   ~30% black. Subtle — this is the only "depth" cue. (In WPF: `box-shadow:inset` → a 2-border
   sandwich, since `DropShadowEffect` is outer-only.)
-- **Optional grid backdrop:** a faint tiled 1px rule grid (`grid.line` @ ~30%) behind the content
-  region sells the "HUD." Implement as a tiled `DrawingBrush` on the window background. Off by
-  default until P3; must never reduce text contrast.
+- **Grid backdrop (implemented):** a faint tiled 1px rule grid (32px cells) behind the whole
+  window sells the "HUD / chart" look; opaque panels sit on top so it shows in gutters/margins.
+  Implemented as the `GridBackdropBrush` tiled `DrawingBrush` (`GlassTheme.xaml`) on a full-window
+  `Rectangle` in `MainWindow.xaml`. Tune visibility via the Pen brush alpha (currently `#5C4A463F`).
 - **Motion:** minimal. Border/fill state changes ≤120ms or instant. No drift, no bounce. Honour
   OS reduced-motion (there's little to disable, which is the point).
 
@@ -172,8 +173,9 @@ stays for v2 — but the title bar is restyled to the graphite palette (charcoal
 wordmark, `state.danger` only on close-button hover). The v1 "self-rolled `WindowChrome`"
 recommendation is **not** pursued; we keep the existing WPF-UI chrome and skin it.
 
-- Title strip: `bg.base`, 1px bottom `grid.line`, wordmark in Cascadia Code, app glyph as a
-  monochrome line icon (no emoji, no glow).
+- Title strip: `bg.base`, 1px bottom `grid.line`, wordmark in Cascadia Code, app glyph = the
+  **orbital hexagon mark** (accent stroke) — implemented as the `AppGlyphImage` `DrawingImage` set
+  on `ui:TitleBar.Icon` via `ui:ImageIcon` (no emoji, no glow).
 - Window corners follow Win11 (`WindowCornerPreference="Round"`); content corners are 2px.
 - Accessibility: every control keeps `AutomationProperties.Name`; visible focus ring in
   `accent.primary`; min hit target 32×32, title-bar buttons taller.
@@ -265,6 +267,10 @@ Presentation-only; `IUUT.Core` + ViewModels untouched.
   `*EditorView`/`*ViewerView` header → readout label, apply/save/unstick → `PrimaryButton`, remove →
   `DangerButton`, emoji buttons → uppercase text; Recovery `ℹ`/`⚠` → `ui:SymbolIcon` (Info/Warning); the
   stash durability chip `🔧` → `DUR`; dialog/status emoji removed.
+
+- **Polish — done.** Title-bar **app glyph** (orbital hexagon, `AppGlyphImage` → `ui:TitleBar.Icon`)
+  and the **1px chart grid backdrop** (`GridBackdropBrush` on a full-window `Rectangle`) — the two
+  optional flourishes from §4/§6 — are now in the live app.
 
 All 256 Core tests green after the UI overhaul; the App layer builds 0-error. (Category glyph mapping:
 account→`WalletCreditCard24`, characters→`Person24`, accolades→`Trophy24`, stash→`Box24`,

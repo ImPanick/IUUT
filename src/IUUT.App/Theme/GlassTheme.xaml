@@ -75,6 +75,40 @@
     <!-- Window background — now a solid graphite (was the orbit gradient) -->
     <SolidColorBrush x:Key="OrbitBackgroundBrush" Color="{StaticResource BgBaseColor}" />
 
+    <!-- ============ Decorative ============ -->
+    <!-- Faint 1px "chart" grid backdrop (doc §4 optional layer); tiled 32px cells. -->
+    <DrawingBrush x:Key="GridBackdropBrush" TileMode="Tile" Stretch="None"
+                  Viewport="0,0,32,32" ViewportUnits="Absolute">
+        <DrawingBrush.Drawing>
+            <GeometryDrawing Geometry="M0,0 L32,0 L32,32 L0,32 Z">
+                <GeometryDrawing.Pen>
+                    <Pen Thickness="1" Brush="#5C4A463F" />
+                </GeometryDrawing.Pen>
+            </GeometryDrawing>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
+
+    <!-- App glyph: the orbital hexagon mark (accent stroke), for the title bar. -->
+    <DrawingImage x:Key="AppGlyphImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup>
+                <GeometryDrawing Geometry="M8,1.5 L13.5,4.7 L13.5,11.3 L8,14.5 L2.5,11.3 L2.5,4.7 Z">
+                    <GeometryDrawing.Pen>
+                        <Pen Thickness="1.3" Brush="{StaticResource AccentBrush}" LineJoin="Round" />
+                    </GeometryDrawing.Pen>
+                </GeometryDrawing>
+                <GeometryDrawing>
+                    <GeometryDrawing.Pen>
+                        <Pen Thickness="1.3" Brush="{StaticResource AccentBrush}" />
+                    </GeometryDrawing.Pen>
+                    <GeometryDrawing.Geometry>
+                        <EllipseGeometry Center="8,8" RadiusX="2.1" RadiusY="2.1" />
+                    </GeometryDrawing.Geometry>
+                </GeometryDrawing>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
     <!-- Panel surface fill: a hair-lighter top edge → settles to the surface within ~2px,
          giving a milled-edge highlight in a single brush (no extra layer needed). -->
     <LinearGradientBrush x:Key="GlassCardBackground" StartPoint="0,0" EndPoint="0,1">
