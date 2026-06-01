@@ -42,8 +42,9 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   blueprints", `AccountEditService`); **Characters & Talents WIRED** (character picker → name/XP/debt/
   dead/abandoned + per-talent rank slider + "Max XP"/"Max talents", `CharacterEditService`);
   **Accolades & Bestiary WIRED** (catalog accolade checklist + grant/revoke all; creature-group scan
-  points + "Max all", `AccoladeBestiaryEditService`); **Orbital Stash WIRED** (viewer + remove with
-  loadout-reference warning; add deferred for items.json picker); **Loadouts WIRED** (read-only
+  points + "Max all", `AccoladeBestiaryEditService`); **Orbital Stash WIRED — staged builder** (add
+  catalog items w/ stack count capped at the hard game max of 100 + remove w/ loadout-reference
+  warning, all staged → one Apply; `StashEditService.AddItem`/`SetStack`/`RemoveItem`); **Loadouts WIRED** (read-only
   viewer + dangling-reference diagnostics, `LoadoutCrossReference`); **Mounts WIRED** (name/level,
   `MountEditService`); **Engine Flags WIRED** (add/remove raw flag IDs, binary `flags_*.dat` via
   `FlagsEditService`); **Prospects WIRED** (per-slot unstick, `ProspectEditService`); **Advanced/Raw
@@ -56,8 +57,9 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
 
 **NEXT: the Custom editor is feature-complete (all 9 categories wired).** Remaining work is polish +
 verification, not new editors:
-- **Stash "add item"** — deferred until `items.json` is enriched (`scripts/fetch-catalogs.ps1`) so the
-  picker shows friendly names; the viewer/remove path is live now.
+- **Stash add item** — DONE (staged builder, embedded 91-item catalog, stack cap 100). Optional
+  follow-up: enrich `items.json` (`scripts/fetch-catalogs.ps1`) for friendly display names + a fuller
+  item list in the picker (currently RowName labels). Durability-on-add is also a possible extension.
 - **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
   spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
   (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).

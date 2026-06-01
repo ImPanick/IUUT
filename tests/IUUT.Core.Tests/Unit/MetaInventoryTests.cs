@@ -94,4 +94,37 @@ public class MetaInventoryTests
         service.RemoveItem(inventory, item.DatabaseGuid).Should().BeFalse();
         inventory.Items.Should().BeEmpty();
     }
+
+    [Fact]
+    public void StashEditService_SetStack_ClampsToHardMax_AndRoundTrips()
+    {
+        var service = new StashEditService(new SystemGuidProvider());
+        var inventory = new MetaInventoryModel();
+        var item = service.AddItem(inventory, "Wood");
+
+        service.SetStack(item, 5000); // way over the 100 cap
+        StashEditService.GetStack(item).Should().Be(StashEditService.MaxStack);
+
+        service.SetStack(item, 0); // under the floor
+        StashEditService.GetStack(item).Should().Be(1);
+
+        service.SetStack(item, 42);
+        StashEditService.GetStack(item).Should().Be(42);
+
+        // Survives a serialize → parse round-trip.
+        var reparsed = MetaInventoryParser.Parse(MetaInventorySerializer.Serialize(inventory));
+        StashEditService.GetStack(reparsed.Items.Single()).Should().Be(42);
+    }
+
+    [Fact]
+    public void StashEditService_SetStack_UpdatesExistingProperty_WithoutDuplicating()
+    {
+        var service = new StashEditService(new SystemGuidProvider());
+        var item = MetaInventoryParser.Parse(Sample).Items.Single(); // already has an ItemableStack
+
+        service.SetStack(item, 7);
+
+        item.ItemDynamicData.Count(p => p.PropertyType == "ItemableStack").Should().Be(1);
+        StashEditService.GetStack(item).Should().Be(7);
+    }
 }

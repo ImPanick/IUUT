@@ -8,10 +8,12 @@ using IUUT.Core.Models;
 namespace IUUT.App.ViewModels;
 
 /// <summary>
-/// The Orbital Stash viewer (master §8.6, §10.4): lists <c>MetaInventory.json</c> items (flagged if
-/// a loadout references them) and removes the selected one through <see cref="StashEditService"/>,
-/// writing via <see cref="CustomFileService"/> (backed up + atomic). Adding items is deferred until
-/// the catalog is enriched with a friendly picker (items.json). The confirm lives in the view.
+/// The Orbital Stash builder (master §8.6, §10.4): lists <c>MetaInventory.json</c> items (with stack
+/// counts, flagged if a loadout references them), adds catalog items with a fresh GUID and a stack
+/// count (capped at the hard game max of <see cref="StashEditService.MaxStack"/>), and removes the
+/// selected one — all staged in memory until <b>Apply</b> writes the file via
+/// <see cref="CustomFileService"/> (backup + atomic). Edits via <see cref="StashEditService"/>; the
+/// loadout coupling via <see cref="LoadoutCrossReference"/>. The confirm lives in the view.
 /// </summary>
 public sealed class StashViewerViewModel : ObservableObject
 {
@@ -22,11 +24,15 @@ public sealed class StashViewerViewModel : ObservableObject
     private readonly string _saveFolder;
 
     private MetaInventoryModel? _stash;
+    private HashSet<string> _referenced = new(StringComparer.OrdinalIgnoreCase);
     private StashItemViewModel? _selectedItem;
+    private CatalogRow? _selectedCatalogItem;
+    private int _addQuantity = 1;
+    private bool _hasChanges;
     private bool _isBusy;
     private string _statusMessage = "Loading the selected save…";
 
-    /// <summary>Creates the viewer for one save profile folder.</summary>
+    /// <summary>Creates the builder for one save profile folder.</summary>
     public StashViewerViewModel(
         CustomFileService files,
         StashEditService stashEdit,
@@ -49,19 +55,52 @@ public sealed class StashViewerViewModel : ObservableObject
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Items = [];
+        CatalogItems = catalogs.Items.Rows.OrderBy(r => r.Label, StringComparer.OrdinalIgnoreCase).ToList();
+
         LoadCommand = new AsyncRelayCommand(LoadAsync);
+        AddItemCommand = new RelayCommand(AddItem, () => !IsBusy && _stash is not null && SelectedCatalogItem is not null);
+        RemoveSelectedCommand = new RelayCommand(RemoveSelected, () => !IsBusy && _stash is not null && SelectedItem is not null);
     }
 
-    /// <summary>The profile being viewed (for the header).</summary>
+    /// <summary>The profile being edited (for the header).</summary>
     public string ProfileLabel { get; }
 
-    /// <summary>The stash items.</summary>
+    /// <summary>The current stash items.</summary>
     public ObservableCollection<StashItemViewModel> Items { get; }
 
-    /// <summary>Reloads the save into the viewer.</summary>
+    /// <summary>The catalog items available to add (embedded D_ItemsStatic, sorted by label).</summary>
+    public IReadOnlyList<CatalogRow> CatalogItems { get; }
+
+    /// <summary>Reloads the save into the builder (discards staged changes).</summary>
     public IAsyncRelayCommand LoadCommand { get; }
 
-    /// <summary>The selected item (the removal target).</summary>
+    /// <summary>Adds the selected catalog item at <see cref="AddQuantity"/> (staged).</summary>
+    public IRelayCommand AddItemCommand { get; }
+
+    /// <summary>Removes the selected stash item (staged).</summary>
+    public IRelayCommand RemoveSelectedCommand { get; }
+
+    /// <summary>The catalog item to add.</summary>
+    public CatalogRow? SelectedCatalogItem
+    {
+        get => _selectedCatalogItem;
+        set
+        {
+            if (SetProperty(ref _selectedCatalogItem, value))
+            {
+                AddItemCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
+
+    /// <summary>The stack count for the next add, clamped to 1..<see cref="StashEditService.MaxStack"/>.</summary>
+    public int AddQuantity
+    {
+        get => _addQuantity;
+        set => SetProperty(ref _addQuantity, Math.Clamp(value, 1, StashEditService.MaxStack));
+    }
+
+    /// <summary>The selected stash item (the removal target).</summary>
     public StashItemViewModel? SelectedItem
     {
         get => _selectedItem;
@@ -70,12 +109,20 @@ public sealed class StashViewerViewModel : ObservableObject
             if (SetProperty(ref _selectedItem, value))
             {
                 OnPropertyChanged(nameof(HasSelection));
+                RemoveSelectedCommand.NotifyCanExecuteChanged();
             }
         }
     }
 
-    /// <summary>Whether an item is selected (enables Remove).</summary>
+    /// <summary>Whether a stash item is selected.</summary>
     public bool HasSelection => SelectedItem is not null;
+
+    /// <summary>Whether there are unsaved staged changes (enables Apply).</summary>
+    public bool HasChanges
+    {
+        get => _hasChanges;
+        private set => SetProperty(ref _hasChanges, value);
+    }
 
     /// <summary>Item-count summary.</summary>
     public string Summary => $"{Items.Count:N0} items · {Items.Count(i => i.IsReferenced):N0} referenced by loadouts";
@@ -84,7 +131,14 @@ public sealed class StashViewerViewModel : ObservableObject
     public bool IsBusy
     {
         get => _isBusy;
-        private set => SetProperty(ref _isBusy, value);
+        private set
+        {
+            if (SetProperty(ref _isBusy, value))
+            {
+                AddItemCommand.NotifyCanExecuteChanged();
+                RemoveSelectedCommand.NotifyCanExecuteChanged();
+            }
+        }
     }
 
     /// <summary>Status-bar message.</summary>
@@ -94,41 +148,33 @@ public sealed class StashViewerViewModel : ObservableObject
         private set => SetProperty(ref _statusMessage, value);
     }
 
-    /// <summary>True once <c>MetaInventory.json</c> parsed and the viewer is usable.</summary>
+    /// <summary>True once <c>MetaInventory.json</c> parsed and the builder is usable.</summary>
     public bool IsLoaded => _stash is not null;
 
-    /// <summary>Loads (or reloads) the stash into the viewer.</summary>
+    /// <summary>Loads (or reloads) the stash into the builder, discarding staged changes.</summary>
     public async Task LoadAsync()
     {
         IsBusy = true;
         try
         {
             _stash = await _files.LoadStashAsync(_saveFolder);
-            Items.Clear();
-
             if (_stash is null)
             {
-                StatusMessage = "Could not load this save's MetaInventory.json (missing or unreadable).";
+                Items.Clear();
+                _referenced = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                HasChanges = false;
                 OnPropertyChanged(nameof(Summary));
+                StatusMessage = "Could not load this save's MetaInventory.json (missing or unreadable).";
                 return;
             }
 
             var loadouts = await _files.LoadLoadoutsAsync(_saveFolder);
-            var referenced = loadouts is null
+            _referenced = loadouts is null
                 ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
                 : new HashSet<string>(_crossReference.ReferencedDatabaseGuids(loadouts), StringComparer.OrdinalIgnoreCase);
 
-            foreach (var item in _stash.Items)
-            {
-                var rowName = item.ItemStaticData.RowName;
-                Items.Add(new StashItemViewModel(
-                    rowName,
-                    _catalogs.Items.Label(rowName),
-                    item.DatabaseGuid,
-                    referenced.Contains(item.DatabaseGuid)));
-            }
-
-            OnPropertyChanged(nameof(Summary));
+            RebuildItems();
+            HasChanges = false;
             StatusMessage = $"Loaded {Items.Count} stash item(s) for “{ProfileLabel}”.";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.
@@ -140,42 +186,43 @@ public sealed class StashViewerViewModel : ObservableObject
         finally
         {
             IsBusy = false;
+            AddItemCommand.NotifyCanExecuteChanged();
+            RemoveSelectedCommand.NotifyCanExecuteChanged();
         }
     }
 
-    /// <summary>Removes the selected item (call after a user confirm).</summary>
-    public async Task RemoveSelectedAsync()
+    /// <summary>Writes the staged stash to disk (call after a user confirm).</summary>
+    public async Task ApplyAsync()
     {
         if (IsBusy)
         {
             return;
         }
 
-        if (_stash is null || SelectedItem is null)
+        if (_stash is null)
         {
-            StatusMessage = "Select an item to remove.";
+            StatusMessage = "Nothing is loaded to apply.";
             return;
         }
 
-        var guid = SelectedItem.DatabaseGuid;
+        if (!HasChanges)
+        {
+            StatusMessage = "No staged changes to apply.";
+            return;
+        }
+
         IsBusy = true;
         try
         {
-            if (!_stashEdit.RemoveItem(_stash, guid))
-            {
-                StatusMessage = "That item is no longer present.";
-                return;
-            }
-
             var result = await _files.SaveStashAsync(_saveFolder, _stash);
             StatusMessage = result.Ok
-                ? "Removed the item from MetaInventory.json — a backup was taken."
+                ? "Applied the stash to MetaInventory.json — a backup was taken."
                 : "Apply failed; the original MetaInventory.json is unchanged.";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.
         catch (Exception ex)
         {
-            StatusMessage = $"Remove failed: {ex.Message}";
+            StatusMessage = $"Apply failed: {ex.Message}";
         }
 #pragma warning restore CA1031
         finally
@@ -184,5 +231,58 @@ public sealed class StashViewerViewModel : ObservableObject
         }
 
         await LoadAsync();
+    }
+
+    private void AddItem()
+    {
+        if (_stash is null || SelectedCatalogItem is null)
+        {
+            return;
+        }
+
+        var item = _stashEdit.AddItem(_stash, SelectedCatalogItem.RowName);
+        _stashEdit.SetStack(item, AddQuantity);
+        RebuildItems();
+        HasChanges = true;
+        StatusMessage = $"Added {SelectedCatalogItem.Label} ×{Math.Clamp(AddQuantity, 1, StashEditService.MaxStack)} (staged) — Apply to save.";
+    }
+
+    private void RemoveSelected()
+    {
+        if (_stash is null || SelectedItem is null)
+        {
+            return;
+        }
+
+        var item = SelectedItem;
+        if (_stashEdit.RemoveItem(_stash, item.DatabaseGuid))
+        {
+            RebuildItems();
+            HasChanges = true;
+            StatusMessage = item.IsReferenced
+                ? $"Removed {item.Label} (staged) — ⚠ a loadout referenced it (now dangling). Apply to save."
+                : $"Removed {item.Label} (staged) — Apply to save.";
+        }
+    }
+
+    private void RebuildItems()
+    {
+        Items.Clear();
+        if (_stash is not null)
+        {
+            foreach (var item in _stash.Items)
+            {
+                var rowName = item.ItemStaticData.RowName;
+                Items.Add(new StashItemViewModel(
+                    rowName,
+                    _catalogs.Items.Label(rowName),
+                    item.DatabaseGuid,
+                    StashEditService.GetStack(item),
+                    _referenced.Contains(item.DatabaseGuid)));
+            }
+        }
+
+        SelectedItem = null;
+        OnPropertyChanged(nameof(Summary));
     }
 }

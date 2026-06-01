@@ -1,3 +1,4 @@
+using System.Text.Json;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Models;
 
@@ -13,6 +14,12 @@ public sealed class StashEditService
 {
     /// <summary>The data-table all stash items reference.</summary>
     public const string ItemsDataTable = "D_ItemsStatic";
+
+    /// <summary>The <c>ItemDynamicData</c> property that holds an item's stack count.</summary>
+    public const string StackProperty = "ItemableStack";
+
+    /// <summary>The hard game-set maximum stack size; the stash editor clamps to this (owner, 2026-05-31).</summary>
+    public const int MaxStack = 100;
 
     private readonly IGuidProvider _guids;
 
@@ -44,6 +51,37 @@ public sealed class StashEditService
         };
         inventory.Items.Add(item);
         return item;
+    }
+
+    /// <summary>
+    /// Sets an item's stack count, clamped to 1..<see cref="MaxStack"/> (the hard game limit), adding
+    /// or updating the <c>ItemableStack</c> dynamic property. Other dynamic data is preserved.
+    /// </summary>
+    public void SetStack(MetaItem item, int count)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+
+        var clamped = Math.Clamp(count, 1, MaxStack);
+        var value = JsonSerializer.SerializeToElement(clamped);
+        var existing = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, StackProperty, StringComparison.Ordinal));
+        if (existing is not null)
+        {
+            existing.Value = value;
+        }
+        else
+        {
+            item.ItemDynamicData.Add(new ItemDynamicProperty { PropertyType = StackProperty, Value = value });
+        }
+    }
+
+    /// <summary>The item's current stack count from its <c>ItemableStack</c> property, or 1 if absent/non-numeric.</summary>
+    public static int GetStack(MetaItem item)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        var property = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, StackProperty, StringComparison.Ordinal));
+        return property is not null && property.Value.ValueKind == JsonValueKind.Number && property.Value.TryGetInt32(out var stack)
+            ? stack
+            : 1;
     }
 
     /// <summary>Removes the stash item with <paramref name="databaseGuid"/>; returns whether it was present.</summary>
