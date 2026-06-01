@@ -1,3 +1,5 @@
+using Wpf.Ui.Controls;
+
 namespace IUUT.App.ViewModels;
 
 /// <summary>
@@ -20,8 +22,8 @@ public sealed class PlaceholderEditorViewModel
             : "This editor is coming soon — its Core service is ready and tested.";
     }
 
-    /// <summary>Category glyph.</summary>
-    public string Glyph { get; }
+    /// <summary>Category line icon.</summary>
+    public SymbolRegular Glyph { get; }
 
     /// <summary>Category label.</summary>
     public string Label { get; }

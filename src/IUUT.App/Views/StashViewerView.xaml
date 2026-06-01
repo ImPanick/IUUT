@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -35,7 +36,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="📦  Orbital Stash" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="ORBITAL STASH" Style="{StaticResource LabelText}" />
                     <TextBlock Text="{Binding ProfileLabel, StringFormat=Build the workshop stash for “{0}” — add catalog items · set stacks · remove. Stacks cap at 100.}"
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding Summary}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
@@ -130,10 +131,10 @@
                                     <Grid Grid.Row="0">
                                         <TextBlock Text="{Binding StackLabel}" Style="{StaticResource MonoText}"
                                                    Foreground="{StaticResource IonCoreBrush}" HorizontalAlignment="Left" />
-                                        <TextBlock Text="⚠" Foreground="{StaticResource AmberCoreBrush}" FontSize="12"
-                                                   HorizontalAlignment="Right" ToolTip="Referenced by a loadout">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
+                                        <ui:SymbolIcon Symbol="Warning24" Foreground="{StaticResource StateWarnBrush}" FontSize="12"
+                                                       HorizontalAlignment="Right" ToolTip="Referenced by a loadout">
+                                            <ui:SymbolIcon.Style>
+                                                <Style TargetType="{x:Type ui:SymbolIcon}">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding IsReferenced}" Value="True">
@@ -141,8 +142,8 @@
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
+                                            </ui:SymbolIcon.Style>
+                                        </ui:SymbolIcon>
                                     </Grid>
                                     <!-- name -->
                                     <TextBlock Grid.Row="1" Text="{Binding Label}" Style="{StaticResource BodyText}"
@@ -177,10 +178,10 @@
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <Button Content="🔧  Repair selected" Command="{Binding RepairSelectedCommand}" Padding="12,8" Margin="0,0,8,0" />
-                <Button Content="🔧  Repair all" Command="{Binding RepairAllCommand}" Padding="12,8" Margin="0,0,8,0" />
-                <Button Content="🗑  Remove" Command="{Binding RemoveSelectedCommand}" Padding="12,8" Margin="0,0,8,0" />
-                <Button Content="💾  Apply changes" Click="OnApply" IsEnabled="{Binding HasChanges}" Padding="16,8" FontWeight="SemiBold" />
+                <Button Content="REPAIR SELECTED" Command="{Binding RepairSelectedCommand}" Margin="0,0,8,0" />
+                <Button Content="REPAIR ALL" Command="{Binding RepairAllCommand}" Margin="0,0,8,0" />
+                <Button Content="REMOVE" Style="{StaticResource DangerButton}" Command="{Binding RemoveSelectedCommand}" Margin="0,0,8,0" />
+                <Button Content="APPLY CHANGES" Style="{StaticResource PrimaryButton}" Click="OnApply" IsEnabled="{Binding HasChanges}" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -2,26 +2,48 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--
-        IUUT "Glass Console" theme tokens + styles (docs/UI-DESIGN-CONCEPT.md).
-        Layered over WPF-UI's Dark theme. Colours are the source of truth in the concept doc.
+        IUUT "Telemetry Console" theme tokens + base styles (docs/UI-DESIGN-CONCEPT.md v2).
+        Warm-gunmetal graphite, hard 1px grid lines, monospace-forward (Cascadia Code).
+        Layered over WPF-UI's Dark theme. Hex is the source of truth in the concept doc §2.
+
+        Implementation rule (doc §2): the legacy x:Key names are KEPT and repointed to the v2
+        values, so the view XAML needs no churn. New keys are added at the end of each group.
     -->
 
-    <!-- ============ Colours ============ -->
-    <Color x:Key="SpaceVoidColor">#FF060A12</Color>
-    <Color x:Key="SpaceDeepColor">#FF0A1020</Color>
-    <Color x:Key="SpaceNavyColor">#FF101A30</Color>
-    <Color x:Key="AmberCoreColor">#FFFFB24C</Color>
-    <Color x:Key="AmberGlowColor">#FFFF9E2C</Color>
-    <Color x:Key="IonCoreColor">#FF46D6F2</Color>
-    <Color x:Key="IonGlowColor">#FF21B6E6</Color>
-    <Color x:Key="TextHiColor">#FFEAF1FB</Color>
-    <Color x:Key="TextMidColor">#FF97A6BF</Color>
-    <Color x:Key="TextLowColor">#FF5C6B85</Color>
-    <Color x:Key="StateOkColor">#FF46E0A0</Color>
-    <Color x:Key="StateWarnColor">#FFFFC24C</Color>
-    <Color x:Key="StateDangerColor">#FFFF6E7C</Color>
+    <!-- ============ Fonts ============ -->
+    <FontFamily x:Key="MonoFontFamily">Cascadia Code, Cascadia Mono, Consolas, monospace</FontFamily>
+
+    <!-- ============ Colours (warm gunmetal, doc §2) ============ -->
+    <!-- legacy keys, repointed -->
+    <Color x:Key="SpaceVoidColor">#FF0E0D0C</Color>
+    <Color x:Key="SpaceDeepColor">#FF131211</Color>
+    <Color x:Key="SpaceNavyColor">#FF1A1816</Color>
+    <Color x:Key="AmberCoreColor">#FFF59E0B</Color>
+    <Color x:Key="AmberGlowColor">#FFF59E0B</Color>
+    <Color x:Key="IonCoreColor">#FF0A84E0</Color>
+    <Color x:Key="IonGlowColor">#FF1A8FEF</Color>
+    <Color x:Key="TextHiColor">#FFECEAE7</Color>
+    <Color x:Key="TextMidColor">#FF9C988F</Color>
+    <Color x:Key="TextLowColor">#FF74706A</Color>
+    <Color x:Key="StateOkColor">#FF4ADE80</Color>
+    <Color x:Key="StateWarnColor">#FFF59E0B</Color>
+    <Color x:Key="StateDangerColor">#FFEF4444</Color>
+
+    <!-- v2 surface ramp -->
+    <Color x:Key="BgBaseColor">#FF131211</Color>
+    <Color x:Key="BgRecessedColor">#FF1A1816</Color>
+    <Color x:Key="SurfaceRaisedColor">#FF232120</Color>
+    <Color x:Key="SurfaceRaisedTopColor">#FF2A2826</Color>
+    <Color x:Key="SurfaceRowColor">#FF2B2926</Color>
+    <Color x:Key="SurfaceRowHiColor">#FF353230</Color>
+    <Color x:Key="GridLineColor">#FF3C3934</Color>
+    <Color x:Key="GridLineStrongColor">#FF4A463F</Color>
+    <Color x:Key="AccentColor">#FF0A84E0</Color>
+    <Color x:Key="AccentHiColor">#FF1A8FEF</Color>
+    <Color x:Key="AccentTextOnColor">#FF06121F</Color>
 
     <!-- ============ Brushes ============ -->
+    <!-- legacy keys, repointed to v2 -->
     <SolidColorBrush x:Key="AmberCoreBrush" Color="{StaticResource AmberCoreColor}" />
     <SolidColorBrush x:Key="IonCoreBrush" Color="{StaticResource IonCoreColor}" />
     <SolidColorBrush x:Key="TextHiBrush" Color="{StaticResource TextHiColor}" />
@@ -31,110 +53,114 @@
     <SolidColorBrush x:Key="StateWarnBrush" Color="{StaticResource StateWarnColor}" />
     <SolidColorBrush x:Key="StateDangerBrush" Color="{StaticResource StateDangerColor}" />
 
-    <SolidColorBrush x:Key="GlassStrokeBrush" Color="#24FFFFFF" />
-    <SolidColorBrush x:Key="GlassFillHoverBrush" Color="#16FFFFFF" />
-    <SolidColorBrush x:Key="DataBackdropBrush" Color="#B80B0F18" />
+    <!-- glass.* legacy names now mean graphite surfaces/lines -->
+    <SolidColorBrush x:Key="GlassStrokeBrush" Color="{StaticResource GridLineColor}" />
+    <SolidColorBrush x:Key="GlassFillHoverBrush" Color="{StaticResource SurfaceRowHiColor}" />
+    <SolidColorBrush x:Key="DataBackdropBrush" Color="{StaticResource SurfaceRowColor}" />
 
-    <!-- Orbit background (window base) + faint instrument glows -->
-    <LinearGradientBrush x:Key="OrbitBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
-        <GradientStop Color="#FF0B1322" Offset="0" />
-        <GradientStop Color="#FF070B14" Offset="1" />
-    </LinearGradientBrush>
-    <RadialGradientBrush x:Key="IonGlowBrush" GradientOrigin="0.16,-0.05" Center="0.16,-0.05" RadiusX="0.8" RadiusY="0.7">
-        <GradientStop Color="#2921B6E6" Offset="0" />
-        <GradientStop Color="#0021B6E6" Offset="1" />
-    </RadialGradientBrush>
-    <RadialGradientBrush x:Key="AmberGlowBrush" GradientOrigin="0.92,1.08" Center="0.92,1.08" RadiusX="0.85" RadiusY="0.8">
-        <GradientStop Color="#26FF9E2C" Offset="0" />
-        <GradientStop Color="#00FF9E2C" Offset="1" />
-    </RadialGradientBrush>
+    <!-- v2 brushes -->
+    <SolidColorBrush x:Key="BgBaseBrush" Color="{StaticResource BgBaseColor}" />
+    <SolidColorBrush x:Key="SurfaceRecessedBrush" Color="{StaticResource BgRecessedColor}" />
+    <SolidColorBrush x:Key="SurfaceRaisedBrush" Color="{StaticResource SurfaceRaisedColor}" />
+    <SolidColorBrush x:Key="SurfaceRowBrush" Color="{StaticResource SurfaceRowColor}" />
+    <SolidColorBrush x:Key="SurfaceRowHoverBrush" Color="{StaticResource SurfaceRowHiColor}" />
+    <SolidColorBrush x:Key="GridLineBrush" Color="{StaticResource GridLineColor}" />
+    <SolidColorBrush x:Key="GridLineStrongBrush" Color="{StaticResource GridLineStrongColor}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHiBrush" Color="{StaticResource AccentHiColor}" />
+    <SolidColorBrush x:Key="AccentTextOnBrush" Color="{StaticResource AccentTextOnColor}" />
+    <!-- milled top-edge highlight (doc edge.hi: warm white ~3.5%) -->
+    <SolidColorBrush x:Key="EdgeHighlightBrush" Color="#09FFFAF4" />
 
-    <!-- Glass surface fill: top inner highlight → body tint, in one brush -->
+    <!-- Window background — now a solid graphite (was the orbit gradient) -->
+    <SolidColorBrush x:Key="OrbitBackgroundBrush" Color="{StaticResource BgBaseColor}" />
+
+    <!-- Panel surface fill: a hair-lighter top edge → settles to the surface within ~2px,
+         giving a milled-edge highlight in a single brush (no extra layer needed). -->
     <LinearGradientBrush x:Key="GlassCardBackground" StartPoint="0,0" EndPoint="0,1">
-        <GradientStop Color="#22FFFFFF" Offset="0" />
-        <GradientStop Color="#0EFFFFFF" Offset="0.14" />
-        <GradientStop Color="#0EFFFFFF" Offset="1" />
+        <GradientStop Color="{StaticResource SurfaceRaisedTopColor}" Offset="0" />
+        <GradientStop Color="{StaticResource SurfaceRaisedColor}" Offset="0.05" />
+        <GradientStop Color="{StaticResource SurfaceRaisedColor}" Offset="1" />
     </LinearGradientBrush>
 
-    <!-- ============ Effects ============ -->
-    <DropShadowEffect x:Key="CardShadow" Color="#FF000000" BlurRadius="26" ShadowDepth="0" Opacity="0.5" />
-    <DropShadowEffect x:Key="IonGlowEffect" Color="{StaticResource IonGlowColor}" BlurRadius="30" ShadowDepth="0" Opacity="0.5" />
-    <DropShadowEffect x:Key="AmberGlowEffect" Color="{StaticResource AmberGlowColor}" BlurRadius="34" ShadowDepth="0" Opacity="0.55" />
-
-    <!-- ============ Text styles ============ -->
+    <!-- ============ Text styles (Cascadia Code, doc §3) ============ -->
     <Style x:Key="DisplayText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="TitleText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
-        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="BodyText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
         <Setter Property="FontSize" Value="13" />
     </Style>
     <Style x:Key="MutedText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextMidBrush}" />
         <Setter Property="FontSize" Value="12" />
     </Style>
     <Style x:Key="LabelText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextLowBrush}" />
         <Setter Property="FontSize" Value="11" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="MonoText" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextMidBrush}" />
-        <Setter Property="FontFamily" Value="Cascadia Mono, Consolas, monospace" />
         <Setter Property="FontSize" Value="12" />
     </Style>
 
-    <!-- ============ Glass card (container) ============ -->
+    <!-- ============ Panel (graphite card) ============ -->
+    <!-- legacy key GlassCard: solid graphite, 2px, hard 1px line, no shadow/glow -->
     <Style x:Key="GlassCard" TargetType="Border">
         <Setter Property="Background" Value="{StaticResource GlassCardBackground}" />
-        <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource GridLineBrush}" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="6" />
-        <Setter Property="Effect" Value="{StaticResource CardShadow}" />
+        <Setter Property="CornerRadius" Value="2" />
     </Style>
 
     <!-- ============ Channel light (status dot) ============ -->
     <Style x:Key="ChannelDot" TargetType="Ellipse">
-        <Setter Property="Width" Value="8" />
-        <Setter Property="Height" Value="8" />
+        <Setter Property="Width" Value="7" />
+        <Setter Property="Height" Value="7" />
         <Setter Property="Fill" Value="{StaticResource StateOkBrush}" />
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="{StaticResource StateOkColor}" BlurRadius="8" ShadowDepth="0" Opacity="0.9" />
+                <DropShadowEffect Color="{StaticResource StateOkColor}" BlurRadius="6" ShadowDepth="0" Opacity="0.7" />
             </Setter.Value>
         </Setter>
     </Style>
 
-    <!-- ============ Mode tile (large glass button) ============ -->
+    <!-- ============ Mode tile (large graphite button) ============ -->
     <Style x:Key="ModeTile" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="bd"
                             Background="{StaticResource GlassCardBackground}"
-                            BorderBrush="{StaticResource GlassStrokeBrush}"
+                            BorderBrush="{StaticResource GridLineBrush}"
                             BorderThickness="1"
-                            CornerRadius="6"
-                            Padding="22"
-                            Effect="{StaticResource CardShadow}">
+                            CornerRadius="2"
+                            Padding="16,14">
                         <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="bd" Property="Background" Value="{StaticResource GlassFillHoverBrush}" />
-                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource IonCoreBrush}" />
-                            <Setter TargetName="bd" Property="Effect" Value="{StaticResource IonGlowEffect}" />
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource SurfaceRowHoverBrush}" />
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="bd" Property="Opacity" Value="0.45" />
@@ -146,29 +172,7 @@
         </Setter>
     </Style>
 
-    <!-- Amber identity variant (Lazy Max) -->
-    <Style x:Key="ModeTileAmber" TargetType="Button" BasedOn="{StaticResource ModeTile}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="bd"
-                            Background="{StaticResource GlassCardBackground}"
-                            BorderBrush="#66FF9E2C"
-                            BorderThickness="1"
-                            CornerRadius="6"
-                            Padding="22"
-                            Effect="{StaticResource AmberGlowEffect}">
-                        <ContentPresenter />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="bd" Property="Background" Value="{StaticResource GlassFillHoverBrush}" />
-                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource AmberCoreBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <!-- Lazy Max now shares the standard tile treatment (amber identity retired; doc §0/§2). -->
+    <Style x:Key="ModeTileAmber" TargetType="Button" BasedOn="{StaticResource ModeTile}" />
 
 </ResourceDictionary>

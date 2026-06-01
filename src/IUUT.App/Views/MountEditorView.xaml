@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🐎  Mounts" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="MOUNTS" Style="{StaticResource LabelText}" />
                     <TextBlock Text="{Binding ProfileLabel, StringFormat=Rename mounts and set their level for “{0}”. The authoritative stats blob is preserved.}"
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                 </StackPanel>
@@ -85,8 +85,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="💾  Apply mount changes" Click="OnApply"
-                    Padding="18,8" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="APPLY MOUNT CHANGES" Style="{StaticResource PrimaryButton}" Click="OnApply" />
         </Grid>
     </Grid>
 </UserControl>

@@ -13,32 +13,49 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
+        <!-- Header (readout) -->
+        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="14">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="⚙  Game Tuner" Style="{StaticResource TitleText}" />
-                    <TextBlock Text="Engine.ini performance &amp; visual tweaks — toggle effects off, set quality/FPS. Standard Unreal cvars; restart Icarus to apply. A backup is taken before any write."
-                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                    <TextBlock Text="GAME TUNER · ENGINE.INI" Style="{StaticResource LabelText}" />
+                    <TextBlock Text="Performance &amp; visual tweaks — toggle effects off, set quality/FPS. Standard Unreal cvars; restart Icarus to apply. A backup is taken before any write."
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,6,0,0" />
                     <TextBlock Text="{Binding EngineIniPath}" Style="{StaticResource MonoText}" Margin="0,6,0,0" TextTrimming="CharacterEllipsis" />
                 </StackPanel>
-                <Button Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="14,4" />
+                <Button Grid.Column="1" Content="RELOAD" Command="{Binding LoadCommand}" VerticalAlignment="Top" />
             </Grid>
         </Border>
 
-        <!-- Settings list -->
-        <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
+        <!-- Settings list (grouped: Visual FX / Frame Rate / Performance) -->
+        <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="10" Margin="0,10,0,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <ItemsControl ItemsSource="{Binding Settings}">
+                    <ItemsControl.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,12,2,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource LabelText}" Margin="0,0,10,0" />
+                                        <Rectangle Grid.Column="1" Height="1" VerticalAlignment="Center"
+                                                   Fill="{StaticResource GridLineBrush}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ItemsControl.GroupStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border Margin="0,0,0,8" Padding="14,10" CornerRadius="4"
-                                    Background="{StaticResource DataBackdropBrush}"
-                                    BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                            <Border Margin="0,0,0,6" Padding="14,9" CornerRadius="2"
+                                    Background="{StaticResource SurfaceRowBrush}"
+                                    BorderBrush="{StaticResource GridLineBrush}" BorderThickness="1">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -46,14 +63,13 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,16,0">
                                         <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" />
                                         <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,2,0,0" />
                                     </StackPanel>
 
-                                    <CheckBox Grid.Column="1" IsChecked="{Binding Enabled, Mode=TwoWay}" VerticalAlignment="Center" Margin="0,0,16,0" />
-
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <!-- Number cluster (collapsed for toggles) sits left of the checkbox -->
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,16,0">
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -69,11 +85,13 @@
                                                 Value="{Binding Value, Mode=TwoWay}"
                                                 TickFrequency="{Binding Step}" IsSnapToTickEnabled="True"
                                                 IsEnabled="{Binding Enabled}" />
-                                        <TextBox Width="62" Margin="10,0,4,0" VerticalAlignment="Center"
+                                        <TextBox Width="58" Margin="10,0,4,0" VerticalAlignment="Center"
                                                  Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
                                                  IsEnabled="{Binding Enabled}" />
-                                        <TextBlock Text="{Binding Unit}" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding Unit}" Style="{StaticResource MutedText}" VerticalAlignment="Center" MinWidth="28" />
                                     </StackPanel>
+
+                                    <CheckBox Grid.Column="2" IsChecked="{Binding Enabled, Mode=TwoWay}" VerticalAlignment="Center" />
                                 </Grid>
                             </Border>
                         </DataTemplate>
@@ -83,14 +101,14 @@
         </Border>
 
         <!-- Status + apply -->
-        <Grid Grid.Row="2" Margin="0,12,0,0">
+        <Grid Grid.Row="2" Margin="0,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="⚙  Apply to Engine.ini" Click="OnApply" Padding="18,8" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="APPLY TO ENGINE.INI" Style="{StaticResource PrimaryButton}" Click="OnApply" />
         </Grid>
     </Grid>
 </UserControl>

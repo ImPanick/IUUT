@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using IUUT.Core.Catalog;
 using IUUT.Core.Editing;
 using IUUT.Core.Services;
+using Wpf.Ui.Controls;
 
 namespace IUUT.App.ViewModels;
 
@@ -203,7 +204,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "account",
-            Glyph = "💰",
+            Glyph = SymbolRegular.WalletCreditCard24,
             Label = "Account & Currencies",
             Description = "Orbital currencies and the workshop/prospect blueprint checklist.",
             Status = "Wired — AccountEditService.",
@@ -211,7 +212,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "characters",
-            Glyph = "🧬",
+            Glyph = SymbolRegular.Person24,
             Label = "Characters & Talents",
             Description = "Per-character XP, debt, revive, rename, and per-talent rank (with a per-character max).",
             Status = "Core ready — CharacterEditService.",
@@ -219,7 +220,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "accolades",
-            Glyph = "🏅",
+            Glyph = SymbolRegular.Trophy24,
             Label = "Accolades & Bestiary",
             Description = "Grant or remove accolades; set a creature group's scan points.",
             Status = "Core ready — AccoladeBestiaryEditService.",
@@ -227,7 +228,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "stash",
-            Glyph = "📦",
+            Glyph = SymbolRegular.Box24,
             Label = "Orbital Stash",
             Description = "MetaInventory items: durability/stack, repair, replace, add, remove — with fresh GUIDs.",
             Status = "Core ready — StashEditService. Visual grid coming.",
@@ -235,7 +236,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "loadouts",
-            Glyph = "🎒",
+            Glyph = SymbolRegular.Backpack24,
             Label = "Loadouts",
             Description = "Per-prospect loadouts; cross-reference item GUIDs with the stash.",
             Status = "Core ready — LoadoutCrossReference.",
@@ -243,7 +244,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "prospects",
-            Glyph = "🗺",
+            Glyph = SymbolRegular.Map24,
             Label = "Prospects",
             Description = "Unstick a stuck character's prospect association; edit world headers (world blob preserved).",
             Status = "Core ready — ProspectEditService / ProspectBlobCodec.",
@@ -251,7 +252,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "mounts",
-            Glyph = "🐎",
+            Glyph = SymbolRegular.AnimalPawPrint24,
             Label = "Mounts",
             Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
             Status = "Core ready — MountEditService.",
@@ -259,7 +260,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "flags",
-            Glyph = "🚩",
+            Glyph = SymbolRegular.Flag24,
             Label = "Engine Flags",
             Description = "The binary flags_*.dat engine unlock flag IDs.",
             Status = "Core ready — FlagsFileCodec.",
@@ -267,7 +268,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "raw",
-            Glyph = "🧾",
+            Glyph = SymbolRegular.Code24,
             Label = "Advanced / Raw",
             Description = "Raw JSON viewer and export/import for any save file.",
             Status = "Coming.",

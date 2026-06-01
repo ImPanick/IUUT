@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🎒  Loadouts" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="LOADOUTS" Style="{StaticResource LabelText}" />
                     <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and their stash references for “{0}” (read-only).}"
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding Summary}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />

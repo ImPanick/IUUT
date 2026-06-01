@@ -13,6 +13,7 @@
                 <ui:ThemesDictionary Theme="Dark" />
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="pack://application:,,,/Theme/GlassTheme.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Theme/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

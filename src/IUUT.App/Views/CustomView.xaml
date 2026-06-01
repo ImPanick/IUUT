@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:IUUT.App.ViewModels"
              xmlns:views="clr-namespace:IUUT.App.Views"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
 
     <!-- Editor panels are picked by the view-model type of CurrentEditor. -->
@@ -60,7 +61,7 @@
                 <TextBlock Grid.Column="0" Text="PROFILE" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
                 <ComboBox Grid.Column="1" ItemsSource="{Binding Slots}" SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
                           DisplayMemberPath="DisplayLabel" Margin="0,0,10,0" />
-                <Button Grid.Column="2" Content="Reload" Command="{Binding LoadSavesCommand}" Padding="14,4" />
+                <Button Grid.Column="2" Content="RELOAD" Command="{Binding LoadSavesCommand}" />
             </Grid>
         </Border>
 
@@ -77,7 +78,8 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="4,7">
-                                <TextBlock Text="{Binding Glyph}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center" />
+                                <ui:SymbolIcon Symbol="{Binding Glyph}" FontSize="16" Margin="0,0,10,0"
+                                               VerticalAlignment="Center" Foreground="{StaticResource TextMidBrush}" />
                                 <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>

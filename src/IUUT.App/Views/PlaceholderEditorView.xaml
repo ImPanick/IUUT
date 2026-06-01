@@ -3,13 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
 
     <!-- Placeholder editor for an un-wired category (or before a profile is chosen). -->
     <Border Style="{StaticResource GlassCard}" Padding="24">
         <StackPanel VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Glyph}" FontSize="26" Margin="0,0,12,0" VerticalAlignment="Center" />
+                <ui:SymbolIcon Symbol="{Binding Glyph}" FontSize="24" Margin="0,0,12,0"
+                               VerticalAlignment="Center" Foreground="{StaticResource TextMidBrush}" />
                 <TextBlock Text="{Binding Label}" Style="{StaticResource TitleText}" VerticalAlignment="Center" />
             </StackPanel>
             <TextBlock Text="{Binding Description}" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,14,0,0" />

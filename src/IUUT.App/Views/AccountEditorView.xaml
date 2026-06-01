@@ -22,13 +22,13 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="💰  Account &amp; Currencies" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="ACCOUNT &amp; CURRENCIES" Style="{StaticResource LabelText}" />
                     <TextBlock Text="{Binding ProfileLabel, StringFormat=Editing account-wide currencies and blueprints for “{0}”.}"
-                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,6,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-                    <Button Content="Max all" Command="{Binding MaxAllCurrenciesCommand}" Padding="12,4" Margin="0,0,6,0" />
-                    <Button Content="Reload" Command="{Binding LoadCommand}" Padding="12,4" />
+                    <Button Content="MAX ALL" Command="{Binding MaxAllCurrenciesCommand}" Margin="0,0,6,0" />
+                    <Button Content="RELOAD" Command="{Binding LoadCommand}" />
                 </StackPanel>
             </Grid>
         </Border>
@@ -86,8 +86,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="💾  Apply currency changes" Click="OnApplyCurrencies"
-                    Padding="18,8" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="APPLY CURRENCY CHANGES" Style="{StaticResource PrimaryButton}"
+                    Click="OnApplyCurrencies" />
         </Grid>
     </Grid>
 </UserControl>

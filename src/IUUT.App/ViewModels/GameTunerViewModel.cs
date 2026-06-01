@@ -1,4 +1,6 @@
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Data;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IUUT.Core.GameTuning;
@@ -30,10 +32,13 @@ public sealed class GameTunerViewModel : ObservableObject
         _saveRoot = SaveDiscoveryService.ResolveDefaultSaveRoot();
 
         Settings = [];
+        // Group the default view (Visual FX / Frame Rate / Performance) — drives the XAML GroupStyle.
+        var view = CollectionViewSource.GetDefaultView(Settings);
+        view.GroupDescriptions.Add(new PropertyGroupDescription(nameof(GameTuningSettingViewModel.Group)));
         LoadCommand = new RelayCommand(Load);
     }
 
-    /// <summary>The tunable settings.</summary>
+    /// <summary>The tunable settings (grouped via the default collection view).</summary>
     public ObservableCollection<GameTuningSettingViewModel> Settings { get; }
 
     /// <summary>(Re)reads Engine.ini.</summary>

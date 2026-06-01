@@ -54,7 +54,7 @@ public sealed class StashItemViewModel
     /// <summary>Whether the item is below its (observed) max durability.</summary>
     public bool IsDamaged => Durability is not null && MaxDurability is not null && Durability < MaxDurability;
 
-    /// <summary>Durability chip text (e.g. <c>🔧 3486 / 5500</c>), empty when not durable.</summary>
+    /// <summary>Durability chip text (e.g. <c>3486 / 5500</c>), empty when not durable.</summary>
     public string DurabilityLabel
     {
         get
@@ -65,8 +65,8 @@ public sealed class StashItemViewModel
             }
 
             return MaxDurability is > 0 && MaxDurability != Durability
-                ? $"🔧 {Durability:N0} / {MaxDurability:N0}"
-                : $"🔧 {Durability:N0}";
+                ? $"DUR {Durability:N0} / {MaxDurability:N0}"
+                : $"DUR {Durability:N0}";
         }
     }
 
@@ -74,7 +74,7 @@ public sealed class StashItemViewModel
     public bool IsReferenced { get; }
 
     /// <summary>A short reference hint for the list.</summary>
-    public string ReferenceHint => IsReferenced ? "⚠ referenced by a loadout" : "";
+    public string ReferenceHint => IsReferenced ? "Referenced by a loadout" : "";
 
     /// <summary>A rough item category derived from the RowName (drives the tile accent colour).</summary>
     public string Category { get; }

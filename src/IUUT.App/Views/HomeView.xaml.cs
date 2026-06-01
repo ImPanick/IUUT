@@ -44,7 +44,7 @@ public partial class HomeView : UserControl
         var result = plan.Result;
         var warnings = plan.Validation.Warnings.ToList();
         var warningLine = warnings.Count > 0
-            ? "\n\n⚠ " + string.Join("\n⚠ ", warnings.Select(w => w.Message))
+            ? "\n\nWarnings:\n• " + string.Join("\n• ", warnings.Select(w => w.Message))
             : string.Empty;
 
         var message =

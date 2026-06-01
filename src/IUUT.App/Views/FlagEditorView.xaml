@@ -21,7 +21,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🚩  Engine Flags &amp; Missions" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="ENGINE FLAGS &amp; MISSIONS" Style="{StaticResource LabelText}" />
                     <TextBlock Text="Character flags (flags_*.dat) — decoded to names. These include map-unlock gates and Mission_* rewards. &quot;Complete missions&quot; sets every mission/story flag."
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding SteamId, StringFormat=flags file SteamID: {0}}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
@@ -50,7 +50,7 @@
                               ItemsSource="{Binding AvailableFlags}" SelectedItem="{Binding SelectedAvailableFlag, Mode=TwoWay}"
                               DisplayMemberPath="Display" IsTextSearchEnabled="True" TextSearch.TextPath="Label" />
                     <Button Grid.Column="2" Content="Add" Command="{Binding AddFlagCommand}" Padding="14,4" Margin="0,0,8,0" />
-                    <Button Grid.Column="3" Content="🏁  Complete missions" Command="{Binding CompleteMissionsCommand}" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Grid.Column="3" Content="COMPLETE MISSIONS" Command="{Binding CompleteMissionsCommand}" Margin="0,0,8,0" />
                     <Button Grid.Column="4" Content="Remove selected" Command="{Binding RemoveSelectedCommand}" Padding="12,4" />
                 </Grid>
                 <Border Grid.Row="1" CornerRadius="4" Background="{StaticResource DataBackdropBrush}"
@@ -86,8 +86,7 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="💾  Apply to flags file" Click="OnApply"
-                    Padding="18,8" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="APPLY TO FLAGS FILE" Style="{StaticResource PrimaryButton}" Click="OnApply" />
         </Grid>
     </Grid>
 </UserControl>

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
 
     <!-- Broken Save Recovery (master §10.1, §11.3). DataContext = RecoveryViewModel. -->
@@ -25,15 +26,17 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="🚑  Broken Save Recovery" Style="{StaticResource TitleText}" />
-                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="Scan a save for corruption, then restore from backups or rebuild."
-                           Style="{StaticResource MutedText}" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                    <TextBlock Text="BROKEN SAVE RECOVERY" Style="{StaticResource LabelText}" />
+                    <TextBlock Text="Scan a save for corruption, then restore from backups or rebuild."
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,6,0,0" />
+                </StackPanel>
 
-                <ComboBox Grid.Row="1" Grid.Column="0" Margin="0,12,10,0"
+                <ComboBox Grid.Row="1" Grid.Column="0" Margin="0,10,10,0"
                           ItemsSource="{Binding Slots}"
                           SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
                           DisplayMemberPath="DisplayLabel" />
-                <Button Grid.Row="1" Grid.Column="1" Margin="0,12,0,0" Content="Scan" Command="{Binding ScanCommand}" Padding="16,4" />
+                <Button Grid.Row="1" Grid.Column="1" Margin="0,10,0,0" Content="SCAN" Command="{Binding ScanCommand}" />
             </Grid>
         </Border>
 
@@ -47,6 +50,25 @@
 
                 <TextBlock Grid.Row="0" Text="RECOVERY PLAN" Style="{StaticResource LabelText}" />
 
+                <!-- Empty state — shown until a scan produces plan lines -->
+                <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" MaxWidth="380">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ActionLines.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="No scan yet" Style="{StaticResource BodyText}"
+                               Foreground="{StaticResource TextMidBrush}" HorizontalAlignment="Center" />
+                    <TextBlock Text="Select a save profile above, then choose Scan to build a recovery plan."
+                               Style="{StaticResource MutedText}" TextWrapping="Wrap" TextAlignment="Center"
+                               Margin="0,4,0,0" />
+                </StackPanel>
+
                 <ScrollViewer Grid.Row="1" Margin="0,8,0,0" VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                         <ItemsControl ItemsSource="{Binding ActionLines}">
@@ -57,7 +79,7 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
 
-                        <TextBlock Text="⚠ Only partial recovery is possible — rebuilt files lost data; finish in Custom."
+                        <TextBlock Text="Only partial recovery is possible — rebuilt files lost data; finish in Custom."
                                    Foreground="{StaticResource StateWarnBrush}" TextWrapping="Wrap" Margin="0,12,0,0">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
@@ -75,7 +97,8 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal" Margin="0,3">
-                                        <TextBlock Text="ℹ " Foreground="{StaticResource IonCoreBrush}" VerticalAlignment="Top" />
+                                        <ui:SymbolIcon Symbol="Info24" Foreground="{StaticResource IonCoreBrush}" FontSize="12"
+                                                       VerticalAlignment="Top" Margin="0,1,6,0" />
                                         <TextBlock Text="{Binding}" Style="{StaticResource MutedText}" TextWrapping="Wrap" />
                                     </StackPanel>
                                 </DataTemplate>
@@ -94,8 +117,8 @@
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="🔧  Repair" IsEnabled="{Binding CanRepair}" Click="OnRepair"
-                    Padding="18,8" FontWeight="SemiBold" />
+            <Button Grid.Column="1" Content="REPAIR" Style="{StaticResource PrimaryButton}"
+                    IsEnabled="{Binding CanRepair}" Click="OnRepair" />
         </Grid>
     </Grid>
 </UserControl>

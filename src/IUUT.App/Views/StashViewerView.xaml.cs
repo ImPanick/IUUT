@@ -31,7 +31,7 @@ public partial class StashViewerView : UserControl
 
         var referenced = vm.Items.Any(i => i.IsReferenced);
         var warning = referenced
-            ? "\n\n⚠ Some items are referenced by loadouts — make sure you didn't remove one a loadout still needs."
+            ? "\n\nNote: some items are referenced by loadouts — make sure you didn't remove one a loadout still needs."
             : "";
         var message =
             "Write the staged stash to MetaInventory.json?\n\n" +

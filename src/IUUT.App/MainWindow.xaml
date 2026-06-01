@@ -8,14 +8,15 @@
                  xmlns:views="clr-namespace:IUUT.App.Views"
                  mc:Ignorable="d"
                  Title="Icarus Ultimate Utility Tool (IUUT)"
-                 Width="980"
-                 Height="660"
-                 MinWidth="780"
-                 MinHeight="540"
+                 Width="1120"
+                 Height="740"
+                 MinWidth="920"
+                 MinHeight="620"
                  ExtendsContentIntoTitleBar="True"
                  WindowBackdropType="None"
                  WindowCornerPreference="Round"
                  WindowStartupLocation="CenterScreen"
+                 FontFamily="{StaticResource MonoFontFamily}"
                  Background="{StaticResource OrbitBackgroundBrush}">
 
     <!--
@@ -40,10 +41,6 @@
     </ui:FluentWindow.Resources>
 
     <Grid>
-        <!-- L0: faint instrument glows over the orbit base (behind every page) -->
-        <Rectangle Fill="{StaticResource IonGlowBrush}" IsHitTestVisible="False" />
-        <Rectangle Fill="{StaticResource AmberGlowBrush}" IsHitTestVisible="False" />
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -65,8 +62,8 @@
                         </Style.Triggers>
                     </Style>
                 </StackPanel.Style>
-                <Button Content="← Back" Command="{Binding BackCommand}" Margin="0,0,8,0" />
-                <Button Content="⌂ Home" Command="{Binding HomeCommand}" />
+                <Button Content="←  BACK" Command="{Binding BackCommand}" Margin="0,0,8,0" />
+                <Button Content="HOME" Command="{Binding HomeCommand}" />
             </StackPanel>
 
             <ContentControl Grid.Row="2" Content="{Binding CurrentPage}" Margin="20,8,20,16" />

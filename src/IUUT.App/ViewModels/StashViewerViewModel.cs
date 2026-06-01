@@ -275,7 +275,7 @@ public sealed class StashViewerViewModel : ObservableObject
             RebuildItems();
             HasChanges = true;
             StatusMessage = item.IsReferenced
-                ? $"Removed {item.Label} (staged) — ⚠ a loadout referenced it (now dangling). Apply to save."
+                ? $"Removed {item.Label} (staged) — a loadout referenced it (now dangling). Apply to save."
                 : $"Removed {item.Label} (staged) — Apply to save.";
         }
     }
