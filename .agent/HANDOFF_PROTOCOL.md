@@ -80,7 +80,8 @@ Co-Authored-By: <Display Name> <noreply@<vendor>.com>
 
 ### `<type>` values
 
-`feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `governance`, `revert`.
+`feat`, `fix`, `build`, `refactor`, `test`, `docs`, `chore`, `governance`, `revert`.
+(`build` = release/packaging plumbing, e.g. `scripts/publish-release.ps1`.)
 
 ### `<scope>` values
 

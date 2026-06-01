@@ -66,7 +66,7 @@ internal sealed class StubHttpMessageHandler : HttpMessageHandler
         LastRequestUri = request.RequestUri;
         return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
         {
-            Content = new StringContent(_responseJson, Encoding.UTF8, "application/json"),
+            Content = new StringContent(_responseJson, new UTF8Encoding(false), "application/json"),
         });
     }
 }

@@ -228,7 +228,7 @@ public class LazyMaxServiceTests
     [Fact]
     public void MaxAll_ReturnsPerFileSummaryCounts()
     {
-        var profile = new ProfileModel { UserId = "76561198000000000" };
+        var profile = new ProfileModel { UserId = "00000000000000000" };
         var characters = new[] { Character(1), Character(2) };
         var accolades = new AccoladesModel();
         var bestiary = new BestiaryModel();
@@ -249,7 +249,7 @@ public class LazyMaxServiceTests
     [Fact]
     public void MaxAccountMissionFlags_SetsStoryFlags_Additive_AndIdempotent()
     {
-        var profile = new ProfileModel { UserId = "76561198000000000", UnlockedFlags = { 8 } };
+        var profile = new ProfileModel { UserId = "00000000000000000", UnlockedFlags = { 8 } };
         var service = NewService();
 
         var added = service.MaxAccountMissionFlags(profile);
@@ -264,7 +264,7 @@ public class LazyMaxServiceTests
     [Fact]
     public void MaxAll_Output_PassesValidationEngine()
     {
-        const string steamId = "76561198000000000";
+        const string steamId = "00000000000000000";
         var profile = new ProfileModel
         {
             UserId = steamId,

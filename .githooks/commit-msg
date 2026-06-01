@@ -79,10 +79,10 @@ if [ "$subject_len" -gt 100 ]; then
 fi
 
 # Allowed subject prefixes (informational warning, not a hard fail).
-allowed_types='^(feat|fix|refactor|test|docs|chore|governance|revert|wip|plan)(\([a-z0-9-]+\))?: '
+allowed_types='^(feat|fix|build|refactor|test|docs|chore|governance|revert|wip|plan)(\([a-z0-9-]+\))?: '
 if ! echo "$subject" | grep -qE "$allowed_types"; then
   echo "[governance hook] WARNING: subject does not match conventional commit prefix."
-  echo "                  Allowed: feat|fix|refactor|test|docs|chore|governance|revert|wip|plan"
+  echo "                  Allowed: feat|fix|build|refactor|test|docs|chore|governance|revert|wip|plan"
   echo "                  See .agent/HANDOFF_PROTOCOL.md §2."
 fi
 

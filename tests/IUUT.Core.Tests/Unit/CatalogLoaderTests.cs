@@ -21,7 +21,7 @@ public class CatalogLoaderTests
         """;
 
     private static CatalogTable LoadSample() =>
-        CatalogLoader.Load(new MemoryStream(Encoding.UTF8.GetBytes(SampleJson)));
+        CatalogLoader.Load(new MemoryStream(new UTF8Encoding(false).GetBytes(SampleJson)));
 
     [Fact]
     public void Load_ReadsVersionTableAndRows()
@@ -86,7 +86,7 @@ public class CatalogLoaderTests
     [Fact]
     public void Load_Empty_Throws()
     {
-        var act = () => CatalogLoader.Load(new MemoryStream(Encoding.UTF8.GetBytes("null")));
+        var act = () => CatalogLoader.Load(new MemoryStream(new UTF8Encoding(false).GetBytes("null")));
 
         act.Should().Throw<JsonException>();
     }

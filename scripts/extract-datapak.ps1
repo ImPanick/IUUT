@@ -60,7 +60,7 @@ for ($i = 0; $i -lt $b.Length - 2; $i++) {
         if ($full.Length -gt $before) { $blocks++; $i += 4 }
     } catch { }
 }
-$text = [System.Text.Encoding]::UTF8.GetString($full.ToArray())
+$text = (New-Object System.Text.UTF8Encoding $false).GetString($full.ToArray())
 Write-Host "inflated $blocks blocks -> $($text.Length.ToString('N0')) chars" -ForegroundColor Green
 
 # 2) Split into top-level JSON objects (brace match, string/escape aware).

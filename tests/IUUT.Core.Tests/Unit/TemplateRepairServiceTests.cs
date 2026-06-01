@@ -9,7 +9,7 @@ namespace IUUT.Core.Tests.Unit;
 
 public class TemplateRepairServiceTests
 {
-    private const string SteamId = "76561198000000000";
+    private const string SteamId = "00000000000000000";
     private readonly TemplateRepairService _service = new();
 
     [Fact]

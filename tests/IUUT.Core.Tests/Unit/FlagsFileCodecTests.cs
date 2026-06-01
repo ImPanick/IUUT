@@ -8,7 +8,7 @@ namespace IUUT.Core.Tests.Unit;
 
 public class FlagsFileCodecTests
 {
-    private const string SteamId = "76561198000000000"; // 17 chars
+    private const string SteamId = "00000000000000000"; // 17-char sentinel (SECURITY_PROTOCOL §3)
 
     [Fact]
     public void WriteThenRead_RoundTripsSteamIdAndFlags()

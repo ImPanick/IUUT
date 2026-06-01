@@ -25,7 +25,7 @@ public class ValidationEngineTests
     [Fact]
     public void ValidateProfile_UserIdMismatch_IsError()
     {
-        var profile = new ProfileModel { UserId = "76561190000000000" };
+        var profile = new ProfileModel { UserId = "00000000000000001" };
 
         var result = ValidationEngine.ValidateProfile(profile, Folder);
 
@@ -133,7 +133,7 @@ public class ValidationEngineTests
     [Fact]
     public void ValidateProspectBlob_ValidHash_IsValid()
     {
-        var (base64, hash) = ProspectBlobFactory.Build(Encoding.UTF8.GetBytes("payload"));
+        var (base64, hash) = ProspectBlobFactory.Build(new UTF8Encoding(false).GetBytes("payload"));
         var blob = new ProspectBlobModel { BinaryBlob = base64, Hash = hash };
 
         ValidationEngine.ValidateProspectBlob(blob).IsValid.Should().BeTrue();
@@ -142,7 +142,7 @@ public class ValidationEngineTests
     [Fact]
     public void ValidateProspectBlob_BadHash_IsError()
     {
-        var (base64, _) = ProspectBlobFactory.Build(Encoding.UTF8.GetBytes("payload"));
+        var (base64, _) = ProspectBlobFactory.Build(new UTF8Encoding(false).GetBytes("payload"));
         var blob = new ProspectBlobModel { BinaryBlob = base64, Hash = "0000" };
 
         ValidationEngine.ValidateProspectBlob(blob).Errors

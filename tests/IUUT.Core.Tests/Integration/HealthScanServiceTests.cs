@@ -27,8 +27,8 @@ public sealed class HealthScanServiceTests : IDisposable
         Write("Profile.json", "{}");
         Write("Characters.json", """{ "Characters.json": [] }""");
         Write("MetaInventory.json", "this is not json");
-        Write(Path.Combine("Prospects", "Good.json"), ProspectBlobFactory.ProspectJson(Encoding.UTF8.GetBytes("good payload")));
-        Write(Path.Combine("Prospects", "Bad.json"), ProspectBlobFactory.ProspectJson(Encoding.UTF8.GetBytes("payload"), hashOverride: "0000"));
+        Write(Path.Combine("Prospects", "Good.json"), ProspectBlobFactory.ProspectJson(new UTF8Encoding(false).GetBytes("good payload")));
+        Write(Path.Combine("Prospects", "Bad.json"), ProspectBlobFactory.ProspectJson(new UTF8Encoding(false).GetBytes("payload"), hashOverride: "0000"));
         // Accolades.json / BestiaryData.json / Mounts.json / Loadouts.json intentionally absent.
 
         var report = _sut.ScanProfile(_temp.Path);

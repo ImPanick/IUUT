@@ -9,7 +9,7 @@ namespace IUUT.Core.Tests.Unit;
 
 public class ProspectBlobVerifierTests
 {
-    private static readonly byte[] _payload = Encoding.UTF8.GetBytes("StateRecorderBlobs example payload — actors etc.");
+    private static readonly byte[] _payload = new UTF8Encoding(false).GetBytes("StateRecorderBlobs example payload — actors etc.");
 
     [Fact]
     public void Decompress_RoundTrips_payload()
