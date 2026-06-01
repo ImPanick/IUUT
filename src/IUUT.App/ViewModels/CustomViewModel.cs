@@ -189,7 +189,7 @@ public sealed class CustomViewModel : ObservableObject
             ("mounts", not null) =>
                 new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
             ("flags", not null) =>
-                new FlagEditorViewModel(_files, _flags, slot.FolderPath, slot.DisplayLabel),
+                new FlagEditorViewModel(_files, _flags, _catalogs.CharacterFlags, slot.FolderPath, slot.DisplayLabel),
             ("prospects", not null) =>
                 new ProspectsEditorViewModel(_files, _prospect, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>

@@ -31,4 +31,7 @@ public sealed record LazyMaxResult
 
     /// <summary>How many of those bestiary groups were newly added.</summary>
     public int BestiaryGroupsAdded { get; init; }
+
+    /// <summary>Account mission/story flags newly set in <c>Profile.UnlockedFlags</c> (marks mission completion).</summary>
+    public int MissionFlagsSet { get; init; }
 }

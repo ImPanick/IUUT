@@ -1,68 +1,88 @@
 using System.Collections.ObjectModel;
-using System.Globalization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IUUT.Core.Catalog;
 using IUUT.Core.Editing;
 using IUUT.Core.Models;
 
 namespace IUUT.App.ViewModels;
 
 /// <summary>
-/// The Engine Flags editor (master §8.11): adds/removes raw engine unlock flag IDs in the binary
-/// <c>flags_&lt;SteamID&gt;.dat</c> via <see cref="FlagsEditService"/>, then writes through
-/// <see cref="CustomFileService"/> (backup + atomic byte write). Advanced/low-level — flag IDs have
-/// no friendly names. The confirm lives in the view.
+/// The Engine Flags editor (master §8.11): the binary <c>flags_&lt;SteamID&gt;.dat</c> = the game's
+/// <c>CharacterFlag</c> set. Decodes each flag id to its friendly name via the flag catalog, lets the
+/// user add a flag by name or remove one, and offers "Complete missions" (set every mission/story
+/// flag — e.g. the Olympus map-unlock gate + the Mission_* rewards). Writes through
+/// <see cref="CustomFileService"/> (backup + atomic). The confirm lives in the view.
 /// </summary>
 public sealed class FlagEditorViewModel : ObservableObject
 {
     private readonly CustomFileService _files;
     private readonly FlagsEditService _service;
+    private readonly FlagCatalog _catalog;
     private readonly string _saveFolder;
 
     private FlagsFileModel? _model;
-    private uint? _selectedFlag;
-    private string _newFlagText = "";
+    private FlagRowViewModel? _selectedFlag;
+    private FlagRowViewModel? _selectedAvailableFlag;
     private bool _isBusy;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
-    public FlagEditorViewModel(CustomFileService files, FlagsEditService service, string saveFolder, string profileLabel)
+    public FlagEditorViewModel(
+        CustomFileService files,
+        FlagsEditService service,
+        FlagCatalog catalog,
+        string saveFolder,
+        string profileLabel)
     {
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(service);
+        ArgumentNullException.ThrowIfNull(catalog);
         ArgumentException.ThrowIfNullOrEmpty(saveFolder);
 
         _files = files;
         _service = service;
+        _catalog = catalog;
         _saveFolder = saveFolder;
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Flags = [];
+        AvailableFlags = catalog.Ids
+            .Select(id => new FlagRowViewModel((uint)id, catalog.Label(id), catalog.IsMissionFlag(id)))
+            .ToList();
+
         LoadCommand = new AsyncRelayCommand(LoadAsync);
-        AddFlagCommand = new RelayCommand(AddFlag, () => !IsBusy && _model is not null);
-        RemoveSelectedCommand = new RelayCommand(RemoveSelected, () => !IsBusy && _model is not null && SelectedFlag.HasValue);
+        AddFlagCommand = new RelayCommand(AddFlag, () => !IsBusy && _model is not null && SelectedAvailableFlag is not null);
+        RemoveSelectedCommand = new RelayCommand(RemoveSelected, () => !IsBusy && _model is not null && SelectedFlag is not null);
+        CompleteMissionsCommand = new RelayCommand(CompleteMissions, () => !IsBusy && _model is not null);
     }
 
     /// <summary>The profile being edited (for the header).</summary>
     public string ProfileLabel { get; }
 
-    /// <summary>The engine unlock flag IDs.</summary>
-    public ObservableCollection<uint> Flags { get; }
+    /// <summary>The character flags currently set (decoded to names).</summary>
+    public ObservableCollection<FlagRowViewModel> Flags { get; }
+
+    /// <summary>Every known character flag, for the add-by-name picker.</summary>
+    public IReadOnlyList<FlagRowViewModel> AvailableFlags { get; }
 
     /// <summary>Reloads the flags file into the editor.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
 
-    /// <summary>Adds the flag id typed in <see cref="NewFlagText"/>.</summary>
+    /// <summary>Adds the picked flag.</summary>
     public IRelayCommand AddFlagCommand { get; }
 
-    /// <summary>Removes the selected flag id.</summary>
+    /// <summary>Removes the selected flag.</summary>
     public IRelayCommand RemoveSelectedCommand { get; }
+
+    /// <summary>Sets every mission/story flag (Olympus unlock + Mission_* rewards).</summary>
+    public IRelayCommand CompleteMissionsCommand { get; }
 
     /// <summary>The flags file's SteamID (read-only display).</summary>
     public string SteamId => _model?.SteamId ?? "—";
 
-    /// <summary>The selected flag id (the removal target).</summary>
-    public uint? SelectedFlag
+    /// <summary>The selected current flag (the removal target).</summary>
+    public FlagRowViewModel? SelectedFlag
     {
         get => _selectedFlag;
         set
@@ -74,11 +94,17 @@ public sealed class FlagEditorViewModel : ObservableObject
         }
     }
 
-    /// <summary>The flag id to add (free text; parsed as an unsigned integer).</summary>
-    public string NewFlagText
+    /// <summary>The flag picked in the add picker.</summary>
+    public FlagRowViewModel? SelectedAvailableFlag
     {
-        get => _newFlagText;
-        set => SetProperty(ref _newFlagText, value);
+        get => _selectedAvailableFlag;
+        set
+        {
+            if (SetProperty(ref _selectedAvailableFlag, value))
+            {
+                AddFlagCommand.NotifyCanExecuteChanged();
+            }
+        }
     }
 
     /// <summary>True while loading or applying.</summary>
@@ -91,6 +117,7 @@ public sealed class FlagEditorViewModel : ObservableObject
             {
                 AddFlagCommand.NotifyCanExecuteChanged();
                 RemoveSelectedCommand.NotifyCanExecuteChanged();
+                CompleteMissionsCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -129,6 +156,7 @@ public sealed class FlagEditorViewModel : ObservableObject
         {
             IsBusy = false;
             AddFlagCommand.NotifyCanExecuteChanged();
+            CompleteMissionsCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -170,21 +198,15 @@ public sealed class FlagEditorViewModel : ObservableObject
 
     private void AddFlag()
     {
-        if (_model is null)
+        if (_model is null || SelectedAvailableFlag is null)
         {
             return;
         }
 
-        if (!uint.TryParse(NewFlagText.Trim(), NumberStyles.Integer, CultureInfo.InvariantCulture, out var flagId))
-        {
-            StatusMessage = "Enter a whole number (0 – 4,294,967,295) to add.";
-            return;
-        }
-
-        StatusMessage = _service.AddFlag(_model, flagId)
-            ? $"Added flag {flagId} — review, then Apply."
-            : $"Flag {flagId} is already present.";
-        NewFlagText = "";
+        var flag = SelectedAvailableFlag;
+        StatusMessage = _service.AddFlag(_model, flag.Id)
+            ? $"Added {flag.Label} (staged) — review, then Apply."
+            : $"{flag.Label} is already present.";
         RebuildFlags();
     }
 
@@ -195,12 +217,34 @@ public sealed class FlagEditorViewModel : ObservableObject
             return;
         }
 
-        var flagId = SelectedFlag.Value;
-        if (_service.RemoveFlag(_model, flagId))
+        var flag = SelectedFlag;
+        if (_service.RemoveFlag(_model, flag.Id))
         {
-            StatusMessage = $"Removed flag {flagId} — review, then Apply.";
+            StatusMessage = $"Removed {flag.Label} (staged) — review, then Apply.";
             RebuildFlags();
         }
+    }
+
+    private void CompleteMissions()
+    {
+        if (_model is null)
+        {
+            return;
+        }
+
+        var added = 0;
+        foreach (var id in _catalog.MissionFlagIds())
+        {
+            if (_service.AddFlag(_model, (uint)id))
+            {
+                added++;
+            }
+        }
+
+        RebuildFlags();
+        StatusMessage = added > 0
+            ? $"Set {added} mission/story flag(s) incl. map unlocks (staged) — review, then Apply."
+            : "All mission/story flags are already set.";
     }
 
     private void RebuildFlags()
@@ -210,7 +254,7 @@ public sealed class FlagEditorViewModel : ObservableObject
         {
             foreach (var flag in _model.Flags)
             {
-                Flags.Add(flag);
+                Flags.Add(new FlagRowViewModel(flag, _catalog.Label((int)flag), _catalog.IsMissionFlag((int)flag)));
             }
         }
 

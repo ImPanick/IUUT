@@ -243,6 +243,22 @@ public class LazyMaxServiceTests
         result.AccoladesAdded.Should().BeGreaterThan(200);
         result.BestiaryGroupsTotal.Should().BeGreaterThan(70);
         result.BestiaryGroupsAdded.Should().Be(result.BestiaryGroupsTotal);
+        result.MissionFlagsSet.Should().BeGreaterThan(0, "Lazy Max marks account mission/story flags");
+    }
+
+    [Fact]
+    public void MaxAccountMissionFlags_SetsStoryFlags_Additive_AndIdempotent()
+    {
+        var profile = new ProfileModel { UserId = "76561198000000000", UnlockedFlags = { 8 } };
+        var service = NewService();
+
+        var added = service.MaxAccountMissionFlags(profile);
+
+        added.Should().BeGreaterThan(0);
+        profile.UnlockedFlags.Should().Contain(8, "already present, not duplicated")
+            .And.Contain(9, "GrantedTalent_Styx_Ironclad — a story-grant mission flag");
+        profile.UnlockedFlags.Should().OnlyHaveUniqueItems();
+        service.MaxAccountMissionFlags(profile).Should().Be(0, "idempotent once the mission flags are set");
     }
 
     [Fact]

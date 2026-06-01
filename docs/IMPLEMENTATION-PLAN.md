@@ -47,8 +47,10 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   item's durability + Repair/Repair-all to max, all staged → one Apply; `StashEditService.AddItem`/
   `SetStack`/`SetDurability`/`RemoveItem`); **Loadouts WIRED** (read-only
   viewer + dangling-reference diagnostics, `LoadoutCrossReference`); **Mounts WIRED** (name/level,
-  `MountEditService`); **Engine Flags WIRED** (add/remove raw flag IDs, binary `flags_*.dat` via
-  `FlagsEditService`); **Prospects WIRED** (per-slot unstick, `ProspectEditService`); **Advanced/Raw
+  `MountEditService`); **Engine Flags & Missions WIRED** (binary `flags_*.dat` = `CharacterFlag` set,
+  now **decoded to names** via `FlagCatalog`; add-by-name + **"Complete missions"** sets every
+  mission/story flag incl. the Olympus map-unlock gate; `FlagsEditService`); **Prospects WIRED**
+  (per-slot unstick, `ProspectEditService`); **Advanced/Raw
   WIRED** (view/edit any save JSON, validated on save) — **all 9 categories live.** The auxiliary
   files load+save via **`CustomFileService`** (JSON via `ISafeSaveWriter`; binary flags via its own
   backup+atomic byte write reusing `BackupManager`); **Game Tuner** (own tile, fully wired:
@@ -69,6 +71,17 @@ verification, not new editors:
   (accolades carry curated names; workshop rows humanize cleanly).
   - Follow-up (optional): the database talent export misses 13 stat-bonus `Workshop_Module_*` rows
     (kept from the real save, so still present); 100% parity would need the game's D_Talents export.
+- **Mission completion / flag systems** — DECODED + partly wired. The two opaque flag systems are
+  0-based indices into data-mined enums: `Profile.UnlockedFlags`=`D_AccountFlags`, `flags_*.dat`=
+  `D_CharacterFlags` (id 27 = `Mission_Olympus_Unlock`). Shipped as `accountflags.json` (86) +
+  `characterflags.json` (40) catalogs + `FlagCatalog` (id↔name, humanized label, mission/story
+  classification). **DONE:** Engine Flags editor decodes names + add-by-name + **"Complete missions"**
+  (character flags); **Lazy Max sets the account mission/story flags** (`MaxAccountMissionFlags`).
+  **Next:** an **Account Flags** Custom editor/section (`UnlockedFlags` by name) for a manual
+  "complete missions" there too, and (bigger) extend the Lazy Max APPLY pipeline to also write the
+  character `flags_*.dat` (currently a separate binary file, so Lazy Max only does the account side).
+  Account flags 86/93 on a maxed save are beyond the Week-149 snapshot → re-mine `D_AccountFlags`
+  from a current `data.pak` to label them.
 - **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
   spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
   (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).

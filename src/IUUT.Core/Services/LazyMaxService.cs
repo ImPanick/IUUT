@@ -106,6 +106,7 @@ public sealed class LazyMaxService
         ArgumentNullException.ThrowIfNull(bestiary);
 
         var (metaMaxed, workshopTotal, workshopAdded) = MaxProfile(profile);
+        var missionFlagsSet = MaxAccountMissionFlags(profile);
         var talentsPerCharacter = MaxCharacters(characters);
         var accoladesAdded = MaxAccolades(accolades);
         var (bestiaryTotal, bestiaryAdded) = MaxBestiary(bestiary);
@@ -120,7 +121,32 @@ public sealed class LazyMaxService
             AccoladesAdded = accoladesAdded,
             BestiaryGroupsTotal = bestiaryTotal,
             BestiaryGroupsAdded = bestiaryAdded,
+            MissionFlagsSet = missionFlagsSet,
         };
+    }
+
+    /// <summary>
+    /// Marks mission/story completion in <c>Profile.UnlockedFlags</c>: adds every account flag that
+    /// records mission rewards / story-talent grants / map-unlock gates (the <c>D_AccountFlags</c>
+    /// mission set). Additive — existing flags are kept. Returns how many were newly set. The
+    /// per-character <c>flags_*.dat</c> mission flags are a separate binary file (Engine Flags editor).
+    /// </summary>
+    public int MaxAccountMissionFlags(ProfileModel profile)
+    {
+        ArgumentNullException.ThrowIfNull(profile);
+
+        var present = new HashSet<int>(profile.UnlockedFlags);
+        var added = 0;
+        foreach (var flagId in _catalogs.AccountFlags.MissionFlagIds())
+        {
+            if (present.Add(flagId))
+            {
+                profile.UnlockedFlags.Add(flagId);
+                added++;
+            }
+        }
+
+        return added;
     }
 
     /// <summary>

@@ -21,8 +21,8 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="🚩  Engine Flags" Style="{StaticResource TitleText}" />
-                    <TextBlock Text="Advanced — raw engine unlock flag IDs in the binary flags file. IDs have no friendly names; edit only if you know the value."
+                    <TextBlock Text="🚩  Engine Flags &amp; Missions" Style="{StaticResource TitleText}" />
+                    <TextBlock Text="Character flags (flags_*.dat) — decoded to names. These include map-unlock gates and Mission_* rewards. &quot;Complete missions&quot; sets every mission/story flag."
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding SteamId, StringFormat=flags file SteamID: {0}}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
                 </StackPanel>
@@ -37,20 +37,40 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4,2,4,10">
-                    <TextBlock Text="ADD FLAG ID" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,10,0" />
-                    <TextBox Width="160" VerticalAlignment="Center" Margin="0,0,8,0"
-                             Text="{Binding NewFlagText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Content="Add" Command="{Binding AddFlagCommand}" Padding="14,4" Margin="0,0,8,0" />
-                    <Button Content="Remove selected" Command="{Binding RemoveSelectedCommand}" Padding="14,4" />
-                </StackPanel>
+                <Grid Grid.Row="0" Margin="4,2,4,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="ADD FLAG" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                    <ComboBox Grid.Column="1" VerticalAlignment="Center" Margin="0,0,8,0"
+                              ItemsSource="{Binding AvailableFlags}" SelectedItem="{Binding SelectedAvailableFlag, Mode=TwoWay}"
+                              DisplayMemberPath="Display" IsTextSearchEnabled="True" TextSearch.TextPath="Label" />
+                    <Button Grid.Column="2" Content="Add" Command="{Binding AddFlagCommand}" Padding="14,4" Margin="0,0,8,0" />
+                    <Button Grid.Column="3" Content="🏁  Complete missions" Command="{Binding CompleteMissionsCommand}" Padding="12,4" Margin="0,0,8,0" />
+                    <Button Grid.Column="4" Content="Remove selected" Command="{Binding RemoveSelectedCommand}" Padding="12,4" />
+                </Grid>
                 <Border Grid.Row="1" CornerRadius="4" Background="{StaticResource DataBackdropBrush}"
                         BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
                     <ListBox ItemsSource="{Binding Flags}" SelectedItem="{Binding SelectedFlag, Mode=TwoWay}"
                              Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" Margin="6,4" />
+                                <TextBlock Text="{Binding Display}" Margin="6,4">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource BodyText}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMission}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource IonCoreBrush}" />
+                                                    <Setter Property="FontWeight" Value="SemiBold" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
