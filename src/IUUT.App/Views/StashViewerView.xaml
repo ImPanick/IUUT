@@ -73,8 +73,21 @@
                                 <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
                                 <TextBlock Text="{Binding DatabaseGuid}" Style="{StaticResource MonoText}" Margin="0,1,0,0" />
                             </StackPanel>
-                            <TextBlock Grid.Column="2" Text="{Binding ReferenceHint}" VerticalAlignment="Center"
-                                       Foreground="{StaticResource AmberCoreBrush}" FontSize="11" />
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding DurabilityLabel}" FontSize="11" HorizontalAlignment="Right">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource MonoText}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsDamaged}" Value="True">
+                                                    <Setter Property="Foreground" Value="{StaticResource AmberCoreBrush}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock Text="{Binding ReferenceHint}" Foreground="{StaticResource AmberCoreBrush}"
+                                           FontSize="11" HorizontalAlignment="Right" Margin="0,1,0,0" />
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -86,14 +99,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
-            <Button Grid.Column="1" Content="🗑  Remove selected" Command="{Binding RemoveSelectedCommand}"
-                    Padding="14,8" Margin="0,0,8,0" />
-            <Button Grid.Column="2" Content="💾  Apply changes" Click="OnApply"
-                    IsEnabled="{Binding HasChanges}" Padding="18,8" FontWeight="SemiBold" />
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="🔧  Repair selected" Command="{Binding RepairSelectedCommand}" Padding="12,8" Margin="0,0,8,0" />
+                <Button Content="🔧  Repair all" Command="{Binding RepairAllCommand}" Padding="12,8" Margin="0,0,8,0" />
+                <Button Content="🗑  Remove" Command="{Binding RemoveSelectedCommand}" Padding="12,8" Margin="0,0,8,0" />
+                <Button Content="💾  Apply changes" Click="OnApply" IsEnabled="{Binding HasChanges}" Padding="16,8" FontWeight="SemiBold" />
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

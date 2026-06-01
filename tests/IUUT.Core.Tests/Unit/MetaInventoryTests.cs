@@ -127,4 +127,29 @@ public class MetaInventoryTests
         item.ItemDynamicData.Count(p => p.PropertyType == "ItemableStack").Should().Be(1);
         StashEditService.GetStack(item).Should().Be(7);
     }
+
+    [Fact]
+    public void StashEditService_Durability_ReadsRepairsAndRoundTrips()
+    {
+        var service = new StashEditService(new SystemGuidProvider());
+        var item = MetaInventoryParser.Parse(Sample).Items.Single(); // Durability = 5500
+
+        StashEditService.GetDurability(item).Should().Be(5500);
+
+        service.SetDurability(item, 100_000); // "repair" to a high value
+        item.ItemDynamicData.Count(p => p.PropertyType == "Durability").Should().Be(1, "the existing property is updated, not duplicated");
+        StashEditService.GetDurability(item).Should().Be(100_000);
+
+        StashEditService.GetDurability(MetaInventoryParser.Parse(MetaInventorySerializer.Serialize(MetaInventoryParser.Parse(Sample)))
+            .Items.Single()).Should().Be(5500, "durability round-trips through serialize/parse");
+    }
+
+    [Fact]
+    public void StashEditService_GetDurability_NullWhenNotADurableItem()
+    {
+        var service = new StashEditService(new SystemGuidProvider());
+        var item = service.AddItem(new MetaInventoryModel(), "Wood"); // resources have no Durability
+
+        StashEditService.GetDurability(item).Should().BeNull();
+    }
 }

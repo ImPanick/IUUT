@@ -43,8 +43,9 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
   dead/abandoned + per-talent rank slider + "Max XP"/"Max talents", `CharacterEditService`);
   **Accolades & Bestiary WIRED** (catalog accolade checklist + grant/revoke all; creature-group scan
   points + "Max all", `AccoladeBestiaryEditService`); **Orbital Stash WIRED — staged builder** (add
-  catalog items w/ stack count capped at the hard game max of 100 + remove w/ loadout-reference
-  warning, all staged → one Apply; `StashEditService.AddItem`/`SetStack`/`RemoveItem`); **Loadouts WIRED** (read-only
+  catalog items w/ stack count capped at hard max 100, remove w/ loadout-reference warning, view each
+  item's durability + Repair/Repair-all to max, all staged → one Apply; `StashEditService.AddItem`/
+  `SetStack`/`SetDurability`/`RemoveItem`); **Loadouts WIRED** (read-only
   viewer + dangling-reference diagnostics, `LoadoutCrossReference`); **Mounts WIRED** (name/level,
   `MountEditService`); **Engine Flags WIRED** (add/remove raw flag IDs, binary `flags_*.dat` via
   `FlagsEditService`); **Prospects WIRED** (per-slot unstick, `ProspectEditService`); **Advanced/Raw
@@ -57,9 +58,11 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
 
 **NEXT: the Custom editor is feature-complete (all 9 categories wired).** Remaining work is polish +
 verification, not new editors:
-- **Stash add item** — DONE (staged builder, embedded 91-item catalog, stack cap 100). Optional
-  follow-up: enrich `items.json` (`scripts/fetch-catalogs.ps1`) for friendly display names + a fuller
-  item list in the picker (currently RowName labels). Durability-on-add is also a possible extension.
+- **Stash builder** — DONE (add w/ stack cap 100, remove, durability view + repair). **Friendly
+  names** — DONE: `items.json` enriched with all 90 verified display names (icarusdatabase.com
+  icon-filename match), and `CatalogName.Humanize` is a universal offline fallback for any unmapped
+  RowName across every catalog. Optional follow-up: enrich the other catalogs' display names
+  (talents/accolades/bestiary) the same way — they read fine via the humanizer today.
 - **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
   spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
   (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).

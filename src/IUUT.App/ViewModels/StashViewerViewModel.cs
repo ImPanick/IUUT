@@ -25,6 +25,7 @@ public sealed class StashViewerViewModel : ObservableObject
 
     private MetaInventoryModel? _stash;
     private HashSet<string> _referenced = new(StringComparer.OrdinalIgnoreCase);
+    private Dictionary<string, int> _rowMaxDurability = new(StringComparer.Ordinal);
     private StashItemViewModel? _selectedItem;
     private CatalogRow? _selectedCatalogItem;
     private int _addQuantity = 1;
@@ -60,6 +61,8 @@ public sealed class StashViewerViewModel : ObservableObject
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         AddItemCommand = new RelayCommand(AddItem, () => !IsBusy && _stash is not null && SelectedCatalogItem is not null);
         RemoveSelectedCommand = new RelayCommand(RemoveSelected, () => !IsBusy && _stash is not null && SelectedItem is not null);
+        RepairSelectedCommand = new RelayCommand(RepairSelected, () => !IsBusy && _stash is not null && SelectedItem is { HasDurability: true });
+        RepairAllCommand = new RelayCommand(RepairAll, () => !IsBusy && _stash is not null);
     }
 
     /// <summary>The profile being edited (for the header).</summary>
@@ -79,6 +82,12 @@ public sealed class StashViewerViewModel : ObservableObject
 
     /// <summary>Removes the selected stash item (staged).</summary>
     public IRelayCommand RemoveSelectedCommand { get; }
+
+    /// <summary>Repairs the selected item to its max durability (staged).</summary>
+    public IRelayCommand RepairSelectedCommand { get; }
+
+    /// <summary>Repairs every damaged item to its max durability (staged).</summary>
+    public IRelayCommand RepairAllCommand { get; }
 
     /// <summary>The catalog item to add.</summary>
     public CatalogRow? SelectedCatalogItem
@@ -110,6 +119,7 @@ public sealed class StashViewerViewModel : ObservableObject
             {
                 OnPropertyChanged(nameof(HasSelection));
                 RemoveSelectedCommand.NotifyCanExecuteChanged();
+                RepairSelectedCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -137,6 +147,8 @@ public sealed class StashViewerViewModel : ObservableObject
             {
                 AddItemCommand.NotifyCanExecuteChanged();
                 RemoveSelectedCommand.NotifyCanExecuteChanged();
+                RepairSelectedCommand.NotifyCanExecuteChanged();
+                RepairAllCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -173,6 +185,7 @@ public sealed class StashViewerViewModel : ObservableObject
                 ? new HashSet<string>(StringComparer.OrdinalIgnoreCase)
                 : new HashSet<string>(_crossReference.ReferencedDatabaseGuids(loadouts), StringComparer.OrdinalIgnoreCase);
 
+            _rowMaxDurability = ComputeRowMaxDurability(_stash);
             RebuildItems();
             HasChanges = false;
             StatusMessage = $"Loaded {Items.Count} stash item(s) for “{ProfileLabel}”.";
@@ -188,6 +201,8 @@ public sealed class StashViewerViewModel : ObservableObject
             IsBusy = false;
             AddItemCommand.NotifyCanExecuteChanged();
             RemoveSelectedCommand.NotifyCanExecuteChanged();
+            RepairSelectedCommand.NotifyCanExecuteChanged();
+            RepairAllCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -273,16 +288,110 @@ public sealed class StashViewerViewModel : ObservableObject
             foreach (var item in _stash.Items)
             {
                 var rowName = item.ItemStaticData.RowName;
+                var durability = StashEditService.GetDurability(item);
+                int? maxDurability = durability is not null && _rowMaxDurability.TryGetValue(rowName, out var max) ? max : null;
                 Items.Add(new StashItemViewModel(
                     rowName,
                     _catalogs.Items.Label(rowName),
                     item.DatabaseGuid,
                     StashEditService.GetStack(item),
+                    durability,
+                    maxDurability,
                     _referenced.Contains(item.DatabaseGuid)));
             }
         }
 
         SelectedItem = null;
         OnPropertyChanged(nameof(Summary));
+    }
+
+    private void RepairSelected()
+    {
+        var selected = SelectedItem;
+        if (_stash is null || selected is null || !selected.HasDurability)
+        {
+            return;
+        }
+
+        var repaired = RepairItems([selected.DatabaseGuid]);
+        StatusMessage = repaired > 0
+            ? $"Repaired {selected.Label} to full durability (staged) — Apply to save."
+            : $"{selected.Label} is already at its max durability.";
+    }
+
+    private void RepairAll()
+    {
+        if (_stash is null)
+        {
+            return;
+        }
+
+        var guids = _stash.Items
+            .Where(i => StashEditService.GetDurability(i) is not null)
+            .Select(i => i.DatabaseGuid);
+        var repaired = RepairItems(guids);
+        StatusMessage = repaired > 0
+            ? $"Repaired {repaired} item(s) to full durability (staged) — Apply to save."
+            : "No items need repair — all are at max durability.";
+    }
+
+    /// <summary>Repairs the given items to the max durability seen for their item type; returns how many changed.</summary>
+    private int RepairItems(IEnumerable<string> databaseGuids)
+    {
+        if (_stash is null)
+        {
+            return 0;
+        }
+
+        var targets = new HashSet<string>(databaseGuids, StringComparer.OrdinalIgnoreCase);
+        var repaired = 0;
+        foreach (var item in _stash.Items)
+        {
+            if (!targets.Contains(item.DatabaseGuid))
+            {
+                continue;
+            }
+
+            var current = StashEditService.GetDurability(item);
+            if (current is null)
+            {
+                continue;
+            }
+
+            if (_rowMaxDurability.TryGetValue(item.ItemStaticData.RowName, out var max) && max > current.Value)
+            {
+                _stashEdit.SetDurability(item, max);
+                repaired++;
+            }
+        }
+
+        if (repaired > 0)
+        {
+            RebuildItems();
+            HasChanges = true;
+        }
+
+        return repaired;
+    }
+
+    private static Dictionary<string, int> ComputeRowMaxDurability(MetaInventoryModel stash)
+    {
+        var map = new Dictionary<string, int>(StringComparer.Ordinal);
+        foreach (var item in stash.Items)
+        {
+            var durability = StashEditService.GetDurability(item);
+            if (durability is null)
+            {
+                continue;
+            }
+
+            var row = item.ItemStaticData.RowName;
+            if (!map.TryGetValue(row, out var current) || durability.Value > current)
+            {
+                map[row] = durability.Value;
+            }
+        }
+
+        return map;
     }
 }

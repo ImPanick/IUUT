@@ -18,6 +18,9 @@ public sealed class StashEditService
     /// <summary>The <c>ItemDynamicData</c> property that holds an item's stack count.</summary>
     public const string StackProperty = "ItemableStack";
 
+    /// <summary>The <c>ItemDynamicData</c> property that holds an item's current durability.</summary>
+    public const string DurabilityProperty = "Durability";
+
     /// <summary>The hard game-set maximum stack size; the stash editor clamps to this (owner, 2026-05-31).</summary>
     public const int MaxStack = 100;
 
@@ -60,28 +63,50 @@ public sealed class StashEditService
     public void SetStack(MetaItem item, int count)
     {
         ArgumentNullException.ThrowIfNull(item);
-
-        var clamped = Math.Clamp(count, 1, MaxStack);
-        var value = JsonSerializer.SerializeToElement(clamped);
-        var existing = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, StackProperty, StringComparison.Ordinal));
-        if (existing is not null)
-        {
-            existing.Value = value;
-        }
-        else
-        {
-            item.ItemDynamicData.Add(new ItemDynamicProperty { PropertyType = StackProperty, Value = value });
-        }
+        SetIntProperty(item, StackProperty, Math.Clamp(count, 1, MaxStack));
     }
 
     /// <summary>The item's current stack count from its <c>ItemableStack</c> property, or 1 if absent/non-numeric.</summary>
     public static int GetStack(MetaItem item)
     {
         ArgumentNullException.ThrowIfNull(item);
-        var property = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, StackProperty, StringComparison.Ordinal));
-        return property is not null && property.Value.ValueKind == JsonValueKind.Number && property.Value.TryGetInt32(out var stack)
-            ? stack
-            : 1;
+        return GetIntProperty(item, StackProperty) ?? 1;
+    }
+
+    /// <summary>Sets an item's current durability (clamped to ≥ 0), adding/updating the <c>Durability</c> property.</summary>
+    public void SetDurability(MetaItem item, int durability)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        SetIntProperty(item, DurabilityProperty, Math.Max(0, durability));
+    }
+
+    /// <summary>The item's current durability, or <c>null</c> when it has no <c>Durability</c> property (not a durable item).</summary>
+    public static int? GetDurability(MetaItem item)
+    {
+        ArgumentNullException.ThrowIfNull(item);
+        return GetIntProperty(item, DurabilityProperty);
+    }
+
+    private static void SetIntProperty(MetaItem item, string propertyType, int value)
+    {
+        var element = JsonSerializer.SerializeToElement(value);
+        var existing = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, propertyType, StringComparison.Ordinal));
+        if (existing is not null)
+        {
+            existing.Value = element;
+        }
+        else
+        {
+            item.ItemDynamicData.Add(new ItemDynamicProperty { PropertyType = propertyType, Value = element });
+        }
+    }
+
+    private static int? GetIntProperty(MetaItem item, string propertyType)
+    {
+        var property = item.ItemDynamicData.FirstOrDefault(p => string.Equals(p.PropertyType, propertyType, StringComparison.Ordinal));
+        return property is not null && property.Value.ValueKind == JsonValueKind.Number && property.Value.TryGetInt32(out var value)
+            ? value
+            : null;
     }
 
     /// <summary>Removes the stash item with <paramref name="databaseGuid"/>; returns whether it was present.</summary>
