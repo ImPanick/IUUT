@@ -9,6 +9,9 @@
 [Ll]og/
 [Ll]ogs/
 
+# Release artifacts (published single-file exe + zip + checksums; reproduce via scripts/publish-release.ps1)
+[Aa]rtifacts/
+
 # Visual Studio / Rider / VS Code user-specific
 .vs/
 .vscode/
