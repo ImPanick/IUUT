@@ -14,7 +14,7 @@ public sealed class UeBlob
 {
     private const int MaxDepth = 128;
 
-    private static readonly HashSet<string> NativeStructs = new(StringComparer.Ordinal)
+    private static readonly HashSet<string> _nativeStructs = new(StringComparer.Ordinal)
     {
         "Guid", "Vector", "Vector2D", "Vector4", "Rotator", "Quat", "Transform", "Box", "Box2D",
         "IntPoint", "IntVector", "Color", "LinearColor", "DateTime", "Timespan", "Matrix", "Plane",
@@ -319,7 +319,7 @@ public sealed class UeBlob
 
         if (string.Equals(node.Type, "StructProperty", StringComparison.Ordinal))
         {
-            if ((node.StructName is not null && NativeStructs.Contains(node.StructName)) ||
+            if ((node.StructName is not null && _nativeStructs.Contains(node.StructName)) ||
                 !LooksLikeTaggedProperty(d, node.ValueStart, node.ValueEnd))
             {
                 return; // native/opaque struct

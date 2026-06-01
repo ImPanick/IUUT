@@ -14,8 +14,8 @@ namespace IUUT.Core.Tests.Unit;
 public class MissionCompletionServiceTests
 {
     private static readonly MissionCatalog _missions = GameCatalogs.LoadEmbedded().Missions;
-    private static readonly string[] ForestScan = ["Prospect_OLY_Forest_Scan"];
-    private static readonly string[] UnknownMission = ["Prospect_Not_A_Real_Mission"];
+    private static readonly string[] _forestScan = ["Prospect_OLY_Forest_Scan"];
+    private static readonly string[] _unknownMission = ["Prospect_Not_A_Real_Mission"];
 
     private static MissionCompletionService NewService() => new(_missions);
 
@@ -24,7 +24,7 @@ public class MissionCompletionServiceTests
     {
         var profile = new ProfileModel();
 
-        var result = NewService().Complete(profile, ForestScan);
+        var result = NewService().Complete(profile, _forestScan);
 
         var rows = profile.Talents.Select(t => t.RowName).ToList();
         rows.Should().Contain("Prospect_OLY_Forest_Scan");
@@ -38,10 +38,10 @@ public class MissionCompletionServiceTests
     {
         var profile = new ProfileModel();
         var service = NewService();
-        service.Complete(profile, ForestScan);
+        service.Complete(profile, _forestScan);
         var countAfterFirst = profile.Talents.Count;
 
-        var second = service.Complete(profile, ForestScan);
+        var second = service.Complete(profile, _forestScan);
 
         second.TalentsAdded.Should().Be(0);
         profile.Talents.Count.Should().Be(countAfterFirst);
@@ -52,7 +52,7 @@ public class MissionCompletionServiceTests
     {
         var profile = new ProfileModel { Talents = { new Talent { RowName = "Workshop_Envirosuit", Rank = 1 } } };
 
-        NewService().Complete(profile, ForestScan);
+        NewService().Complete(profile, _forestScan);
 
         profile.Talents.Should().Contain(t => t.RowName == "Workshop_Envirosuit", "unrelated talents are untouched");
     }
@@ -70,11 +70,11 @@ public class MissionCompletionServiceTests
     }
 
     [Fact]
-    public void Complete_UnknownMission_IsStillGranted()
+    public void Complete__unknownMission_IsStillGranted()
     {
         var profile = new ProfileModel();
 
-        var result = NewService().Complete(profile, UnknownMission);
+        var result = NewService().Complete(profile, _unknownMission);
 
         profile.Talents.Should().ContainSingle(t => t.RowName == "Prospect_Not_A_Real_Mission");
         result.TalentsAdded.Should().Be(1);

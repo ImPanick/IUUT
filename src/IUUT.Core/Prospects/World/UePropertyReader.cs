@@ -20,7 +20,7 @@ public static class UePropertyReader
     private const int MaxDepth = 96;
 
     /// <summary>UE native (non-tagged) structs serialized as raw bytes — never recursed into.</summary>
-    private static readonly HashSet<string> NativeStructs = new(StringComparer.Ordinal)
+    private static readonly HashSet<string> _nativeStructs = new(StringComparer.Ordinal)
     {
         "Guid", "Vector", "Vector2D", "Vector4", "Rotator", "Quat", "Transform", "Box", "Box2D",
         "IntPoint", "IntVector", "Color", "LinearColor", "DateTime", "Timespan", "Matrix", "Plane",
@@ -260,7 +260,7 @@ public static class UePropertyReader
     /// </summary>
     private static bool ShouldRecurseStruct(string? structName, byte[] d, int start, int end)
     {
-        if (structName is not null && NativeStructs.Contains(structName))
+        if (structName is not null && _nativeStructs.Contains(structName))
         {
             return false;
         }
