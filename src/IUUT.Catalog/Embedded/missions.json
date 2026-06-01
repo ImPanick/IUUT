@@ -1,0 +1,1159 @@
+{
+  "catalogVersion": "icarusdata-master-2026-05",
+  "source": "Mission prerequisite graph from D_Talents Prospect_* rows (RequiredTalents = prereq edges, TalentTree = region), data-mined github.com/GODOFMINECRAFT4/IcarusData. A mission = its Prospect_ talent in Profile.Talents; complete = own it. Re-mine per game version (indices/flags may grow). 2026-05-31.",
+  "missions": [
+    {
+      "rowName": "Prospect_Canyon_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Canyon_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Dev_Prometheus",
+      "tree": "Prospect_Dev",
+      "requires": [],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Farm",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Fish",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Fisher",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Hunter",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Igloo",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Norex",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_4"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder1",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_4"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder2",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_SQ_Speeder1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder3",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_SQ_Speeder2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder4",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_SQ_Speeder3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Yeti",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_SQ_Igloo"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_1",
+      "tree": "Prospect_Elysium",
+      "requires": [],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_2",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_3",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_4",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_5",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_4"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_ELY_Story_6",
+      "tree": "Prospect_Elysium",
+      "requires": [
+        "Prospect_ELY_Story_5"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Expedition",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Extermination",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Extraction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Extraction"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Recovery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Stockpile",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Survey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Stockpile"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Construction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Expedition",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_LongSurvey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Canyon_Survey"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Recovery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Stockpile_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Canyons_Stockpile"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Survey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Canyons_Stockpile",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration",
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Construction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Expedition",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Extermination",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Scan"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Extermination_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Recovery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Recovery_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Research",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Research_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Extermination_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Survey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Farming",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Construction"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Construction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Defence",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Scan"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Recon"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Extermination",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Scan"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Range",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Recon",
+      "tree": "Prospect_Olympus",
+      "requires": [],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Research",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "ProspectReroute_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Stockpile",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Construction"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Survey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Construction"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_WS_Stockpile",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Construction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Expedition",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Forest_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Extraction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Recovery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Research",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Arctic_Exploration",
+        "Prospect_OLY_Desert_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Omni_"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_Recovery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Omni_"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Construction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Delivery",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Scan"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Expedition",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration",
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Exploration",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Extermination",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Extraction",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Research",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Scan",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Stockpile",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Stockpile_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Extermination"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Survey",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Construction"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Farm",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "ProspectReroute_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Fisher",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_Canyon_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Hunter",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Glacier_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Norex",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Riverlands_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Omni_Research",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Omni_"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Omni_Research_2",
+      "tree": "Prospect_Olympus",
+      "requires": [
+        "Prospect_OLY_Omni_"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_A_Exploration",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_2"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Pro_A_Extraction",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_A_Stockpile",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Ashlands_Story",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_5"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_B_Exploration",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_4"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Pro_B_Extermination",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_B_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_C_Construction",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_C_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_C_Exploration",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_3"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Pro_C_Research",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_C_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_D_Recovery",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Ashlands_Story"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_D_Rescue",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_D_Resupply"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_D_Research",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Ashlands_Story"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_D_Resupply",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_D_Recovery"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_E_Research",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Icesheet_Story"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Icesheet_Story",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Ashlands_Story"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Nullsector_Story",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Icesheet_Story"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_PRO_SQ_Farm",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_PRO_SQ_Fisher",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_PRO_SQ_Hunter",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_PRO_SQ_Norex",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_5"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_1",
+      "tree": "Prospect_Prometheus",
+      "requires": [],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_2",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_1"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_3",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_2"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_4",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_3"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_5",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_4"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Pro_Story_6",
+      "tree": "Prospect_Prometheus",
+      "requires": [
+        "Prospect_Pro_Story_5"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_A_Construction",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Reroute"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_A_Expedition",
+      "tree": "Prospect_Styx",
+      "requires": [],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_A_Exploration",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_A_Extermination",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_A_Extermination2",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Reroute"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_A_Reroute",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_A_Research",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Reroute"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_B_Expedition",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_B_Exploration",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_B_Extermination",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_B_Research",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_B_Stockpile",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_C_Construction",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_C_Expedition",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_C_Exploration",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_C_Extermination",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_C_Extermination2",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_C_Fishing",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Delivery",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Expedition",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Exploration",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_D_Extermination",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Recovery",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Research",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_D_Research_2",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_E_Expedition",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_A_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_E_Exploration",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Expedition"
+      ],
+      "defaultUnlocked": true
+    },
+    {
+      "rowName": "Prospect_Styx_E_Extraction",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_E_Research",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_E_Survey",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Exploration"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_STYX_SQ_Farm",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_B_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Fisher",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_E_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Hunter",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_C_Expedition"
+      ],
+      "defaultUnlocked": false
+    },
+    {
+      "rowName": "Prospect_STYX_SQ_Norex",
+      "tree": "Prospect_Styx",
+      "requires": [
+        "Prospect_Styx_D_Expedition"
+      ],
+      "defaultUnlocked": false
+    }
+  ]
+}

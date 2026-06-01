@@ -77,4 +77,23 @@ public class GameCatalogsTests
         _catalogs.AccountFlags.Label(93).Should().Be("Flag 93");
         _catalogs.CharacterFlags.MissionFlagIds().Should().Contain(27);
     }
+
+    [Fact]
+    public void Missions_DecodeGraph_WithPrerequisitesAndRegions()
+    {
+        var missions = _catalogs.Missions;
+        missions.Count.Should().BeGreaterThan(140, "the Prospect_* mission nodes from D_Talents");
+
+        missions.TryGet("Prospect_OLY_Forest_Scan", out var scan).Should().BeTrue();
+        scan.Requires.Should().Contain("Prospect_OLY_Forest_Exploration", "the prereq edge from RequiredTalents");
+        MissionCatalog.Label("Prospect_OLY_Forest_Scan").Should().Be("OLY Forest Scan");
+        MissionCatalog.TreeLabel(scan.Tree).Should().Be("Olympus");
+
+        // Transitive closure: completing Forest_Scan must also complete its ancestor(s).
+        missions.AllPrerequisites("Prospect_OLY_Forest_Scan").Should().Contain("Prospect_OLY_Forest_Exploration");
+
+        // Cycle-safety + roots: a no-prereq node has an empty prerequisite closure.
+        var root = missions.Missions.First(m => m.Requires.Count == 0);
+        missions.AllPrerequisites(root.RowName).Should().BeEmpty();
+    }
 }

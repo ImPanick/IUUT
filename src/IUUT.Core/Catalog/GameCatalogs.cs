@@ -14,7 +14,8 @@ public sealed class GameCatalogs
         CatalogTable bestiary,
         CatalogTable metaResources,
         FlagCatalog accountFlags,
-        FlagCatalog characterFlags)
+        FlagCatalog characterFlags,
+        MissionCatalog missions)
     {
         Talents = talents;
         Items = items;
@@ -23,6 +24,7 @@ public sealed class GameCatalogs
         MetaResources = metaResources;
         AccountFlags = accountFlags;
         CharacterFlags = characterFlags;
+        Missions = missions;
     }
 
     /// <summary><c>D_Talents</c> — character + workshop/prospect talents.</summary>
@@ -46,6 +48,9 @@ public sealed class GameCatalogs
     /// <summary><c>D_CharacterFlags</c> — <c>flags_&lt;SteamID&gt;.dat</c> ids (talents, mission unlocks, map gates).</summary>
     public FlagCatalog CharacterFlags { get; }
 
+    /// <summary>The mission graph (<c>Prospect_*</c> talents + their prerequisite DAG) for the Missions checklist.</summary>
+    public MissionCatalog Missions { get; }
+
     /// <summary>Loads all catalogs from the embedded resources in <c>IUUT.Catalog</c>.</summary>
     public static GameCatalogs LoadEmbedded() => new(
         CatalogLoader.LoadEmbedded("talents.json"),
@@ -54,5 +59,6 @@ public sealed class GameCatalogs
         CatalogLoader.LoadEmbedded("bestiary.json"),
         CatalogLoader.LoadEmbedded("metaresources.json"),
         FlagCatalogLoader.LoadEmbedded("accountflags.json"),
-        FlagCatalogLoader.LoadEmbedded("characterflags.json"));
+        FlagCatalogLoader.LoadEmbedded("characterflags.json"),
+        MissionCatalogLoader.LoadEmbedded("missions.json"));
 }

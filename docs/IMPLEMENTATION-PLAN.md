@@ -77,11 +77,17 @@ verification, not new editors:
   `characterflags.json` (40) catalogs + `FlagCatalog` (id↔name, humanized label, mission/story
   classification). **DONE:** Engine Flags editor decodes names + add-by-name + **"Complete missions"**
   (character flags); **Lazy Max sets the account mission/story flags** (`MaxAccountMissionFlags`).
-  **Next:** an **Account Flags** Custom editor/section (`UnlockedFlags` by name) for a manual
-  "complete missions" there too, and (bigger) extend the Lazy Max APPLY pipeline to also write the
-  character `flags_*.dat` (currently a separate binary file, so Lazy Max only does the account side).
-  Account flags 86/93 on a maxed save are beyond the Week-149 snapshot → re-mine `D_AccountFlags`
-  from a current `data.pak` to label them.
+  **Mission graph engine — DONE (Core):** `missions.json` (145 `Prospect_*` missions, prereq DAG from
+  `D_Talents.RequiredTalents`, 5 region trees) + `MissionCatalog` (`AllPrerequisites` transitive
+  closure, region/mission labels) on `GameCatalogs.Missions`. A "mission" = its `Prospect_*` talent in
+  `Profile.Talents`; complete = own it (+ ancestors). **All data provenance + re-mine steps are in
+  `docs/DATA-PROVENANCE.md`** (where flags/missions/names live; the index-shift caveat).
+  **Next (UI — STAGED behind the concurrent UI-polish agent who is restyling every App view):** rename
+  the "flags" category to **Missions**, a checkbox list grouped by region with **transitive
+  prerequisite auto-select** (writes the `Prospect_*` talents to Profile.json via the bundle + the
+  signature flags); plus the Account Flags editor + character `flags_*.dat` in Lazy Max's apply.
+  Account flags 86/93 + exact flag indices → re-mine from a current `data.pak` (the owner's `Data/
+  data.pak` is Icarus's custom format, not crackable here; use the IcarusData mirror or FModel).
 - **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
   spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
   (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).
