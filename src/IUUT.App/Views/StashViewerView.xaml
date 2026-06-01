@@ -5,6 +5,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
 
+    <UserControl.Resources>
+        <!-- Category accent colours for the stash tiles (local; kept off the shared theme). -->
+        <SolidColorBrush x:Key="CatWeapon" Color="#E5634B" />
+        <SolidColorBrush x:Key="CatArmor" Color="#46D6F2" />
+        <SolidColorBrush x:Key="CatTool" Color="#7FD17A" />
+        <SolidColorBrush x:Key="CatModule" Color="#B98CF0" />
+        <SolidColorBrush x:Key="CatConsumable" Color="#5BD6B0" />
+        <SolidColorBrush x:Key="CatAmmo" Color="#F0C36A" />
+        <SolidColorBrush x:Key="CatBackpack" Color="#C8A06A" />
+        <SolidColorBrush x:Key="CatResource" Color="#8FA0B8" />
+        <SolidColorBrush x:Key="CatOther" Color="#6E7C90" />
+    </UserControl.Resources>
+
     <!-- Orbital Stash builder (master §8.6). DataContext = StashViewerViewModel. -->
     <Grid>
         <Grid.RowDefinitions>
@@ -52,43 +65,104 @@
             </Grid>
         </Border>
 
-        <!-- Items list -->
-        <Border Grid.Row="2" Style="{StaticResource GlassCard}" Padding="6" Margin="0,12,0,0">
+        <!-- Items grid (visual stash tiles, mirroring the orbital workshop layout) -->
+        <Border Grid.Row="2" Style="{StaticResource GlassCard}" Padding="8" Margin="0,12,0,0">
             <ListBox ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-                     Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                     Background="Transparent" BorderThickness="0"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="0" />
+                        <Setter Property="Padding" Value="0" />
+                        <Setter Property="Background" Value="Transparent" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Margin="6,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" CornerRadius="3" Padding="6,1" Margin="0,0,10,0" VerticalAlignment="Center"
-                                    Background="{StaticResource DataBackdropBrush}">
-                                <TextBlock Text="{Binding StackLabel}" Style="{StaticResource MonoText}"
-                                           Foreground="{StaticResource IonCoreBrush}" />
-                            </Border>
-                            <StackPanel Grid.Column="1" Margin="0,0,12,0">
-                                <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
-                                <TextBlock Text="{Binding DatabaseGuid}" Style="{StaticResource MonoText}" Margin="0,1,0,0" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                <TextBlock Text="{Binding DurabilityLabel}" FontSize="11" HorizontalAlignment="Right">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock" BasedOn="{StaticResource MonoText}">
+                        <Border Width="170" Height="90" Margin="4" CornerRadius="5"
+                                Background="{StaticResource DataBackdropBrush}" BorderThickness="1">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="BorderBrush" Value="{StaticResource GlassStrokeBrush}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                            <Setter Property="BorderBrush" Value="{StaticResource IonCoreBrush}" />
+                                            <Setter Property="BorderThickness" Value="2" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <!-- category accent -->
+                                <Border Grid.Column="0" CornerRadius="4,0,0,4">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="{StaticResource CatOther}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsDamaged}" Value="True">
-                                                    <Setter Property="Foreground" Value="{StaticResource AmberCoreBrush}" />
-                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Weapon"><Setter Property="Background" Value="{StaticResource CatWeapon}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Armor"><Setter Property="Background" Value="{StaticResource CatArmor}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Tool"><Setter Property="Background" Value="{StaticResource CatTool}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Module"><Setter Property="Background" Value="{StaticResource CatModule}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Consumable"><Setter Property="Background" Value="{StaticResource CatConsumable}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Ammo"><Setter Property="Background" Value="{StaticResource CatAmmo}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Backpack"><Setter Property="Background" Value="{StaticResource CatBackpack}" /></DataTrigger>
+                                                <DataTrigger Binding="{Binding Category}" Value="Resource"><Setter Property="Background" Value="{StaticResource CatResource}" /></DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBlock Text="{Binding ReferenceHint}" Foreground="{StaticResource AmberCoreBrush}"
-                                           FontSize="11" HorizontalAlignment="Right" Margin="0,1,0,0" />
-                            </StackPanel>
-                        </Grid>
+                                    </Border.Style>
+                                </Border>
+                                <Grid Grid.Column="1" Margin="9,6,8,6">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <!-- top: stack chip + referenced warning -->
+                                    <Grid Grid.Row="0">
+                                        <TextBlock Text="{Binding StackLabel}" Style="{StaticResource MonoText}"
+                                                   Foreground="{StaticResource IonCoreBrush}" HorizontalAlignment="Left" />
+                                        <TextBlock Text="⚠" Foreground="{StaticResource AmberCoreBrush}" FontSize="12"
+                                                   HorizontalAlignment="Right" ToolTip="Referenced by a loadout">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsReferenced}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                    <!-- name -->
+                                    <TextBlock Grid.Row="1" Text="{Binding Label}" Style="{StaticResource BodyText}"
+                                               FontSize="12" TextWrapping="Wrap" TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Top" Margin="0,3,0,0" />
+                                    <!-- durability -->
+                                    <TextBlock Grid.Row="2" Text="{Binding DurabilityLabel}" FontSize="10" TextTrimming="CharacterEllipsis">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource MonoText}">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsDamaged}" Value="True">
+                                                        <Setter Property="Foreground" Value="{StaticResource AmberCoreBrush}" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

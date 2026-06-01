@@ -24,6 +24,7 @@ public sealed class StashItemViewModel
         Durability = durability;
         MaxDurability = maxDurability;
         IsReferenced = isReferenced;
+        Category = Classify(RowName);
     }
 
     /// <summary>The item's <c>D_ItemsStatic</c> row key.</summary>
@@ -74,4 +75,55 @@ public sealed class StashItemViewModel
 
     /// <summary>A short reference hint for the list.</summary>
     public string ReferenceHint => IsReferenced ? "⚠ referenced by a loadout" : "";
+
+    /// <summary>A rough item category derived from the RowName (drives the tile accent colour).</summary>
+    public string Category { get; }
+
+    private static string Classify(string rowName)
+    {
+        bool Has(string token) => rowName.Contains(token, StringComparison.OrdinalIgnoreCase);
+
+        if (Has("Module"))
+        {
+            return "Module";
+        }
+
+        if (Has("Vaccine") || Has("Seed") || Has("Antibiotic") || Has("Antiparasitic") || Has("Antipoison"))
+        {
+            return "Consumable";
+        }
+
+        if (Has("Arrow") || Has("Bolt") || Has("Quiver"))
+        {
+            return "Ammo";
+        }
+
+        if (Has("Backpack"))
+        {
+            return "Backpack";
+        }
+
+        if (Has("Armor") || Has("Carbon") || Has("Envirosuit"))
+        {
+            return "Armor";
+        }
+
+        if (Has("Bow") || Has("Crossbow") || Has("Spear") || Has("Flame") || Has("Sword"))
+        {
+            return "Weapon";
+        }
+
+        if (Has("Pickaxe") || Has("Axe") || Has("Hammer") || Has("Sickle") || Has("Knife") ||
+            Has("Scanner") || Has("Fishfinder") || Has("Canteen") || Has("Oxygen") || Has("Saddle"))
+        {
+            return "Tool";
+        }
+
+        if (Has("Resource") || Has("Ore"))
+        {
+            return "Resource";
+        }
+
+        return "Other";
+    }
 }
