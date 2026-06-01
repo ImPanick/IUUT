@@ -95,9 +95,93 @@ public sealed class UeNode
     /// <summary>Parsed children (for containers); empty for <see cref="UeNodeKind.Leaf"/>.</summary>
     public List<UeNode> Children { get; } = new();
 
+    /// <summary>The parent node (null for roots). Used to propagate <see cref="Dirty"/> to ancestors on edit.</summary>
+    public UeNode? Parent { get; set; }
+
     /// <summary>An edited replacement for a <see cref="UeNodeKind.Leaf"/> value; <c>null</c> if unedited.</summary>
     public byte[]? ReplacementValue { get; set; }
 
+    /// <summary>
+    /// For a synthetic node not backed by the original buffer (e.g. a cloned slot inserted into an array),
+    /// its fully-formed bytes. When set, the node is emitted verbatim from these bytes.
+    /// </summary>
+    public byte[]? RawBytes { get; set; }
+
     /// <summary>Whether this node needs header re-emission (set on edit and propagated to ancestors).</summary>
     public bool Dirty { get; set; }
+
+    // --- StructArray inner-element tag fields (captured so the count/size preamble can be rebuilt on edit) ---
+
+    /// <summary>For a <see cref="UeNodeKind.StructArray"/>, the inner element tag's name.</summary>
+    public string? ArrayInnerName { get; set; }
+
+    /// <summary>For a <see cref="UeNodeKind.StructArray"/>, the inner element struct name.</summary>
+    public string? ArrayInnerStructName { get; set; }
+
+    /// <summary>For a <see cref="UeNodeKind.StructArray"/>, the inner element tag's 16-byte struct Guid.</summary>
+    public byte[]? ArrayInnerGuid { get; set; }
+
+    /// <summary>For a <see cref="UeNodeKind.StructArray"/>, the inner element tag's <c>HasGuid</c> byte.</summary>
+    public byte ArrayInnerHasGuid { get; set; }
+
+    /// <summary>For a <see cref="UeNodeKind.StructArray"/>, the inner element tag's array index.</summary>
+    public int ArrayInnerArrayIndex { get; set; }
+
+    /// <summary>Marks this node and all its ancestors dirty so their headers/sizes are recomputed on serialize.</summary>
+    public void MarkDirty()
+    {
+        for (var n = this; n is not null; n = n.Parent)
+        {
+            n.Dirty = true;
+        }
+    }
+
+    /// <summary>
+    /// Deep-copies this node and its descendants (sharing the owning blob's byte buffer via the same
+    /// offsets, so unedited parts still reconstruct from the original bytes). Used to duplicate an
+    /// inventory slot before patching it. <see cref="Parent"/> is left null for the clone root.
+    /// </summary>
+    public UeNode DeepClone()
+    {
+        var clone = new UeNode
+        {
+            Name = Name,
+            Type = Type,
+            ArrayIndex = ArrayIndex,
+            StructName = StructName,
+            StructGuid = StructGuid?.ToArray(),
+            InnerType = InnerType,
+            EnumName = EnumName,
+            BoolValue = BoolValue,
+            MapKeyType = MapKeyType,
+            MapValueType = MapValueType,
+            SetElementType = SetElementType,
+            HasGuid = HasGuid,
+            PropertyGuid = PropertyGuid?.ToArray(),
+            Kind = Kind,
+            TagStart = TagStart,
+            TagEnd = TagEnd,
+            ValueStart = ValueStart,
+            ContentStart = ContentStart,
+            ContentEnd = ContentEnd,
+            ValueEnd = ValueEnd,
+            ReplacementValue = ReplacementValue?.ToArray(),
+            RawBytes = RawBytes?.ToArray(),
+            Dirty = Dirty,
+            ArrayInnerName = ArrayInnerName,
+            ArrayInnerStructName = ArrayInnerStructName,
+            ArrayInnerGuid = ArrayInnerGuid?.ToArray(),
+            ArrayInnerHasGuid = ArrayInnerHasGuid,
+            ArrayInnerArrayIndex = ArrayInnerArrayIndex,
+        };
+
+        foreach (var child in Children)
+        {
+            var childClone = child.DeepClone();
+            childClone.Parent = clone;
+            clone.Children.Add(childClone);
+        }
+
+        return clone;
+    }
 }

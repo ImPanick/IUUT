@@ -153,6 +153,12 @@ dotnet_diagnostic.CA1822.severity = none
 [src/IUUT.Core/GameTuning/*.cs]
 dotnet_diagnostic.CA1822.severity = none
 
+# ---------- IUUT.Core prospect world-blob editor ----------
+# Same DI-service rationale: the prospect world reader/editor (ProspectWorldReader, ProspectWorldEditor)
+# are instances bound to a parsed blob even when an individual mutator only touches the passed-in node.
+[src/IUUT.Core/Prospects/World/*.cs]
+dotnet_diagnostic.CA1822.severity = none
+
 # ---------- Save-file fixtures (game uses tabs + CRLF; we store LF in repo per .gitattributes) ----------
 [fixtures/**/*.json]
 indent_style = tab

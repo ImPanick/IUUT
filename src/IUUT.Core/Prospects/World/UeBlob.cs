@@ -44,7 +44,21 @@ public sealed class UeBlob
         ArgumentNullException.ThrowIfNull(data);
         var pos = 0;
         var roots = ParseList(data, ref pos, data.Length, 0);
+        foreach (var root in roots)
+        {
+            SetParents(root);
+        }
+
         return new UeBlob(data, roots, pos);
+    }
+
+    private static void SetParents(UeNode node)
+    {
+        foreach (var child in node.Children)
+        {
+            child.Parent = node;
+            SetParents(child);
+        }
     }
 
     /// <summary>
@@ -67,9 +81,14 @@ public sealed class UeBlob
 
     private byte[] EmitNode(UeNode node, bool force)
     {
+        if (node.RawBytes is not null)
+        {
+            return node.RawBytes; // synthetic node (e.g. a freshly built element): emit verbatim
+        }
+
         if (node.Kind == UeNodeKind.StructElement)
         {
-            return EmitValue(node, force); // synthetic: a property list, no header of its own
+            return EmitValue(node, force); // synthetic framing: a property list, no header of its own
         }
 
         if (!node.Dirty && !force)
@@ -93,15 +112,67 @@ public sealed class UeBlob
             return node.ReplacementValue ?? Slice(node.ValueStart, node.ValueEnd);
         }
 
-        using var ms = new MemoryStream();
-        ms.Write(Data, node.ValueStart, node.ContentStart - node.ValueStart); // preamble (count / inner tag)
+        using var body = new MemoryStream();
         foreach (var child in node.Children)
         {
             var bytes = EmitNode(child, force);
-            ms.Write(bytes, 0, bytes.Length);
+            body.Write(bytes, 0, bytes.Length);
         }
 
-        ms.Write(Data, node.ContentEnd, node.ValueEnd - node.ContentEnd); // tail (None terminator / padding)
+        var bodyBytes = body.ToArray();
+        var tail = Slice(node.ContentEnd, node.ValueEnd); // None terminator / padding
+
+        using var ms = new MemoryStream();
+        switch (node.Kind)
+        {
+            case UeNodeKind.StructArray:
+                // value = count + inner tag (preamble) + elements + tail. Rebuild the preamble when dirty
+                // so the element count and inner-tag total-size track edits.
+                var preamble = node.Dirty
+                    ? BuildArrayPreamble(node, bodyBytes.Length)
+                    : Slice(node.ValueStart, node.ContentStart);
+                ms.Write(preamble, 0, preamble.Length);
+                ms.Write(bodyBytes, 0, bodyBytes.Length);
+                ms.Write(tail, 0, tail.Length);
+                break;
+
+            case UeNodeKind.ByteStream:
+                // value = int32(byteCount) + content; content = elements + tail (the nested None).
+                var contentLength = bodyBytes.Length + tail.Length;
+                if (node.Dirty)
+                {
+                    WriteInt32(ms, contentLength);
+                }
+                else
+                {
+                    ms.Write(Data, node.ValueStart, node.ContentStart - node.ValueStart);
+                }
+
+                ms.Write(bodyBytes, 0, bodyBytes.Length);
+                ms.Write(tail, 0, tail.Length);
+                break;
+
+            default: // Struct / StructElement — preamble is empty
+                ms.Write(Data, node.ValueStart, node.ContentStart - node.ValueStart);
+                ms.Write(bodyBytes, 0, bodyBytes.Length);
+                ms.Write(tail, 0, tail.Length);
+                break;
+        }
+
+        return ms.ToArray();
+    }
+
+    private static byte[] BuildArrayPreamble(UeNode node, int totalElementSize)
+    {
+        using var ms = new MemoryStream();
+        WriteInt32(ms, node.Children.Count);
+        WriteFString(ms, node.ArrayInnerName ?? node.Name);
+        WriteFString(ms, "StructProperty");
+        WriteInt32(ms, totalElementSize);
+        WriteInt32(ms, node.ArrayInnerArrayIndex);
+        WriteFString(ms, node.ArrayInnerStructName ?? "");
+        ms.Write(node.ArrayInnerGuid ?? new byte[16], 0, 16);
+        ms.WriteByte(node.ArrayInnerHasGuid);
         return ms.ToArray();
     }
 
@@ -287,20 +358,27 @@ public sealed class UeBlob
         var count = BitConverter.ToInt32(d, cp);
         cp += 4;
         // Inner element tag: Name, Type(StructProperty), Size, ArrayIndex, StructName, Guid(16), HasGuid.
-        UePropertyReader.ReadFString(d, ref cp);
+        var innerName = UePropertyReader.ReadFString(d, ref cp);
         var innerType = UePropertyReader.ReadFString(d, ref cp);
         if (count < 0 || count > 2_000_000 || !string.Equals(innerType, "StructProperty", StringComparison.Ordinal) || cp + 8 > node.ValueEnd)
         {
             return; // not a struct array we can frame — leave as leaf
         }
 
-        cp += 4; // total element-data size
-        cp += 4; // array index
-        UePropertyReader.ReadFString(d, ref cp); // element struct name
-        cp += 16; // struct Guid
-        cp += 1; // HasGuid
+        cp += 4; // total element-data size (rebuilt from element bytes on edit)
+        var innerArrayIndex = BitConverter.ToInt32(d, cp);
+        cp += 4;
+        var innerStructName = UePropertyReader.ReadFString(d, ref cp);
+        var innerGuid = ReadBytes(d, ref cp, 16);
+        var innerHasGuid = cp < node.ValueEnd ? d[cp] : (byte)0;
+        cp += 1;
 
         node.Kind = UeNodeKind.StructArray;
+        node.ArrayInnerName = innerName;
+        node.ArrayInnerStructName = innerStructName;
+        node.ArrayInnerGuid = innerGuid;
+        node.ArrayInnerHasGuid = innerHasGuid;
+        node.ArrayInnerArrayIndex = innerArrayIndex;
         node.ContentStart = cp;
         for (var i = 0; i < count && cp < node.ValueEnd; i++)
         {

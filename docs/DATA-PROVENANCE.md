@@ -127,11 +127,21 @@ ItemOwnerLookupId: IntProperty, DynamicData: ArrayProperty<InventorySlotDynamicD
 And `Hash` = **`SHA1(uncompressed)`** (verified — `ProspectBlobCodec` already re-stamps it), so the write
 path does **not** need byte-identical recompression.
 
-**Read path implemented (spike, read-only).** `IUUT.Core.Prospects.World` —
-`UePropertyReader` (defensive recursive tagged-property reader; recurses structs, struct-arrays, and
-`BinaryData` byte-streams; skips UE native structs via the tag `Size`) + `ProspectWorldReader`
-(→ `ProspectWorldReport`: actor/inventory/slot counts + every item with friendly names). Validated
-against real prospects (a 17 MB / 2768-actor world parses in ~75 ms, surfacing 885 items / 286 types).
-**No write path exists yet** — that's the remaining (riskier) half.
+**Read + write path implemented + validated.** `IUUT.Core.Prospects.World`:
+- `UePropertyReader` / `ProspectWorldReader` — read-only inspection (→ `ProspectWorldReport`:
+  actor/inventory/slot counts + every item with friendly names). 17 MB / 2768-actor world in ~75 ms.
+- `UeBlob` / `UeNode` — full-fidelity, write-capable parse. `Serialize(forceReconstruct: true)` is the
+  **lossless round-trip gate** (rebuilds every header from parsed fields); verified byte-identical
+  against all real prospect worlds (18 KB .. 17 MB). Edits mark nodes `Dirty`; only the touched path is
+  re-emitted, recomputing every length prefix (slot-array count + inner-tag size, recorder `BinaryData`
+  byte count, all ancestor struct/array sizes) while clean nodes copy original bytes.
+- `ProspectWorldEditor` — `RemoveSlot` / `DuplicateSlot` (optionally retyped) / `RetypeSlot`. Then
+  `ProspectBlobCodec.SetUncompressed` recompresses + re-stamps the SHA-1.
+
+Validated end-to-end on real prospects (scratch): edit → re-serialize → recompress → `VerifyHash` passes,
+and the edited stream force-reconstructs to itself (every recomputed prefix consistent). **Remaining:**
+precise stack/durability editing (the `DynamicData → InventorySlotDynamicData` indexed values — not yet
+decoded), file-level save wiring, the "return trapped items → orbital stash" flow, UI, and in-game
+human validation (WP-15). Add-new-item is done via clone-and-retype (guarantees all required fields).
 - A **~45 GB set of 32 `.pak` files** is the full cooked content (textures/meshes/etc.) — not needed
   for save editing; the small `data.pak` + the mirror cover the DataTables.
