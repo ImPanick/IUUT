@@ -1,34 +1,14 @@
 {
-  "catalogVersion": "2026-02-mendel",
+  "catalogVersion": "datapak-live-2026-05-31",
   "dataTable": "D_BestiaryData",
-  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
-      "rowName": "Alpha_Wolf_Boss",
+      "rowName": "Forest_Wolf",
       "displayName": null
     },
     {
-      "rowName": "Arctic_Bat",
-      "displayName": null
-    },
-    {
-      "rowName": "Arctic_Moa",
-      "displayName": null
-    },
-    {
-      "rowName": "Arctic_Scorpion",
-      "displayName": null
-    },
-    {
-      "rowName": "Baby_Deer",
-      "displayName": null
-    },
-    {
-      "rowName": "BatDog",
-      "displayName": null
-    },
-    {
-      "rowName": "Bear",
+      "rowName": "Snow_Wolf",
       "displayName": null
     },
     {
@@ -36,23 +16,7 @@
       "displayName": null
     },
     {
-      "rowName": "Bee",
-      "displayName": null
-    },
-    {
-      "rowName": "Blueback",
-      "displayName": null
-    },
-    {
-      "rowName": "Buffalo",
-      "displayName": null
-    },
-    {
-      "rowName": "Cattle",
-      "displayName": null
-    },
-    {
-      "rowName": "Caveworm",
+      "rowName": "Bear",
       "displayName": null
     },
     {
@@ -60,55 +24,19 @@
       "displayName": null
     },
     {
-      "rowName": "Chamios_Variant",
-      "displayName": null
-    },
-    {
-      "rowName": "Chew",
-      "displayName": null
-    },
-    {
-      "rowName": "Cougar",
-      "displayName": null
-    },
-    {
-      "rowName": "Crocodile",
-      "displayName": null
-    },
-    {
-      "rowName": "Deer_Variant",
-      "displayName": null
-    },
-    {
-      "rowName": "Desert_Deer",
-      "displayName": null
-    },
-    {
-      "rowName": "Desert_Scorpion",
-      "displayName": null
-    },
-    {
-      "rowName": "Desert_Striker",
-      "displayName": null
-    },
-    {
-      "rowName": "Desert_Wolf",
-      "displayName": null
-    },
-    {
-      "rowName": "Dog",
-      "displayName": null
-    },
-    {
-      "rowName": "Drone",
-      "displayName": null
-    },
-    {
       "rowName": "Elephant",
       "displayName": null
     },
     {
-      "rowName": "Flightless_Tank",
+      "rowName": "Polar_Bear_Cub",
+      "displayName": null
+    },
+    {
+      "rowName": "Polar_Bear",
+      "displayName": null
+    },
+    {
+      "rowName": "Baby_Deer",
       "displayName": null
     },
     {
@@ -116,27 +44,15 @@
       "displayName": null
     },
     {
-      "rowName": "Forest_Wolf",
+      "rowName": "Desert_Deer",
       "displayName": null
     },
     {
-      "rowName": "Gas_Flyer",
+      "rowName": "Cougar",
       "displayName": null
     },
     {
-      "rowName": "GhostCrocodile",
-      "displayName": null
-    },
-    {
-      "rowName": "Horse",
-      "displayName": null
-    },
-    {
-      "rowName": "Horse_Standard",
-      "displayName": null
-    },
-    {
-      "rowName": "IceMammoth_WorldSpawn",
+      "rowName": "Mammoth",
       "displayName": null
     },
     {
@@ -144,11 +60,39 @@
       "displayName": null
     },
     {
+      "rowName": "Pronghorn",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Leopard",
+      "displayName": null
+    },
+    {
+      "rowName": "Rabbit",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Wolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Buffalo",
+      "displayName": null
+    },
+    {
+      "rowName": "Wild_Boar",
+      "displayName": null
+    },
+    {
+      "rowName": "Zebra",
+      "displayName": null
+    },
+    {
       "rowName": "Kea",
       "displayName": null
     },
     {
-      "rowName": "Kiwi",
+      "rowName": "Crocodile",
       "displayName": null
     },
     {
@@ -156,7 +100,79 @@
       "displayName": null
     },
     {
+      "rowName": "Desert_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Arctic_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Caveworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Teenage_Caveworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Moa",
+      "displayName": null
+    },
+    {
+      "rowName": "Alpha_Wolf_Boss",
+      "displayName": null
+    },
+    {
       "rowName": "Landshark_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Scorpion_Boss",
+      "displayName": null
+    },
+    {
+      "rowName": "Sandworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Rockdog",
+      "displayName": null
+    },
+    {
+      "rowName": "BatDog",
+      "displayName": null
+    },
+    {
+      "rowName": "Needler",
+      "displayName": null
+    },
+    {
+      "rowName": "Predator_Bird",
+      "displayName": null
+    },
+    {
+      "rowName": "Gas_Flyer",
+      "displayName": null
+    },
+    {
+      "rowName": "Deer_Variant",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Quadruped",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Bird",
+      "displayName": null
+    },
+    {
+      "rowName": "Chamios_Variant",
+      "displayName": null
+    },
+    {
+      "rowName": "Blueback",
       "displayName": null
     },
     {
@@ -164,11 +180,35 @@
       "displayName": null
     },
     {
-      "rowName": "Lava_Hunter",
+      "rowName": "Snow_Striker",
+      "displayName": null
+    },
+    {
+      "rowName": "Desert_Striker",
+      "displayName": null
+    },
+    {
+      "rowName": "Spider",
+      "displayName": null
+    },
+    {
+      "rowName": "Wooly_Zebra",
+      "displayName": null
+    },
+    {
+      "rowName": "Roat",
       "displayName": null
     },
     {
       "rowName": "Lava_Hunter_Spawns",
+      "displayName": null
+    },
+    {
+      "rowName": "Swamp_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Hunter",
       "displayName": null
     },
     {
@@ -180,119 +220,11 @@
       "displayName": null
     },
     {
-      "rowName": "Mammoth",
-      "displayName": null
-    },
-    {
-      "rowName": "MiniHippo",
-      "displayName": null
-    },
-    {
-      "rowName": "Moa",
-      "displayName": null
-    },
-    {
-      "rowName": "Needler",
-      "displayName": null
-    },
-    {
-      "rowName": "Orka",
-      "displayName": null
-    },
-    {
-      "rowName": "Polar_Bear",
-      "displayName": null
-    },
-    {
-      "rowName": "Polar_Bear_Cub",
-      "displayName": null
-    },
-    {
-      "rowName": "Predator_Bird",
-      "displayName": null
-    },
-    {
-      "rowName": "Pronghorn",
-      "displayName": null
-    },
-    {
-      "rowName": "Rabbit",
-      "displayName": null
-    },
-    {
       "rowName": "Rabbit_Variant",
       "displayName": null
     },
     {
-      "rowName": "Raptor_Desert",
-      "displayName": null
-    },
-    {
-      "rowName": "Roat",
-      "displayName": null
-    },
-    {
-      "rowName": "RockDog",
-      "displayName": null
-    },
-    {
-      "rowName": "Sandworm",
-      "displayName": null
-    },
-    {
-      "rowName": "Scorpion_Boss",
-      "displayName": null
-    },
-    {
-      "rowName": "Slinker",
-      "displayName": null
-    },
-    {
-      "rowName": "Snow_Leopard",
-      "displayName": null
-    },
-    {
-      "rowName": "Snow_Slug",
-      "displayName": null
-    },
-    {
-      "rowName": "Snow_Striker",
-      "displayName": null
-    },
-    {
-      "rowName": "Snow_Wolf",
-      "displayName": null
-    },
-    {
-      "rowName": "Spider",
-      "displayName": null
-    },
-    {
-      "rowName": "Storca",
-      "displayName": null
-    },
-    {
-      "rowName": "Swamp_Bird",
-      "displayName": null
-    },
-    {
-      "rowName": "Swamp_Quadruped",
-      "displayName": null
-    },
-    {
-      "rowName": "Swamp_Slug",
-      "displayName": null
-    },
-    {
-      "rowName": "Teenage_Caveworm",
-      "displayName": null
-    },
-    {
-      "rowName": "Tundra_Deer",
-      "displayName": null
-    },
-    {
-      "rowName": "Tundra_Monkey",
+      "rowName": "Horse",
       "displayName": null
     },
     {
@@ -300,11 +232,171 @@
       "displayName": null
     },
     {
-      "rowName": "Wild_Boar",
+      "rowName": "Arctic_Bat",
       "displayName": null
     },
     {
-      "rowName": "Wooly_Zebra",
+      "rowName": "Bee",
+      "displayName": null
+    },
+    {
+      "rowName": "Hammerhead_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "MiniHippo",
+      "displayName": null
+    },
+    {
+      "rowName": "Sheep",
+      "displayName": null
+    },
+    {
+      "rowName": "Chicken",
+      "displayName": null
+    },
+    {
+      "rowName": "Kiwi",
+      "displayName": null
+    },
+    {
+      "rowName": "Ape",
+      "displayName": null
+    },
+    {
+      "rowName": "Ape_Juvenile",
+      "displayName": null
+    },
+    {
+      "rowName": "Cat",
+      "displayName": null
+    },
+    {
+      "rowName": "Dog",
+      "displayName": null
+    },
+    {
+      "rowName": "Horse_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Arctic_Moa",
+      "displayName": null
+    },
+    {
+      "rowName": "Cattle",
+      "displayName": null
+    },
+    {
+      "rowName": "RockGolem",
+      "displayName": null
+    },
+    {
+      "rowName": "RockGolem_Juvenile",
+      "displayName": null
+    },
+    {
+      "rowName": "IceMammoth",
+      "displayName": null
+    },
+    {
+      "rowName": "IceMammoth_WorldSpawn",
+      "displayName": null
+    },
+    {
+      "rowName": "Snow_Slug",
+      "displayName": null
+    },
+    {
+      "rowName": "Mange_Wolf",
+      "displayName": null
+    },
+    {
+      "rowName": "GhostCrocodile",
+      "displayName": null
+    },
+    {
+      "rowName": "Reaver",
+      "displayName": null
+    },
+    {
+      "rowName": "Drone",
+      "displayName": null
+    },
+    {
+      "rowName": "Orka",
+      "displayName": null
+    },
+    {
+      "rowName": "Bounder_Desert",
+      "displayName": null
+    },
+    {
+      "rowName": "Tundra_Deer",
+      "displayName": null
+    },
+    {
+      "rowName": "Hopping_Creature",
+      "displayName": null
+    },
+    {
+      "rowName": "SulfurWorm",
+      "displayName": null
+    },
+    {
+      "rowName": "Slinker",
+      "displayName": null
+    },
+    {
+      "rowName": "Raptor",
+      "displayName": null
+    },
+    {
+      "rowName": "Irradiated_Prospector",
+      "displayName": null
+    },
+    {
+      "rowName": "Chew",
+      "displayName": null
+    },
+    {
+      "rowName": "Hopping_Creature_Swamp",
+      "displayName": null
+    },
+    {
+      "rowName": "Raptor_Desert",
+      "displayName": null
+    },
+    {
+      "rowName": "Stomper",
+      "displayName": null
+    },
+    {
+      "rowName": "Storca",
+      "displayName": null
+    },
+    {
+      "rowName": "Giant_Roach",
+      "displayName": null
+    },
+    {
+      "rowName": "DragonFly",
+      "displayName": null
+    },
+    {
+      "rowName": "Flying_Tank",
+      "displayName": null
+    },
+    {
+      "rowName": "Flightless_Tank",
+      "displayName": null
+    },
+    {
+      "rowName": "Sandwyrm_Queen",
+      "displayName": null
+    },
+    {
+      "rowName": "Geothermal_Bat",
       "displayName": null
     },
     {
@@ -312,7 +404,31 @@
       "displayName": null
     },
     {
-      "rowName": "Zebra",
+      "rowName": "Irradiated_Abomination",
+      "displayName": null
+    },
+    {
+      "rowName": "SandScuttler",
+      "displayName": null
+    },
+    {
+      "rowName": "Tundra_Monkey",
+      "displayName": null
+    },
+    {
+      "rowName": "FleshSac_Floater",
+      "displayName": null
+    },
+    {
+      "rowName": "Irradiated_Mutation",
+      "displayName": null
+    },
+    {
+      "rowName": "Geothermal_Spider",
+      "displayName": null
+    },
+    {
+      "rowName": "Pig",
       "displayName": null
     }
   ]

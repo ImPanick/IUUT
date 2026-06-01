@@ -11,14 +11,14 @@
 
 | File | Game table | Key → value | Loader | Notes |
 | --- | --- | --- | --- | --- |
-| `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | Character talents + the 456 `Workshop_*`/`Prospect_*` unlock rows. Display names mostly null → humanized. |
-| `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Workshop/orbital items only — `Item.Meta.*`-tagged rows (377, dev/test excluded).** The Stash "Add item" picker. The orbital stash REJECTS non-Meta items (raw resources, building pieces), so they're filtered out; every blueprint-crafted Meta item is included. 90 curated names; the rest humanize. |
-| `accolades.json` | `D_Accolades` | `rowName` → `displayName` | `CatalogLoader` | 446 rows (complete). |
-| `bestiary.json` | `D_BestiaryData` | `rowName` → `displayName` | `CatalogLoader` | 78 creature groups. |
-| `metaresources.json` | `D_MetaResources` | `rowName` → `displayName` | `CatalogLoader` | 7 currencies. |
-| `accountflags.json` | `D_AccountFlags` | **array index = flag id** → name | `FlagCatalogLoader` | Backs `Profile.json` `UnlockedFlags`. **86-row Week-149 snapshot** — a maxed save already has ids 86/93 beyond it (re-mine to label). |
-| `characterflags.json` | `D_CharacterFlags` | **array index = flag id** → name | `FlagCatalogLoader` | Backs `flags_<SteamID>.dat`. 40 rows. id 27 = `Mission_Olympus_Unlock` for the current shipped version (matches the reference save). |
-| `missions.json` | `D_Talents` (`Prospect_*` rows) | `rowName` → `{tree, requires[], defaultUnlocked}` | `MissionCatalogLoader` | The **mission prerequisite DAG**. 145 missions, 140 with prereqs, 5 region trees. |
+| `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | **2188 rows (live data.pak, 2026-05-31; was 1523).** All `Workshop_*`/`Prospect_*` unlocks. Display names null → humanized. |
+| `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Workshop/orbital items only — `Item.Meta.*`-tagged rows (378, live; dev/test excluded).** The Stash "Add item" picker. The orbital stash REJECTS non-Meta items (raw resources, building pieces). 90 curated names preserved; the rest humanize. |
+| `accolades.json` | `D_Accolades` | `rowName` → `displayName` | `CatalogLoader` | **447 rows (live), all with the game's own `DisplayName`** (NSLOCTEXT, e.g. `DefeatGarganutan` → "Gone Bananas"). |
+| `bestiary.json` | `D_BestiaryData` | `rowName` → `displayName` | `CatalogLoader` | **107 creature groups (live; was 78).** |
+| `metaresources.json` | `D_MetaResources` | `rowName` → `displayName` | `CatalogLoader` | 7 currencies. **Save-derived (kept); the data.pak `MetaCurrency` table is a different row set.** |
+| `accountflags.json` | `D_AccountFlags` | **array index = flag id** → name | `FlagCatalogLoader` | Backs `Profile.json` `UnlockedFlags`. **100-row live snapshot (was 86); indices verified stable** (id 8 = `GrantedTalent_Olympus_Nightfall`, id 9 = `GrantedTalent_Styx_Ironclad`). |
+| `characterflags.json` | `D_CharacterFlags` | **array index = flag id** → name | `FlagCatalogLoader` | Backs `flags_<SteamID>.dat`. **45 rows (live; was 40).** id 27 = `Mission_Olympus_Unlock` (stable). |
+| `missions.json` | `D_Talents` (`Prospect_*` rows) | `rowName` → `{tree, requires[], defaultUnlocked}` | `MissionCatalogLoader` | The **mission prerequisite DAG**. 145 missions, 5 region trees (live data.pak). |
 
 ## How "mission completion" is stored (the important one)
 

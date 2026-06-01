@@ -1,142 +1,10 @@
 {
-  "catalogVersion": "icarusdata-master-2026-05",
+  "catalogVersion": "datapak-live-2026-05-31",
   "dataTable": "D_ItemsStatic",
-  "source": "Workshop/orbital items only: D_ItemsStatic rows tagged Item.Meta.* (the items the orbital Workshop crafts + that the MetaInventory legitimately holds). The game rejects non-Meta items (raw resources, building pieces) in the orbital stash, so they are excluded. From github.com/GODOFMINECRAFT4/IcarusData; 90 curated display names preserved, the rest humanize. Re-mine per game version (docs/DATA-PROVENANCE.md).",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
-      "rowName": "AlphaWolf_Attachment_Melee",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_AssaultRifle_Round_Workshop",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_AssaultRifle_Round_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Pistol_Round_Workshop",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Pistol_Round_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Rifle_Round_Workshop",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Rifle_Round_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Shell_Workshop",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Shell_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Explosive",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Explosive_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Illumination",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Incendiary",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Incendiary_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Ammo_Sniper_Round_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "AntiRadiation_Injection",
-      "displayName": null
-    },
-    {
-      "rowName": "Ape_Attachment",
-      "displayName": null
-    },
-    {
-      "rowName": "Basic_Bandolier",
-      "displayName": null
-    },
-    {
-      "rowName": "Basic_Quiver",
-      "displayName": "Archer's Backpack"
-    },
-    {
-      "rowName": "Biofuel_Can_Meta",
-      "displayName": null
-    },
-    {
-      "rowName": "Biomass",
-      "displayName": null
-    },
-    {
-      "rowName": "Bulky_Armor_Arms",
-      "displayName": null
-    },
-    {
-      "rowName": "Bulky_Armor_Chest",
-      "displayName": null
-    },
-    {
-      "rowName": "Bulky_Armor_Feet",
-      "displayName": null
-    },
-    {
-      "rowName": "Bulky_Armor_Head",
-      "displayName": null
-    },
-    {
-      "rowName": "Bulky_Armor_Legs",
-      "displayName": null
-    },
-    {
-      "rowName": "Carbon_Arms",
-      "displayName": null
-    },
-    {
-      "rowName": "Carbon_Chest",
-      "displayName": null
-    },
-    {
-      "rowName": "Carbon_Feet",
-      "displayName": null
-    },
-    {
-      "rowName": "Carbon_Head",
-      "displayName": null
-    },
-    {
-      "rowName": "Carbon_Legs",
-      "displayName": null
-    },
-    {
-      "rowName": "Chefs_Backpack",
-      "displayName": null
-    },
-    {
-      "rowName": "Dropship_Grenade_Workshop",
+      "rowName": "MetaResource",
       "displayName": null
     },
     {
@@ -144,36 +12,36 @@
       "displayName": null
     },
     {
-      "rowName": "Envirosuit_Deluxe",
-      "displayName": null
-    },
-    {
-      "rowName": "Envirosuit_Inaris_Alpha",
-      "displayName": "Inaris \"Lua\" Envirosuit"
-    },
-    {
-      "rowName": "Envirosuit_Larkwell_Alpha",
-      "displayName": "Larkwell \"Haulier\" Envirosuit"
-    },
-    {
-      "rowName": "Envirosuit_Larkwell_Bravo",
-      "displayName": "Larkwell \"Bulwark\" Envirosuit"
-    },
-    {
-      "rowName": "Envirosuit_Larkwell_White",
-      "displayName": null
-    },
-    {
       "rowName": "Envirosuit_Sand",
       "displayName": null
     },
     {
+      "rowName": "Envirosuit_Deluxe",
+      "displayName": null
+    },
+    {
       "rowName": "Envirosuit_Shengong",
-      "displayName": "Shengong \"Bihu\" Envirosuit"
+      "displayName": "Shengong \u0022Bihu\u0022 Envirosuit"
     },
     {
       "rowName": "Envirosuit_Shengong_2",
-      "displayName": "Shengong \"Dongtian\" Envirosuit"
+      "displayName": "Shengong \u0022Dongtian\u0022 Envirosuit"
+    },
+    {
+      "rowName": "Meta_Axe",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife",
+      "displayName": null
+    },
+    {
+      "rowName": "Module_Player_Tracker",
+      "displayName": null
     },
     {
       "rowName": "Envirosuit_Tier2",
@@ -200,139 +68,251 @@
       "displayName": null
     },
     {
-      "rowName": "Exotic_Red",
+      "rowName": "Carbon_Chest",
       "displayName": null
     },
     {
-      "rowName": "Explorers_Backpack",
-      "displayName": "Explorer Backpack"
-    },
-    {
-      "rowName": "Extractor_Meta",
+      "rowName": "Carbon_Arms",
       "displayName": null
     },
     {
-      "rowName": "Farmers_Backpack",
+      "rowName": "Carbon_Legs",
       "displayName": null
     },
     {
-      "rowName": "Farming_CropPlot_Workshop",
+      "rowName": "Carbon_Feet",
       "displayName": null
     },
     {
-      "rowName": "Frozen_Kiwi",
+      "rowName": "Carbon_Head",
       "displayName": null
     },
     {
-      "rowName": "Hunters_Backpack",
-      "displayName": "Xenon Backpack"
-    },
-    {
-      "rowName": "IceMammoth_Attachment_Melee",
+      "rowName": "Meta_Ration",
       "displayName": null
     },
     {
-      "rowName": "Larkwell_Armor_Alpha_Arms",
-      "displayName": "Larkwell Martinez Tachyon Arm Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Alpha_Chest",
-      "displayName": "Larkwell Martinez Tachyon Chest Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Alpha_Feet",
-      "displayName": "Larkwell Martinez Tachyon Feet Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Alpha_Head",
-      "displayName": "Larkwell Martinez Tachyon Head Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Alpha_Legs",
-      "displayName": "Larkwell Martinez Tachyon Legs Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Black_Arms",
-      "displayName": "LM Beastmaster Arm Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Black_Chest",
-      "displayName": "LM Beastmaster Chest Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Black_Feet",
-      "displayName": "LM Beastmaster Feet Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Black_Head",
-      "displayName": "LM Beastmaster Head Armor"
-    },
-    {
-      "rowName": "Larkwell_Armor_Black_Legs",
-      "displayName": "LM Beastmaster Leg Armor"
-    },
-    {
-      "rowName": "Lava_Hunter_Attachment",
+      "rowName": "Meta_Super_Ration",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Ape_Club",
+      "rowName": "Meta_Soda",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Black_Wolf_Revolver",
+      "rowName": "Meta_Oxygen_Gel",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Bow",
+      "rowName": "Meta_Stamina_Gel",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_GolemGauntlet",
+      "rowName": "Meta_Module_PlayerTracker",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer",
+      "rowName": "Meta_Module_Movement",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer_Ammo",
+      "rowName": "Meta_Module_Carry_Weight",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_LavaHunter_FlameThrower",
-      "displayName": "Heavy Flamethrower"
-    },
-    {
-      "rowName": "LegendaryWeapon_Sandworm_Crossbow",
+      "rowName": "Meta_Module_Poison_Resistance",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Sandwyrm_Chainsaw",
+      "rowName": "Meta_Module_Fire_Resistance",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Scorpion_Rifle",
+      "rowName": "Meta_Module_Inventory_Slots",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_SlugLauncher",
+      "rowName": "Meta_Module_Inventory_Slots_2",
       "displayName": null
     },
     {
-      "rowName": "LegendaryWeapon_Sniper",
+      "rowName": "Meta_Module_Consumption",
+      "displayName": "DoseUp Module"
+    },
+    {
+      "rowName": "Meta_Module_Fall_Damage",
+      "displayName": "KickFall Module"
+    },
+    {
+      "rowName": "Meta_Axe_Shengong_Alpha",
       "displayName": null
     },
     {
-      "rowName": "Licence",
+      "rowName": "Meta_Axe_Shengong_Beta",
       "displayName": null
     },
     {
-      "rowName": "Medic_Backpack",
-      "displayName": "Biomore Backpack"
+      "rowName": "Meta_Axe_Shengong_Charlie",
+      "displayName": null
     },
     {
-      "rowName": "Meta_Agave_Seed",
+      "rowName": "Meta_Axe_Shengong_Echo",
+      "displayName": "Shengong CY7 Axe"
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Shengong_Echo",
+      "displayName": "Shengong UT5 Pickaxe"
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Shengong_Echo",
+      "displayName": "Shengong DL7 Knife"
+    },
+    {
+      "rowName": "Meta_Spear_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Shengong_Echo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Hammer_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Hammer_Shengong_Beta",
+      "displayName": "Shengong \u0022Akira\u0022 Hammer"
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bow_Shengong_Echo",
+      "displayName": "Shengong CZ4 Bow"
+    },
+    {
+      "rowName": "Meta_Arrow_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Canteen_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bandage_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Oxygen_Tank_Shengong",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Knife_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Pickaxe_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Spear_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Firewhacker_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Printed_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Printed_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Printed_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Printed_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Printed_Beta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Printed_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Cot_Printed",
       "displayName": null
     },
     {
@@ -372,206 +352,6 @@
       "displayName": "Anti-poison Vaccine III"
     },
     {
-      "rowName": "Meta_Arrow_Inaris_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Bravo",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Set_Bravo",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Set_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Inaris_Set_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Larkwell_Ballistic",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Larkwell_Bleed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Larkwell_Standard",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Larkwell_Tazer",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Printed_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Printed_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Printed_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Inaris_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Larkwell_Ballistic",
-      "displayName": "Larkwell Ballistic Arrow Bundle"
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Larkwell_Bleed",
-      "displayName": "Larkwell Bleed Arrow Bundle"
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Larkwell_Standard",
-      "displayName": "Larkwell Arrow Bundle"
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Larkwell_Tazer",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Printed_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Printed_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Printed_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Set_Shengong",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Arrow_Shengong",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Avocado_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Inaris_Alpha",
-      "displayName": "Inaris \"Dias\" Axe"
-    },
-    {
-      "rowName": "Meta_Axe_Inaris_Bravo",
-      "displayName": "Inaris \"Sali\" Axe"
-    },
-    {
-      "rowName": "Meta_Axe_Inaris_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Inaris_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Larkwell",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Shengong_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Shengong_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Shengong_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Axe_Shengong_Echo",
-      "displayName": "Shengong CY7 Axe"
-    },
-    {
-      "rowName": "Meta_Backpack_Larkwell_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Backpack_Larkwell_Beta",
-      "displayName": "Larkwell Martinez Tactical Backpack"
-    },
-    {
-      "rowName": "Meta_Banana_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bandage_Shengong",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bean_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Berry_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_AlphaWolf",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_Hammerhead",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_IceMammoth",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_LavaHunter",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_RockGolem",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_Sandworm",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_Scorpion",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Biolab_Inhaler_SwampApe",
-      "displayName": null
-    },
-    {
       "rowName": "Meta_Blood_Thinning_Vaccine_Alpha",
       "displayName": null
     },
@@ -584,63 +364,19 @@
       "displayName": "Blood Thinning Vaccine III"
     },
     {
-      "rowName": "Meta_Bolt_Larkwell_Electroshock",
+      "rowName": "Meta_Coal_Set",
       "displayName": null
     },
     {
-      "rowName": "Meta_Bolt_Larkwell_Explosive",
-      "displayName": null
+      "rowName": "Mining_Backpack",
+      "displayName": "Gatherer\u0027s Backpack"
     },
     {
-      "rowName": "Meta_Bolt_Larkwell_Piercing",
-      "displayName": null
+      "rowName": "Basic_Quiver",
+      "displayName": "Archer\u0027s Backpack"
     },
     {
-      "rowName": "Meta_Bolt_Larkwell_Standard",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bolt_Set_Larkwell_Electroshock",
-      "displayName": "Larkwell Charged Bolt Bundle"
-    },
-    {
-      "rowName": "Meta_Bolt_Set_Larkwell_Explosive",
-      "displayName": "Larkwell Explosive Bolt Bundle"
-    },
-    {
-      "rowName": "Meta_Bolt_Set_Larkwell_Piercing",
-      "displayName": "Larkwell Piercing Bolt Bundle"
-    },
-    {
-      "rowName": "Meta_Bolt_Set_Larkwell_Standard",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bow_Larkwell",
-      "displayName": "Larkwell Martinez Compound Bow"
-    },
-    {
-      "rowName": "Meta_Bow_Shengong_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bow_Shengong_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bow_Shengong_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bow_Shengong_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Bow_Shengong_Echo",
-      "displayName": "Shengong CZ4 Bow"
-    },
-    {
-      "rowName": "Meta_Bramble_Seed",
+      "rowName": "Basic_Bandolier",
       "displayName": null
     },
     {
@@ -648,156 +384,60 @@
       "displayName": null
     },
     {
-      "rowName": "Meta_Canteen_Shengong",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Carbon_Arms_Alpha",
-      "displayName": "ST-700 Arms Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Arms_Beta",
-      "displayName": "CX-400 Arms Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Chest_Alpha",
-      "displayName": "ST-700 Chest Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Chest_Beta",
-      "displayName": "CX-400 Chest Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Feet_Alpha",
-      "displayName": "ST-700 Feet Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Feet_Beta",
-      "displayName": "CX-400 Feet Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Head_Alpha",
-      "displayName": "ST-700 Head Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Head_Beta",
-      "displayName": "CX-400 Head Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Legs_Alpha",
-      "displayName": "ST-700 Legs Armor"
-    },
-    {
-      "rowName": "Meta_Carbon_Legs_Beta",
-      "displayName": "CX-400 Legs Armor"
-    },
-    {
-      "rowName": "Meta_Carrot_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Coal_Set",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Cocao_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Coconut_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Coffee_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Corn_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Cot_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Crate_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Creature_Scanner",
-      "displayName": "BEAST"
-    },
-    {
-      "rowName": "Meta_Crossbow_Inaris_A",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Crossbow_Inaris_B",
-      "displayName": "Inaris \"Heavy\" Crossbow"
-    },
-    {
-      "rowName": "Meta_Crossbow_Inaris_C",
-      "displayName": "Inaris \"Lune\" Crossbow"
-    },
-    {
-      "rowName": "Meta_Crossbow_Inaris_D",
-      "displayName": "Inaris \"Sole\" Crossbow"
-    },
-    {
-      "rowName": "Meta_Fiber_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Firewhacker_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Fishfinder",
-      "displayName": "F.I.S.H."
-    },
-    {
-      "rowName": "Meta_Furnace_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Garlic_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_GreenTea_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Hammer_Larkwell",
-      "displayName": "Larkwell Martinez Hammer"
-    },
-    {
       "rowName": "Meta_Hammer_Printed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Hammer_Shengong_Alpha",
+      "rowName": "Meta_Sickle_Printed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Hammer_Shengong_Beta",
-      "displayName": "Shengong \"Akira\" Hammer"
-    },
-    {
-      "rowName": "Meta_Heated_Canteen_Larkwell",
-      "displayName": "Larkwell Martinez Heated Canteen"
-    },
-    {
-      "rowName": "Meta_Kiwi_Fruit_Seed",
+      "rowName": "Meta_Arrow_Inaris_Alpha",
       "displayName": null
     },
     {
-      "rowName": "Meta_Knife",
+      "rowName": "Meta_Arrow_Inaris_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Inaris_Set_Bravo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Inaris_Set_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Inaris_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Inaris_Set_Delta",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Alpha",
+      "displayName": "Inaris \u0022Dias\u0022 Axe"
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Bravo",
+      "displayName": "Inaris \u0022Sali\u0022 Axe"
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Charlie",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Axe_Inaris_Delta",
       "displayName": null
     },
     {
       "rowName": "Meta_Knife_Inaris_Alpha",
-      "displayName": "Inaris \"Ventura\" Knife"
+      "displayName": "Inaris \u0022Ventura\u0022 Knife"
     },
     {
       "rowName": "Meta_Knife_Inaris_Bravo",
@@ -809,203 +449,11 @@
     },
     {
       "rowName": "Meta_Knife_Inaris_Delta",
-      "displayName": "Inaris \"Cerulean\" Knife"
-    },
-    {
-      "rowName": "Meta_Knife_Larkwell",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Shengong_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Shengong_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Shengong_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Shengong_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Knife_Shengong_Echo",
-      "displayName": "Shengong DL7 Knife"
-    },
-    {
-      "rowName": "Meta_Kumara_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Lily_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Alpha",
-      "displayName": "Strength Boost Module"
-    },
-    {
-      "rowName": "Meta_Module_Animal_Healthbar",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Animal_Highlighting",
-      "displayName": "Animal Highlighting Module"
-    },
-    {
-      "rowName": "Meta_Module_Beta",
-      "displayName": "Healing Boost Module"
-    },
-    {
-      "rowName": "Meta_Module_Carry_Weight",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Caving",
-      "displayName": "Miner's Module"
-    },
-    {
-      "rowName": "Meta_Module_ColdResist",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Consumption",
-      "displayName": "DoseUp Module"
-    },
-    {
-      "rowName": "Meta_Module_ExposureResist",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Extremes",
-      "displayName": "Survival Module"
-    },
-    {
-      "rowName": "Meta_Module_Fall_Damage",
-      "displayName": "KickFall Module"
-    },
-    {
-      "rowName": "Meta_Module_Fire_Resistance",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Fishing",
-      "displayName": "Fisher's Module"
-    },
-    {
-      "rowName": "Meta_Module_Food",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_HeatResist",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Highlight",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Inventory_Slots",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Inventory_Slots_2",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_ItemWear",
-      "displayName": "Item Wear Module"
-    },
-    {
-      "rowName": "Meta_Module_Melee",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Movement",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Night",
-      "displayName": "Night Module"
-    },
-    {
-      "rowName": "Meta_Module_Oxygen",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_PlayerTracker",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Poison_Resistance",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Radiation",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_StaminaRegen",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_TamedDamage",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_Taming",
-      "displayName": "Pheromone Module"
-    },
-    {
-      "rowName": "Meta_Module_Temperature",
-      "displayName": "Suit Conditioning Module"
-    },
-    {
-      "rowName": "Meta_Module_Water",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Module_WorldBoss",
-      "displayName": "World Boss Module"
-    },
-    {
-      "rowName": "Meta_Module_Wounds",
-      "displayName": "Protection Module"
-    },
-    {
-      "rowName": "Meta_Mushroom_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Onion_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Oxygen_Gel",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Oxygen_Tank_Larkwell",
-      "displayName": "Larkwell Martinez Oxygen Tank"
-    },
-    {
-      "rowName": "Meta_Oxygen_Tank_Shengong",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe",
-      "displayName": null
+      "displayName": "Inaris \u0022Cerulean\u0022 Knife"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Alpha",
-      "displayName": "Inaris \"Neves\" Pickaxe"
+      "displayName": "Inaris \u0022Neves\u0022 Pickaxe"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Bravo",
@@ -1013,187 +461,15 @@
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Charlie",
-      "displayName": "Inaris \"Claret\" Pickaxe"
+      "displayName": "Inaris \u0022Claret\u0022 Pickaxe"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Delta",
-      "displayName": "Inaris \"Viridian\" Pickaxe"
-    },
-    {
-      "rowName": "Meta_Pickaxe_Larkwell",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Shengong_Alpha",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Shengong_Beta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Shengong_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Shengong_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pickaxe_Shengong_Echo",
-      "displayName": "Shengong UT5 Pickaxe"
-    },
-    {
-      "rowName": "Meta_Potato_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Power_Source",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_PricklyPear_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Pumpkin_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Ration",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Reed_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Repair_Item",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Repair_Item_Pack",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Aluminium",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Clay",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Copper",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Dirt",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Gold",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Iron",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Limestone",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Lithium",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Obsidian",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Oxite",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Platinum",
-      "displayName": "UDA Platinum Ore Resource Supply"
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Ruby",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Scoria",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Silica",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Stone",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Sulfur",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Synthetic_Enzymes",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Titanium",
-      "displayName": "UDA Titanium Ore Resource Supply"
-    },
-    {
-      "rowName": "Meta_Resource_Pack_Wood",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Rhubarb_Seed",
-      "displayName": "Rhubarb Farming Packet"
-    },
-    {
-      "rowName": "Meta_Scanner_DeepOre",
-      "displayName": "Advanced Deep Mining Ore Scanner"
-    },
-    {
-      "rowName": "Meta_Sickle_Inaris_00",
-      "displayName": "Inaris \"Reaper\" Sickle"
-    },
-    {
-      "rowName": "Meta_Sickle_Inaris_01",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Sickle_Inaris_02",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Sickle_Inaris_03",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Sickle_Larkwell",
-      "displayName": "Larkwell Martinez Sickle"
-    },
-    {
-      "rowName": "Meta_Sickle_Printed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Soda",
-      "displayName": null
+      "displayName": "Inaris \u0022Viridian\u0022 Pickaxe"
     },
     {
       "rowName": "Meta_Spear_Inaris_Alpha",
-      "displayName": "Inaris \"Gris\" Spear"
+      "displayName": "Inaris \u0022Gris\u0022 Spear"
     },
     {
       "rowName": "Meta_Spear_Inaris_Bravo",
@@ -1208,31 +484,23 @@
       "displayName": null
     },
     {
-      "rowName": "Meta_Spear_Larkwell",
+      "rowName": "Meta_Furnace_Printed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Spear_Printed",
+      "rowName": "Meta_Crate_Printed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Spear_Shengong_Alpha",
+      "rowName": "Meta_Arrow_Set_Inaris_Alpha",
       "displayName": null
     },
     {
-      "rowName": "Meta_Spear_Shengong_Beta",
+      "rowName": "Meta_Corn_Seed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Spear_Shengong_Charlie",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Spear_Shengong_Delta",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Spear_Shengong_Echo",
+      "rowName": "Meta_Pumpkin_Seed",
       "displayName": null
     },
     {
@@ -1240,27 +508,15 @@
       "displayName": null
     },
     {
-      "rowName": "Meta_Stamina_Gel",
+      "rowName": "Meta_Carrot_Seed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Strawberry_Seed",
-      "displayName": "Strawberry Farming Packet"
-    },
-    {
-      "rowName": "Meta_SugarCane_Seed",
+      "rowName": "Meta_Mushroom_Seed",
       "displayName": null
     },
     {
-      "rowName": "Meta_Super_Ration",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Tomato_Seed",
-      "displayName": null
-    },
-    {
-      "rowName": "Meta_Truffle_Seed",
+      "rowName": "Meta_Berry_Seed",
       "displayName": null
     },
     {
@@ -1272,39 +528,139 @@
       "displayName": null
     },
     {
-      "rowName": "Meta_WildTea_Seed",
-      "displayName": "Gorse Farming Packet"
-    },
-    {
-      "rowName": "Meta_Yeast_Seed",
+      "rowName": "Meta_Bean_Seed",
       "displayName": null
     },
     {
-      "rowName": "MetaResource",
+      "rowName": "Meta_Module_Animal_Healthbar",
       "displayName": null
     },
     {
-      "rowName": "Mining_Backpack",
-      "displayName": "Gatherer's Backpack"
+      "rowName": "Meta_Module_Animal_Highlighting",
+      "displayName": "Animal Highlighting Module"
     },
     {
-      "rowName": "Mission_Burner",
+      "rowName": "Survival_Backpack",
       "displayName": null
     },
     {
-      "rowName": "Mission_Knife_Lion",
+      "rowName": "Meta_Axe_Larkwell",
       "displayName": null
     },
     {
-      "rowName": "Module_Player_Tracker",
+      "rowName": "Meta_Pickaxe_Larkwell",
       "displayName": null
     },
     {
-      "rowName": "Oil_Can_Meta",
+      "rowName": "Meta_Hammer_Larkwell",
+      "displayName": "Larkwell Martinez Hammer"
+    },
+    {
+      "rowName": "Meta_Sickle_Larkwell",
+      "displayName": "Larkwell Martinez Sickle"
+    },
+    {
+      "rowName": "Meta_Knife_Larkwell",
       "displayName": null
     },
     {
-      "rowName": "Pistol_CHAC",
+      "rowName": "Meta_Spear_Larkwell",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Larkwell_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Larkwell_Ballistic",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Larkwell_Bleed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Larkwell_Tazer",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Larkwell_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Scanner_DeepOre",
+      "displayName": "Advanced Deep Mining Ore Scanner"
+    },
+    {
+      "rowName": "Meta_Bow_Larkwell",
+      "displayName": "Larkwell Martinez Compound Bow"
+    },
+    {
+      "rowName": "Meta_Carbon_Head_Alpha",
+      "displayName": "ST-700 Head Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Chest_Alpha",
+      "displayName": "ST-700 Chest Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Arms_Alpha",
+      "displayName": "ST-700 Arms Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Legs_Alpha",
+      "displayName": "ST-700 Legs Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Feet_Alpha",
+      "displayName": "ST-700 Feet Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Head_Beta",
+      "displayName": "CX-400 Head Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Chest_Beta",
+      "displayName": "CX-400 Chest Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Arms_Beta",
+      "displayName": "CX-400 Arms Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Legs_Beta",
+      "displayName": "CX-400 Legs Armor"
+    },
+    {
+      "rowName": "Meta_Carbon_Feet_Beta",
+      "displayName": "CX-400 Feet Armor"
+    },
+    {
+      "rowName": "Meta_Backpack_Larkwell_Alpha",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Backpack_Larkwell_Beta",
+      "displayName": "Larkwell Martinez Tactical Backpack"
+    },
+    {
+      "rowName": "Envirosuit_Inaris_Alpha",
+      "displayName": "Inaris \u0022Lua\u0022 Envirosuit"
+    },
+    {
+      "rowName": "Meta_Module_Alpha",
+      "displayName": "Strength Boost Module"
+    },
+    {
+      "rowName": "Meta_Module_Beta",
+      "displayName": "Healing Boost Module"
+    },
+    {
+      "rowName": "Meta_Repair_Item",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Repair_Item_Pack",
       "displayName": null
     },
     {
@@ -1312,23 +668,323 @@
       "displayName": null
     },
     {
-      "rowName": "Ren",
+      "rowName": "Extractor_Meta",
       "displayName": null
     },
     {
-      "rowName": "Rifle_CHAC",
+      "rowName": "Biofuel_Can_Meta",
       "displayName": null
     },
     {
-      "rowName": "Saddle_Carrier",
-      "displayName": "Carrier Saddle"
-    },
-    {
-      "rowName": "Saddle_Overrider",
+      "rowName": "Meta_Power_Source",
       "displayName": null
     },
     {
-      "rowName": "Saddle_QuickTamer",
+      "rowName": "Mission_Knife_Lion",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_WorldBoss",
+      "displayName": "World Boss Module"
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Standard",
+      "displayName": "Larkwell Arrow Bundle"
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Standard",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Ballistic",
+      "displayName": "Larkwell Ballistic Arrow Bundle"
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Bleed",
+      "displayName": "Larkwell Bleed Arrow Bundle"
+    },
+    {
+      "rowName": "Meta_Arrow_Set_Larkwell_Tazer",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_A",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_B",
+      "displayName": "Inaris \u0022Heavy\u0022 Crossbow"
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_C",
+      "displayName": "Inaris \u0022Lune\u0022 Crossbow"
+    },
+    {
+      "rowName": "Meta_Crossbow_Inaris_D",
+      "displayName": "Inaris \u0022Sole\u0022 Crossbow"
+    },
+    {
+      "rowName": "Exotic_Red",
+      "displayName": null
+    },
+    {
+      "rowName": "Dropship_Grenade_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Avocado_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Rhubarb_Seed",
+      "displayName": "Rhubarb Farming Packet"
+    },
+    {
+      "rowName": "Meta_Kumara_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Strawberry_Seed",
+      "displayName": "Strawberry Farming Packet"
+    },
+    {
+      "rowName": "Meta_Fishfinder",
+      "displayName": "F.I.S.H."
+    },
+    {
+      "rowName": "Envirosuit_Larkwell_Alpha",
+      "displayName": "Larkwell \u0022Haulier\u0022 Envirosuit"
+    },
+    {
+      "rowName": "Envirosuit_Larkwell_Bravo",
+      "displayName": "Larkwell \u0022Bulwark\u0022 Envirosuit"
+    },
+    {
+      "rowName": "Meta_Bolt_Larkwell_Electroshock",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Electroshock",
+      "displayName": "Larkwell Charged Bolt Bundle"
+    },
+    {
+      "rowName": "Meta_Bolt_Larkwell_Explosive",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Explosive",
+      "displayName": "Larkwell Explosive Bolt Bundle"
+    },
+    {
+      "rowName": "Meta_Bolt_Larkwell_Piercing",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bolt_Set_Larkwell_Piercing",
+      "displayName": "Larkwell Piercing Bolt Bundle"
+    },
+    {
+      "rowName": "Meta_Module_Temperature",
+      "displayName": "Suit Conditioning Module"
+    },
+    {
+      "rowName": "Meta_Module_Caving",
+      "displayName": "Miner\u0027s Module"
+    },
+    {
+      "rowName": "Meta_Module_Extremes",
+      "displayName": "Survival Module"
+    },
+    {
+      "rowName": "Meta_Module_Fishing",
+      "displayName": "Fisher\u0027s Module"
+    },
+    {
+      "rowName": "Meta_Module_Wounds",
+      "displayName": "Protection Module"
+    },
+    {
+      "rowName": "Meta_Module_Taming",
+      "displayName": "Pheromone Module"
+    },
+    {
+      "rowName": "Meta_Heated_Canteen_Larkwell",
+      "displayName": "Larkwell Martinez Heated Canteen"
+    },
+    {
+      "rowName": "Meta_Oxygen_Tank_Larkwell",
+      "displayName": "Larkwell Martinez Oxygen Tank"
+    },
+    {
+      "rowName": "Meta_Creature_Scanner",
+      "displayName": "BEAST"
+    },
+    {
+      "rowName": "Farming_CropPlot_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Shovel",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Reed_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Yeast_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Lily_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Cocao_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Coffee_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_GreenTea_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_WildTea_Seed",
+      "displayName": "Gorse Farming Packet"
+    },
+    {
+      "rowName": "Meta_Fiber_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Tomato_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Potato_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Wood",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Stone",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Silica",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Oxite",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Sulfur",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Iron",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Copper",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Gold",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Aluminium",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Platinum",
+      "displayName": "UDA Platinum Ore Resource Supply"
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Titanium",
+      "displayName": "UDA Titanium Ore Resource Supply"
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Head",
+      "displayName": "Larkwell Martinez Tachyon Head Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Chest",
+      "displayName": "Larkwell Martinez Tachyon Chest Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Legs",
+      "displayName": "Larkwell Martinez Tachyon Legs Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Arms",
+      "displayName": "Larkwell Martinez Tachyon Arm Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Alpha_Feet",
+      "displayName": "Larkwell Martinez Tachyon Feet Armor"
+    },
+    {
+      "rowName": "Farmers_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Medic_Backpack",
+      "displayName": "Biomore Backpack"
+    },
+    {
+      "rowName": "Chefs_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Explorers_Backpack",
+      "displayName": "Explorer Backpack"
+    },
+    {
+      "rowName": "Tech_Backpack",
+      "displayName": "Ion Backpack"
+    },
+    {
+      "rowName": "Hunters_Backpack",
+      "displayName": "Xenon Backpack"
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Head",
+      "displayName": "LM Beastmaster Head Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Chest",
+      "displayName": "LM Beastmaster Chest Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Arms",
+      "displayName": "LM Beastmaster Arm Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Legs",
+      "displayName": "LM Beastmaster Leg Armor"
+    },
+    {
+      "rowName": "Larkwell_Armor_Black_Feet",
+      "displayName": "LM Beastmaster Feet Armor"
+    },
+    {
+      "rowName": "Biomass",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Black_Wolf_Revolver",
+      "displayName": null
+    },
+    {
+      "rowName": "IceMammoth_Attachment_Melee",
       "displayName": null
     },
     {
@@ -1336,7 +992,63 @@
       "displayName": null
     },
     {
+      "rowName": "AlphaWolf_Attachment_Melee",
+      "displayName": null
+    },
+    {
       "rowName": "Scorpion_Attachment_Armor",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_Sandworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_AlphaWolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_IceMammoth",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Scorpion_Rifle",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Sickle_Inaris_00",
+      "displayName": "Inaris \u0022Reaper\u0022 Sickle"
+    },
+    {
+      "rowName": "Meta_Sickle_Inaris_01",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Sickle_Inaris_02",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Sickle_Inaris_03",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Sandworm_Crossbow",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_SugarCane_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Coconut_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Bramble_Seed",
       "displayName": null
     },
     {
@@ -1344,79 +1056,19 @@
       "displayName": null
     },
     {
-      "rowName": "Slug_Attachment",
-      "displayName": null
-    },
-    {
-      "rowName": "Solar_Backpack",
-      "displayName": null
-    },
-    {
-      "rowName": "Splint_Workshop",
-      "displayName": null
-    },
-    {
-      "rowName": "Splint_Workshop_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Survival_Backpack",
-      "displayName": null
-    },
-    {
-      "rowName": "Tech_Backpack",
-      "displayName": "Ion Backpack"
-    },
-    {
-      "rowName": "Uranium_Rod",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Beehive_Starter_Kit",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Calf",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Calf_Male",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Cat_A1",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Cat_A2",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Cat_A3",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Cat_B",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Cat_C",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Chick_Female",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Chick_Male",
-      "displayName": null
-    },
-    {
       "rowName": "Workshop_Chicken",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Cooker",
+      "rowName": "Workshop_Sheep",
+      "displayName": null
+    },
+    {
+      "rowName": "Pistol_CHAC",
+      "displayName": null
+    },
+    {
+      "rowName": "Rifle_CHAC",
       "displayName": null
     },
     {
@@ -1436,35 +1088,15 @@
       "displayName": null
     },
     {
-      "rowName": "Workshop_Dog_C1",
+      "rowName": "Workshop_Cat_A1",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Dog_C2",
+      "rowName": "Workshop_Cat_A2",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Dog_D1",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Dog_D2",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Dog_E",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Dressing_Bundle",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Dressing_Kit",
-      "displayName": null
-    },
-    {
-      "rowName": "Workshop_Heater",
+      "rowName": "Workshop_Cat_A3",
       "displayName": null
     },
     {
@@ -1480,11 +1112,355 @@
       "displayName": null
     },
     {
+      "rowName": "Workshop_Purification_Tablet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dog_C1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dressing_Kit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dressing_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dog_D1",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dog_D2",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Pistol_Round_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Pistol_Round_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Frozen_Kiwi",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Kiwi_Fruit_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Lava_Hunter_Attachment",
+      "displayName": null
+    },
+    {
+      "rowName": "Slug_Attachment",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_GolemGauntlet",
+      "displayName": null
+    },
+    {
+      "rowName": "Ape_Attachment",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Ape_Club",
+      "displayName": null
+    },
+    {
+      "rowName": "Licence",
+      "displayName": null
+    },
+    {
+      "rowName": "Ren",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Food",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Oxygen",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Water",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_TamedDamage",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Melee",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_HeatResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_ColdResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_ExposureResist",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_ItemWear",
+      "displayName": "Item Wear Module"
+    },
+    {
+      "rowName": "Meta_Module_Night",
+      "displayName": "Night Module"
+    },
+    {
+      "rowName": "Meta_Module_Highlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_StaminaRegen",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Heater",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Cooker",
+      "displayName": null
+    },
+    {
       "rowName": "Workshop_Hydrazine_Container",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Lamb_Female",
+      "rowName": "Workshop_Calf",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_SlugLauncher",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_LavaHunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_Hammerhead",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_RockGolem",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Biolab_Inhaler_SwampApe",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Dirt",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Scoria",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Obsidian",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Clay",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_LavaHunter_FlameThrower",
+      "displayName": "Heavy Flamethrower"
+    },
+    {
+      "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Synthetic_Enzymes",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Banana_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Mission_Burner",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Shell_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Shell_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Splint_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Splint_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Bow",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Sniper",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Explosive",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Explosive_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Incendiary",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Incendiary_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Sniper_Round_Illumination",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Rifle_Round_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_Rifle_Round_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_AssaultRifle_Round_Workshop",
+      "displayName": null
+    },
+    {
+      "rowName": "Ammo_AssaultRifle_Round_Workshop_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Uranium_Rod",
+      "displayName": null
+    },
+    {
+      "rowName": "AntiRadiation_Injection",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Onion_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Agave_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_PricklyPear_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Garlic_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Truffle_Seed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Module_Radiation",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_QuickTamer",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Overrider",
+      "displayName": null
+    },
+    {
+      "rowName": "Saddle_Carrier",
+      "displayName": "Carrier Saddle"
+    },
+    {
+      "rowName": "Bulky_Armor_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Bulky_Armor_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Bulky_Armor_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Bulky_Armor_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Bulky_Armor_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Solar_Backpack",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dog_C2",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Dog_E",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Cat_B",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Cat_C",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Chick_Male",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Calf_Male",
       "displayName": null
     },
     {
@@ -1492,7 +1468,11 @@
       "displayName": null
     },
     {
-      "rowName": "Workshop_Piglet_Female",
+      "rowName": "Workshop_Lamb_Female",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Chick_Female",
       "displayName": null
     },
     {
@@ -1500,15 +1480,39 @@
       "displayName": null
     },
     {
-      "rowName": "Workshop_Purification_Tablet",
+      "rowName": "Workshop_Piglet_Female",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Sheep",
+      "rowName": "Workshop_Beehive_Starter_Kit",
       "displayName": null
     },
     {
-      "rowName": "Workshop_Shovel",
+      "rowName": "Envirosuit_Larkwell_White",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Limestone",
+      "displayName": null
+    },
+    {
+      "rowName": "Oil_Can_Meta",
+      "displayName": null
+    },
+    {
+      "rowName": "LegendaryWeapon_Sandwyrm_Chainsaw",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Lithium",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Ruby",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sawblade_Bundle",
       "displayName": null
     }
   ]

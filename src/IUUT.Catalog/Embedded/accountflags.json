@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "icarusdata-week149",
+  "catalogVersion": "datapak-live-2026-05-31",
   "rowStruct": "/Script/Icarus.AccountFlag",
-  "source": "Data-mined D_AccountFlags from github.com/GODOFMINECRAFT4/IcarusData (unpacked from the game's data.pak). Array index = flag id (0-based). Game data re-derived for IUUT, 2026-05-31. Re-mine per game version; the live table may have grown.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "names": [
     "Mission_Communicator_T2_Upgrade",
     "Mission_Communicator_T3_Upgrade",
@@ -88,6 +88,20 @@
     "GrantedBlueprint_SW_Building2",
     "GrantedBlueprint_SW_Module",
     "GrantedBlueprint_SW_Attachment",
-    "GrantedBlueprint_CavewormArmor"
+    "GrantedBlueprint_CavewormArmor",
+    "Homestead_Passive_Talent_Refund",
+    "GrantedBlueprint_YetiArticArmor",
+    "GrantedTalent_ELY_SQ",
+    "GrantedTalent_ELY_Story_6",
+    "GrantedBlueprint_Hasmat",
+    "GrantedBlueprint_Sandwyrm",
+    "GrantedBlueprint_Sandwyrm_Trophies",
+    "GrantedWorkshop_ELY_Seeds",
+    "GrantedWorkshop_LandingPads",
+    "Elysium_Level_Boost_Claimed",
+    "GrantedBlueprint_Speeder",
+    "GrantedBlueprint_ScoutSuit",
+    "GrantedBlueprint_ScoutSmg",
+    "GrantedBlueprint_UraniumAmmo"
   ]
 }

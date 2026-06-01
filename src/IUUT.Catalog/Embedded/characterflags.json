@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "icarusdata-week149",
+  "catalogVersion": "datapak-live-2026-05-31",
   "rowStruct": "/Script/Icarus.CharacterFlag",
-  "source": "Data-mined D_CharacterFlags from github.com/GODOFMINECRAFT4/IcarusData (unpacked from the game's data.pak). Array index = flag id (0-based). Game data re-derived for IUUT, 2026-05-31. Re-mine per game version; the live table may have grown.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "names": [
     "TestDataFlag",
     "TutorialTestFlag",
@@ -42,6 +42,11 @@
     "StyxBlocker_D_TooltipOnly",
     "StyxBlocker_E_TooltipOnly",
     "RefundOnly_Repairable",
-    "GreatHunt_IntroPlayed"
+    "GreatHunt_IntroPlayed",
+    "NPC_Farmer_TooltipOnly",
+    "NPC_Norex_TooltipOnly",
+    "NPC_Hunter_TooltipOnly",
+    "NPC_Fisher_TooltipOnly",
+    "Sandwyrm_Queen_TooltipOnly"
   ]
 }

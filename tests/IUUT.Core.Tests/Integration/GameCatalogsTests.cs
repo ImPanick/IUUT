@@ -33,10 +33,11 @@ public class GameCatalogsTests
     [Fact]
     public void Accolades_And_Bestiary_AreSeeded()
     {
-        _catalogs.Accolades.Count.Should().Be(446, "the complete D_Accolades set (boss kills, milestones, ribbons)");
+        _catalogs.Accolades.Count.Should().Be(447, "the complete D_Accolades set re-mined from the live data.pak");
         _catalogs.Accolades.Contains("DefeatGarganutan").Should().BeTrue("a boss-kill accolade beyond the original 212");
         _catalogs.Accolades.Contains("BearsKilled5000").Should().BeTrue("a kill-X-times milestone");
-        _catalogs.Bestiary.Count.Should().Be(78);
+        _catalogs.Accolades.Label("DefeatGarganutan").Should().Be("Gone Bananas", "the game's own DisplayName, re-mined from data.pak");
+        _catalogs.Bestiary.Count.Should().Be(107, "the live D_BestiaryData set");
         _catalogs.Bestiary.Contains("Forest_Wolf").Should().BeTrue();
     }
 
@@ -78,9 +79,13 @@ public class GameCatalogsTests
         _catalogs.AccountFlags.IsMissionFlag(8).Should().BeTrue();
         _catalogs.AccountFlags.Label(9).Should().Be("Granted Talent Styx Ironclad", "humanized label");
 
-        // Out-of-range ids (beyond the shipped snapshot) are tolerated.
-        _catalogs.AccountFlags.Name(93).Should().BeNull();
-        _catalogs.AccountFlags.Label(93).Should().Be("Flag 93");
+        // The live D_AccountFlags grew to 100 rows (was 86); id 93 is now a real flag.
+        _catalogs.AccountFlags.Count.Should().Be(100, "re-mined from the live data.pak");
+        _catalogs.CharacterFlags.Count.Should().Be(45);
+
+        // Out-of-range ids (beyond the live table) are still tolerated.
+        _catalogs.AccountFlags.Name(200).Should().BeNull();
+        _catalogs.AccountFlags.Label(200).Should().Be("Flag 200");
         _catalogs.CharacterFlags.MissionFlagIds().Should().Contain(27);
     }
 
