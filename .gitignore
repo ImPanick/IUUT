@@ -54,8 +54,43 @@ appsettings.Development.json
 *.profdata
 coverage*.json
 coverage*.xml
+BenchmarkDotNet.Artifacts/
 
-# Misc
-*.swp
-*.bak
-*~
+# Compiled binaries / debug symbols — NEVER committed (shipped exe is built by publish-release.ps1).
+# The repo is source-only; the only large things that exist are build outputs (already ignored above).
+*.exe
+*.dll
+*.pdb
+*.so
+*.dylib
+
+# Archives + game data assets — keep the 36 GB paks / 72 MB exe / data.pak dumps out of git.
+*.zip
+*.7z
+*.rar
+*.pak
+*.ucas
+*.utoc
+*.usmap
+*.dat
+oo2core*.dll
+# data.pak re-mine dumps (scripts/extract-datapak.ps1 writes under artifacts/, already ignored)
+datapak/
+
+# More IDE / build tooling
+*.code-workspace
+*.sln.iml
+_ReSharper*/
+*.DotSettings.user
+.fleet/
+*.binlog
+*.tlog
+project.lock.json
+[Pp]ublish/
+
+# Patch / merge / temp junk
+*.orig
+*.rej
+*.tmp
+*.temp
+*.log
