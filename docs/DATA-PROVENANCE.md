@@ -57,9 +57,23 @@ those flags via quest scripts. So the ~12 character + ~6 account "signature" fla
 
 ## Sources (in order of authority)
 
-1. **The game's data pak** — `…\steamapps\common\Icarus\Icarus\Content\Paks\` (cooked, AES). The owner
-   also has a **`Data/data.pak`** (~2.3 MB, Icarus's *custom* data-pak format — NOT a UE pak/zip, not
-   crackable without the Icarus mod tooling). This is ground truth for the current version.
+1. **The game's `data.pak` — ground truth, and it IS crackable (reversed 2026-05-31).**
+   `…\steamapps\common\Icarus\Icarus\Content\Data\data.pak` (~2.4 MB) holds **all gameplay DataTables**
+   as JSON. Format (no AES / no Oodle / no .usmap needed):
+   - A run of **zlib streams** (`0x78 0x9C`), each a ~64 KB chunk of UTF-8 JSON. Inflating every block in
+     file order and concatenating yields **~40 MB of JSON = 247 DataTables**, each shaped
+     `{ "RowStruct": "/Script/Icarus.<Type>", "Defaults": {…}, "Rows": { "<RowName>": {…}, … } }`.
+   - A **directory index at the tail**: nested `[int32 nameLen][name\0][int32 value]` entries; folders end
+     in `/` (value = child count), files end in `.json` (value = the file's start block, so files sorted by
+     value match the decompressed object order). Tables are also identifiable by their **unique `RowStruct`**
+     (246 distinct over 247 objects) — e.g. `AccountFlag`, `CharacterFlag`, `AccoladeData`, `TalentData`,
+     `ItemableData`.
+   - Re-mine = inflate blocks → split top-level JSON objects → map to names (by RowStruct or the index) →
+     regenerate the embedded catalogs. A scratch extractor (`CUE4Parse` only needed for the *asset* paks,
+     not this) proved it end to end.
+   - ⚠️ The big **`…\Content\Paks\pakchunk0*.pak`** (~36 GB, UE 4.27, **unencrypted** index, Oodle) are
+     **cooked assets only** (maps/meshes/UI) — they do **NOT** contain the gameplay DataTables, so they're
+     not needed for catalog refresh. (CUE4Parse mounts them fine if assets are ever wanted.)
 2. **Data-mine mirror** — `github.com/GODOFMINECRAFT4/IcarusData` (branch **`master`**), e.g.
    `…/master/Talents/D_Talents.json`, `…/master/Flags/D_AccountFlags.json`. What the current catalogs
    were generated from. May lag the live game by a version.
