@@ -262,6 +262,20 @@ public class LazyMaxServiceTests
     }
 
     [Fact]
+    public void MaxCharacterMissionFlags_SetsCharacterFlags_Additive_AndIdempotent()
+    {
+        var flags = new FlagsFileModel { SteamId = "00000000000000000", Flags = { 27u } };
+        var service = NewService();
+
+        var added = service.MaxCharacterMissionFlags(flags);
+
+        added.Should().BeGreaterThan(0, "the D_CharacterFlags mission/recipe/map-unlock set");
+        flags.Flags.Should().Contain(27u, "Mission_Olympus_Unlock was already present, not duplicated");
+        flags.Flags.Should().OnlyHaveUniqueItems();
+        service.MaxCharacterMissionFlags(flags).Should().Be(0, "idempotent once the character mission flags are set");
+    }
+
+    [Fact]
     public void MaxAll_Output_PassesValidationEngine()
     {
         const string steamId = "00000000000000000";

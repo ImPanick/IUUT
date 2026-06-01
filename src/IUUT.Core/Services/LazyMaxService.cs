@@ -150,6 +150,32 @@ public sealed class LazyMaxService
     }
 
     /// <summary>
+    /// Maxes the per-character engine flags in a <c>flags_&lt;SteamID&gt;.dat</c>
+    /// (<see cref="FlagsFileModel"/>): sets every <c>D_CharacterFlags</c> mission/recipe/map-unlock
+    /// signature flag (<see cref="Catalog.FlagCatalog.MissionFlagIds"/>) — e.g. <c>Mission_Olympus_Unlock</c>,
+    /// <c>Mission_Sandworm_Items</c>. Additive (existing flags kept); returns how many were newly set.
+    /// The App's Lazy Max flow loads the binary file, calls this, and persists via
+    /// <c>CustomFileService.SaveFlagsAsync</c> (own backup + atomic write).
+    /// </summary>
+    public int MaxCharacterMissionFlags(FlagsFileModel flags)
+    {
+        ArgumentNullException.ThrowIfNull(flags);
+
+        var present = new HashSet<uint>(flags.Flags);
+        var added = 0;
+        foreach (var flagId in _catalogs.CharacterFlags.MissionFlagIds())
+        {
+            if (present.Add((uint)flagId))
+            {
+                flags.Flags.Add((uint)flagId);
+                added++;
+            }
+        }
+
+        return added;
+    }
+
+    /// <summary>
     /// Maxes every character: applies the account-union of talents (plus the 16 Genetics rows) at
     /// <see cref="MaxTalentRank"/>, raises XP to at least <see cref="MinMaxedExperience"/>, clears
     /// <c>XP_Debt</c>, and revives (<c>IsDead</c>/<c>IsAbandoned</c> → false). Returns the union size
