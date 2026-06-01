@@ -84,5 +84,35 @@ those flags via quest scripts. So the ~12 character + ~6 account "signature" fla
   **"return trapped items from a prospect to the orbital stash"** feature would have to parse — that's
   a world-blob reverse-engineering project (the items live in the zlib `ProspectBlob`), the hardest
   item on the roadmap.
+
+### Prospect world-save anatomy (confirmed — for in-prospect inventory/container editing)
+
+A prospect world save is `PlayerData/<SteamID>/Prospects/<Name>.json`, top-level **plain JSON** with two
+keys:
+
+- **`ProspectInfo`** — flat, editable metadata: `ProspectID, ClaimedAccountID, ClaimedAccountCharacter,
+  ProspectDTKey, FactionMissionDTKey, ProspectState, AssociatedMembers, Cost, Reward, Difficulty,
+  Insurance, NoRespawns, ElapsedTime, SelectedDropPoint, CustomSettings`. (This is the same `ProspectState`
+  the AssociatedProspects files mirror.)
+- **`ProspectBlob`** — the compressed live world: `{ Key:"actors", Hash:<SHA-1 40-hex>, TotalLength,
+  DataLength, UncompressedLength, BinaryBlob:<base64> }`. `BinaryBlob` is **zlib** (`0x78 0x9C` header) →
+  on a small map decompresses to **~2.7 MB**. `ProspectBlobCodec` already does the decompress/recompress
+  + Adler-32/SHA-1.
+
+**The decompressed payload is NOT JSON.** It is **Unreal Engine `FProperty` serialization** (a
+GVAS-style SaveGame stream): top-level `StateRecorderBlobs` → an array of per-actor `ActorRecord`s, each
+holding a component `StateRecorderBlob` (`/Script/Icarus.*RecorderComponent`, e.g.
+`EnzymeGeyserRecorderComponent`). Item/inventory data lives here as **`InventorySaveData` StructProperty**
+nodes (749 `Inventory` refs, 7 `Container`, 22 `Slot`, 3279 `Recorder` in the Olympus sample). Item
+identity is encoded as UE `FName`/struct refs (RowName-into-`D_ItemsStatic`), **not** readable asset paths.
+
+**Editing implication.** Player inventory + storage-container contents ARE in there and ARE addressable,
+but adding/removing an item requires a real **UE property-tree parser+serializer**: walk the
+`ArrayProperty/StructProperty/NameProperty` tags with their byte-length prefixes, locate the actor's
+`InventorySaveData` item array, insert/modify an entry, then **fix every enclosing length prefix**,
+recompute `UncompressedLength`, recompress, and recompute `Hash`. High-risk (a wrong length bricks an
+in-progress run; the game checksums the blob). This is the "hardest item on the roadmap" — a scoped R&D
+feature, not a flat-JSON edit. "Return trapped items → orbital stash" is the same machinery (null the
+prospect-side items, add to the flat `MetaInventory.json` we already edit).
 - A **~45 GB set of 32 `.pak` files** is the full cooked content (textures/meshes/etc.) — not needed
   for save editing; the small `data.pak` + the mirror cover the DataTables.
