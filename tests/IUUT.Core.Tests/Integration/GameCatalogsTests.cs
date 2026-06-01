@@ -55,4 +55,26 @@ public class GameCatalogsTests
         _catalogs.Items.Count.Should().BeGreaterThan(0);
         _catalogs.Items.CatalogVersion.Should().Be("2026-02-mendel");
     }
+
+    [Fact]
+    public void FlagCatalogs_DecodeIdsToNames()
+    {
+        // CharacterFlag id 27 is the Olympus story-map unlock gate (flags_<SteamID>.dat).
+        _catalogs.CharacterFlags.Count.Should().BeGreaterThan(27);
+        _catalogs.CharacterFlags.Name(27).Should().Be("Mission_Olympus_Unlock");
+        _catalogs.CharacterFlags.IsMissionFlag(27).Should().BeTrue();
+        _catalogs.CharacterFlags.IsMissionFlag(2).Should().BeFalse("FirstScanComplete is not a mission/story flag");
+        _catalogs.CharacterFlags.TryGetId("Mission_Olympus_Unlock", out var id).Should().BeTrue();
+        id.Should().Be(27);
+
+        // AccountFlag id 8 is the Olympus Nightfall story-talent grant (Profile.UnlockedFlags).
+        _catalogs.AccountFlags.Name(8).Should().Be("GrantedTalent_Olympus_Nightfall");
+        _catalogs.AccountFlags.IsMissionFlag(8).Should().BeTrue();
+        _catalogs.AccountFlags.Label(9).Should().Be("Granted Talent Styx Ironclad", "humanized label");
+
+        // Out-of-range ids (beyond the shipped snapshot) are tolerated.
+        _catalogs.AccountFlags.Name(93).Should().BeNull();
+        _catalogs.AccountFlags.Label(93).Should().Be("Flag 93");
+        _catalogs.CharacterFlags.MissionFlagIds().Should().Contain(27);
+    }
 }
