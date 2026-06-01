@@ -50,11 +50,15 @@ public class GameCatalogsTests
     }
 
     [Fact]
-    public void Items_AreComplete_ForTheStashPicker()
+    public void Items_AreWorkshopMetaItems_Only_ForTheStashPicker()
     {
-        _catalogs.Items.Count.Should().BeGreaterThan(2000, "the complete itemable D_ItemsStatic set, so every blueprint-crafted item is addable to the stash");
-        _catalogs.Items.Contains("Bulky_Armor_Chest").Should().BeTrue("a newer blueprint-crafted item beyond the original 91");
+        // The orbital stash only accepts Item.Meta workshop items; raw resources / building pieces
+        // would make the game reject the inventory.
+        _catalogs.Items.Count.Should().BeInRange(300, 900, "the Item.Meta workshop/orbital set, not the whole item table");
+        _catalogs.Items.Contains("Bulky_Armor_Chest").Should().BeTrue("a blueprint-crafted workshop item beyond the original 91");
         _catalogs.Items.Contains("Meta_Carbon_Chest_Beta").Should().BeTrue();
+        _catalogs.Items.Contains("Stone").Should().BeFalse("raw resources are not valid in the orbital stash");
+        _catalogs.Items.Contains("Wood_Floor").Should().BeFalse("building pieces are not valid in the orbital stash");
         _catalogs.Items.Label("Meta_Crossbow_Inaris_D").Should().Be("Inaris \"Sole\" Crossbow", "the curated display names are preserved");
     }
 

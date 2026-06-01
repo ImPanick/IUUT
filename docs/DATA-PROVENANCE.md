@@ -12,7 +12,7 @@
 | File | Game table | Key → value | Loader | Notes |
 | --- | --- | --- | --- | --- |
 | `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | Character talents + the 456 `Workshop_*`/`Prospect_*` unlock rows. Display names mostly null → humanized. |
-| `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Complete itemable set (2,993 rows, dev/test excluded)** — the Stash "Add item" picker, so every blueprint-crafted item is addable. 90 curated display names; the rest humanize. |
+| `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Workshop/orbital items only — `Item.Meta.*`-tagged rows (377, dev/test excluded).** The Stash "Add item" picker. The orbital stash REJECTS non-Meta items (raw resources, building pieces), so they're filtered out; every blueprint-crafted Meta item is included. 90 curated names; the rest humanize. |
 | `accolades.json` | `D_Accolades` | `rowName` → `displayName` | `CatalogLoader` | 446 rows (complete). |
 | `bestiary.json` | `D_BestiaryData` | `rowName` → `displayName` | `CatalogLoader` | 78 creature groups. |
 | `metaresources.json` | `D_MetaResources` | `rowName` → `displayName` | `CatalogLoader` | 7 currencies. |
