@@ -1,855 +1,1791 @@
 {
-  "catalogVersion": "2026-02-mendel",
+  "catalogVersion": "2026-05-31-complete",
   "dataTable": "D_Accolades",
-  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "source": "Complete D_Accolades set (446 rows) from icarusdatabase.com's machine-readable dataset (id = internal RowName); the prior 212-row subset is fully contained (0 mismatches). Game data re-derived for IUUT, 2026-05-31.",
   "rows": [
     {
+      "rowName": "100Packs",
+      "displayName": "Gimme Gimme Gimme"
+    },
+    {
+      "rowName": "10HoursOutpost",
+      "displayName": "Outpost Veteran"
+    },
+    {
+      "rowName": "50SMPL3",
+      "displayName": "UDA Veteran"
+    },
+    {
       "rowName": "AllBlueprintsUnlockedTier1",
-      "displayName": null
+      "displayName": "Bear Necessities"
     },
     {
       "rowName": "AllBlueprintsUnlockedTier2",
-      "displayName": null
+      "displayName": "Unlocked And Loaded"
     },
     {
       "rowName": "AllBlueprintsUnlockedTier3",
-      "displayName": null
+      "displayName": "Unlocking Intensifies"
     },
     {
       "rowName": "AllBlueprintsUnlockedTier4",
-      "displayName": null
+      "displayName": "Bench Enthusiast"
+    },
+    {
+      "rowName": "AllELYStoryComplete",
+      "displayName": "For Mo"
+    },
+    {
+      "rowName": "AllGarganutanMissionsDone",
+      "displayName": "Colossus Collapse"
+    },
+    {
+      "rowName": "AllQuarriteMissionsDone",
+      "displayName": "Faultless Victory"
+    },
+    {
+      "rowName": "AllRimetuskMissionsDone",
+      "displayName": "Glacial Supremacy"
+    },
+    {
+      "rowName": "AllSixStoryMissionsProm",
+      "displayName": "A Gift of Fire"
+    },
+    {
+      "rowName": "AlterLaserGun",
+      "displayName": "Pew Review"
     },
     {
       "rowName": "AluminumMined1000",
-      "displayName": null
+      "displayName": "Aluminum Master III"
+    },
+    {
+      "rowName": "AluminumMined10000",
+      "displayName": "Aluminum Master V"
     },
     {
       "rowName": "AluminumMined200",
-      "displayName": null
+      "displayName": "Aluminum Master I"
     },
     {
       "rowName": "AluminumMined500",
-      "displayName": null
+      "displayName": "Aluminum Master II"
+    },
+    {
+      "rowName": "AluminumMined5000",
+      "displayName": "Aluminum Master IV"
+    },
+    {
+      "rowName": "ArcticArmor",
+      "displayName": "Snow Problem"
+    },
+    {
+      "rowName": "ArcticScanComplete",
+      "displayName": "Arctic Scanner"
     },
     {
       "rowName": "ArrowsFired100",
-      "displayName": null
+      "displayName": "Nice Shot I"
     },
     {
       "rowName": "ArrowsFired1000",
-      "displayName": null
+      "displayName": "Nice Shot II"
     },
     {
       "rowName": "ArrowsFired5000",
-      "displayName": null
+      "displayName": "Nice Shot III"
+    },
+    {
+      "rowName": "AttackNPC",
+      "displayName": "Plot Armor"
     },
     {
       "rowName": "AxeKills250",
-      "displayName": null
+      "displayName": "Axe Wielder II"
     },
     {
       "rowName": "AxeKills50",
-      "displayName": null
+      "displayName": "Axe Wielder I"
+    },
+    {
+      "rowName": "AxeKills500",
+      "displayName": "Axe Wielder III"
+    },
+    {
+      "rowName": "BabyCreaturesKilled100",
+      "displayName": "Heartless I"
+    },
+    {
+      "rowName": "BabyCreaturesKilled1000",
+      "displayName": "Heartless III"
+    },
+    {
+      "rowName": "BabyCreaturesKilled500",
+      "displayName": "Heartless II"
+    },
+    {
+      "rowName": "BearsKilled100",
+      "displayName": "Bear Killer II"
+    },
+    {
+      "rowName": "BearsKilled1000",
+      "displayName": "Bear Killer IV"
     },
     {
       "rowName": "BearsKilled20",
-      "displayName": null
+      "displayName": "Bear Killer I"
+    },
+    {
+      "rowName": "BearsKilled500",
+      "displayName": "Bear Killer III"
+    },
+    {
+      "rowName": "BearsKilled5000",
+      "displayName": "Bear Killer V"
+    },
+    {
+      "rowName": "BigBreakfast",
+      "displayName": "The Most Important Meal of the Day"
+    },
+    {
+      "rowName": "Block5000",
+      "displayName": "Blocked!"
+    },
+    {
+      "rowName": "BoarsKilled100",
+      "displayName": "Boar Killer II"
+    },
+    {
+      "rowName": "BoarsKilled1000",
+      "displayName": "Boar Killer IV"
     },
     {
       "rowName": "BoarsKilled20",
-      "displayName": null
+      "displayName": "Boar Killer I"
+    },
+    {
+      "rowName": "BoarsKilled500",
+      "displayName": "Boar Killer III"
+    },
+    {
+      "rowName": "BoarsKilled5000",
+      "displayName": "Boar Killer V"
     },
     {
       "rowName": "BoneCollected100",
-      "displayName": null
+      "displayName": "Bone Gatherer I"
     },
     {
       "rowName": "BoneCollected1000",
-      "displayName": null
+      "displayName": "Bone Gatherer III"
     },
     {
       "rowName": "BoneCollected500",
-      "displayName": null
+      "displayName": "Bone Gatherer II"
+    },
+    {
+      "rowName": "BowKills10000",
+      "displayName": "Quiver Me Timbers"
     },
     {
       "rowName": "BowKills250",
-      "displayName": null
+      "displayName": "Archer II"
     },
     {
       "rowName": "BowKills50",
-      "displayName": null
+      "displayName": "Archer I"
     },
     {
       "rowName": "BowKills500",
-      "displayName": null
+      "displayName": "Archer III"
     },
     {
       "rowName": "BuildIce",
-      "displayName": null
+      "displayName": "So Cool"
+    },
+    {
+      "rowName": "BuildOutpost",
+      "displayName": "Outpost Builder"
+    },
+    {
+      "rowName": "BulletKills10000",
+      "displayName": "Lock, Stock, and Lots of Bears"
+    },
+    {
+      "rowName": "BulletsFired10000",
+      "displayName": "Trigger Happy III"
+    },
+    {
+      "rowName": "BulletsFired500",
+      "displayName": "Trigger Happy I"
+    },
+    {
+      "rowName": "BulletsFired5000",
+      "displayName": "Trigger Happy II"
+    },
+    {
+      "rowName": "CatchAllFishTypes",
+      "displayName": "Master Angler"
     },
     {
       "rowName": "CaveWormsKilled10",
-      "displayName": null
+      "displayName": "Cave Worm Killer I"
     },
     {
       "rowName": "CaveWormsKilled100",
-      "displayName": null
+      "displayName": "Cave Worm Killer II"
+    },
+    {
+      "rowName": "CaveWormsKilled1000",
+      "displayName": "Cave Worm Killer IV"
     },
     {
       "rowName": "CaveWormsKilled500",
-      "displayName": null
+      "displayName": "Cave Worm Killer III"
+    },
+    {
+      "rowName": "CaveWormsKilled5000",
+      "displayName": "Cave Worm Killer V"
+    },
+    {
+      "rowName": "ChainsawTree",
+      "displayName": "Saw It Coming"
+    },
+    {
+      "rowName": "ChargeLithiumTool",
+      "displayName": "Power Trip"
+    },
+    {
+      "rowName": "ChefBackpack",
+      "displayName": "Professional Chef"
     },
     {
       "rowName": "CoalMined1000",
-      "displayName": null
+      "displayName": "Coal Master III"
+    },
+    {
+      "rowName": "CoalMined10000",
+      "displayName": "Coal Master V"
     },
     {
       "rowName": "CoalMined200",
-      "displayName": null
+      "displayName": "Coal Master I"
     },
     {
       "rowName": "CoalMined500",
-      "displayName": null
+      "displayName": "Coal Master II"
+    },
+    {
+      "rowName": "CoalMined5000",
+      "displayName": "Coal Master IV"
     },
     {
       "rowName": "CollectAllPlants",
-      "displayName": null
+      "displayName": "Herb Your Enthusiasm"
+    },
+    {
+      "rowName": "CompleteAllOlympusMissions",
+      "displayName": "Zero To Hero"
+    },
+    {
+      "rowName": "CompleteAllStyxMissions",
+      "displayName": "Styx And Stones"
+    },
+    {
+      "rowName": "CompleteBestiary",
+      "displayName": "Gotta Catch Them All"
+    },
+    {
+      "rowName": "CompleteGarganutanTree",
+      "displayName": "What Experiment?"
+    },
+    {
+      "rowName": "CompleteQuarriteTree",
+      "displayName": "Hero of the Mines"
+    },
+    {
+      "rowName": "CompleteRimetuskTree",
+      "displayName": "Nothing to see Here"
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted100",
+      "displayName": "Experienced Concrete Builder"
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted1000",
+      "displayName": "Professional Concrete Builder"
     },
     {
       "rowName": "ConcreteBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Concrete Builder"
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted50",
+      "displayName": "Proficient Concrete Builder"
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted500",
+      "displayName": "Expert Concrete Builder"
+    },
+    {
+      "rowName": "ConvUranium",
+      "displayName": "Heavy Metal Remix"
     },
     {
       "rowName": "CopperMined1000",
-      "displayName": null
+      "displayName": "Copper Master III"
     },
     {
       "rowName": "CopperMined10000",
-      "displayName": null
+      "displayName": "Copper Master V"
     },
     {
       "rowName": "CopperMined200",
-      "displayName": null
+      "displayName": "Copper Master I"
     },
     {
       "rowName": "CopperMined500",
-      "displayName": null
+      "displayName": "Copper Master II"
     },
     {
       "rowName": "CopperMined5000",
-      "displayName": null
+      "displayName": "Copper Master IV"
     },
     {
       "rowName": "Cozy250",
-      "displayName": null
+      "displayName": "So Comfy, Can't Move"
+    },
+    {
+      "rowName": "CraftAllFoods",
+      "displayName": "Yes Chef!"
     },
     {
       "rowName": "CraftLegWeapon",
-      "displayName": null
+      "displayName": "Matter Reforged"
+    },
+    {
+      "rowName": "CreatePortBattery",
+      "displayName": "Handy"
     },
     {
       "rowName": "CreaturesSkinned100",
-      "displayName": null
+      "displayName": "Creatures Skinned II"
     },
     {
       "rowName": "CreaturesSkinned20",
-      "displayName": null
+      "displayName": "Creatures Skinned I"
     },
     {
       "rowName": "CreaturesSkinned500",
-      "displayName": null
+      "displayName": "Creatures Skinned III"
     },
     {
       "rowName": "CreditsEarned10000",
-      "displayName": null
+      "displayName": "Money Money Money"
     },
     {
       "rowName": "CriticalHitKills250",
-      "displayName": null
+      "displayName": "Ruthless II"
     },
     {
       "rowName": "CriticalHitKills50",
-      "displayName": null
+      "displayName": "Ruthless I"
     },
     {
       "rowName": "CriticalHitKills500",
-      "displayName": null
+      "displayName": "Ruthless III"
+    },
+    {
+      "rowName": "CrudePower",
+      "displayName": "Crude Awakening"
     },
     {
       "rowName": "DaisyEscortSuccess",
-      "displayName": null
+      "displayName": "The Bodyguard"
     },
     {
       "rowName": "DeerKilled10",
-      "displayName": null
+      "displayName": "Deer Killer I"
+    },
+    {
+      "rowName": "DeerKilled100",
+      "displayName": "Deer Killer II"
+    },
+    {
+      "rowName": "DeerKilled1000",
+      "displayName": "Deer Killer IV"
+    },
+    {
+      "rowName": "DeerKilled500",
+      "displayName": "Deer Killer III"
+    },
+    {
+      "rowName": "DeerKilled5000",
+      "displayName": "Deer Killer V"
+    },
+    {
+      "rowName": "DefeatGarganutan",
+      "displayName": "Gone Bananas"
+    },
+    {
+      "rowName": "DefeatGarganutanHard",
+      "displayName": "Ape-x Predator"
+    },
+    {
+      "rowName": "DefeatHammerhead",
+      "displayName": "Ooze Control"
+    },
+    {
+      "rowName": "DefeatHammerheadHard",
+      "displayName": "Nailed It"
     },
     {
       "rowName": "DefeatLavaHunter",
-      "displayName": null
+      "displayName": "Meltdown"
+    },
+    {
+      "rowName": "DefeatLavaHunterHard",
+      "displayName": "Too Hot to Handle"
+    },
+    {
+      "rowName": "DefeatQuarrite",
+      "displayName": "Fault Line"
+    },
+    {
+      "rowName": "DefeatQuarriteHard",
+      "displayName": "Rock and a Hard Place"
+    },
+    {
+      "rowName": "DefeatRimetusk",
+      "displayName": "Cold-Blooded"
+    },
+    {
+      "rowName": "DefeatRimetuskHard",
+      "displayName": "Tusks to Dust"
+    },
+    {
+      "rowName": "DesertScanComplete",
+      "displayName": "Desert Scanner"
+    },
+    {
+      "rowName": "DestroyCrateWithGrenade",
+      "displayName": "Ex-Box"
     },
     {
       "rowName": "DestroyDrone",
-      "displayName": null
+      "displayName": "Signal Jammed"
+    },
+    {
+      "rowName": "DiscoverAbyssCave",
+      "displayName": "Still Not Lost"
     },
     {
       "rowName": "DispatchSurvivedLaser",
-      "displayName": null
+      "displayName": "That Was Close"
     },
     {
       "rowName": "DistanceTraveled10",
-      "displayName": null
+      "displayName": "Wayfarer I"
     },
     {
       "rowName": "DistanceTraveled100",
-      "displayName": null
+      "displayName": "Wayfarer IV"
     },
     {
       "rowName": "DistanceTraveled25",
-      "displayName": null
+      "displayName": "Wayfarer II"
     },
     {
       "rowName": "DistanceTraveled50",
-      "displayName": null
+      "displayName": "Wayfarer III"
     },
     {
       "rowName": "DistanceTraveled500",
-      "displayName": null
+      "displayName": "Wayfarer V"
     },
     {
       "rowName": "DistanceTraveledArctic10",
-      "displayName": null
+      "displayName": "Frozen Traveller I"
+    },
+    {
+      "rowName": "DistanceTraveledArctic100",
+      "displayName": "Frozen Traveller IV"
     },
     {
       "rowName": "DistanceTraveledArctic25",
-      "displayName": null
+      "displayName": "Frozen Traveller II"
+    },
+    {
+      "rowName": "DistanceTraveledArctic50",
+      "displayName": "Frozen Traveller III"
+    },
+    {
+      "rowName": "DistanceTraveledArctic500",
+      "displayName": "Frozen Traveller V"
     },
     {
       "rowName": "DistanceTraveledCaves1",
-      "displayName": null
+      "displayName": "Spelunker I"
+    },
+    {
+      "rowName": "DistanceTraveledCaves10",
+      "displayName": "Spelunker IIII"
     },
     {
       "rowName": "DistanceTraveledCaves2",
-      "displayName": null
+      "displayName": "Spelunker II"
+    },
+    {
+      "rowName": "DistanceTraveledCaves20",
+      "displayName": "Spelunker V"
     },
     {
       "rowName": "DistanceTraveledCaves5",
-      "displayName": null
+      "displayName": "Spelunker III"
     },
     {
       "rowName": "DistanceTraveledDesert10",
-      "displayName": null
+      "displayName": "Scorched Traveller I"
+    },
+    {
+      "rowName": "DistanceTraveledDesert100",
+      "displayName": "Scorched Traveller IV"
     },
     {
       "rowName": "DistanceTraveledDesert25",
-      "displayName": null
+      "displayName": "Scorched Traveller II"
     },
     {
       "rowName": "DistanceTraveledDesert50",
-      "displayName": null
+      "displayName": "Scorched Traveller III"
+    },
+    {
+      "rowName": "DistanceTraveledDesert500",
+      "displayName": "Scorched Traveller V"
     },
     {
       "rowName": "DistanceTraveledForest10",
-      "displayName": null
+      "displayName": "Hiker I"
     },
     {
       "rowName": "DistanceTraveledForest100",
-      "displayName": null
+      "displayName": "Hiker IV"
     },
     {
       "rowName": "DistanceTraveledForest25",
-      "displayName": null
+      "displayName": "Hiker II"
     },
     {
       "rowName": "DistanceTraveledForest50",
-      "displayName": null
+      "displayName": "Hiker III"
+    },
+    {
+      "rowName": "DistanceTraveledForest500",
+      "displayName": "Hiker V"
     },
     {
       "rowName": "DownedCount1",
-      "displayName": null
-    },
-    {
-      "rowName": "Electroshock",
-      "displayName": null
+      "displayName": "Whoops!"
     },
     {
       "rowName": "ELY1Complete",
-      "displayName": null
+      "displayName": "The Eris Inquisition"
+    },
+    {
+      "rowName": "ELY2Complete",
+      "displayName": "Encrypted"
+    },
+    {
+      "rowName": "ELY3Complete",
+      "displayName": "Lab Rat"
+    },
+    {
+      "rowName": "ELY4Complete",
+      "displayName": "Deceit"
+    },
+    {
+      "rowName": "ELY5Complete",
+      "displayName": "Thermonuclear"
+    },
+    {
+      "rowName": "ELY6Complete",
+      "displayName": "At All Costs"
+    },
+    {
+      "rowName": "ERPNullSec",
+      "displayName": "Back to Square One"
+    },
+    {
+      "rowName": "EatCake",
+      "displayName": "Let Them Eat Cake"
+    },
+    {
+      "rowName": "Electroshock",
+      "displayName": "Shocking"
+    },
+    {
+      "rowName": "ElephantsKilled100",
+      "displayName": "Elephant Killer II"
+    },
+    {
+      "rowName": "ElephantsKilled1000",
+      "displayName": "Elephant Killer IV"
+    },
+    {
+      "rowName": "ElephantsKilled20",
+      "displayName": "Elephant Killer I"
+    },
+    {
+      "rowName": "ElephantsKilled500",
+      "displayName": "Elephant Killer III"
+    },
+    {
+      "rowName": "ElephantsKilled5000",
+      "displayName": "Elephant Killer V"
+    },
+    {
+      "rowName": "EndAbyss",
+      "displayName": "Poor Hans"
+    },
+    {
+      "rowName": "EnterGeo",
+      "displayName": "Serene Stench"
+    },
+    {
+      "rowName": "EnterNullSec",
+      "displayName": "Dude, Where's my Map?"
     },
     {
       "rowName": "EquipFullArmour",
-      "displayName": null
+      "displayName": "Armored and Dangerous"
+    },
+    {
+      "rowName": "ExoticsEarned10000",
+      "displayName": "Ore-mageddon"
+    },
+    {
+      "rowName": "Extract1000Biomass",
+      "displayName": "Flesh and Circuitry"
+    },
+    {
+      "rowName": "FallDeathNullSec",
+      "displayName": "Watch Your Step"
+    },
+    {
+      "rowName": "FetchWithDog",
+      "displayName": "No Take, Only Throw"
     },
     {
       "rowName": "FindEden",
-      "displayName": null
+      "displayName": "Home Sweet Home"
+    },
+    {
+      "rowName": "FirearmKills250",
+      "displayName": "Deadly Aim II"
     },
     {
       "rowName": "FirearmKills50",
-      "displayName": null
+      "displayName": "Deadly Aim I"
+    },
+    {
+      "rowName": "FirearmKills500",
+      "displayName": "Deadly Aim III"
+    },
+    {
+      "rowName": "FiresExtinguished100",
+      "displayName": "Fire Fighter II"
     },
     {
       "rowName": "FiresExtinguished50",
-      "displayName": null
+      "displayName": "Fire Fighter I"
+    },
+    {
+      "rowName": "FiresExtinguished500",
+      "displayName": "Fire Fighter III"
     },
     {
       "rowName": "FirstDropPromStory",
-      "displayName": null
+      "displayName": "Soft Landing"
     },
     {
       "rowName": "FishKilled10",
-      "displayName": null
+      "displayName": "Fish Killer I"
+    },
+    {
+      "rowName": "FishKilled100",
+      "displayName": "Fish Killer II"
+    },
+    {
+      "rowName": "FishKilled1000",
+      "displayName": "Fish Killer IV"
+    },
+    {
+      "rowName": "FishKilled500",
+      "displayName": "Fish Killer III"
+    },
+    {
+      "rowName": "FishKilled5000",
+      "displayName": "Fish Killer V"
+    },
+    {
+      "rowName": "FishRadZone",
+      "displayName": "Gone Fission"
+    },
+    {
+      "rowName": "FistKills250",
+      "displayName": "Smashing! II"
+    },
+    {
+      "rowName": "FistKills50",
+      "displayName": "Smashing! I"
+    },
+    {
+      "rowName": "FistKills500",
+      "displayName": "Smashing! III"
+    },
+    {
+      "rowName": "FlameTurretKill",
+      "displayName": "Burn Notice"
     },
     {
       "rowName": "FoodConsumed100",
-      "displayName": null
+      "displayName": "Ravenous I"
     },
     {
       "rowName": "FoodConsumed1000",
-      "displayName": null
+      "displayName": "Ravenous III"
+    },
+    {
+      "rowName": "FoodConsumed10000",
+      "displayName": "Ravenous V"
     },
     {
       "rowName": "FoodConsumed500",
-      "displayName": null
+      "displayName": "Ravenous II"
+    },
+    {
+      "rowName": "FoodConsumed5000",
+      "displayName": "Ravenous IV"
     },
     {
       "rowName": "ForestScanComplete",
-      "displayName": null
+      "displayName": "Forest Scanner"
+    },
+    {
+      "rowName": "FractureAWOL",
+      "displayName": "AWOL"
+    },
+    {
+      "rowName": "FractureCave",
+      "displayName": "What is this place?"
     },
     {
       "rowName": "FurCollected100",
-      "displayName": null
+      "displayName": "Fur Gatherer I"
     },
     {
       "rowName": "FurCollected1000",
-      "displayName": null
+      "displayName": "Fur Gatherer III"
     },
     {
       "rowName": "FurCollected500",
-      "displayName": null
+      "displayName": "Fur Gatherer II"
+    },
+    {
+      "rowName": "GenerateCrude",
+      "displayName": "Drill, Baby, Drill"
+    },
+    {
+      "rowName": "GenerateNatural",
+      "displayName": "The Better Option?"
+    },
+    {
+      "rowName": "GetLaserGun",
+      "displayName": "Pew Pew Pew"
+    },
+    {
+      "rowName": "GhillieArmor",
+      "displayName": "You Can't See Me"
+    },
+    {
+      "rowName": "GlacierScanComplete",
+      "displayName": "Glacier Scanner"
+    },
+    {
+      "rowName": "GlassBuildingsCrafted100",
+      "displayName": "Experienced Glass Builder"
+    },
+    {
+      "rowName": "GlassBuildingsCrafted1000",
+      "displayName": "Professional Glass Builder"
     },
     {
       "rowName": "GlassBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Glass Builder"
     },
     {
       "rowName": "GlassBuildingsCrafted50",
-      "displayName": null
+      "displayName": "Proficient Glass Builder"
+    },
+    {
+      "rowName": "GlassBuildingsCrafted500",
+      "displayName": "Expert Glass Builder"
+    },
+    {
+      "rowName": "HotCold",
+      "displayName": "Hot 'n' Cold"
+    },
+    {
+      "rowName": "IceBreakerCrushed",
+      "displayName": "Press F to Pay Respects"
+    },
+    {
+      "rowName": "IceBreakerEncounter",
+      "displayName": "What is That?"
+    },
+    {
+      "rowName": "IgniteABuilding",
+      "displayName": "Fired Up"
     },
     {
       "rowName": "InteriorWoodBuildingsCrafted100",
-      "displayName": null
+      "displayName": "Experienced Interior Wood Builder"
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted1000",
+      "displayName": "Professional Interior Wood Builder"
     },
     {
       "rowName": "InteriorWoodBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Interior Wood Builder"
     },
     {
       "rowName": "InteriorWoodBuildingsCrafted50",
-      "displayName": null
+      "displayName": "Proficient Interior Wood Builder"
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted500",
+      "displayName": "Expert Interior Wood Builder"
     },
     {
       "rowName": "Introduction",
-      "displayName": null
+      "displayName": "And You Are?"
+    },
+    {
+      "rowName": "IronBuildingsCrafted100",
+      "displayName": "Experienced Aluminum Builder"
+    },
+    {
+      "rowName": "IronBuildingsCrafted1000",
+      "displayName": "Professional Aluminum Builder"
+    },
+    {
+      "rowName": "IronBuildingsCrafted20",
+      "displayName": "Novice Aluminum Builder"
+    },
+    {
+      "rowName": "IronBuildingsCrafted50",
+      "displayName": "Proficient Aluminum Builder"
+    },
+    {
+      "rowName": "IronBuildingsCrafted500",
+      "displayName": "Expert Aluminum Builder"
     },
     {
       "rowName": "IronMined1000",
-      "displayName": null
+      "displayName": "Iron Master III"
     },
     {
       "rowName": "IronMined10000",
-      "displayName": null
+      "displayName": "Iron Master V"
     },
     {
       "rowName": "IronMined200",
-      "displayName": null
+      "displayName": "Iron Master I"
     },
     {
       "rowName": "IronMined500",
-      "displayName": null
+      "displayName": "Iron Master II"
     },
     {
       "rowName": "IronMined5000",
-      "displayName": null
+      "displayName": "Iron Master IV"
     },
     {
       "rowName": "ItemsAltered1",
-      "displayName": null
+      "displayName": "Makeshift Engineering"
     },
     {
-      "rowName": "KilledByABear",
-      "displayName": null
+      "rowName": "JaguarBossKilled",
+      "displayName": "Jaguar Slayer"
+    },
+    {
+      "rowName": "KillAlphaWolfBossOnHardest",
+      "displayName": "Leader Of The Pack"
+    },
+    {
+      "rowName": "KillBearHands",
+      "displayName": "Bear Hands"
+    },
+    {
+      "rowName": "KillCams1000",
+      "displayName": "One Shot, One Kill"
+    },
+    {
+      "rowName": "KillDeerWithGrenade",
+      "displayName": "Buck and Cover"
+    },
+    {
+      "rowName": "KillDrones",
+      "displayName": "The People's Syndicate"
     },
     {
       "rowName": "KillFishWithBow",
-      "displayName": null
+      "displayName": "Pain in the Bass"
+    },
+    {
+      "rowName": "KillLandsharkBossOnHardest",
+      "displayName": "... The Harder They Fall"
+    },
+    {
+      "rowName": "KillMutant",
+      "displayName": "Enzymic Mutation"
+    },
+    {
+      "rowName": "KillQueen",
+      "displayName": "Royal Decree"
+    },
+    {
+      "rowName": "KillQueenHard",
+      "displayName": "Wyrm Reaper"
+    },
+    {
+      "rowName": "KillRadspectors",
+      "displayName": "Ghosted"
+    },
+    {
+      "rowName": "KillSandwormBossOnHardest",
+      "displayName": "The Bigger They Are..."
+    },
+    {
+      "rowName": "KillScorpionBossOnHardest",
+      "displayName": "Sting Operation"
+    },
+    {
+      "rowName": "KillSpawner",
+      "displayName": "Hard Reset"
+    },
+    {
+      "rowName": "KillWithRadAmmo",
+      "displayName": "Biochemical Warfare"
+    },
+    {
+      "rowName": "KillZebrasX",
+      "displayName": "Pony Slaystation"
+    },
+    {
+      "rowName": "KilledByABear",
+      "displayName": "Welcome to Icarus"
+    },
+    {
+      "rowName": "KilledByALavaFlyer",
+      "displayName": "Jelly Baby"
+    },
+    {
+      "rowName": "KnifeKills250",
+      "displayName": "Razor Sharp II"
     },
     {
       "rowName": "KnifeKills50",
-      "displayName": null
+      "displayName": "Razor Sharp I"
+    },
+    {
+      "rowName": "KnifeKills500",
+      "displayName": "Razor Sharp III"
     },
     {
       "rowName": "LandEly",
-      "displayName": null
+      "displayName": "Graceful Landing"
     },
     {
       "rowName": "LavaSwim",
-      "displayName": null
+      "displayName": "Hot-hot-hot-hot-hot!"
     },
     {
       "rowName": "LeatherCollected100",
-      "displayName": null
+      "displayName": "Leather Gatherer I"
     },
     {
       "rowName": "LeatherCollected1000",
-      "displayName": null
+      "displayName": "Leather Gatherer III"
     },
     {
       "rowName": "LeatherCollected500",
-      "displayName": null
+      "displayName": "Leather Gatherer II"
+    },
+    {
+      "rowName": "LionsKilled100",
+      "displayName": "Cougar Killer II"
+    },
+    {
+      "rowName": "LionsKilled1000",
+      "displayName": "Cougar Killer IV"
     },
     {
       "rowName": "LionsKilled20",
-      "displayName": null
+      "displayName": "Cougar Killer I"
+    },
+    {
+      "rowName": "LionsKilled500",
+      "displayName": "Cougar Killer III"
+    },
+    {
+      "rowName": "LionsKilled5000",
+      "displayName": "Cougar Killer V"
     },
     {
       "rowName": "Lose80percHealth",
-      "displayName": null
+      "displayName": "What Fall Damage?"
     },
     {
       "rowName": "MammothBossKilled",
-      "displayName": null
+      "displayName": "Mammoth Slayer"
+    },
+    {
+      "rowName": "MammothsKilled100",
+      "displayName": "Mammoth Killer II"
+    },
+    {
+      "rowName": "MammothsKilled1000",
+      "displayName": "Mammoth Killer IV"
     },
     {
       "rowName": "MammothsKilled20",
-      "displayName": null
+      "displayName": "Mammoth Killer I"
+    },
+    {
+      "rowName": "MammothsKilled500",
+      "displayName": "Mammoth Killer III"
+    },
+    {
+      "rowName": "MammothsKilled5000",
+      "displayName": "Mammoth Killer V"
+    },
+    {
+      "rowName": "MaxRankELY",
+      "displayName": "Gotta Catch Them All II"
     },
     {
       "rowName": "MeatCollected100",
-      "displayName": null
+      "displayName": "Meat Gatherer I"
     },
     {
       "rowName": "MeatCollected1000",
-      "displayName": null
+      "displayName": "Meat Gatherer III"
     },
     {
       "rowName": "MeatCollected500",
-      "displayName": null
+      "displayName": "Meat Gatherer II"
+    },
+    {
+      "rowName": "MeleeKills10000",
+      "displayName": "Whack-A-Mole"
+    },
+    {
+      "rowName": "MiddleIceSheet",
+      "displayName": "Calm Before the Storm"
     },
     {
       "rowName": "MineAllOres",
-      "displayName": null
+      "displayName": "Rock 'n' Roll"
+    },
+    {
+      "rowName": "Mount50",
+      "displayName": "Mountie"
+    },
+    {
+      "rowName": "MushroomSwamp",
+      "displayName": "Mushrooms?"
     },
     {
       "rowName": "OffenderAudiolog",
-      "displayName": null
+      "displayName": "Unknown Caller"
+    },
+    {
+      "rowName": "OilBaron",
+      "displayName": "Future Oil Baron"
+    },
+    {
+      "rowName": "OrderCat",
+      "displayName": "Cat-astrophy Averted"
+    },
+    {
+      "rowName": "OrderChicken",
+      "displayName": "Cock-a-Doodle-Doom"
+    },
+    {
+      "rowName": "OrderDog",
+      "displayName": "Barking Up the Right Tree"
     },
     {
       "rowName": "OrderHorse",
-      "displayName": null
+      "displayName": "Hay There, Neigh-bor!"
     },
     {
       "rowName": "OxiteMined1000",
-      "displayName": null
+      "displayName": "Oxite Master III"
     },
     {
       "rowName": "OxiteMined10000",
-      "displayName": null
+      "displayName": "Oxite Master V"
     },
     {
       "rowName": "OxiteMined200",
-      "displayName": null
+      "displayName": "Oxite Master I"
     },
     {
       "rowName": "OxiteMined500",
-      "displayName": null
+      "displayName": "Oxite Master II"
     },
     {
       "rowName": "OxiteMined5000",
-      "displayName": null
+      "displayName": "Oxite Master IV"
+    },
+    {
+      "rowName": "Pet25",
+      "displayName": "Fur Baby"
+    },
+    {
+      "rowName": "PetDies",
+      "displayName": "RIP Mr Kitty"
     },
     {
       "rowName": "PetHome",
-      "displayName": null
+      "displayName": "Habitat Acquired"
+    },
+    {
+      "rowName": "PickaxeKills250",
+      "displayName": "Pickaxe Wielder II"
     },
     {
       "rowName": "PickaxeKills50",
-      "displayName": null
+      "displayName": "Pickaxe Wielder I"
+    },
+    {
+      "rowName": "PickaxeKills500",
+      "displayName": "Pickaxe Wielder III"
     },
     {
       "rowName": "PickupBasicResource",
-      "displayName": null
+      "displayName": "Survival 101"
+    },
+    {
+      "rowName": "PlaceFort",
+      "displayName": "Rock Solid"
     },
     {
       "rowName": "PlatinumMined1000",
-      "displayName": null
+      "displayName": "Platinum Master III"
+    },
+    {
+      "rowName": "PlatinumMined10000",
+      "displayName": "Platinum Master V"
     },
     {
       "rowName": "PlatinumMined200",
-      "displayName": null
+      "displayName": "Platinum Master I"
     },
     {
       "rowName": "PlatinumMined500",
-      "displayName": null
+      "displayName": "Platinum Master II"
+    },
+    {
+      "rowName": "PlatinumMined5000",
+      "displayName": "Platinum Master IV"
     },
     {
       "rowName": "PlayersKilled1",
-      "displayName": null
+      "displayName": "Friendly Fire"
     },
     {
       "rowName": "PrimeMeatCollected100",
-      "displayName": null
+      "displayName": "Prime Meat Gatherer I"
     },
     {
       "rowName": "PrimeMeatCollected1000",
-      "displayName": null
+      "displayName": "Prime Meat Gatherer III"
     },
     {
       "rowName": "PrimeMeatCollected500",
-      "displayName": null
+      "displayName": "Prime Meat Gatherer II"
+    },
+    {
+      "rowName": "RabbitsKilled100",
+      "displayName": "Rabbit Killer II"
+    },
+    {
+      "rowName": "RabbitsKilled1000",
+      "displayName": "Rabbit Killer IV"
     },
     {
       "rowName": "RabbitsKilled20",
-      "displayName": null
+      "displayName": "Rabbit Killer I"
+    },
+    {
+      "rowName": "RabbitsKilled500",
+      "displayName": "Rabbit Killer III"
+    },
+    {
+      "rowName": "RabbitsKilled5000",
+      "displayName": "Rabbit Killer V"
+    },
+    {
+      "rowName": "RadDeath",
+      "displayName": "You're Glowing..."
+    },
+    {
+      "rowName": "RadExotics",
+      "displayName": "Off the Charts"
     },
     {
       "rowName": "ReachBottomOfTalentTree",
-      "displayName": null
+      "displayName": "Highly Skilled"
+    },
+    {
+      "rowName": "ReachIceSheet",
+      "displayName": "Not Lost"
     },
     {
       "rowName": "ReachMaxLevel",
-      "displayName": null
+      "displayName": "Veteran Prospector"
+    },
+    {
+      "rowName": "RedExotics",
+      "displayName": "Cha-Ching!"
     },
     {
       "rowName": "ReviveCount1",
-      "displayName": null
+      "displayName": "Medic!"
+    },
+    {
+      "rowName": "RezNullSec",
+      "displayName": "Nice to Have Friends"
     },
     {
       "rowName": "RideRaptor",
-      "displayName": null
+      "displayName": "Nice Ride"
+    },
+    {
+      "rowName": "RiverlandsScanComplete",
+      "displayName": "Riverlands Scanner"
+    },
+    {
+      "rowName": "SandwormArmor",
+      "displayName": "Who Wore It Better?"
     },
     {
       "rowName": "SandwormBossKilled",
-      "displayName": null
+      "displayName": "Sandworm Slayer"
+    },
+    {
+      "rowName": "SavedChurch",
+      "displayName": "You Ever Wonder Why We're Here?"
+    },
+    {
+      "rowName": "ScorpionArmor",
+      "displayName": "Your Own Worst Enemy"
     },
     {
       "rowName": "ShadowedUnlockG15",
-      "displayName": null
+      "displayName": "One Of Us"
     },
     {
       "rowName": "SilicaMined1000",
-      "displayName": null
+      "displayName": "Silica Master III"
+    },
+    {
+      "rowName": "SilicaMined10000",
+      "displayName": "Silica Master V"
     },
     {
       "rowName": "SilicaMined200",
-      "displayName": null
+      "displayName": "Silica Master I"
     },
     {
       "rowName": "SilicaMined500",
-      "displayName": null
+      "displayName": "Silica Master II"
     },
     {
       "rowName": "SilicaMined5000",
-      "displayName": null
+      "displayName": "Silica Master IV"
     },
     {
       "rowName": "SneakAttackKills250",
-      "displayName": null
+      "displayName": "Silent but Deadly II"
     },
     {
       "rowName": "SneakAttackKills50",
-      "displayName": null
+      "displayName": "Silent but Deadly I"
+    },
+    {
+      "rowName": "SneakAttackKills500",
+      "displayName": "Silent but Deadly III"
     },
     {
       "rowName": "SpearKills250",
-      "displayName": null
+      "displayName": "The Pointy End II"
     },
     {
       "rowName": "SpearKills50",
-      "displayName": null
+      "displayName": "The Pointy End I"
     },
     {
       "rowName": "SpearKills500",
-      "displayName": null
+      "displayName": "The Pointy End III"
     },
     {
       "rowName": "StoneBuildingsCrafted100",
-      "displayName": null
+      "displayName": "Experienced Stone Builder"
+    },
+    {
+      "rowName": "StoneBuildingsCrafted1000",
+      "displayName": "Professional Stone Builder"
     },
     {
       "rowName": "StoneBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Stone Builder"
     },
     {
       "rowName": "StoneBuildingsCrafted50",
-      "displayName": null
+      "displayName": "Proficient Stone Builder"
     },
     {
       "rowName": "StoneBuildingsCrafted500",
-      "displayName": null
+      "displayName": "Expert Stone Builder"
     },
     {
       "rowName": "StoneMined1000",
-      "displayName": null
+      "displayName": "Master Mason II"
     },
     {
       "rowName": "StoneMined10000",
-      "displayName": null
+      "displayName": "Master Mason III"
+    },
+    {
+      "rowName": "StoneMined100000",
+      "displayName": "Master Mason V"
     },
     {
       "rowName": "StoneMined500",
-      "displayName": null
+      "displayName": "Master Mason I"
     },
     {
       "rowName": "StoneMined50000",
-      "displayName": null
+      "displayName": "Master Mason IV"
     },
     {
       "rowName": "StruckByLightning1",
-      "displayName": null
+      "displayName": "At least it never hits the same place twice..."
+    },
+    {
+      "rowName": "StruckByLightning2",
+      "displayName": "Sometimes it does..."
     },
     {
       "rowName": "SuitUp",
-      "displayName": null
+      "displayName": "Suited Up"
     },
     {
       "rowName": "SulfurMined1000",
-      "displayName": null
+      "displayName": "Sulfur Master III"
+    },
+    {
+      "rowName": "SulfurMined10000",
+      "displayName": "Sulfur Master V"
     },
     {
       "rowName": "SulfurMined200",
-      "displayName": null
+      "displayName": "Sulfur Master I"
     },
     {
       "rowName": "SulfurMined500",
-      "displayName": null
+      "displayName": "Sulfur Master II"
     },
     {
       "rowName": "SulfurMined5000",
-      "displayName": null
+      "displayName": "Sulfur Master IV"
     },
     {
-      "rowName": "Tamed10",
-      "displayName": null
+      "rowName": "Survive5Hours",
+      "displayName": "Harshest of Conditions"
+    },
+    {
+      "rowName": "TameDraven",
+      "displayName": "Pack Mule"
     },
     {
       "rowName": "TameHostile",
-      "displayName": null
+      "displayName": "Easy Tiger"
+    },
+    {
+      "rowName": "TameRaptor",
+      "displayName": "Jurassic Perks"
+    },
+    {
+      "rowName": "TameSkulk",
+      "displayName": "Skulking Around"
     },
     {
       "rowName": "TameSlinker",
-      "displayName": null
+      "displayName": "Slinky"
+    },
+    {
+      "rowName": "TameStorca",
+      "displayName": "Eyes On Me"
+    },
+    {
+      "rowName": "Tamed10",
+      "displayName": "Ringleader"
+    },
+    {
+      "rowName": "TamedPetKill",
+      "displayName": "Sic 'em!"
     },
     {
       "rowName": "TempestFavor",
-      "displayName": null
+      "displayName": "Thanks, Buddy"
+    },
+    {
+      "rowName": "TeslaCoil",
+      "displayName": "Pinnacle of his Career"
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted100",
+      "displayName": "Experienced Thatch Builder"
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted1000",
+      "displayName": "Professional Thatch Builder"
     },
     {
       "rowName": "ThatchBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Thatch Builder"
     },
     {
       "rowName": "ThatchBuildingsCrafted50",
-      "displayName": null
+      "displayName": "Proficient Thatch Builder"
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted500",
+      "displayName": "Expert Thatch Builder"
     },
     {
       "rowName": "ThumperActivations1",
-      "displayName": null
+      "displayName": "Mined Over Matter"
     },
     {
       "rowName": "TimeSurvived10",
-      "displayName": null
+      "displayName": "Survivor II"
     },
     {
       "rowName": "TimeSurvived15",
-      "displayName": null
+      "displayName": "Survivor III"
     },
     {
       "rowName": "TimeSurvived20",
-      "displayName": null
+      "displayName": "Survivor IV"
     },
     {
       "rowName": "TimeSurvived5",
-      "displayName": null
+      "displayName": "Survivor I"
     },
     {
       "rowName": "TimeSurvived50",
-      "displayName": null
+      "displayName": "Survivor V"
+    },
+    {
+      "rowName": "TimeSurvivedArctic10",
+      "displayName": "Frozen II"
+    },
+    {
+      "rowName": "TimeSurvivedArctic15",
+      "displayName": "Frozen III"
+    },
+    {
+      "rowName": "TimeSurvivedArctic20",
+      "displayName": "Frozen IV"
     },
     {
       "rowName": "TimeSurvivedArctic5",
-      "displayName": null
+      "displayName": "Frozen I"
+    },
+    {
+      "rowName": "TimeSurvivedArctic50",
+      "displayName": "Frozen V"
     },
     {
       "rowName": "TimeSurvivedCaves10",
-      "displayName": null
+      "displayName": "Cave Dweller II"
+    },
+    {
+      "rowName": "TimeSurvivedCaves15",
+      "displayName": "Cave Dweller III"
+    },
+    {
+      "rowName": "TimeSurvivedCaves20",
+      "displayName": "Cave Dweller IV"
     },
     {
       "rowName": "TimeSurvivedCaves5",
-      "displayName": null
+      "displayName": "Cave Dweller I"
+    },
+    {
+      "rowName": "TimeSurvivedCaves50",
+      "displayName": "Cave Dweller V"
     },
     {
       "rowName": "TimeSurvivedDesert10",
-      "displayName": null
+      "displayName": "Scorched II"
+    },
+    {
+      "rowName": "TimeSurvivedDesert15",
+      "displayName": "Scorched III"
+    },
+    {
+      "rowName": "TimeSurvivedDesert20",
+      "displayName": "Scorched IV"
     },
     {
       "rowName": "TimeSurvivedDesert5",
-      "displayName": null
+      "displayName": "Scorched I"
+    },
+    {
+      "rowName": "TimeSurvivedDesert50",
+      "displayName": "Scorched V"
     },
     {
       "rowName": "TimeSurvivedForest10",
-      "displayName": null
+      "displayName": "Hunted II"
     },
     {
       "rowName": "TimeSurvivedForest15",
-      "displayName": null
+      "displayName": "Hunted III"
     },
     {
       "rowName": "TimeSurvivedForest20",
-      "displayName": null
+      "displayName": "Hunted IV"
     },
     {
       "rowName": "TimeSurvivedForest5",
-      "displayName": null
+      "displayName": "Hunted I"
     },
     {
       "rowName": "TimeSurvivedForest50",
-      "displayName": null
+      "displayName": "Hunted V"
     },
     {
       "rowName": "TitaniumMined1000",
-      "displayName": null
+      "displayName": "Titanium Master III"
+    },
+    {
+      "rowName": "TitaniumMined10000",
+      "displayName": "Titanium Master V"
     },
     {
       "rowName": "TitaniumMined200",
-      "displayName": null
+      "displayName": "Titanium Master I"
     },
     {
       "rowName": "TitaniumMined500",
-      "displayName": null
+      "displayName": "Titanium Master II"
+    },
+    {
+      "rowName": "TitaniumMined5000",
+      "displayName": "Titanium Master IV"
     },
     {
       "rowName": "TreesFelled100",
-      "displayName": null
+      "displayName": "Lumberjack II"
+    },
+    {
+      "rowName": "TreesFelled1000",
+      "displayName": "Lumberjack IV"
     },
     {
       "rowName": "TreesFelled50",
-      "displayName": null
+      "displayName": "Lumberjack I"
     },
     {
       "rowName": "TreesFelled500",
-      "displayName": null
+      "displayName": "Lumberjack III"
+    },
+    {
+      "rowName": "TreesFelled5000",
+      "displayName": "Lumberjack V"
     },
     {
       "rowName": "TutorialCompleted",
-      "displayName": null
-    },
-    {
-      "rowName": "UnlockBPT5",
-      "displayName": null
-    },
-    {
-      "rowName": "UnlockManu",
-      "displayName": null
+      "displayName": "Baby Steps"
     },
     {
       "rowName": "USeSledgehammer",
-      "displayName": null
+      "displayName": "Crushing It"
+    },
+    {
+      "rowName": "UnlockBPT5",
+      "displayName": "Peak Tech"
+    },
+    {
+      "rowName": "UnlockManu",
+      "displayName": "Mass Production"
+    },
+    {
+      "rowName": "UpgradeLegWeaponFully",
+      "displayName": "Weaponized Perfection"
+    },
+    {
+      "rowName": "UpgradedBeehive",
+      "displayName": "Not the Bees!"
+    },
+    {
+      "rowName": "UseGeigerCounter",
+      "displayName": "Read the Room"
+    },
+    {
+      "rowName": "UseJackhammer",
+      "displayName": "Rock Out"
+    },
+    {
+      "rowName": "UseMiningLaser",
+      "displayName": "Advanced Technology"
+    },
+    {
+      "rowName": "UseNailgun",
+      "displayName": "Industrial Stapling"
+    },
+    {
+      "rowName": "UseReactor",
+      "displayName": "3-Eyed Fish"
     },
     {
       "rowName": "ViewMeteor",
-      "displayName": null
+      "displayName": "Starstruck"
+    },
+    {
+      "rowName": "VisitAllBiomes",
+      "displayName": "Biome is Where The Heart Is"
     },
     {
       "rowName": "VoxelsComplete100",
-      "displayName": null
+      "displayName": "Tidy Miner I"
     },
     {
       "rowName": "VoxelsComplete1000",
-      "displayName": null
+      "displayName": "Tidy Miner IV"
     },
     {
       "rowName": "VoxelsComplete250",
-      "displayName": null
+      "displayName": "Tidy Miner II"
     },
     {
       "rowName": "VoxelsComplete500",
-      "displayName": null
+      "displayName": "Tidy Miner III"
     },
     {
       "rowName": "VoxelsComplete5000",
-      "displayName": null
+      "displayName": "Tidy Miner V"
     },
     {
       "rowName": "VoxelsHit1000",
-      "displayName": null
+      "displayName": "Professional Miner II"
     },
     {
       "rowName": "VoxelsHit10000",
-      "displayName": null
+      "displayName": "Professional Miner V"
     },
     {
       "rowName": "VoxelsHit2500",
-      "displayName": null
+      "displayName": "Professional Miner III"
     },
     {
       "rowName": "VoxelsHit500",
-      "displayName": null
+      "displayName": "Professional Miner I"
     },
     {
       "rowName": "VoxelsHit5000",
-      "displayName": null
+      "displayName": "Professional Miner IV"
+    },
+    {
+      "rowName": "WayfarerArmor",
+      "displayName": "No Sweat"
+    },
+    {
+      "rowName": "WearHazmat",
+      "displayName": "Glow-up"
     },
     {
       "rowName": "WolfBossKilled",
-      "displayName": null
+      "displayName": "Alpha Wolf Slayer"
     },
     {
       "rowName": "WolvesKilled10",
-      "displayName": null
+      "displayName": "Wolf Killer I"
     },
     {
       "rowName": "WolvesKilled100",
-      "displayName": null
+      "displayName": "Wolf Killer II"
+    },
+    {
+      "rowName": "WolvesKilled1000",
+      "displayName": "Wolf Killer IV"
+    },
+    {
+      "rowName": "WolvesKilled500",
+      "displayName": "Wolf Killer III"
+    },
+    {
+      "rowName": "WolvesKilled5000",
+      "displayName": "Wolf Killer V"
     },
     {
       "rowName": "WoodBuildingsCrafted100",
-      "displayName": null
+      "displayName": "Experienced Wood Builder"
     },
     {
       "rowName": "WoodBuildingsCrafted1000",
-      "displayName": null
+      "displayName": "Professional Wood Builder"
     },
     {
       "rowName": "WoodBuildingsCrafted20",
-      "displayName": null
+      "displayName": "Novice Wood Builder"
     },
     {
       "rowName": "WoodBuildingsCrafted50",
-      "displayName": null
+      "displayName": "Proficient Wood Builder"
     },
     {
       "rowName": "WoodBuildingsCrafted500",
-      "displayName": null
+      "displayName": "Expert Wood Builder"
     },
     {
       "rowName": "WoodCollected1000",
-      "displayName": null
+      "displayName": "Lumber Gatherer III"
     },
     {
       "rowName": "WoodCollected10000",
-      "displayName": null
+      "displayName": "Lumber Gatherer V"
     },
     {
       "rowName": "WoodCollected250",
-      "displayName": null
+      "displayName": "Lumber Gatherer I"
     },
     {
       "rowName": "WoodCollected500",
-      "displayName": null
+      "displayName": "Lumber Gatherer II"
     },
     {
       "rowName": "WoodCollected5000",
-      "displayName": null
+      "displayName": "Lumber Gatherer IV"
     }
   ]
 }

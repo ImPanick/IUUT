@@ -58,11 +58,17 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
 
 **NEXT: the Custom editor is feature-complete (all 9 categories wired).** Remaining work is polish +
 verification, not new editors:
-- **Stash builder** — DONE (add w/ stack cap 100, remove, durability view + repair). **Friendly
-  names** — DONE: `items.json` enriched with all 90 verified display names (icarusdatabase.com
-  icon-filename match), and `CatalogName.Humanize` is a universal offline fallback for any unmapped
-  RowName across every catalog. Optional follow-up: enrich the other catalogs' display names
-  (talents/accolades/bestiary) the same way — they read fine via the humanizer today.
+- **Stash builder** — DONE (add w/ stack cap 100, remove, durability view + repair, **visual tile
+  grid** colour-coded by category). **Friendly names** — DONE: `items.json` enriched with 90 verified
+  display names + `CatalogName.Humanize` universal fallback. **Catalog completeness ("Max = Max")** —
+  DONE: the catalogs were seeded from one save and were the ceiling; now completed from
+  icarusdatabase.com — **accolades 212 → 446** (all boss kills / kill-X / ribbons), **workshop+prospect
+  310 → 456** (+146: the Norex inhaler line, bulky armor, radiation tier, new seeds, Styx/Desert
+  prospects). Lazy Max + Account "unlock all" + Accolade "grant all" iterate the catalogs, so they
+  now reach the true max. Friendly names for the new talent/accolade rows come via the humanizer
+  (accolades carry curated names; workshop rows humanize cleanly).
+  - Follow-up (optional): the database talent export misses 13 stat-bonus `Workshop_Module_*` rows
+    (kept from the real save, so still present); 100% parity would need the game's D_Talents export.
 - **Polish pass** (owner-noted): the Recovery header overlap (being handled by the UI-polish agent),
   spacing/typography, Home line-icons/font/blur. Coordinate with the concurrent UI agent
   (`GlassTheme.xaml`, `RecoveryView.xaml`, `UI-DESIGN-CONCEPT.md` are theirs — keep off them).

@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "2026-02-mendel",
+  "catalogVersion": "2026-05-31-complete",
   "dataTable": "D_Talents",
-  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "source": "Character talents seeded from a maxed reference save; Workshop_/Prospect_ unlock set completed (456 rows) from icarusdatabase.com sitemap + per-page casing verification, 2026-05-31. Game data re-derived for IUUT.",
   "rows": [
     {
       "rowName": "Advanced_Alteration_Bench",
@@ -5509,6 +5509,590 @@
     },
     {
       "rowName": "Yield_Fertilizer",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_AntiRadiation",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Backpack_Solar",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_Alphawolf",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_Hammerhead",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_IceMammoth",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_LavaHunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_RockGolem",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_Sandworm",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_Scorpion",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Biolab_Inhaler_SwampApe",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bulky_Armor_Arms",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bulky_Armor_Chest",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bulky_Armor_Feet",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bulky_Armor_Head",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Bulky_Armor_Legs",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Deluxe_Envirosuit",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Scout",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Knife_Inaris_Delta_0",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Meta_Oil",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Module_Radiation",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Resource_Pack_Lithium",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Agave",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Banana",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Garlic",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Onion",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_PricklyPear",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Seed_Truffle",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Sniper_Incendiary_Ammo",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Dev_Prometheus",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Farm",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Fish",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Norex",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder1",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder3",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Speeder4",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_SQ_Yeti",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_3",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_4",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_5",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_ELY_Story_6",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Arctic_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_LongSurvey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Stockpile_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyon_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Canyons_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Extermination_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Recovery_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Research_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Desert_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Farming",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Range",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Forest_WS_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Extraction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Glacier_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Omni_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Delivery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Extraction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Scan",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Stockpile_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_Riverlands_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Farm",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Fisher",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_OLY_SQ_Norex",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Omni_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Omni_Research_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_A_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Ashlands_Story",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_C_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_D_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_D_Rescue",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_D_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_D_Resupply",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_E_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Icesheet_Story",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Nullsector_Story",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_SQ_Farm",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_SQ_Fisher",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_SQ_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_SQ_Norex",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Pro_Story_6",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Extermination2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_A_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_B_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_B_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_B_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_B_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_B_Stockpile",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Construction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Extermination2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_C_Fishing",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Delivery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Extermination",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Recovery",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_D_Research_2",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_E_Expedition",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_E_Exploration",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_E_Extraction",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_E_Research",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_E_Survey",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Farm",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Fisher",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Hunter",
+      "displayName": null
+    },
+    {
+      "rowName": "Prospect_Styx_SQ_Norex",
       "displayName": null
     }
   ]

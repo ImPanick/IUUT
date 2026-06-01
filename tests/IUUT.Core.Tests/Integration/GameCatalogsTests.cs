@@ -22,16 +22,20 @@ public class GameCatalogsTests
     [Fact]
     public void Talents_ContainTheExpectedSeedData()
     {
-        _catalogs.Talents.Count.Should().BeGreaterThan(1000, "the maxed reference account has ~1377 talents");
+        _catalogs.Talents.Count.Should().BeGreaterThan(1000, "character talents + the complete workshop set");
         _catalogs.Talents.Contains("Workshop_Envirosuit").Should().BeTrue();
         _catalogs.Talents.Contains("Genetics_Twins").Should().BeTrue();
+        _catalogs.Talents.Contains("Workshop_Biolab_Inhaler_Sandworm").Should().BeTrue("the Norex inhaler category, completed beyond the original 310");
+        _catalogs.Talents.Contains("Workshop_Bulky_Armor_Chest").Should().BeTrue("bulky armor, completed beyond the original 310");
         _catalogs.Talents.Contains("Definitely_Not_A_Real_Talent").Should().BeFalse();
     }
 
     [Fact]
     public void Accolades_And_Bestiary_AreSeeded()
     {
-        _catalogs.Accolades.Count.Should().Be(212);
+        _catalogs.Accolades.Count.Should().Be(446, "the complete D_Accolades set (boss kills, milestones, ribbons)");
+        _catalogs.Accolades.Contains("DefeatGarganutan").Should().BeTrue("a boss-kill accolade beyond the original 212");
+        _catalogs.Accolades.Contains("BearsKilled5000").Should().BeTrue("a kill-X-times milestone");
         _catalogs.Bestiary.Count.Should().Be(78);
         _catalogs.Bestiary.Contains("Forest_Wolf").Should().BeTrue();
     }
