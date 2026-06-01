@@ -50,10 +50,12 @@ public class GameCatalogsTests
     }
 
     [Fact]
-    public void Items_AreSeeded()
+    public void Items_AreComplete_ForTheStashPicker()
     {
-        _catalogs.Items.Count.Should().BeGreaterThan(0);
-        _catalogs.Items.CatalogVersion.Should().Be("2026-02-mendel");
+        _catalogs.Items.Count.Should().BeGreaterThan(2000, "the complete itemable D_ItemsStatic set, so every blueprint-crafted item is addable to the stash");
+        _catalogs.Items.Contains("Bulky_Armor_Chest").Should().BeTrue("a newer blueprint-crafted item beyond the original 91");
+        _catalogs.Items.Contains("Meta_Carbon_Chest_Beta").Should().BeTrue();
+        _catalogs.Items.Label("Meta_Crossbow_Inaris_D").Should().Be("Inaris \"Sole\" Crossbow", "the curated display names are preserved");
     }
 
     [Fact]

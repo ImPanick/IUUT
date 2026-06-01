@@ -61,7 +61,9 @@ no branch protection). The commit-msg hook **requires** the three trailers: `Age
 **NEXT: the Custom editor is feature-complete (all 9 categories wired).** Remaining work is polish +
 verification, not new editors:
 - **Stash builder** — DONE (add w/ stack cap 100, remove, durability view + repair, **visual tile
-  grid** colour-coded by category). **Friendly names** — DONE: `items.json` enriched with 90 verified
+  grid** colour-coded by category; **picker catalog now COMPLETE** — `items.json` 91 → 2,993 (all
+  itemable `D_ItemsStatic` rows, dev/test excluded), so every blueprint-crafted item is addable, not
+  just the reference save's 91). **Friendly names** — DONE: `items.json` enriched with 90 verified
   display names + `CatalogName.Humanize` universal fallback. **Catalog completeness ("Max = Max")** —
   DONE: the catalogs were seeded from one save and were the ceiling; now completed from
   icarusdatabase.com — **accolades 212 → 446** (all boss kills / kill-X / ribbons), **workshop+prospect
