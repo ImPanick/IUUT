@@ -1,359 +1,359 @@
 {
   "catalogVersion": "2026-02-mendel",
   "dataTable": "D_ItemsStatic",
-  "source": "Seeded from a maxed reference save (2026-05-31). Real RowNames; display names, max ranks, and any missing rows are enriched from Eureka Endeavors via scripts/fetch-catalogs.ps1.",
+  "source": "RowNames seeded from a maxed reference save; display names verified against icarusdatabase.com (icon-filename ITEM_<RowName>.png match) + icarus.fandom.com, 2026-05-31. Game data re-derived for IUUT.",
   "rows": [
     {
       "rowName": "Basic_Quiver",
-      "displayName": null
+      "displayName": "Archer's Backpack"
     },
     {
       "rowName": "Envirosuit_Inaris_Alpha",
-      "displayName": null
+      "displayName": "Inaris \"Lua\" Envirosuit"
     },
     {
       "rowName": "Envirosuit_Larkwell_Alpha",
-      "displayName": null
+      "displayName": "Larkwell \"Haulier\" Envirosuit"
     },
     {
       "rowName": "Envirosuit_Larkwell_Bravo",
-      "displayName": null
+      "displayName": "Larkwell \"Bulwark\" Envirosuit"
     },
     {
       "rowName": "Envirosuit_Shengong",
-      "displayName": null
+      "displayName": "Shengong \"Bihu\" Envirosuit"
     },
     {
       "rowName": "Envirosuit_Shengong_2",
-      "displayName": null
+      "displayName": "Shengong \"Dongtian\" Envirosuit"
     },
     {
       "rowName": "Envirosuit_Tier2",
-      "displayName": null
+      "displayName": "Xigo S5-II Envirosuit"
     },
     {
       "rowName": "Explorers_Backpack",
-      "displayName": null
+      "displayName": "Explorer Backpack"
     },
     {
       "rowName": "Hunters_Backpack",
-      "displayName": null
+      "displayName": "Xenon Backpack"
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Arms",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tachyon Arm Armor"
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Chest",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tachyon Chest Armor"
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Feet",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tachyon Feet Armor"
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Head",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tachyon Head Armor"
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Legs",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tachyon Legs Armor"
     },
     {
       "rowName": "Larkwell_Armor_Black_Arms",
-      "displayName": null
+      "displayName": "LM Beastmaster Arm Armor"
     },
     {
       "rowName": "Larkwell_Armor_Black_Chest",
-      "displayName": null
+      "displayName": "LM Beastmaster Chest Armor"
     },
     {
       "rowName": "Larkwell_Armor_Black_Feet",
-      "displayName": null
+      "displayName": "LM Beastmaster Feet Armor"
     },
     {
       "rowName": "Larkwell_Armor_Black_Head",
-      "displayName": null
+      "displayName": "LM Beastmaster Head Armor"
     },
     {
       "rowName": "Larkwell_Armor_Black_Legs",
-      "displayName": null
+      "displayName": "LM Beastmaster Leg Armor"
     },
     {
       "rowName": "LegendaryWeapon_LavaHunter_FlameThrower",
-      "displayName": null
+      "displayName": "Heavy Flamethrower"
     },
     {
       "rowName": "Medic_Backpack",
-      "displayName": null
+      "displayName": "Biomore Backpack"
     },
     {
       "rowName": "Meta_Antibiotic_Vaccine_Charlie",
-      "displayName": null
+      "displayName": "Bacterial Vaccine III"
     },
     {
       "rowName": "Meta_Antiparasitic_Vaccine_Charlie",
-      "displayName": null
+      "displayName": "Antiparasitic Vaccine III"
     },
     {
       "rowName": "Meta_Antipoison_Vaccine_Charlie",
-      "displayName": null
+      "displayName": "Anti-poison Vaccine III"
     },
     {
       "rowName": "Meta_Arrow_Set_Larkwell_Ballistic",
-      "displayName": null
+      "displayName": "Larkwell Ballistic Arrow Bundle"
     },
     {
       "rowName": "Meta_Arrow_Set_Larkwell_Bleed",
-      "displayName": null
+      "displayName": "Larkwell Bleed Arrow Bundle"
     },
     {
       "rowName": "Meta_Arrow_Set_Larkwell_Standard",
-      "displayName": null
+      "displayName": "Larkwell Arrow Bundle"
     },
     {
       "rowName": "Meta_Axe_Inaris_Alpha",
-      "displayName": null
+      "displayName": "Inaris \"Dias\" Axe"
     },
     {
       "rowName": "Meta_Axe_Inaris_Bravo",
-      "displayName": null
+      "displayName": "Inaris \"Sali\" Axe"
     },
     {
       "rowName": "Meta_Axe_Shengong_Echo",
-      "displayName": null
+      "displayName": "Shengong CY7 Axe"
     },
     {
       "rowName": "Meta_Backpack_Larkwell_Beta",
-      "displayName": null
+      "displayName": "Larkwell Martinez Tactical Backpack"
     },
     {
       "rowName": "Meta_Blood_Thinning_Vaccine_Beta",
-      "displayName": null
+      "displayName": "Blood Thinning Vaccine II"
     },
     {
       "rowName": "Meta_Blood_Thinning_Vaccine_Charlie",
-      "displayName": null
+      "displayName": "Blood Thinning Vaccine III"
     },
     {
       "rowName": "Meta_Bolt_Set_Larkwell_Electroshock",
-      "displayName": null
+      "displayName": "Larkwell Charged Bolt Bundle"
     },
     {
       "rowName": "Meta_Bolt_Set_Larkwell_Explosive",
-      "displayName": null
+      "displayName": "Larkwell Explosive Bolt Bundle"
     },
     {
       "rowName": "Meta_Bolt_Set_Larkwell_Piercing",
-      "displayName": null
+      "displayName": "Larkwell Piercing Bolt Bundle"
     },
     {
       "rowName": "Meta_Bow_Larkwell",
-      "displayName": null
+      "displayName": "Larkwell Martinez Compound Bow"
     },
     {
       "rowName": "Meta_Bow_Shengong_Echo",
-      "displayName": null
+      "displayName": "Shengong CZ4 Bow"
     },
     {
       "rowName": "Meta_Carbon_Arms_Alpha",
-      "displayName": null
+      "displayName": "ST-700 Arms Armor"
     },
     {
       "rowName": "Meta_Carbon_Arms_Beta",
-      "displayName": null
+      "displayName": "CX-400 Arms Armor"
     },
     {
       "rowName": "Meta_Carbon_Chest_Alpha",
-      "displayName": null
+      "displayName": "ST-700 Chest Armor"
     },
     {
       "rowName": "Meta_Carbon_Chest_Beta",
-      "displayName": null
+      "displayName": "CX-400 Chest Armor"
     },
     {
       "rowName": "Meta_Carbon_Feet_Alpha",
-      "displayName": null
+      "displayName": "ST-700 Feet Armor"
     },
     {
       "rowName": "Meta_Carbon_Feet_Beta",
-      "displayName": null
+      "displayName": "CX-400 Feet Armor"
     },
     {
       "rowName": "Meta_Carbon_Head_Alpha",
-      "displayName": null
+      "displayName": "ST-700 Head Armor"
     },
     {
       "rowName": "Meta_Carbon_Head_Beta",
-      "displayName": null
+      "displayName": "CX-400 Head Armor"
     },
     {
       "rowName": "Meta_Carbon_Legs_Alpha",
-      "displayName": null
+      "displayName": "ST-700 Legs Armor"
     },
     {
       "rowName": "Meta_Carbon_Legs_Beta",
-      "displayName": null
+      "displayName": "CX-400 Legs Armor"
     },
     {
       "rowName": "Meta_Creature_Scanner",
-      "displayName": null
+      "displayName": "BEAST"
     },
     {
       "rowName": "Meta_Crossbow_Inaris_B",
-      "displayName": null
+      "displayName": "Inaris \"Heavy\" Crossbow"
     },
     {
       "rowName": "Meta_Crossbow_Inaris_C",
-      "displayName": null
+      "displayName": "Inaris \"Lune\" Crossbow"
     },
     {
       "rowName": "Meta_Crossbow_Inaris_D",
-      "displayName": null
+      "displayName": "Inaris \"Sole\" Crossbow"
     },
     {
       "rowName": "Meta_Fishfinder",
-      "displayName": null
+      "displayName": "F.I.S.H."
     },
     {
       "rowName": "Meta_Hammer_Larkwell",
-      "displayName": null
+      "displayName": "Larkwell Martinez Hammer"
     },
     {
       "rowName": "Meta_Hammer_Shengong_Beta",
-      "displayName": null
+      "displayName": "Shengong \"Akira\" Hammer"
     },
     {
       "rowName": "Meta_Heated_Canteen_Larkwell",
-      "displayName": null
+      "displayName": "Larkwell Martinez Heated Canteen"
     },
     {
       "rowName": "Meta_Knife_Inaris_Alpha",
-      "displayName": null
+      "displayName": "Inaris \"Ventura\" Knife"
     },
     {
       "rowName": "Meta_Knife_Inaris_Delta",
-      "displayName": null
+      "displayName": "Inaris \"Cerulean\" Knife"
     },
     {
       "rowName": "Meta_Knife_Shengong_Echo",
-      "displayName": null
+      "displayName": "Shengong DL7 Knife"
     },
     {
       "rowName": "Meta_Module_Alpha",
-      "displayName": null
+      "displayName": "Strength Boost Module"
     },
     {
       "rowName": "Meta_Module_Animal_Highlighting",
-      "displayName": null
+      "displayName": "Animal Highlighting Module"
     },
     {
       "rowName": "Meta_Module_Beta",
-      "displayName": null
+      "displayName": "Healing Boost Module"
     },
     {
       "rowName": "Meta_Module_Caving",
-      "displayName": null
+      "displayName": "Miner's Module"
     },
     {
       "rowName": "Meta_Module_Consumption",
-      "displayName": null
+      "displayName": "DoseUp Module"
     },
     {
       "rowName": "Meta_Module_Extremes",
-      "displayName": null
+      "displayName": "Survival Module"
     },
     {
       "rowName": "Meta_Module_Fall_Damage",
-      "displayName": null
+      "displayName": "KickFall Module"
     },
     {
       "rowName": "Meta_Module_Fishing",
-      "displayName": null
+      "displayName": "Fisher's Module"
     },
     {
       "rowName": "Meta_Module_ItemWear",
-      "displayName": null
+      "displayName": "Item Wear Module"
     },
     {
       "rowName": "Meta_Module_Night",
-      "displayName": null
+      "displayName": "Night Module"
     },
     {
       "rowName": "Meta_Module_Taming",
-      "displayName": null
+      "displayName": "Pheromone Module"
     },
     {
       "rowName": "Meta_Module_Temperature",
-      "displayName": null
+      "displayName": "Suit Conditioning Module"
     },
     {
       "rowName": "Meta_Module_WorldBoss",
-      "displayName": null
+      "displayName": "World Boss Module"
     },
     {
       "rowName": "Meta_Module_Wounds",
-      "displayName": null
+      "displayName": "Protection Module"
     },
     {
       "rowName": "Meta_Oxygen_Tank_Larkwell",
-      "displayName": null
+      "displayName": "Larkwell Martinez Oxygen Tank"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Alpha",
-      "displayName": null
+      "displayName": "Inaris \"Neves\" Pickaxe"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Charlie",
-      "displayName": null
+      "displayName": "Inaris \"Claret\" Pickaxe"
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Delta",
-      "displayName": null
+      "displayName": "Inaris \"Viridian\" Pickaxe"
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Echo",
-      "displayName": null
+      "displayName": "Shengong UT5 Pickaxe"
     },
     {
       "rowName": "Meta_Resource_Pack_Platinum",
-      "displayName": null
+      "displayName": "UDA Platinum Ore Resource Supply"
     },
     {
       "rowName": "Meta_Resource_Pack_Titanium",
-      "displayName": null
+      "displayName": "UDA Titanium Ore Resource Supply"
     },
     {
       "rowName": "Meta_Rhubarb_Seed",
-      "displayName": null
+      "displayName": "Rhubarb Farming Packet"
     },
     {
       "rowName": "Meta_Scanner_DeepOre",
-      "displayName": null
+      "displayName": "Advanced Deep Mining Ore Scanner"
     },
     {
       "rowName": "Meta_Sickle_Inaris_00",
-      "displayName": null
+      "displayName": "Inaris \"Reaper\" Sickle"
     },
     {
       "rowName": "Meta_Sickle_Larkwell",
-      "displayName": null
+      "displayName": "Larkwell Martinez Sickle"
     },
     {
       "rowName": "Meta_Spear_Inaris_Alpha",
-      "displayName": null
+      "displayName": "Inaris \"Gris\" Spear"
     },
     {
       "rowName": "Meta_Strawberry_Seed",
-      "displayName": null
+      "displayName": "Strawberry Farming Packet"
     },
     {
       "rowName": "Meta_WildTea_Seed",
-      "displayName": null
+      "displayName": "Gorse Farming Packet"
     },
     {
       "rowName": "Mining_Backpack",
-      "displayName": null
+      "displayName": "Gatherer's Backpack"
     },
     {
       "rowName": "None",
@@ -361,11 +361,11 @@
     },
     {
       "rowName": "Saddle_Carrier",
-      "displayName": null
+      "displayName": "Carrier Saddle"
     },
     {
       "rowName": "Tech_Backpack",
-      "displayName": null
+      "displayName": "Ion Backpack"
     }
   ]
 }

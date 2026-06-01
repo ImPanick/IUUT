@@ -20,7 +20,7 @@ public sealed class CatalogRow
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? Extra { get; set; }
 
-    /// <summary>The best label for the UI: <see cref="DisplayName"/> if present, else <see cref="RowName"/>.</summary>
+    /// <summary>The best label for the UI: <see cref="DisplayName"/> if present, else a humanized <see cref="RowName"/>.</summary>
     [JsonIgnore]
-    public string Label => string.IsNullOrEmpty(DisplayName) ? RowName : DisplayName;
+    public string Label => string.IsNullOrEmpty(DisplayName) ? CatalogName.Humanize(RowName) : DisplayName;
 }

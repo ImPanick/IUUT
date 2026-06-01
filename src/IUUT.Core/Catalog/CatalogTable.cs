@@ -46,7 +46,7 @@ public sealed class CatalogTable
     public bool TryGet(string rowName, [MaybeNullWhen(false)] out CatalogRow row) =>
         _rowsByName.TryGetValue(rowName, out row);
 
-    /// <summary>The display label for <paramref name="rowName"/>, falling back to the RowName itself.</summary>
+    /// <summary>The display label for <paramref name="rowName"/>, falling back to a humanized RowName.</summary>
     public string Label(string rowName) =>
-        _rowsByName.TryGetValue(rowName, out var row) ? row.Label : rowName;
+        _rowsByName.TryGetValue(rowName, out var row) ? row.Label : CatalogName.Humanize(rowName);
 }

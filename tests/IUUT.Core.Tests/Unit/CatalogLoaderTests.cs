@@ -43,12 +43,24 @@ public class CatalogLoaderTests
     }
 
     [Fact]
-    public void Label_FallsBackToRowName_WhenDisplayNameMissing()
+    public void Label_FallsBackToHumanizedRowName_WhenDisplayNameMissing()
     {
         var table = LoadSample();
 
-        table.Label("Alpha").Should().Be("The Alpha");
-        table.Label("Beta").Should().Be("Beta", "no display name falls back to the row name");
+        table.Label("Alpha").Should().Be("The Alpha", "a curated display name wins");
+        table.Label("Beta").Should().Be("Beta", "no display name falls back to the humanized row name");
+    }
+
+    [Theory]
+    [InlineData("Larkwell_Armor_Alpha_Chest", "Larkwell Armor Alpha Chest")]
+    [InlineData("Envirosuit_Tier2", "Envirosuit Tier 2")]
+    [InlineData("Meta_Crossbow_Inaris_D", "Meta Crossbow Inaris D")]
+    [InlineData("Basic_Quiver", "Basic Quiver")]
+    [InlineData("Plain", "Plain")]
+    [InlineData("", "")]
+    public void Humanize_SplitsUnderscoresAndBoundaries(string rowName, string expected)
+    {
+        CatalogName.Humanize(rowName).Should().Be(expected);
     }
 
     [Fact]
