@@ -124,6 +124,9 @@ bytes are themselves a tagged-property stream** (the recorder pattern — one de
 nested zlib) containing `SavedInventories → InventorySaveData → Slots (ArrayProperty<InventorySlotSaveData>)`.
 A filled slot = `{ ItemStaticData: NameProperty (the D_ItemsStatic RowName), ItemGuid: StrProperty,
 ItemOwnerLookupId: IntProperty, DynamicData: ArrayProperty<InventorySlotDynamicData> (stack/durability) }`.
+`DynamicData` is an **enum-indexed** array of `{ Index: IntProperty, Value: IntProperty }` pairs;
+**Index 7 = stack count, Index 9 = durability** (verified across a real save — Index-7 values run 1..500
+peaking at 100, the common max stack; Index-9 e.g. 150000 = full durability). Stash quantities use this.
 And `Hash` = **`SHA1(uncompressed)`** (verified — `ProspectBlobCodec` already re-stamps it), so the write
 path does **not** need byte-identical recompression.
 
@@ -135,13 +138,17 @@ path does **not** need byte-identical recompression.
   against all real prospect worlds (18 KB .. 17 MB). Edits mark nodes `Dirty`; only the touched path is
   re-emitted, recomputing every length prefix (slot-array count + inner-tag size, recorder `BinaryData`
   byte count, all ancestor struct/array sizes) while clean nodes copy original bytes.
-- `ProspectWorldEditor` — `RemoveSlot` / `DuplicateSlot` (optionally retyped) / `RetypeSlot`. Then
+- `ProspectWorldEditor` — `RemoveSlot` / `DuplicateSlot` (optionally retyped) / `RetypeSlot` /
+  `SetStack` / `SetDurability`; `SlotRef` exposes the decoded `Stack` + `Durability`. Then
   `ProspectBlobCodec.SetUncompressed` recompresses + re-stamps the SHA-1.
+- `ProspectReturnService` (`IUUT.Core.Editing`) — the **"return trapped items → orbital stash"** flow:
+  `Preview` lists trapped items (summed real quantities), `Return` moves them into a `MetaInventoryModel`
+  via `StashEditService` (coalesced into ≤100 stacks), removes the slots, and re-stamps the prospect.
 
 Validated end-to-end on real prospects (scratch): edit → re-serialize → recompress → `VerifyHash` passes,
-and the edited stream force-reconstructs to itself (every recomputed prefix consistent). **Remaining:**
-precise stack/durability editing (the `DynamicData → InventorySlotDynamicData` indexed values — not yet
-decoded), file-level save wiring, the "return trapped items → orbital stash" flow, UI, and in-game
-human validation (WP-15). Add-new-item is done via clone-and-retype (guarantees all required fields).
+the edited stream force-reconstructs to itself (every recomputed prefix consistent), and a full
+return-to-stash moved 99 slots / 6268 items with totals conserved + stacks capped at 100. **Remaining:**
+file-level save wiring (load/save the prospect JSON + stash via the file service), UI, and in-game human
+validation (WP-15). Add-new-item is done via clone-and-retype (guarantees all required fields).
 - A **~45 GB set of 32 `.pak` files** is the full cooked content (textures/meshes/etc.) — not needed
   for save editing; the small `data.pak` + the mirror cover the DataTables.

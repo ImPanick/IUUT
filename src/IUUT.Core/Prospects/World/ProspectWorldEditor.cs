@@ -18,9 +18,16 @@ public sealed class ProspectWorldEditor
 {
     private const string SlotStruct = "InventorySlotSaveData";
     private const string ItemStaticDataProperty = "ItemStaticData";
+    private const string DynamicDataProperty = "DynamicData";
 
-    /// <summary>A reference to one inventory slot: its containing array, the element node, and the item RowName.</summary>
-    public sealed record SlotRef(UeNode Array, UeNode Element, string RowName);
+    /// <summary>The <c>DynamicData</c> Index for an item's stack count (verified against real saves).</summary>
+    public const int StackIndex = 7;
+
+    /// <summary>The <c>DynamicData</c> Index for an item's durability (verified against real saves).</summary>
+    public const int DurabilityIndex = 9;
+
+    /// <summary>A reference to one inventory slot: its containing array, the element node, the item RowName, and stack/durability.</summary>
+    public sealed record SlotRef(UeNode Array, UeNode Element, string RowName, int Stack, int? Durability);
 
     private readonly UeBlob _blob;
 
@@ -75,7 +82,7 @@ public sealed class ProspectWorldEditor
 
         slot.Array.Children.Add(clone);
         slot.Array.MarkDirty();
-        return new SlotRef(slot.Array, clone, rowName);
+        return new SlotRef(slot.Array, clone, rowName, slot.Stack, slot.Durability);
     }
 
     /// <summary>Changes the item in a slot to <paramref name="newItemRowName"/> (a <c>D_ItemsStatic</c> RowName).</summary>
@@ -84,6 +91,20 @@ public sealed class ProspectWorldEditor
         ArgumentNullException.ThrowIfNull(slot);
         ArgumentException.ThrowIfNullOrEmpty(newItemRowName);
         SetItemRowName(slot.Element, newItemRowName);
+    }
+
+    /// <summary>Sets a slot's stack count (the <c>DynamicData</c> Index-7 value). Returns false if the slot has no stack entry.</summary>
+    public bool SetStack(SlotRef slot, int stack)
+    {
+        ArgumentNullException.ThrowIfNull(slot);
+        return SetDynamicValue(slot.Element, StackIndex, stack);
+    }
+
+    /// <summary>Sets a slot's durability (the <c>DynamicData</c> Index-9 value). Returns false if the slot has no durability entry.</summary>
+    public bool SetDurability(SlotRef slot, int durability)
+    {
+        ArgumentNullException.ThrowIfNull(slot);
+        return SetDynamicValue(slot.Element, DurabilityIndex, durability);
     }
 
     /// <summary>Serializes the edited world to decompressed bytes (feed to <c>ProspectBlobCodec.SetUncompressed</c>).</summary>
@@ -99,7 +120,9 @@ public sealed class ProspectWorldEditor
                 var rowName = ReadItemRowName(element);
                 if (rowName is not null)
                 {
-                    slots.Add(new SlotRef(node, element, rowName));
+                    var stack = ReadDynamicValue(element, StackIndex) ?? 1;
+                    var durability = ReadDynamicValue(element, DurabilityIndex);
+                    slots.Add(new SlotRef(node, element, rowName, stack, durability));
                 }
             }
         }
@@ -140,6 +163,58 @@ public sealed class ProspectWorldEditor
         leaf.ReplacementValue = EncodeFString(rowName);
         leaf.MarkDirty();
     }
+
+    /// <summary>
+    /// Reads a slot's <c>DynamicData</c> value for the given enum <paramref name="index"/> (7 = stack,
+    /// 9 = durability): finds the <c>InventorySlotDynamicData</c> element whose <c>Index</c> equals it and
+    /// returns its <c>Value</c>. Returns <c>null</c> when the slot has no such entry.
+    /// </summary>
+    private int? ReadDynamicValue(UeNode element, int index)
+    {
+        var valueLeaf = FindDynamicValueLeaf(element, index);
+        return valueLeaf is null ? null : ReadInt(valueLeaf);
+    }
+
+    private bool SetDynamicValue(UeNode element, int index, int value)
+    {
+        var valueLeaf = FindDynamicValueLeaf(element, index);
+        if (valueLeaf is null)
+        {
+            return false;
+        }
+
+        valueLeaf.ReplacementValue = BitConverter.GetBytes(value); // same-width int32, in place
+        valueLeaf.MarkDirty();
+        return true;
+    }
+
+    private UeNode? FindDynamicValueLeaf(UeNode element, int index)
+    {
+        var dynamicData = element.Children.FirstOrDefault(c =>
+            string.Equals(c.Name, DynamicDataProperty, StringComparison.Ordinal) &&
+            c.Kind == UeNodeKind.StructArray);
+        if (dynamicData is null)
+        {
+            return null;
+        }
+
+        foreach (var entry in dynamicData.Children)
+        {
+            var indexLeaf = entry.Children.FirstOrDefault(c => string.Equals(c.Name, "Index", StringComparison.Ordinal));
+            var valueLeaf = entry.Children.FirstOrDefault(c => string.Equals(c.Name, "Value", StringComparison.Ordinal));
+            if (indexLeaf is not null && valueLeaf is not null && ReadInt(indexLeaf) == index)
+            {
+                return valueLeaf;
+            }
+        }
+
+        return null;
+    }
+
+    private int ReadInt(UeNode leaf) =>
+        leaf.ReplacementValue is not null
+            ? BitConverter.ToInt32(leaf.ReplacementValue, 0)
+            : BitConverter.ToInt32(_blob.Data, leaf.ValueStart);
 
     private static byte[] EncodeFString(string s)
     {

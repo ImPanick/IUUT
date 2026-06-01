@@ -98,6 +98,50 @@ public class ProspectWorldEditorTests
     }
 
     [Fact]
+    public void FindItemSlots_ReadsStackAndDurability_FromDynamicData()
+    {
+        var world = UeFixtureBuilder.WorldWithSlots(new[]
+        {
+            UeFixtureBuilder.InventorySlot("Wood", (ProspectWorldEditor.StackIndex, 100), (ProspectWorldEditor.DurabilityIndex, 150000)),
+            UeFixtureBuilder.InventorySlot("Stone", (ProspectWorldEditor.StackIndex, 42)),
+        });
+
+        var slots = new ProspectWorldEditor(UeBlob.Parse(world)).FindItemSlots();
+
+        var wood = slots.Single(s => s.RowName == "Wood");
+        wood.Stack.Should().Be(100);
+        wood.Durability.Should().Be(150000);
+        var stone = slots.Single(s => s.RowName == "Stone");
+        stone.Stack.Should().Be(42);
+        stone.Durability.Should().BeNull("no Index-9 entry on this slot");
+    }
+
+    [Fact]
+    public void SetStack_ChangesTheStackInPlace_AndStreamStaysConsistent()
+    {
+        var editor = new ProspectWorldEditor(UeBlob.Parse(
+            UeFixtureBuilder.WorldWithSlots(new[] { UeFixtureBuilder.InventorySlot("Wood", (ProspectWorldEditor.StackIndex, 10)) })));
+        editor.SetStack(editor.FindItemSlots()[0], 77).Should().BeTrue();
+
+        var edited = editor.Serialize();
+
+        ReparsesStably(edited).Should().BeTrue();
+        new ProspectWorldEditor(UeBlob.Parse(edited)).FindItemSlots()[0].Stack.Should().Be(77);
+    }
+
+    [Fact]
+    public void SetDurability_RepairsTheItem()
+    {
+        var editor = new ProspectWorldEditor(UeBlob.Parse(UeFixtureBuilder.WorldWithSlots(new[]
+        {
+            UeFixtureBuilder.InventorySlot("Crossbow", (ProspectWorldEditor.StackIndex, 1), (ProspectWorldEditor.DurabilityIndex, 5000)),
+        })));
+        editor.SetDurability(editor.FindItemSlots()[0], 150000).Should().BeTrue();
+
+        new ProspectWorldEditor(UeBlob.Parse(editor.Serialize())).FindItemSlots()[0].Durability.Should().Be(150000);
+    }
+
+    [Fact]
     public void EditedWorld_RewrappedViaCodec_PassesTheGameHashCheck()
     {
         var editor = new ProspectWorldEditor(UeBlob.Parse(WorldWith("Wood", "Stone", "Wood")));

@@ -93,6 +93,31 @@ internal static class UeFixtureBuilder
         return Tag(name, "ArrayProperty", ms.ToArray(), FString("ByteProperty"));
     }
 
+    /// <summary>
+    /// A filled inventory slot's property list: <c>ItemStaticData</c> (the RowName) plus a
+    /// <c>DynamicData</c> array of <c>InventorySlotDynamicData</c> {Index, Value} pairs (7 = stack,
+    /// 9 = durability). Returned without a trailing <c>None</c> (the array builder adds it per element).
+    /// </summary>
+    public static byte[] InventorySlot(string row, params (int Index, int Value)[] dynamic)
+    {
+        var entries = dynamic
+            .Select(d => Concat(IntProp("Index", d.Index), IntProp("Value", d.Value)))
+            .ToList();
+        var dynamicData = StructArrayProp("DynamicData", "InventorySlotDynamicData", entries);
+        return Concat(NameProp("ItemStaticData", row), dynamicData);
+    }
+
+    /// <summary>Wraps inventory slots in the full recorder shape: StateRecorderBlobs → actor → BinaryData → SavedInventories → Slots.</summary>
+    public static byte[] WorldWithSlots(IReadOnlyList<byte[]> slotBodies)
+    {
+        var slots = StructArrayProp("Slots", "InventorySlotSaveData", slotBodies);
+        var inventory = StructProp("SavedInventories", "InventorySaveData", slots);
+        var actor = Concat(
+            StrProp("ComponentClassName", "/Script/Icarus.TestRecorderComponent"),
+            ByteStreamProp("BinaryData", inventory));
+        return StructArrayProp("StateRecorderBlobs", "StateRecorderBlob", new[] { actor });
+    }
+
     /// <summary>Concatenates byte arrays.</summary>
     public static byte[] Concat(params byte[][] parts)
     {
