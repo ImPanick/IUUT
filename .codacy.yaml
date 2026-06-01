@@ -1,0 +1,32 @@
+# Codacy configuration — https://docs.codacy.com/repositories-configure/codacy-configuration-file/
+#
+# IUUT is a .NET 8 solution; Codacy analyses the C# (Roslyn/Roslynator). We exclude data,
+# docs, fixtures, mockups, and build output so the Grade reflects real source code rather
+# than embedded game-data catalogs (re-mined JSON) or generated/markdown content.
+---
+exclude_paths:
+  # Embedded game-data catalogs + fixtures (data, not code)
+  - 'src/IUUT.Catalog/Embedded/**'
+  - 'fixtures/**'
+  - 'catalogs/**'
+  - '**/*.json'
+  # Documentation, design mockups, governance contract
+  - 'docs/**'
+  - '*.md'
+  - '.agent/**'
+  - '.github/**'
+  - '.githooks/**'
+  - 'scripts/**'
+  # Build output / artifacts (never analysed)
+  - '**/bin/**'
+  - '**/obj/**'
+  - 'artifacts/**'
+  # Test doubles / generated fixtures are not product code
+  - 'tests/**/TestDoubles/**'
+
+engines:
+  # .NET static analysis (Roslyn-based) — Codacy enables the relevant tools automatically.
+  metrics:
+    enabled: true
+  duplication:
+    enabled: true
