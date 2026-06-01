@@ -114,5 +114,24 @@ recompute `UncompressedLength`, recompress, and recompute `Hash`. High-risk (a w
 in-progress run; the game checksums the blob). This is the "hardest item on the roadmap" — a scoped R&D
 feature, not a flat-JSON edit. "Return trapped items → orbital stash" is the same machinery (null the
 prospect-side items, add to the flat `MetaInventory.json` we already edit).
+
+**Exact byte format (reversed + confirmed).** Standard UE4 tagged properties, **`int32 Size` +
+`int32 ArrayIndex`** (not int64): `FString Name, FString Type, int32 Size, int32 ArrayIndex,
+[type metadata], byte HasGuid, value[Size]`. `FString` = `int32 len` (+ = ASCII incl. null, − = UTF-16).
+Top level is one `StateRecorderBlobs` ArrayProperty → N `StateRecorderBlob` structs (one per actor),
+each `{ ComponentClassName: StrProperty, BinaryData: ArrayProperty<ByteProperty> }`. **`BinaryData`'s raw
+bytes are themselves a tagged-property stream** (the recorder pattern — one decompression layer, not
+nested zlib) containing `SavedInventories → InventorySaveData → Slots (ArrayProperty<InventorySlotSaveData>)`.
+A filled slot = `{ ItemStaticData: NameProperty (the D_ItemsStatic RowName), ItemGuid: StrProperty,
+ItemOwnerLookupId: IntProperty, DynamicData: ArrayProperty<InventorySlotDynamicData> (stack/durability) }`.
+And `Hash` = **`SHA1(uncompressed)`** (verified — `ProspectBlobCodec` already re-stamps it), so the write
+path does **not** need byte-identical recompression.
+
+**Read path implemented (spike, read-only).** `IUUT.Core.Prospects.World` —
+`UePropertyReader` (defensive recursive tagged-property reader; recurses structs, struct-arrays, and
+`BinaryData` byte-streams; skips UE native structs via the tag `Size`) + `ProspectWorldReader`
+(→ `ProspectWorldReport`: actor/inventory/slot counts + every item with friendly names). Validated
+against real prospects (a 17 MB / 2768-actor world parses in ~75 ms, surfacing 885 items / 286 types).
+**No write path exists yet** — that's the remaining (riskier) half.
 - A **~45 GB set of 32 `.pak` files** is the full cooked content (textures/meshes/etc.) — not needed
   for save editing; the small `data.pak` + the mirror cover the DataTables.
