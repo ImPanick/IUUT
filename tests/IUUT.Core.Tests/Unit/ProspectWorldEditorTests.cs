@@ -130,6 +130,19 @@ public class ProspectWorldEditorTests
     }
 
     [Fact]
+    public void FindItemSlots_ExposesOwnerComponentClass_ForScoping()
+    {
+        var world = UeFixtureBuilder.WorldWithSlots(
+            "/Script/Icarus.PlayerStateRecorderComponent",
+            new[] { UeFixtureBuilder.InventorySlot("Wood", (ProspectWorldEditor.StackIndex, 1)) });
+
+        var slot = new ProspectWorldEditor(UeBlob.Parse(world)).FindItemSlots()[0];
+
+        slot.OwnerComponentClass.Should().Be("/Script/Icarus.PlayerStateRecorderComponent");
+        SlotOwner.Classify(slot.OwnerComponentClass).Should().Be(SlotOwnerKind.PlayerCarried);
+    }
+
+    [Fact]
     public void SetDurability_RepairsTheItem()
     {
         var editor = new ProspectWorldEditor(UeBlob.Parse(UeFixtureBuilder.WorldWithSlots(new[]

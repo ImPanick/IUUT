@@ -81,6 +81,26 @@ public class ProspectReturnServiceTests
         SlotsLeftIn(prospect).Should().Be(1, "the unselected Stone slot stays in the prospect");
     }
 
+    [Fact]
+    public void ReturnPlayerOwned_ReturnsPlayerItems_ButLeavesMachineInventories()
+    {
+        var player = WrapWorld(UeFixtureBuilder.WorldWithSlots(
+            "/Script/Icarus.PlayerStateRecorderComponent",
+            new[] { UeFixtureBuilder.InventorySlot("Wood", (StackIdx, 10)) }));
+        var stash = new MetaInventoryModel { InventoryId = "1" };
+        Service().ReturnPlayerOwned(player, stash);
+        stash.Items.Sum(StashEditService.GetStack).Should().Be(10);
+        SlotsLeftIn(player).Should().Be(0, "the player's carried items are returned");
+
+        var machine = WrapWorld(UeFixtureBuilder.WorldWithSlots(
+            "/Script/Icarus.DrillRecorderComponent",
+            new[] { UeFixtureBuilder.InventorySlot("Ore", (StackIdx, 10)) }));
+        var stash2 = new MetaInventoryModel { InventoryId = "1" };
+        Service().ReturnPlayerOwned(machine, stash2);
+        stash2.Items.Should().BeEmpty("a drill's inventory is not player-owned");
+        SlotsLeftIn(machine).Should().Be(1, "the machine's items stay put");
+    }
+
     private static int SlotsLeftIn(ProspectFileModel prospect) =>
         new ProspectWorldEditor(UeBlob.Parse(ProspectBlobCodec.Decompress(prospect.ProspectBlob.BinaryBlob)))
             .FindItemSlots().Count;

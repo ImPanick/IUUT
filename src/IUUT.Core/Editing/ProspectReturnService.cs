@@ -46,18 +46,23 @@ public sealed class ProspectReturnService
     }
 
     /// <summary>
-    /// Returns trapped items to <paramref name="stash"/>. When <paramref name="rowNames"/> is null, every
-    /// item is returned; otherwise only matching RowNames. Mutates both <paramref name="prospect"/>'s blob
+    /// Returns trapped items to <paramref name="stash"/>. <paramref name="rowNames"/> null = every item,
+    /// else only matching RowNames; <paramref name="scope"/> further restricts to slots whose owning actor
+    /// matches (e.g. <see cref="SlotOwner.IsPlayerOwned"/>). Mutates both <paramref name="prospect"/>'s blob
     /// and <paramref name="stash"/> in place and reports what moved.
     /// </summary>
-    public ProspectReturnResult Return(ProspectFileModel prospect, MetaInventoryModel stash, IReadOnlySet<string>? rowNames = null)
+    public ProspectReturnResult Return(
+        ProspectFileModel prospect,
+        MetaInventoryModel stash,
+        IReadOnlySet<string>? rowNames = null,
+        Func<ProspectWorldEditor.SlotRef, bool>? scope = null)
     {
         ArgumentNullException.ThrowIfNull(prospect);
         ArgumentNullException.ThrowIfNull(stash);
 
         var editor = OpenEditor(prospect);
         var selected = editor.FindItemSlots()
-            .Where(s => rowNames is null || rowNames.Contains(s.RowName))
+            .Where(s => (rowNames is null || rowNames.Contains(s.RowName)) && (scope is null || scope(s)))
             .ToList();
 
         var summary = Summarize(selected);
@@ -84,6 +89,13 @@ public sealed class ProspectReturnService
 
         return new ProspectReturnResult(summary, selected.Count, summary.Sum(i => i.TotalQuantity), stacksAdded);
     }
+
+    /// <summary>
+    /// Returns only the player's recoverable items — carried inventory, deployed containers, and mount
+    /// bags (<see cref="SlotOwner.IsPlayerOwned"/>) — leaving world machines (drills, geysers) untouched.
+    /// </summary>
+    public ProspectReturnResult ReturnPlayerOwned(ProspectFileModel prospect, MetaInventoryModel stash) =>
+        Return(prospect, stash, scope: s => SlotOwner.IsPlayerOwned(s.OwnerComponentClass));
 
     private static ProspectWorldEditor OpenEditor(ProspectFileModel prospect)
     {

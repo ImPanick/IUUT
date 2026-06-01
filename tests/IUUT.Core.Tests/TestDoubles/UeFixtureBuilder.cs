@@ -108,12 +108,16 @@ internal static class UeFixtureBuilder
     }
 
     /// <summary>Wraps inventory slots in the full recorder shape: StateRecorderBlobs → actor → BinaryData → SavedInventories → Slots.</summary>
-    public static byte[] WorldWithSlots(IReadOnlyList<byte[]> slotBodies)
+    public static byte[] WorldWithSlots(IReadOnlyList<byte[]> slotBodies) =>
+        WorldWithSlots("/Script/Icarus.TestRecorderComponent", slotBodies);
+
+    /// <summary>As <see cref="WorldWithSlots(IReadOnlyList{byte[]})"/> but with a specific owning recorder component class.</summary>
+    public static byte[] WorldWithSlots(string componentClass, IReadOnlyList<byte[]> slotBodies)
     {
         var slots = StructArrayProp("Slots", "InventorySlotSaveData", slotBodies);
         var inventory = StructProp("SavedInventories", "InventorySaveData", slots);
         var actor = Concat(
-            StrProp("ComponentClassName", "/Script/Icarus.TestRecorderComponent"),
+            StrProp("ComponentClassName", componentClass),
             ByteStreamProp("BinaryData", inventory));
         return StructArrayProp("StateRecorderBlobs", "StateRecorderBlob", new[] { actor });
     }

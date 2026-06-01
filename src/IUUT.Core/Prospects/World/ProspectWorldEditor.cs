@@ -26,8 +26,15 @@ public sealed class ProspectWorldEditor
     /// <summary>The <c>DynamicData</c> Index for an item's durability (verified against real saves).</summary>
     public const int DurabilityIndex = 9;
 
-    /// <summary>A reference to one inventory slot: its containing array, the element node, the item RowName, and stack/durability.</summary>
-    public sealed record SlotRef(UeNode Array, UeNode Element, string RowName, int Stack, int? Durability);
+    private const string ComponentClassProperty = "ComponentClassName";
+
+    /// <summary>
+    /// A reference to one inventory slot: its containing array, the element node, the item RowName,
+    /// stack/durability, and the recorder component class of the owning actor (e.g.
+    /// <c>/Script/Icarus.PlayerInventoryRecorderComponent</c>) — used to scope "return to stash" to the
+    /// player's items rather than every world container.
+    /// </summary>
+    public sealed record SlotRef(UeNode Array, UeNode Element, string RowName, int Stack, int? Durability, string? OwnerComponentClass);
 
     private readonly UeBlob _blob;
 
@@ -82,7 +89,7 @@ public sealed class ProspectWorldEditor
 
         slot.Array.Children.Add(clone);
         slot.Array.MarkDirty();
-        return new SlotRef(slot.Array, clone, rowName, slot.Stack, slot.Durability);
+        return new SlotRef(slot.Array, clone, rowName, slot.Stack, slot.Durability, slot.OwnerComponentClass);
     }
 
     /// <summary>Changes the item in a slot to <paramref name="newItemRowName"/> (a <c>D_ItemsStatic</c> RowName).</summary>
@@ -122,7 +129,7 @@ public sealed class ProspectWorldEditor
                 {
                     var stack = ReadDynamicValue(element, StackIndex) ?? 1;
                     var durability = ReadDynamicValue(element, DurabilityIndex);
-                    slots.Add(new SlotRef(node, element, rowName, stack, durability));
+                    slots.Add(new SlotRef(node, element, rowName, stack, durability, FindOwnerComponentClass(element)));
                 }
             }
         }
@@ -137,6 +144,28 @@ public sealed class ProspectWorldEditor
         element.Children.FirstOrDefault(c =>
             string.Equals(c.Name, ItemStaticDataProperty, StringComparison.Ordinal) &&
             string.Equals(c.Type, "NameProperty", StringComparison.Ordinal));
+
+    /// <summary>
+    /// Walks up from a slot to the owning actor record and returns its <c>ComponentClassName</c>
+    /// (the recorder component, which identifies whether the inventory is the player's, a deployable
+    /// container's, a creature's, etc.). Null if not found.
+    /// </summary>
+    private string? FindOwnerComponentClass(UeNode slotElement)
+    {
+        for (var n = slotElement.Parent; n is not null; n = n.Parent)
+        {
+            var cc = n.Children.FirstOrDefault(c =>
+                string.Equals(c.Name, ComponentClassProperty, StringComparison.Ordinal) &&
+                string.Equals(c.Type, "StrProperty", StringComparison.Ordinal));
+            if (cc is not null)
+            {
+                var pos = cc.ValueStart;
+                return UePropertyReader.ReadFString(_blob.Data, ref pos);
+            }
+        }
+
+        return null;
+    }
 
     private string? ReadItemRowName(UeNode element)
     {
