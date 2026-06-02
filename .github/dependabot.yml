@@ -21,6 +21,11 @@ updates:
       - "agent:dependabot"
     commit-message:
       prefix: "chore(deps)"
+    ignore:
+      # FluentAssertions is pinned at 6.12.0: v7+ relicensed to a paid
+      # commercial model; we stay on the last free (Apache-2.0) line.
+      # Owner decision 2026-06-01. Delete this entry to revisit the stance.
+      - dependency-name: "FluentAssertions"
     groups:
       # Bundle low-risk patch/minor bumps to reduce PR churn
       microsoft-extensions:
@@ -30,7 +35,6 @@ updates:
         patterns:
           - "xunit*"
           - "Microsoft.NET.Test.Sdk"
-          - "FluentAssertions"
           - "coverlet.*"
 
   # GitHub Actions used by our workflows
