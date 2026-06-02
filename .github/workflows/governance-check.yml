@@ -9,6 +9,12 @@ name: Governance Check
 #   3. Validates commit trailers on every commit in the PR.
 #
 # A failure on any of the above blocks merge.
+#
+# Dependabot exemption: Dependabot[bot] cannot write our PR template or the
+# Agent:/Consulted: commit trailers, so the PR-body (1) and commit-trailer (3)
+# jobs are skipped for it. Its bumps are reviewed via .github/dependabot.yml
+# (license/provenance) and the PII/secret lint (2) still runs on every PR.
+# Owner-approved enforcement carve-out (SCOPE_GUARDRAILS §2.11), 2026-06-01.
 
 on:
   pull_request:
@@ -22,6 +28,8 @@ permissions:
 jobs:
   pr-body-check:
     name: PR body contract sections
+    # Dependabot PR bodies cannot contain our template sections — skip for it.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Verify required PR body sections
@@ -80,6 +88,8 @@ jobs:
 
   commit-trailer-check:
     name: Commit trailers
+    # Dependabot commits cannot carry Agent:/Consulted: trailers — skip for it.
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR commits
