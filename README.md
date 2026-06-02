@@ -2,6 +2,7 @@
 
 A free, **offline**, open-source Windows tool that **repairs broken [Icarus](https://www.surviveicarus.com/) (RocketWerkz) save files** and lets players **safely edit their own local progression** — with automatic backups, atomic writes, and **zero telemetry**.
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/920c16bf5898406495629923788e394f)](https://app.codacy.com/gh/ImPanick/IUUT/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Build & Test](https://github.com/ImPanick/IUUT/actions/workflows/build.yml/badge.svg)](https://github.com/ImPanick/IUUT/actions/workflows/build.yml)
 [![Governance](https://github.com/ImPanick/IUUT/actions/workflows/governance-check.yml/badge.svg)](https://github.com/ImPanick/IUUT/actions/workflows/governance-check.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
