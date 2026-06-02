@@ -46,7 +46,12 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Restore
-        run: dotnet restore IcarusUltimateUtilityTool.sln
+        # Restore in the Release configuration so IUUT.App's Release-only
+        # conditional RuntimeIdentifier (win-x64) is part of the restored
+        # assets. Without this, the Release build below fails with NETSDK1047
+        # ("Assets file ... doesn't have a target for net8.0-windows/win-x64")
+        # because the default restore runs in Debug, where the RID is inactive.
+        run: dotnet restore IcarusUltimateUtilityTool.sln -p:Configuration=Release
 
       - name: Build (Release, warnings as errors)
         run: dotnet build IcarusUltimateUtilityTool.sln -c Release --no-restore
