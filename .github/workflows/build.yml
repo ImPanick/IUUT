@@ -26,6 +26,10 @@ env:
   DOTNET_CLI_TELEMETRY_OPTOUT: "1"
   DOTNET_NOLOGO: "1"
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: "1"
+  # Mapped from the repo secret so the coverage-upload step can gate on its
+  # presence (you cannot reference `secrets.*` directly in a step `if:`).
+  # Until the secret is set, the upload step skips and the build stays green.
+  CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
 
 concurrency:
   group: build-${{ github.ref }}
@@ -70,3 +74,15 @@ jobs:
           path: "**/TestResults/**/coverage.cobertura.xml"
           if-no-files-found: ignore
           retention-days: 14
+
+      # Sends the cobertura coverage report to Codacy so its quality gate has
+      # real coverage data. Skipped (build stays green) until the repo secret
+      # CODACY_PROJECT_TOKEN is configured. Without coverage, Codacy reports
+      # "Not up to standards" on every PR — including changes it does not even
+      # analyse (e.g. .github/** is excluded in .codacy.yaml).
+      - name: Upload coverage to Codacy
+        if: ${{ always() && env.CODACY_PROJECT_TOKEN != '' }}
+        uses: codacy/codacy-coverage-reporter-action@v1.3.0
+        with:
+          project-token: ${{ env.CODACY_PROJECT_TOKEN }}
+          coverage-reports: "**/TestResults/**/coverage.cobertura.xml"
