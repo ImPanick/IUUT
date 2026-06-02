@@ -76,14 +76,19 @@ jobs:
 
       - name: Generate SHA256SUMS.txt
         shell: pwsh
+        working-directory: dist
         run: |
-          Push-Location dist
-          Get-ChildItem -File -Exclude SHA256SUMS.txt | ForEach-Object {
-            $h = (Get-FileHash $_.Name -Algorithm SHA256).Hash.ToLower()
-            "$h  $($_.Name)"
-          } | Set-Content -Path SHA256SUMS.txt -Encoding ascii
+          # Collect to a variable first, then Set-Content -Value. The previous
+          # `... | Set-Content` pipeline form left no file when the pipeline
+          # produced nothing (and `-Exclude` without a path wildcard is a no-op),
+          # which broke the release. This form always writes the file.
+          $files = Get-ChildItem -File | Where-Object { $_.Name -ne 'SHA256SUMS.txt' }
+          $lines = foreach ($f in $files) {
+            $h = (Get-FileHash -LiteralPath $f.FullName -Algorithm SHA256).Hash.ToLower()
+            '{0}  {1}' -f $h, $f.Name
+          }
+          Set-Content -Path SHA256SUMS.txt -Value $lines -Encoding ascii
           Get-Content SHA256SUMS.txt
-          Pop-Location
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@v4
