@@ -46,6 +46,17 @@ jobs:
           dotnet restore IcarusUltimateUtilityTool.sln
           dotnet test IcarusUltimateUtilityTool.sln -c Release --logger "console;verbosity=minimal"
 
+      - name: Derive version from tag
+        id: ver
+        shell: pwsh
+        run: |
+          # The pushed SemVer tag (e.g. v1.1.0) is the single source of truth for the
+          # release version. Strip the leading 'v' and feed it to dotnet publish so the
+          # shipped exe's AssemblyVersion/FileVersion/ProductVersion match the release.
+          $v = "${{ github.ref_name }}".TrimStart('v')
+          "version=$v" | Out-File -FilePath $env:GITHUB_OUTPUT -Append -Encoding utf8
+          Write-Host "Release version: $v"
+
       - name: Publish self-contained single-file IUUT.exe
         run: >
           dotnet publish src/IUUT.App/IUUT.App.csproj
@@ -54,6 +65,7 @@ jobs:
           -p:PublishSingleFile=true
           -p:IncludeNativeLibrariesForSelfExtract=true
           -p:EnableCompressionInSingleFile=true
+          -p:Version=${{ steps.ver.outputs.version }}
           -o publish
 
       - name: Stage release artifacts
@@ -100,6 +112,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
+          name: IUUT v${{ steps.ver.outputs.version }}
           files: |
             dist/IUUT.exe
             dist/IUUT-portable.zip
