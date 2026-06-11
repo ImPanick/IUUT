@@ -34,10 +34,14 @@ public static class AssociatedProspectsParser
             throw new JsonException("AssociatedProspects container has no outer key.");
         }
 
+        // Each inner string is wrapped: { "AssociatedProspect": { "ProspectID": …, … } }. Unwrap so
+        // callers get the association directly (ProspectId populated). The serializer re-wraps it.
         return new AssociatedProspectsModel
         {
             ContainerKey = key,
-            Prospects = NestedStringifiedJson.Parse<AssociatedProspect>(json, key),
+            Prospects = NestedStringifiedJson.Parse<AssociatedProspectEntry>(json, key)
+                .Select(entry => entry.AssociatedProspect)
+                .ToList(),
         };
     }
 }

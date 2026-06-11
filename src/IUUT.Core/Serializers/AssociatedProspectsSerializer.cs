@@ -10,6 +10,9 @@ public static class AssociatedProspectsSerializer
     public static string Serialize(AssociatedProspectsModel model)
     {
         ArgumentNullException.ThrowIfNull(model);
-        return NestedStringifiedJson.Serialize(model.ContainerKey, model.Prospects);
+        // Re-wrap each association in its "AssociatedProspect" object to match the on-disk format.
+        return NestedStringifiedJson.Serialize(
+            model.ContainerKey,
+            model.Prospects.Select(p => new AssociatedProspectEntry { AssociatedProspect = p }));
     }
 }
