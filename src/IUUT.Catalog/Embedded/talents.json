@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-week235-2026-06",
+  "catalogVersion": "datapak-week236-2026-06",
   "dataTable": "D_Talents",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
@@ -8712,10 +8712,6 @@
       "displayName": null
     },
     {
-      "rowName": "GH_R_D",
-      "displayName": null
-    },
-    {
       "rowName": "GH_R_D2",
       "displayName": null
     },
@@ -8761,7 +8757,51 @@
     },
     {
       "rowName": "Settlement_Hub_Population_1",
-      "displayName": null
+      "displayName": "Increased Population"
+    },
+    {
+      "rowName": "Settlement_Hub_Population_2",
+      "displayName": "Increased Population II"
+    },
+    {
+      "rowName": "Settlement_Hub_BuildingLimit_1",
+      "displayName": "Building Limit I"
+    },
+    {
+      "rowName": "Settlement_Hub_BuildingLimit_2",
+      "displayName": "Building Limit II"
+    },
+    {
+      "rowName": "Settlement_Hub_BuildingLimit_3",
+      "displayName": "Building Limit III"
+    },
+    {
+      "rowName": "Settlement_Hub_Watchtower",
+      "displayName": "Building: Watchtower"
+    },
+    {
+      "rowName": "Settlement_Hub_Barracks",
+      "displayName": "Building: Barracks"
+    },
+    {
+      "rowName": "Settlement_Hub_Stockpile",
+      "displayName": "Building: Stockpile"
+    },
+    {
+      "rowName": "Settlement_Hub_Warehouse",
+      "displayName": "Building: Warehouse"
+    },
+    {
+      "rowName": "Settlement_Hub_Forge",
+      "displayName": "Building: Forge"
+    },
+    {
+      "rowName": "Settlement_Hub_Workshop",
+      "displayName": "Building: Workshop"
+    },
+    {
+      "rowName": "Settlement_Hub_Medical",
+      "displayName": "Building: Medical Center"
     }
   ]
 }
