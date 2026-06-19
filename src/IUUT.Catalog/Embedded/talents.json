@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "datapak-week236-2026-06",
+  "catalogVersion": "datapak-week237-2026-06",
   "dataTable": "D_Talents",
-  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-06-18. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
       "rowName": "Stone_Axe",
@@ -8802,6 +8802,30 @@
     {
       "rowName": "Settlement_Hub_Medical",
       "displayName": "Building: Medical Center"
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Colonist",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Envirosuit_Radiation",
+      "displayName": null
+    },
+    {
+      "rowName": "DNA_Serum",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Radius_1",
+      "displayName": "Settlement Radius I"
+    },
+    {
+      "rowName": "Settlement_Hub_Radius_2",
+      "displayName": "Settlement Radius II"
+    },
+    {
+      "rowName": "Settlement_Hub_FortifiedWalls",
+      "displayName": "Fortified Walls"
     }
   ]
 }

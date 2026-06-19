@@ -11,7 +11,7 @@
 
 | File | Game table | Key → value | Loader | Notes |
 | --- | --- | --- | --- | --- |
-| `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | **2200 rows (live data.pak, Week 236 / 2026-06-11; was 1523).** All `Workshop_*`/`Prospect_*` unlocks. Display names null → humanized. |
+| `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | **2206 rows (live data.pak, Week 237 / 2026-06-18; was 1523).** All `Workshop_*`/`Prospect_*` unlocks. Display names null → humanized. |
 | `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Workshop/orbital items only — `Item.Meta.*`-tagged rows (378, live; dev/test excluded).** The Stash "Add item" picker. The orbital stash REJECTS non-Meta items (raw resources, building pieces). 90 curated names preserved; the rest humanize. |
 | `accolades.json` | `D_Accolades` | `rowName` → `displayName` | `CatalogLoader` | **447 rows (live), all with the game's own `DisplayName`** (NSLOCTEXT, e.g. `DefeatGarganutan` → "Gone Bananas"). |
 | `bestiary.json` | `D_BestiaryData` | `rowName` → `displayName` | `CatalogLoader` | **107 creature groups (live; was 78).** |
