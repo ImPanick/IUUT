@@ -1,20 +1,21 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IUUT.Core.Catalog;
 using IUUT.Core.Editing;
 
 namespace IUUT.App.ViewModels;
 
 /// <summary>
-/// The read-only Loadouts viewer (master §8.7, §10.4): lists the per-prospect loadouts and surfaces
-/// the loadout→stash GUID coupling — how many stash items the loadouts reference and which
-/// references are <em>dangling</em> (referenced but missing from the stash, to restore together).
-/// Loads <c>Loadout\Loadouts.json</c> + <c>MetaInventory.json</c> via <see cref="CustomFileService"/>.
+/// The read-only Loadouts viewer (master §8.7): shows each per-prospect loadout by the prospect it
+/// is for and the gear it carries — envirosuit + meta items resolved to friendly catalog names.
+/// Loads <c>Loadout\Loadouts.json</c> via <see cref="CustomFileService"/>.
 /// </summary>
 public sealed class LoadoutsViewerViewModel : ObservableObject
 {
     private readonly CustomFileService _files;
     private readonly LoadoutCrossReference _crossReference;
+    private readonly GameCatalogs _catalogs;
     private readonly string _saveFolder;
 
     private bool _isBusy;
@@ -24,20 +25,22 @@ public sealed class LoadoutsViewerViewModel : ObservableObject
     public LoadoutsViewerViewModel(
         CustomFileService files,
         LoadoutCrossReference crossReference,
+        GameCatalogs catalogs,
         string saveFolder,
         string profileLabel)
     {
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(crossReference);
+        ArgumentNullException.ThrowIfNull(catalogs);
         ArgumentException.ThrowIfNullOrEmpty(saveFolder);
 
         _files = files;
         _crossReference = crossReference;
+        _catalogs = catalogs;
         _saveFolder = saveFolder;
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Loadouts = [];
-        DanglingReferences = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
     }
 
@@ -47,16 +50,10 @@ public sealed class LoadoutsViewerViewModel : ObservableObject
     /// <summary>The per-prospect loadouts.</summary>
     public ObservableCollection<LoadoutRowViewModel> Loadouts { get; }
 
-    /// <summary>Loadout-referenced item GUIDs that are not present in the stash.</summary>
-    public ObservableCollection<string> DanglingReferences { get; }
-
     /// <summary>Reloads the save into the viewer.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
 
-    /// <summary>Whether there are any dangling references (drives the warning panel).</summary>
-    public bool HasDangling => DanglingReferences.Count > 0;
-
-    /// <summary>Cross-reference summary.</summary>
+    /// <summary>Header summary (loadout / prospect / item counts).</summary>
     public string Summary { get; private set; } = "";
 
     /// <summary>True while loading.</summary>
@@ -83,7 +80,6 @@ public sealed class LoadoutsViewerViewModel : ObservableObject
         try
         {
             Loadouts.Clear();
-            DanglingReferences.Clear();
 
             var loadouts = await _files.LoadLoadoutsAsync(_saveFolder);
             IsLoaded = loadouts is not null;
@@ -91,33 +87,21 @@ public sealed class LoadoutsViewerViewModel : ObservableObject
             {
                 Summary = "";
                 OnPropertyChanged(nameof(Summary));
-                OnPropertyChanged(nameof(HasDangling));
                 StatusMessage = "Could not load this save's Loadout\\Loadouts.json (missing or unreadable).";
                 return;
             }
 
-            foreach (var entry in loadouts.Loadouts.OrderBy(l => l.ChrSlot))
+            foreach (var summary in _crossReference.Summarize(loadouts)
+                         .OrderBy(s => s.ProspectId, StringComparer.OrdinalIgnoreCase)
+                         .ThenBy(s => s.ChrSlot))
             {
-                Loadouts.Add(new LoadoutRowViewModel(entry.ChrSlot, entry.LoadoutGuid));
+                Loadouts.Add(new LoadoutRowViewModel(summary, _catalogs));
             }
 
-            var referenced = _crossReference.ReferencedDatabaseGuids(loadouts);
-
-            var stash = await _files.LoadStashAsync(_saveFolder);
-            var danglingNote = "stash not loaded";
-            if (stash is not null)
-            {
-                foreach (var guid in _crossReference.DanglingReferences(loadouts, stash))
-                {
-                    DanglingReferences.Add(guid);
-                }
-
-                danglingNote = $"{DanglingReferences.Count} dangling";
-            }
-
-            Summary = $"{Loadouts.Count:N0} loadouts · {referenced.Count:N0} item references · {danglingNote}";
+            var prospectCount = Loadouts.Select(l => l.ProspectId).Distinct(StringComparer.OrdinalIgnoreCase).Count();
+            var itemCount = Loadouts.Sum(l => l.ItemCount);
+            Summary = $"{Loadouts.Count:N0} loadouts · {prospectCount:N0} prospects · {itemCount:N0} items configured";
             OnPropertyChanged(nameof(Summary));
-            OnPropertyChanged(nameof(HasDangling));
             StatusMessage = $"Loaded loadouts for “{ProfileLabel}”.";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.

@@ -186,7 +186,7 @@ public sealed class CustomViewModel : ObservableObject
             ("stash", not null) =>
                 new StashViewerViewModel(_files, _stash, _loadoutCrossReference, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("loadouts", not null) =>
-                new LoadoutsViewerViewModel(_files, _loadoutCrossReference, slot.FolderPath, slot.DisplayLabel),
+                new LoadoutsViewerViewModel(_files, _loadoutCrossReference, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("mounts", not null) =>
                 new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
             ("flags", not null) =>

@@ -35,6 +35,33 @@ public sealed class LoadoutCrossReference
         return found;
     }
 
+    /// <summary>
+    /// Digests each loadout into a human-readable <see cref="LoadoutSummary"/> — the prospect it is
+    /// for, its envirosuit, and its meta items (grouped by RowName) — so the viewer can show names
+    /// instead of raw GUIDs. Read-only; tolerant of missing sub-blocks.
+    /// </summary>
+    public IReadOnlyList<LoadoutSummary> Summarize(LoadoutsModel loadouts)
+    {
+        ArgumentNullException.ThrowIfNull(loadouts);
+
+        var summaries = new List<LoadoutSummary>(loadouts.Loadouts.Count);
+        foreach (var entry in loadouts.Loadouts)
+        {
+            var data = entry.AdditionalData;
+            summaries.Add(new LoadoutSummary(
+                entry.ChrSlot,
+                SubField(data, "AssociatedProspect", "ProspectID") ?? "",
+                SubField(data, "AssociatedProspect", "ProspectState") ?? "",
+                EnviroSuitRowName(data),
+                MetaItemRefs(data),
+                Flag(data, "bInsured"),
+                Flag(data, "bSettled"),
+                entry.LoadoutGuid));
+        }
+
+        return summaries;
+    }
+
     /// <summary>Whether any loadout references the stash item <paramref name="databaseGuid"/> (warn before removing it).</summary>
     public bool IsReferenced(LoadoutsModel loadouts, string databaseGuid)
     {
@@ -82,4 +109,53 @@ public sealed class LoadoutCrossReference
                 break;
         }
     }
+
+    // An item sub-block ("EnviroSuit", a "MetaItems" element) → its ItemStaticData RowName, or null
+    // for the empty "None" slot / a missing block.
+    private static string? RowName(JsonElement itemBlock)
+    {
+        if (itemBlock.ValueKind == JsonValueKind.Object &&
+            itemBlock.TryGetProperty("ItemStaticData", out var staticData) &&
+            staticData.ValueKind == JsonValueKind.Object &&
+            staticData.TryGetProperty("RowName", out var rowName) &&
+            rowName.ValueKind == JsonValueKind.String)
+        {
+            var value = rowName.GetString();
+            return string.IsNullOrEmpty(value) || string.Equals(value, "None", StringComparison.Ordinal) ? null : value;
+        }
+
+        return null;
+    }
+
+    private static string? EnviroSuitRowName(Dictionary<string, JsonElement>? data) =>
+        data is not null && data.TryGetValue("EnviroSuit", out var enviroSuit) ? RowName(enviroSuit) : null;
+
+    private static List<LoadoutItemRef> MetaItemRefs(Dictionary<string, JsonElement>? data)
+    {
+        var counts = new Dictionary<string, int>(StringComparer.Ordinal);
+        if (data is not null && data.TryGetValue("MetaItems", out var items) && items.ValueKind == JsonValueKind.Array)
+        {
+            foreach (var item in items.EnumerateArray())
+            {
+                if (RowName(item) is { } rowName)
+                {
+                    counts[rowName] = counts.GetValueOrDefault(rowName) + 1;
+                }
+            }
+        }
+
+        return counts
+            .Select(kv => new LoadoutItemRef(kv.Key, kv.Value))
+            .OrderBy(r => r.RowName, StringComparer.Ordinal)
+            .ToList();
+    }
+
+    private static string? SubField(Dictionary<string, JsonElement>? data, string block, string field) =>
+        data is not null && data.TryGetValue(block, out var sub) && sub.ValueKind == JsonValueKind.Object &&
+        sub.TryGetProperty(field, out var value) && value.ValueKind == JsonValueKind.String
+            ? value.GetString()
+            : null;
+
+    private static bool Flag(Dictionary<string, JsonElement>? data, string field) =>
+        data is not null && data.TryGetValue(field, out var value) && value.ValueKind == JsonValueKind.True;
 }

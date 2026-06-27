@@ -64,4 +64,59 @@ public class LoadoutsTests
 
         _xref.DanglingReferences(loadouts, stash).Should().BeEquivalentTo([MetaItemGuid]);
     }
+
+    // The real on-disk shape: each loadout names its prospect + carries items by ItemStaticData RowName.
+    private const string RichSample = """
+        {
+            "Loadouts": [
+                {
+                    "ChrSlot": 3,
+                    "Guid": "LOADOUT00000000000000000000000003",
+                    "AssociatedProspect": { "ProspectID": "Olympus", "ProspectState": "Active" },
+                    "EnviroSuit": { "ItemStaticData": { "RowName": "Envirosuit_Larkwell_Alpha" } },
+                    "MetaItems": [
+                        { "ItemStaticData": { "RowName": "Meta_Knife_Inaris_Delta" } },
+                        { "ItemStaticData": { "RowName": "Meta_Knife_Inaris_Delta" } },
+                        { "ItemStaticData": { "RowName": "Meta_Axe" } }
+                    ],
+                    "bInsured": false,
+                    "bSettled": true
+                },
+                {
+                    "ChrSlot": 1,
+                    "Guid": "LOADOUT00000000000000000000000001",
+                    "AssociatedProspect": { "ProspectID": "Styx", "ProspectState": "Active" },
+                    "EnviroSuit": { "ItemStaticData": { "RowName": "None" } },
+                    "MetaItems": []
+                }
+            ]
+        }
+        """;
+
+    [Fact]
+    public void Summarize_ResolvesProspect_EnviroSuit_AndGroupedItems()
+    {
+        var summaries = _xref.Summarize(LoadoutsParser.Parse(RichSample));
+
+        var olympus = summaries.Should().ContainSingle(s => s.ProspectId == "Olympus").Subject;
+        olympus.ChrSlot.Should().Be(3);
+        olympus.ProspectState.Should().Be("Active");
+        olympus.Settled.Should().BeTrue();
+        olympus.Insured.Should().BeFalse();
+        olympus.EnviroSuitRowName.Should().Be("Envirosuit_Larkwell_Alpha");
+        olympus.Items.Should().BeEquivalentTo([
+            new LoadoutItemRef("Meta_Axe", 1),
+            new LoadoutItemRef("Meta_Knife_Inaris_Delta", 2),
+        ], "duplicate meta items are grouped with a count");
+    }
+
+    [Fact]
+    public void Summarize_EmptyEnviroSuitAndItems_AreNullAndEmpty()
+    {
+        var summaries = _xref.Summarize(LoadoutsParser.Parse(RichSample));
+
+        var styx = summaries.Should().ContainSingle(s => s.ProspectId == "Styx").Subject;
+        styx.EnviroSuitRowName.Should().BeNull("the \"None\" slot is not a real envirosuit");
+        styx.Items.Should().BeEmpty();
+    }
 }

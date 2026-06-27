@@ -22,7 +22,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="LOADOUTS" Style="{StaticResource LabelText}" />
-                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and their stash references for “{0}” (read-only).}"
+                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and the gear they carry for “{0}” (read-only).}"
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding Summary}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
                 </StackPanel>
@@ -30,75 +30,49 @@
             </Grid>
         </Border>
 
-        <!-- Loadouts (left) + dangling references (right) -->
-        <Grid Grid.Row="1" Margin="0,12,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <!-- Loadout cards -->
+        <ScrollViewer Grid.Row="1" Margin="0,12,0,0" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Loadouts}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="0,0,0,8" Padding="14,12" CornerRadius="6"
+                                Background="{StaticResource DataBackdropBrush}"
+                                BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                            <StackPanel>
+                                <!-- Prospect · slot, then state/insured/settled -->
+                                <TextBlock Text="{Binding Title}" Style="{StaticResource BodyText}" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding Flags}" Style="{StaticResource MutedText}" Margin="0,1,0,0" />
 
-            <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="12" Margin="0,0,6,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="LOADOUTS" Style="{StaticResource LabelText}" Margin="4,2,0,8" />
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Loadouts}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border Margin="0,0,0,5" Padding="12,8" CornerRadius="4"
-                                            Background="{StaticResource DataBackdropBrush}"
-                                            BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding SlotLabel}" Style="{StaticResource BodyText}" />
-                                            <TextBlock Text="{Binding LoadoutGuid}" Style="{StaticResource MonoText}" Margin="0,1,0,0" TextTrimming="CharacterEllipsis" />
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
-                </Grid>
-            </Border>
+                                <!-- Envirosuit -->
+                                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                    <TextBlock Text="ENVIROSUIT" Style="{StaticResource LabelText}" VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding EnviroSuit}" Style="{StaticResource BodyText}" Margin="10,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
 
-            <Border Grid.Column="1" Style="{StaticResource GlassCard}" Padding="12" Margin="6,0,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="DANGLING REFERENCES" Style="{StaticResource LabelText}" Margin="4,2,0,8" />
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <Grid>
-                            <ItemsControl ItemsSource="{Binding DanglingReferences}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding}" Style="{StaticResource MonoText}"
-                                                   Foreground="{StaticResource AmberCoreBrush}" Margin="6,3" TextTrimming="CharacterEllipsis" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                                       Text="No dangling references — every loadout item is present in the stash."
-                                       TextWrapping="Wrap" TextAlignment="Center" Margin="12">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding HasDangling}" Value="False">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </Grid>
-                    </ScrollViewer>
-                </Grid>
-            </Border>
-        </Grid>
+                                <!-- Meta items as wrapping chips -->
+                                <TextBlock Text="{Binding ItemsHeader}" Style="{StaticResource LabelText}" Margin="0,10,0,6" />
+                                <ItemsControl ItemsSource="{Binding Items}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border CornerRadius="3" Padding="7,3" Margin="0,0,5,5"
+                                                    Background="{StaticResource GlassFillHoverBrush}"
+                                                    BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                                <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
 
         <!-- Status -->
         <TextBlock Grid.Row="2" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
