@@ -270,7 +270,8 @@ public sealed class LazyMaxService
 
         var total = 0;
         var added = 0;
-        foreach (var rowName in _catalogs.Talents.RowNames.Where(IsWorkshopOrProspect))
+        // Live blueprints only — never grant staged/not-live catalog rows the game cooked out.
+        foreach (var rowName in _catalogs.Talents.LiveRowNames.Where(IsWorkshopOrProspect))
         {
             total++;
             if (existingTalents.TryGetValue(rowName, out var talent))

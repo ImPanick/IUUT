@@ -28,6 +28,7 @@ public sealed class AccountEditorViewModel : ObservableObject
     private bool _isBusy;
     private int _blueprintsUnlocked;
     private int _blueprintsTotal;
+    private bool _includeUnreleasedBlueprints;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -106,7 +107,30 @@ public sealed class AccountEditorViewModel : ObservableObject
     }
 
     /// <summary>Human summary of blueprint unlock progress.</summary>
-    public string BlueprintsSummary => $"{BlueprintsUnlocked:N0} of {BlueprintsTotal:N0} workshop & prospect blueprints unlocked";
+    public string BlueprintsSummary =>
+        $"{BlueprintsUnlocked:N0} of {BlueprintsTotal:N0} workshop & prospect blueprints unlocked"
+        + (IncludeUnreleasedBlueprints ? " · incl. unreleased" : "");
+
+    /// <summary>
+    /// When on, the blueprint count + "unlock all" include staged/not-live catalog blueprints
+    /// (e.g. dev-gated content the game cooked out). Off by default so IUUT only grants what the
+    /// live game recognises.
+    /// </summary>
+    public bool IncludeUnreleasedBlueprints
+    {
+        get => _includeUnreleasedBlueprints;
+        set
+        {
+            if (SetProperty(ref _includeUnreleasedBlueprints, value))
+            {
+                OnPropertyChanged(nameof(BlueprintsSummary));
+                if (_bundle is not null)
+                {
+                    RefreshBlueprintSummary(_bundle.Profile);
+                }
+            }
+        }
+    }
 
     /// <summary>Status-bar message.</summary>
     public string StatusMessage
@@ -269,7 +293,8 @@ public sealed class AccountEditorViewModel : ObservableObject
     }
 
     private IEnumerable<string> BlueprintRowNames() =>
-        _catalogs.Talents.RowNames.Where(IsBlueprint);
+        (IncludeUnreleasedBlueprints ? _catalogs.Talents.RowNames : _catalogs.Talents.LiveRowNames)
+            .Where(IsBlueprint);
 
     private static bool IsBlueprint(string rowName) =>
         rowName.StartsWith("Workshop_", StringComparison.Ordinal) ||

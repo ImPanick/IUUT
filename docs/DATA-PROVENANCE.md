@@ -11,7 +11,7 @@
 
 | File | Game table | Key → value | Loader | Notes |
 | --- | --- | --- | --- | --- |
-| `talents.json` | `D_Talents` | `rowName` → `displayName` | `CatalogLoader` | **2206 rows (live data.pak, Week 237 / 2026-06-18; was 1523).** All `Workshop_*`/`Prospect_*` unlocks. Display names null → humanized. |
+| `talents.json` | `D_Talents` | `rowName` → `displayName` (+ optional `live`) | `CatalogLoader` | **2214 rows (Week 238 / 2026-06-26): 2206 live + 8 `live:false`.** A **superset** — when the weekly re-mine drops a row (staged/dev-gated content cooked out, or a removed row) it is kept with `"live": false` instead of deleted, so saves referencing it still get a friendly name and the "show unreleased" toggle can reveal it. `LiveRowNames`/`IsLive` expose the live subset (Lazy Max + the blueprint checklist use it). All `Workshop_*`/`Prospect_*` unlocks; display names null → humanized. |
 | `items.json` | `D_ItemsStatic` | `rowName` → `displayName` | `CatalogLoader` | **Workshop/orbital items only — `Item.Meta.*`-tagged rows (378, live; dev/test excluded).** The Stash "Add item" picker. The orbital stash REJECTS non-Meta items (raw resources, building pieces). 90 curated names preserved; the rest humanize. |
 | `accolades.json` | `D_Accolades` | `rowName` → `displayName` | `CatalogLoader` | **447 rows (live), all with the game's own `DisplayName`** (NSLOCTEXT, e.g. `DefeatGarganutan` → "Gone Bananas"). |
 | `bestiary.json` | `D_BestiaryData` | `rowName` → `displayName` | `CatalogLoader` | **107 creature groups (live; was 78).** |

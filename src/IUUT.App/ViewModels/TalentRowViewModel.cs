@@ -13,11 +13,12 @@ public sealed class TalentRowViewModel : ObservableObject
     private int _rank;
 
     /// <summary>Creates a talent row.</summary>
-    public TalentRowViewModel(string rowName, string label, int rank)
+    public TalentRowViewModel(string rowName, string label, int rank, bool isLive = true)
     {
         ArgumentException.ThrowIfNullOrEmpty(rowName);
         RowName = rowName;
         Label = string.IsNullOrEmpty(label) ? rowName : label;
+        IsLive = isLive;
         _rank = Clamp(rank);
     }
 
@@ -26,6 +27,13 @@ public sealed class TalentRowViewModel : ObservableObject
 
     /// <summary>The display name (catalog label, falling back to the key).</summary>
     public string Label { get; }
+
+    /// <summary>Whether this talent exists in the current live game data. <c>false</c> = staged/removed
+    /// content the editor badges as "not live" (still editable; the game ignores unknown talents on load).</summary>
+    public bool IsLive { get; }
+
+    /// <summary>A short suffix the UI appends to <see cref="Label"/> for not-live rows.</summary>
+    public string LiveBadge => IsLive ? "" : "  · not live";
 
     /// <summary>The editable rank, clamped to 0..<see cref="CharacterEditService.MaxTalentRank"/>.</summary>
     public int Rank

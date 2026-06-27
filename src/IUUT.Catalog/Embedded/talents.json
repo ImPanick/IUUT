@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "datapak-week237-2026-06",
+  "catalogVersion": "datapak-week238-2026-06",
   "dataTable": "D_Talents",
-  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-06-18. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-06-26. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
       "rowName": "Stone_Axe",
@@ -8757,23 +8757,28 @@
     },
     {
       "rowName": "Settlement_Hub_Population_1",
-      "displayName": "Increased Population"
+      "displayName": "Increased Population",
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_Population_2",
-      "displayName": "Increased Population II"
+      "displayName": "Increased Population II",
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_BuildingLimit_1",
-      "displayName": "Building Limit I"
+      "displayName": "Building Limit I",
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_BuildingLimit_2",
-      "displayName": "Building Limit II"
+      "displayName": "Building Limit II",
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_BuildingLimit_3",
-      "displayName": "Building Limit III"
+      "displayName": "Building Limit III",
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_Watchtower",
@@ -8805,15 +8810,18 @@
     },
     {
       "rowName": "Workshop_Envirosuit_Colonist",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "Workshop_Envirosuit_Radiation",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "DNA_Serum",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "Settlement_Hub_Radius_1",
@@ -8826,6 +8834,38 @@
     {
       "rowName": "Settlement_Hub_FortifiedWalls",
       "displayName": "Fortified Walls"
+    },
+    {
+      "rowName": "Settlement_Hub_Watertower",
+      "displayName": "Building: Water Tower"
+    },
+    {
+      "rowName": "Settlement_Hub_Farm",
+      "displayName": "Building: Farm"
+    },
+    {
+      "rowName": "Settlement_Hub_Generator",
+      "displayName": "Building: Generator"
+    },
+    {
+      "rowName": "Settlement_Hub_Mine",
+      "displayName": "Building: Mine"
+    },
+    {
+      "rowName": "Settlement_Hub_Woodcutter",
+      "displayName": "Building: Logging Camp"
+    },
+    {
+      "rowName": "Settlement_Hub_Sawmill",
+      "displayName": "Building: Sawmill"
+    },
+    {
+      "rowName": "Settlement_Hub_Residence",
+      "displayName": "Building: Residence"
+    },
+    {
+      "rowName": "T3_Backpack",
+      "displayName": "Cured Leather Backpack"
     }
   ]
 }

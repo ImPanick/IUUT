@@ -39,6 +39,13 @@ public sealed class CatalogTable
     /// <summary>All RowNames.</summary>
     public IEnumerable<string> RowNames => _rowsByName.Keys;
 
+    /// <summary>The RowNames present in the current live game data (excludes <c>live:false</c> rows).</summary>
+    public IEnumerable<string> LiveRowNames => _rowsByName.Values.Where(r => r.Live).Select(r => r.RowName);
+
+    /// <summary>Whether <paramref name="rowName"/> is present in the current live game data
+    /// (true for unknown rows — absence from the catalog never marks something not-live).</summary>
+    public bool IsLive(string rowName) => !_rowsByName.TryGetValue(rowName, out var row) || row.Live;
+
     /// <summary>Whether the table contains <paramref name="rowName"/>.</summary>
     public bool Contains(string rowName) => _rowsByName.ContainsKey(rowName);
 

@@ -30,6 +30,32 @@ public class GameCatalogsTests
         _catalogs.Talents.Contains("Definitely_Not_A_Real_Talent").Should().BeFalse();
     }
 
+    [Fact] // Week 238: staged content the game cooked out is kept with live:false, never deleted.
+    public void Talents_KeepNotLiveStagedRows_OutsideTheLiveSet()
+    {
+        // The Week 238 Settlement-Hub restructure dropped these from the live D_Talents; the catalog
+        // keeps them so saves that reference them still get a friendly name and the toggle can reveal them.
+        string[] notLive =
+        [
+            "DNA_Serum", "Workshop_Envirosuit_Colonist", "Workshop_Envirosuit_Radiation",
+            "Settlement_Hub_Population_1", "Settlement_Hub_BuildingLimit_1",
+        ];
+        foreach (var rowName in notLive)
+        {
+            _catalogs.Talents.Contains(rowName).Should().BeTrue($"{rowName} is retained in the catalog");
+            _catalogs.Talents.IsLive(rowName).Should().BeFalse($"{rowName} is staged / not in the live game");
+        }
+
+        // The current Week 238 building nodes ARE live.
+        _catalogs.Talents.IsLive("Settlement_Hub_Residence").Should().BeTrue();
+        _catalogs.Talents.IsLive("T3_Backpack").Should().BeTrue();
+        _catalogs.Talents.Label("T3_Backpack").Should().Be("Cured Leather Backpack");
+
+        // Live blueprints exclude the not-live ones (Lazy Max / the blueprint checklist use this).
+        _catalogs.Talents.LiveRowNames.Should().NotContain("Workshop_Envirosuit_Colonist");
+        _catalogs.Talents.LiveRowNames.Should().Contain("Workshop_Envirosuit");
+    }
+
     [Fact]
     public void Accolades_And_Bestiary_AreSeeded()
     {

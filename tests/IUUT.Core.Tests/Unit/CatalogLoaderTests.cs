@@ -90,4 +90,41 @@ public class CatalogLoaderTests
 
         act.Should().Throw<JsonException>();
     }
+
+    private const string LiveSampleJson = """
+        {
+            "catalogVersion": "v",
+            "dataTable": "D_Example",
+            "source": "test",
+            "rows": [
+                { "rowName": "LiveDefault", "displayName": "Live by default" },
+                { "rowName": "Staged", "displayName": "Staged content", "live": false }
+            ]
+        }
+        """;
+
+    private static CatalogTable LoadLiveSample() =>
+        CatalogLoader.Load(new MemoryStream(new UTF8Encoding(false).GetBytes(LiveSampleJson)));
+
+    [Fact]
+    public void Live_DefaultsTrue_AndParsesFalse()
+    {
+        var table = LoadLiveSample();
+
+        table.TryGet("LiveDefault", out var live).Should().BeTrue();
+        live!.Live.Should().BeTrue("rows without a 'live' field are live by default");
+        table.TryGet("Staged", out var staged).Should().BeTrue();
+        staged!.Live.Should().BeFalse("\"live\": false marks staged / not-live content");
+    }
+
+    [Fact]
+    public void LiveRowNames_And_IsLive_ExcludeNotLiveRows()
+    {
+        var table = LoadLiveSample();
+
+        table.LiveRowNames.Should().BeEquivalentTo("LiveDefault");
+        table.IsLive("LiveDefault").Should().BeTrue();
+        table.IsLive("Staged").Should().BeFalse();
+        table.IsLive("Unknown").Should().BeTrue("absence from the catalog never marks something not-live (CONSTITUTION VI)");
+    }
 }

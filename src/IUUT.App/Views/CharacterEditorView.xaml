@@ -115,7 +115,12 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
-                                                <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                                    <!-- LiveBadge is "" for live rows (renders nothing); "· not live" for staged content. -->
+                                                    <TextBlock Text="{Binding LiveBadge}" Style="{StaticResource MonoText}"
+                                                               VerticalAlignment="Center" Margin="6,0,0,0" />
+                                                </StackPanel>
                                                 <TextBlock Text="{Binding RowName}" Style="{StaticResource MonoText}" Margin="0,1,0,0" />
                                             </StackPanel>
                                             <Slider Grid.Column="1" Width="130" VerticalAlignment="Center"

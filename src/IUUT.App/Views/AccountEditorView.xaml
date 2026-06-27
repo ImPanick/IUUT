@@ -72,6 +72,8 @@
                 <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,12,0">
                     <TextBlock Text="Workshop &amp; prospect blueprints" Style="{StaticResource BodyText}" />
                     <TextBlock Text="{Binding BlueprintsSummary}" Style="{StaticResource MutedText}" Margin="0,2,0,0" />
+                    <CheckBox Content="Include unreleased / not-live blueprints"
+                              IsChecked="{Binding IncludeUnreleasedBlueprints, Mode=TwoWay}" Margin="0,6,0,0" />
                 </StackPanel>
                 <Button Grid.Column="1" Content="Unlock all blueprints" Click="OnUnlockAllBlueprints"
                         VerticalAlignment="Center" Padding="14,6" />

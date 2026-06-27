@@ -43,7 +43,8 @@ public sealed class CharacterSlotViewModel : ObservableObject
         Talents = [];
         foreach (var talent in model.Talents.OrderBy(t => _catalogs.Talents.Label(t.RowName), StringComparer.OrdinalIgnoreCase))
         {
-            Talents.Add(new TalentRowViewModel(talent.RowName, _catalogs.Talents.Label(talent.RowName), talent.Rank));
+            Talents.Add(new TalentRowViewModel(
+                talent.RowName, _catalogs.Talents.Label(talent.RowName), talent.Rank, _catalogs.Talents.IsLive(talent.RowName)));
         }
     }
 
@@ -125,7 +126,8 @@ public sealed class CharacterSlotViewModel : ObservableObject
         {
             if (present.Add(genetics))
             {
-                Talents.Add(new TalentRowViewModel(genetics, _catalogs.Talents.Label(genetics), CharacterEditService.MaxTalentRank));
+                Talents.Add(new TalentRowViewModel(
+                    genetics, _catalogs.Talents.Label(genetics), CharacterEditService.MaxTalentRank, _catalogs.Talents.IsLive(genetics)));
             }
         }
 
