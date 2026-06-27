@@ -41,6 +41,14 @@ in-game console (if enabled), which is how we **verify** (§7) before adding it 
 > exist in every UE4 title. Whether Icarus *honors* a given one (vs. clamping/locking it) is
 > game-dependent and must be confirmed by the live dump. Treat every recipe below as a
 > **candidate** until verified.
+>
+> **Datamined source (since v1.4.0).** Many of the catalog's cvars + their defaults/ranges are
+> now taken from the game's own **`Icarus/Config/SettingsSchema.json`** (the schema behind the
+> in-game settings menu) — e.g. `r.MotionBlur.Scale`, `r.ContactShadows`, `grass.DisableDynamicShadows`,
+> `r.Shadow.CSM.MaxCascades`, `r.Streaming.PoolSize` + `…LimitPoolSizeToVRAM`, `r.VolumetricCloud`,
+> and the `r.RayTracing.*` family. These are grouped (Visual FX / Frame Rate / Resolution & Quality /
+> Shadows / Textures & Streaming), and the niche ones (ray tracing, tessellation) sit in an
+> **`ADVANCED · MAY NOT APPLY`** group flagged `Experimental` — they are still candidates pending §7.
 
 ## 3. The toggle model (recap of §20.1)
 

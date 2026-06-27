@@ -30,15 +30,11 @@ public sealed class GameTuningSettingViewModel : ObservableObject
     /// <summary>Whether this is a numeric setting (shows the slider + number box).</summary>
     public bool IsNumber => _state.Setting.Kind == GameTuningKind.Number;
 
-    /// <summary>Presentation-only grouping for the Game Tuner list (Visual FX / Frame Rate /
-    /// Performance). Derived from the cvar — no Core change.</summary>
-    public string Group => _state.Setting.Key switch
-    {
-        "r.Fog" or "r.VolumetricFog" or "r.VolumetricCloud"
-            or "r.MotionBlurQuality" or "r.DepthOfFieldQuality" => "VISUAL FX",
-        "r.VSync" or "t.MaxFPS" or "bSmoothFrameRate" => "FRAME RATE",
-        _ => "PERFORMANCE",
-    };
+    /// <summary>Grouping header for the Game Tuner list, declared by the catalog setting.</summary>
+    public string Group => _state.Setting.Group;
+
+    /// <summary>True for niche/experimental cvars (ray tracing, tessellation …) Icarus may ignore.</summary>
+    public bool IsExperimental => _state.Setting.Experimental;
 
     /// <summary>Slider minimum.</summary>
     public double Minimum => _state.Setting.Min;

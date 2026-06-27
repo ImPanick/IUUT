@@ -25,6 +25,15 @@ public sealed record GameTuningSetting
     /// <summary>Toggle or number.</summary>
     public required GameTuningKind Kind { get; init; }
 
+    /// <summary>UI grouping header, e.g. <c>VISUAL FX</c>, <c>SHADOWS</c>, <c>ADVANCED · MAY NOT APPLY</c>.</summary>
+    public string Group { get; init; } = "PERFORMANCE";
+
+    /// <summary>
+    /// True for niche/experimental cvars (e.g. ray tracing, tessellation) that Icarus may not honour
+    /// at all. Surfaced with a caveat; still safe to write (an ignored cvar is inert).
+    /// </summary>
+    public bool Experimental { get; init; }
+
     /// <summary>For a toggle: the value written when ON (OFF removes the key). Default <c>0</c>.</summary>
     public string OnValue { get; init; } = "0";
 
