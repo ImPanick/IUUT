@@ -34,20 +34,27 @@ public sealed class MountEditorViewModel : ObservableObject
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Mounts = [];
+        ProspectMountGroups = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
     }
 
     /// <summary>The profile being edited (for the header).</summary>
     public string ProfileLabel { get; }
 
-    /// <summary>The save's tamed mounts.</summary>
+    /// <summary>The editable profile-roster mounts (<c>Mounts.json</c>).</summary>
     public ObservableCollection<MountSlotViewModel> Mounts { get; }
+
+    /// <summary>Read-only mounts deployed in each active prospect's world save (issue #19).</summary>
+    public ObservableCollection<ProspectMountGroupViewModel> ProspectMountGroups { get; }
 
     /// <summary>Reloads the save into the editor.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
 
-    /// <summary>Whether the save has at least one mount (drives the empty state).</summary>
+    /// <summary>Whether the profile roster has at least one mount (drives the empty state).</summary>
     public bool HasMounts => Mounts.Count > 0;
+
+    /// <summary>Whether any active prospect has deployed mounts (drives that section's visibility).</summary>
+    public bool HasProspectMounts => ProspectMountGroups.Count > 0;
 
     /// <summary>True while loading or applying.</summary>
     public bool IsBusy
@@ -72,25 +79,38 @@ public sealed class MountEditorViewModel : ObservableObject
         IsBusy = true;
         try
         {
-            _model = await _files.LoadMountsAsync(_saveFolder);
             Mounts.Clear();
+            ProspectMountGroups.Clear();
 
-            if (_model is null)
+            // Read-only: mounts deployed in each active prospect's world blob (issue #19).
+            foreach (var group in await _files.LoadProspectMountsAsync(_saveFolder))
             {
-                StatusMessage = "Could not load this save's Mounts.json (missing or unreadable).";
-                OnPropertyChanged(nameof(HasMounts));
-                return;
+                ProspectMountGroups.Add(new ProspectMountGroupViewModel(group));
             }
 
-            foreach (var mount in _model.SavedMounts)
+            OnPropertyChanged(nameof(HasProspectMounts));
+
+            // Editable: the profile Mounts.json roster.
+            _model = await _files.LoadMountsAsync(_saveFolder);
+            if (_model is not null)
             {
-                Mounts.Add(new MountSlotViewModel(mount));
+                foreach (var mount in _model.SavedMounts)
+                {
+                    Mounts.Add(new MountSlotViewModel(mount));
+                }
             }
 
             OnPropertyChanged(nameof(HasMounts));
-            StatusMessage = Mounts.Count > 0
-                ? $"Loaded {Mounts.Count} mount(s) for “{ProfileLabel}”."
-                : "This save has no tamed mounts.";
+
+            var prospectMounts = ProspectMountGroups.Sum(g => g.Mounts.Count);
+            var prospectNote = HasProspectMounts
+                ? $" · {prospectMounts} deployed across {ProspectMountGroups.Count} prospect(s)"
+                : "";
+            StatusMessage = _model is null
+                ? (HasProspectMounts
+                    ? $"No Mounts.json roster{prospectNote}."
+                    : "Could not load this save's Mounts.json (missing or unreadable).")
+                : $"Loaded {Mounts.Count} roster mount(s){prospectNote} for “{ProfileLabel}”.";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.
         catch (Exception ex)

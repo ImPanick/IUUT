@@ -2,6 +2,7 @@ using System.Text.Json;
 using IUUT.Core.Io;
 using IUUT.Core.Models;
 using IUUT.Core.Parsers;
+using IUUT.Core.Prospects.World;
 using IUUT.Core.Serializers;
 
 namespace IUUT.Core.Editing;
@@ -70,6 +71,48 @@ public sealed class CustomFileService
     /// <summary>Loads <c>Loadout\Loadouts.json</c> (read-only); <c>null</c> if missing/unreadable/unparseable.</summary>
     public Task<LoadoutsModel?> LoadLoadoutsAsync(string saveFolder, CancellationToken cancellationToken = default) =>
         LoadJsonAsync(LoadoutsPath(saveFolder), LoadoutsParser.Parse, cancellationToken);
+
+    /// <summary>
+    /// Reads the mounts deployed inside each <c>Prospects\*.json</c> world save, grouped per prospect
+    /// (only prospects that actually have mounts). These are SEPARATE from the <c>Mounts.json</c>
+    /// roster — they are the mounts currently in active prospects, which the flat roster never showed
+    /// (issue #19). Read-only; the world blob is never mutated; unreadable prospect files are skipped.
+    /// </summary>
+    public async Task<IReadOnlyList<ProspectMountGroup>> LoadProspectMountsAsync(
+        string saveFolder, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+
+        var directory = Path.Combine(saveFolder, "Prospects");
+        if (!Directory.Exists(directory))
+        {
+            return Array.Empty<ProspectMountGroup>();
+        }
+
+        var reader = new ProspectMountReader();
+        var groups = new List<ProspectMountGroup>();
+        foreach (var file in Directory.EnumerateFiles(directory, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
+        {
+            IReadOnlyList<ProspectMount> mounts;
+            try
+            {
+                var json = await File.ReadAllTextAsync(file, cancellationToken).ConfigureAwait(false);
+                mounts = reader.ReadBlob(ProspectFileParser.Parse(json).ProspectBlob);
+            }
+            catch (Exception ex) when (
+                ex is JsonException or IOException or FormatException or InvalidDataException or ArgumentException)
+            {
+                continue; // skip an unreadable / non-prospect file rather than failing the whole load
+            }
+
+            if (mounts.Count > 0)
+            {
+                groups.Add(new ProspectMountGroup(Path.GetFileNameWithoutExtension(file), mounts));
+            }
+        }
+
+        return groups;
+    }
 
     // --- Engine flags (binary flags_<SteamID>.dat) ----------------------------
 

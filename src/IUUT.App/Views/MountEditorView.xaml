@@ -29,10 +29,12 @@
             </Grid>
         </Border>
 
-        <!-- Mounts list -->
+        <!-- Profile roster (editable) + per-prospect deployed mounts (read-only), in one scroll -->
         <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
-            <Grid>
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Section A: the editable Mounts.json roster -->
+                    <TextBlock Text="PROFILE ROSTER" Style="{StaticResource LabelText}" Margin="4,2,0,8" />
                     <ItemsControl ItemsSource="{Binding Mounts}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -58,23 +60,56 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </ScrollViewer>
+                    <TextBlock Text="The Mounts.json roster has no mounts (your mounts may be deployed in prospects, below)."
+                               TextWrapping="Wrap" Margin="4,2,0,0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasMounts}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
 
-                <!-- Empty state -->
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center"
-                           Text="No tamed mounts in this save." TextWrapping="Wrap" TextAlignment="Center">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock" BasedOn="{StaticResource MutedText}">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding HasMounts}" Value="False">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </Grid>
+                    <!-- Section B: read-only mounts deployed in each active prospect (issue #19) -->
+                    <StackPanel Margin="0,18,0,0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasProspectMounts}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="DEPLOYED IN PROSPECTS  (read-only)" Style="{StaticResource LabelText}" Margin="4,0,0,8" />
+                        <ItemsControl ItemsSource="{Binding ProspectMountGroups}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,6" Padding="14,10" CornerRadius="4"
+                                            Background="{StaticResource DataBackdropBrush}"
+                                            BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Header}" Style="{StaticResource BodyText}" FontWeight="SemiBold" />
+                                            <ItemsControl ItemsSource="{Binding Mounts}" Margin="0,4,0,0">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" Margin="10,2,0,0" />
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
         </Border>
 
         <!-- Status + apply -->
