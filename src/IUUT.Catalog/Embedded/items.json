@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "datapak-live-2026-05-31",
+  "catalogVersion": "datapak-week239-2026-07",
   "dataTable": "D_ItemsStatic",
-  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-03. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
       "rowName": "MetaResource",
@@ -1513,6 +1513,14 @@
     },
     {
       "rowName": "Workshop_Sawblade_Bundle",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Oxite_Dissolver_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Meta_Resource_Pack_Salt",
       "displayName": null
     }
   ]

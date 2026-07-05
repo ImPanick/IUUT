@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "datapak-week238-2026-06",
+  "catalogVersion": "datapak-week239-2026-07",
   "dataTable": "D_Talents",
-  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-06-26. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-03. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
       "rowName": "Stone_Axe",
@@ -8713,7 +8713,8 @@
     },
     {
       "rowName": "GH_R_D2",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "GH_R_Final",
@@ -8866,6 +8867,14 @@
     {
       "rowName": "T3_Backpack",
       "displayName": "Cured Leather Backpack"
+    },
+    {
+      "rowName": "GH_R_D",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Oxite_Dissolver_Printed",
+      "displayName": null
     }
   ]
 }
