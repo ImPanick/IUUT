@@ -6,20 +6,8 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <!-- Category accent colours for the stash tiles (local; kept off the shared theme). -->
-        <SolidColorBrush x:Key="CatWeapon" Color="#E5634B" />
-        <SolidColorBrush x:Key="CatArmor" Color="#46D6F2" />
-        <SolidColorBrush x:Key="CatTool" Color="#7FD17A" />
-        <SolidColorBrush x:Key="CatModule" Color="#B98CF0" />
-        <SolidColorBrush x:Key="CatConsumable" Color="#5BD6B0" />
-        <SolidColorBrush x:Key="CatAmmo" Color="#F0C36A" />
-        <SolidColorBrush x:Key="CatBackpack" Color="#C8A06A" />
-        <SolidColorBrush x:Key="CatResource" Color="#8FA0B8" />
-        <SolidColorBrush x:Key="CatOther" Color="#6E7C90" />
-    </UserControl.Resources>
-
-    <!-- Orbital Stash builder (master §8.6). DataContext = StashViewerViewModel. -->
+    <!-- Orbital Stash builder (master §8.6). DataContext = StashViewerViewModel.
+         Category accent brushes (CatWeapon…CatOther) live in the shared theme (DE-1 tokens). -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

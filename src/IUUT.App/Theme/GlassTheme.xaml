@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!--
         IUUT "Telemetry Console" theme tokens + base styles (docs/UI-DESIGN-CONCEPT.md v2).
@@ -12,6 +13,15 @@
 
     <!-- ============ Fonts ============ -->
     <FontFamily x:Key="MonoFontFamily">Cascadia Code, Cascadia Mono, Consolas, monospace</FontFamily>
+
+    <!-- ============ Type scale (Divine Elevation token set) ============ -->
+    <!-- Roles, not sizes: label (uppercase eyebrows) · meta (mono ids/paths) · body · title · display.
+         Weight is 400 or 600 only. Spacing scale (margins/padding): 4 / 8 / 12 / 16 / 24 / 40. -->
+    <sys:Double x:Key="FontSizeLabel">11</sys:Double>
+    <sys:Double x:Key="FontSizeMeta">12</sys:Double>
+    <sys:Double x:Key="FontSizeBody">13</sys:Double>
+    <sys:Double x:Key="FontSizeTitle">14</sys:Double>
+    <sys:Double x:Key="FontSizeDisplay">18</sys:Double>
 
     <!-- ============ Colours (warm gunmetal, doc §2) ============ -->
     <!-- legacy keys, repointed -->
@@ -28,6 +38,9 @@
     <Color x:Key="StateOkColor">#FF4ADE80</Color>
     <Color x:Key="StateWarnColor">#FFF59E0B</Color>
     <Color x:Key="StateDangerColor">#FFEF4444</Color>
+    <!-- Divine Elevation: STAGED is its own role (unapplied edits), distinct from warn — the
+         dirty-guard/apply-bar visual language uses this and nothing else uses this hue. -->
+    <Color x:Key="StateStagedColor">#FFE0A22E</Color>
 
     <!-- v2 surface ramp -->
     <Color x:Key="BgBaseColor">#FF131211</Color>
@@ -52,6 +65,7 @@
     <SolidColorBrush x:Key="StateOkBrush" Color="{StaticResource StateOkColor}" />
     <SolidColorBrush x:Key="StateWarnBrush" Color="{StaticResource StateWarnColor}" />
     <SolidColorBrush x:Key="StateDangerBrush" Color="{StaticResource StateDangerColor}" />
+    <SolidColorBrush x:Key="StateStagedBrush" Color="{StaticResource StateStagedColor}" />
 
     <!-- glass.* legacy names now mean graphite surfaces/lines -->
     <SolidColorBrush x:Key="GlassStrokeBrush" Color="{StaticResource GridLineColor}" />
@@ -74,6 +88,17 @@
 
     <!-- Window background — now a solid graphite (was the orbit gradient) -->
     <SolidColorBrush x:Key="OrbitBackgroundBrush" Color="{StaticResource BgBaseColor}" />
+
+    <!-- ============ Item-category accents (stash tiles; part of the token set) ============ -->
+    <SolidColorBrush x:Key="CatWeapon" Color="#E5634B" />
+    <SolidColorBrush x:Key="CatArmor" Color="#46D6F2" />
+    <SolidColorBrush x:Key="CatTool" Color="#7FD17A" />
+    <SolidColorBrush x:Key="CatModule" Color="#B98CF0" />
+    <SolidColorBrush x:Key="CatConsumable" Color="#5BD6B0" />
+    <SolidColorBrush x:Key="CatAmmo" Color="#F0C36A" />
+    <SolidColorBrush x:Key="CatBackpack" Color="#C8A06A" />
+    <SolidColorBrush x:Key="CatResource" Color="#8FA0B8" />
+    <SolidColorBrush x:Key="CatOther" Color="#6E7C90" />
 
     <!-- ============ Decorative ============ -->
     <!-- Faint 1px "chart" grid backdrop (doc §4 optional layer); tiled 32px cells. -->
@@ -121,35 +146,35 @@
     <Style x:Key="DisplayText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeDisplay}" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="TitleText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
-        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeTitle}" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="BodyText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextHiBrush}" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeBody}" />
     </Style>
     <Style x:Key="MutedText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextMidBrush}" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMeta}" />
     </Style>
     <Style x:Key="LabelText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextLowBrush}" />
-        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLabel}" />
         <Setter Property="FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="MonoText" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="{StaticResource MonoFontFamily}" />
         <Setter Property="Foreground" Value="{StaticResource TextMidBrush}" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMeta}" />
     </Style>
 
     <!-- ============ Panel (graphite card) ============ -->
