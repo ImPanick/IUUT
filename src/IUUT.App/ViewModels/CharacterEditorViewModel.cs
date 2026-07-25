@@ -200,9 +200,12 @@ public sealed class CharacterEditorViewModel : ObservableObject
             IsBusy = false;
         }
 
-        // Re-read from disk so the editor reflects what was actually written.
+        // Re-read from disk so the editor reflects what was actually written — keeping both the
+        // selection and the apply outcome (the reload would otherwise overwrite the status).
         var keepSlot = SelectedCharacter?.ChrSlot;
+        var appliedStatus = StatusMessage;
         await LoadAsync();
+        StatusMessage = appliedStatus;
         if (keepSlot is not null)
         {
             SelectedCharacter = Characters.FirstOrDefault(c => c.ChrSlot == keepSlot) ?? SelectedCharacter;

@@ -121,6 +121,9 @@ public sealed class GameTunerViewModel : ObservableObject
             IsBusy = false;
         }
 
+        // Refresh from Engine.ini, but keep the apply outcome visible in the status bar.
+        var appliedStatus = StatusMessage;
         Load();
+        StatusMessage = appliedStatus;
     }
 }

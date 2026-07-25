@@ -193,7 +193,10 @@ public sealed class FlagEditorViewModel : ObservableObject
             IsBusy = false;
         }
 
+        // Reload from disk, but keep the apply outcome visible in the status bar.
+        var appliedStatus = StatusMessage;
         await LoadAsync();
+        StatusMessage = appliedStatus;
     }
 
     private void AddFlag()
@@ -249,6 +252,8 @@ public sealed class FlagEditorViewModel : ObservableObject
 
     private void RebuildFlags()
     {
+        // Preserve the selection across staged operations by flag id.
+        var keepId = SelectedFlag?.Id;
         Flags.Clear();
         if (_model is not null)
         {
@@ -258,6 +263,6 @@ public sealed class FlagEditorViewModel : ObservableObject
             }
         }
 
-        SelectedFlag = null;
+        SelectedFlag = keepId is null ? null : Flags.FirstOrDefault(f => f.Id == keepId);
     }
 }

@@ -162,6 +162,9 @@ public sealed class MountEditorViewModel : ObservableObject
             IsBusy = false;
         }
 
+        // Reload from disk, but keep the apply outcome visible in the status bar.
+        var appliedStatus = StatusMessage;
         await LoadAsync();
+        StatusMessage = appliedStatus;
     }
 }

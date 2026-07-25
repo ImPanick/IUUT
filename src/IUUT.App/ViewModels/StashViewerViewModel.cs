@@ -245,7 +245,10 @@ public sealed class StashViewerViewModel : ObservableObject
             IsBusy = false;
         }
 
+        // Reload from disk, but keep the apply outcome visible in the status bar.
+        var appliedStatus = StatusMessage;
         await LoadAsync();
+        StatusMessage = appliedStatus;
     }
 
     private void AddItem()
@@ -282,6 +285,8 @@ public sealed class StashViewerViewModel : ObservableObject
 
     private void RebuildItems()
     {
+        // Preserve the selection across staged operations (repair, stack edits) by identity.
+        var keepGuid = SelectedItem?.DatabaseGuid;
         Items.Clear();
         if (_stash is not null)
         {
@@ -301,7 +306,9 @@ public sealed class StashViewerViewModel : ObservableObject
             }
         }
 
-        SelectedItem = null;
+        SelectedItem = keepGuid is null
+            ? null
+            : Items.FirstOrDefault(i => string.Equals(i.DatabaseGuid, keepGuid, StringComparison.OrdinalIgnoreCase));
         OnPropertyChanged(nameof(Summary));
     }
 

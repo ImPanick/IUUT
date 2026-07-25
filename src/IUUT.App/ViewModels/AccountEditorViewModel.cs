@@ -277,8 +277,11 @@ public sealed class AccountEditorViewModel : ObservableObject
             IsBusy = false;
         }
 
-        // Re-read from disk so the editor reflects what was actually written.
+        // Re-read from disk so the editor reflects what was actually written — but keep the apply
+        // outcome visible (the reload would otherwise overwrite "Applied … a backup was taken").
+        var appliedStatus = StatusMessage;
         await LoadAsync();
+        StatusMessage = appliedStatus;
     }
 
     private void RefreshBlueprintSummary(ProfileModel profile)
