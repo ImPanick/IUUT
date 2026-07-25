@@ -44,7 +44,11 @@ public sealed class CharacterSlotViewModel : ObservableObject
         foreach (var talent in model.Talents.OrderBy(t => _catalogs.Talents.Label(t.RowName), StringComparer.OrdinalIgnoreCase))
         {
             Talents.Add(new TalentRowViewModel(
-                talent.RowName, _catalogs.Talents.Label(talent.RowName), talent.Rank, _catalogs.Talents.IsLive(talent.RowName)));
+                talent.RowName,
+                _catalogs.Talents.Label(talent.RowName),
+                talent.Rank,
+                _catalogs.Talents.IsLive(talent.RowName),
+                _catalogs.Talents.MaxRank(talent.RowName, CharacterEditService.MaxTalentRank)));
         }
     }
 
@@ -110,14 +114,15 @@ public sealed class CharacterSlotViewModel : ObservableObject
     /// <summary>How many talents the character currently has (for the header).</summary>
     public int TalentCount => Talents.Count;
 
-    /// <summary>Maxes this character's talents in the editor: every non-Reroute row → 4, plus the Genetics rows.</summary>
+    /// <summary>Maxes this character's talents in the editor: every non-Reroute row → its true
+    /// catalog max (fallback 4), plus the Genetics rows at theirs.</summary>
     public void MaxTalents()
     {
         foreach (var talent in Talents)
         {
             if (!talent.RowName.Contains("Reroute", StringComparison.Ordinal))
             {
-                talent.Rank = CharacterEditService.MaxTalentRank;
+                talent.Rank = talent.Maximum; // the row VM already carries its true max
             }
         }
 
@@ -126,8 +131,9 @@ public sealed class CharacterSlotViewModel : ObservableObject
         {
             if (present.Add(genetics))
             {
+                var max = _catalogs.Talents.MaxRank(genetics, CharacterEditService.MaxTalentRank);
                 Talents.Add(new TalentRowViewModel(
-                    genetics, _catalogs.Talents.Label(genetics), CharacterEditService.MaxTalentRank, _catalogs.Talents.IsLive(genetics)));
+                    genetics, _catalogs.Talents.Label(genetics), max, _catalogs.Talents.IsLive(genetics), max));
             }
         }
 

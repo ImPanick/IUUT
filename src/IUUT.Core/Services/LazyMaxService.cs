@@ -26,7 +26,9 @@ namespace IUUT.Core.Services;
 /// </remarks>
 public sealed class LazyMaxService
 {
-    /// <summary>Rank applied to every unlocked character talent; the game clamps per row on load (master §8.3).</summary>
+    /// <summary>Fallback rank for talents the catalog has no mined max for (unlock-style/unknown
+    /// rows); the game clamps per row on load regardless (master §8.3). Rows with a mined
+    /// <c>maxRank</c> (from <c>Talent.Rewards</c> count) get their exact max instead.</summary>
     public const int MaxTalentRank = 4;
 
     /// <summary>Lazy Max raises each character's XP to at least this (master §8.3, F-030: "XP ≥ 80,000,000").</summary>
@@ -216,13 +218,16 @@ public sealed class LazyMaxService
 
             foreach (var rowName in union)
             {
+                // Exact per-row max from the mined catalog (Genetics_Twins = 2, three creature
+                // talents = 5, …); fallback for unlock-style/unknown rows.
+                var rank = _catalogs.Talents.MaxRank(rowName, MaxTalentRank);
                 if (existing.TryGetValue(rowName, out var talent))
                 {
-                    talent.Rank = MaxTalentRank;
+                    talent.Rank = rank;
                 }
                 else
                 {
-                    character.Talents.Add(new Talent { RowName = rowName, Rank = MaxTalentRank });
+                    character.Talents.Add(new Talent { RowName = rowName, Rank = rank });
                 }
             }
 

@@ -124,7 +124,7 @@
                                                 <TextBlock Text="{Binding RowName}" Style="{StaticResource MonoText}" Margin="0,1,0,0" />
                                             </StackPanel>
                                             <Slider Grid.Column="1" Width="130" VerticalAlignment="Center"
-                                                    Minimum="0" Maximum="4" TickFrequency="1" IsSnapToTickEnabled="True"
+                                                    Minimum="0" Maximum="{Binding Maximum}" TickFrequency="1" IsSnapToTickEnabled="True"
                                                     Value="{Binding Rank, Mode=TwoWay}" />
                                             <TextBlock Grid.Column="2" Width="20" Margin="10,0,0,0" VerticalAlignment="Center"
                                                        TextAlignment="Center" Style="{StaticResource BodyText}"

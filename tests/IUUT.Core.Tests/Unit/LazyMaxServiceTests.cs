@@ -27,7 +27,7 @@ public class LazyMaxServiceTests
     // ---- Characters -------------------------------------------------------
 
     [Fact]
-    public void MaxCharacters_AppliesAccountUnionAtRank4_ToEveryCharacter()
+    public void MaxCharacters_AppliesAccountUnion_AtEachRowsTrueMax_ToEveryCharacter()
     {
         var a = Character(1, ("Survival_HealthBoost", 2));
         var b = Character(2, ("Crafting_Speed", 1));
@@ -38,11 +38,13 @@ public class LazyMaxServiceTests
         foreach (var c in characters)
         {
             // Each character ends up with the full union: the other slot's talent too.
+            // Rows the mined catalog doesn't know fall back to the permissive 4.
             c.Talents.Should().Contain(t => t.RowName == "Survival_HealthBoost" && t.Rank == 4);
             c.Talents.Should().Contain(t => t.RowName == "Crafting_Speed" && t.Rank == 4);
-            // ...plus every functional Genetics row at rank 4.
-            c.Talents.Should().Contain(t => t.RowName == "Genetics_Twins" && t.Rank == 4);
-            c.Talents.Should().Contain(t => t.RowName == "Genetics_Lineage" && t.Rank == 4);
+            // ...plus every functional Genetics row at its TRUE mined max (both max at 2 in-game
+            // — the old blind rank-4 write relied on the game clamping on load).
+            c.Talents.Should().Contain(t => t.RowName == "Genetics_Twins" && t.Rank == 2);
+            c.Talents.Should().Contain(t => t.RowName == "Genetics_Lineage" && t.Rank == 2);
             // No duplicate RowNames (would be a hard validation error).
             c.Talents.Select(t => t.RowName).Should().OnlyHaveUniqueItems();
             c.Talents.Should().HaveCount(unionSize);
@@ -50,15 +52,19 @@ public class LazyMaxServiceTests
     }
 
     [Fact]
-    public void MaxCharacters_OverlaysSixteenGeneticsRows()
+    public void MaxCharacters_OverlaysSixteenGeneticsRows_AtTheirTrueMax()
     {
         var character = Character(1);
 
         NewService().MaxCharacters(new[] { character });
 
+        var talents = GameCatalogs.LoadEmbedded().Talents;
         var genetics = character.Talents.Where(t => t.RowName.StartsWith("Genetics_", StringComparison.Ordinal)).ToList();
         genetics.Should().HaveCount(16);
-        genetics.Should().OnlyContain(t => t.Rank == 4);
+        genetics.Should().OnlyContain(
+            t => t.Rank == talents.MaxRank(t.RowName, LazyMaxService.MaxTalentRank),
+            "every Genetics row is written at its exact mined max");
+        genetics.Should().OnlyContain(t => t.Rank >= 1, "a maxed talent is never rank 0");
     }
 
     [Fact]

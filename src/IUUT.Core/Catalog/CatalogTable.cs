@@ -56,4 +56,12 @@ public sealed class CatalogTable
     /// <summary>The display label for <paramref name="rowName"/>, falling back to a humanized RowName.</summary>
     public string Label(string rowName) =>
         _rowsByName.TryGetValue(rowName, out var row) ? row.Label : CatalogName.Humanize(rowName);
+
+    /// <summary>
+    /// The true max rank for a talent row, or <paramref name="fallback"/> when the catalog doesn't
+    /// know one (unlock-style rows, unknown rows). Never gatekeeping beyond the caller's own clamp
+    /// (CONSTITUTION VI) — the game clamps to its own max on load regardless.
+    /// </summary>
+    public int MaxRank(string rowName, int fallback) =>
+        _rowsByName.TryGetValue(rowName, out var row) ? row.MaxRank ?? fallback : fallback;
 }

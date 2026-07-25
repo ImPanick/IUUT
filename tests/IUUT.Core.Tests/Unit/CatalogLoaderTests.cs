@@ -15,7 +15,7 @@ public class CatalogLoaderTests
             "source": "test",
             "rows": [
                 { "rowName": "Alpha", "displayName": "The Alpha" },
-                { "rowName": "Beta", "displayName": null, "maxRank": 4 }
+                { "rowName": "Beta", "displayName": null, "maxRank": 4, "tree": "Prospect_Olympus" }
             ]
         }
         """;
@@ -79,8 +79,20 @@ public class CatalogLoaderTests
         var table = LoadSample();
         table.TryGet("Beta", out var beta).Should().BeTrue();
 
-        beta!.Extra.Should().ContainKey("maxRank");
-        beta.Extra!["maxRank"].GetInt32().Should().Be(4);
+        beta!.Extra.Should().ContainKey("tree", "fields without a first-class property land in Extra");
+        beta.Extra!["tree"].GetString().Should().Be("Prospect_Olympus");
+    }
+
+    [Fact]
+    public void MaxRank_ParsesFirstClass_AndFallsBackWhenAbsent()
+    {
+        var table = LoadSample();
+
+        table.TryGet("Beta", out var beta).Should().BeTrue();
+        beta!.MaxRank.Should().Be(4, "maxRank is a first-class mined field");
+        table.MaxRank("Beta", fallback: 9).Should().Be(4);
+        table.MaxRank("Alpha", fallback: 9).Should().Be(9, "rows without a mined max use the fallback");
+        table.MaxRank("Unknown", fallback: 9).Should().Be(9, "unknown rows use the fallback (never gatekeeping)");
     }
 
     [Fact]

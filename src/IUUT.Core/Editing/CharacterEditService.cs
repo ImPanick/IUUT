@@ -1,3 +1,4 @@
+using IUUT.Core.Catalog;
 using IUUT.Core.Models;
 using IUUT.Core.Services;
 
@@ -10,7 +11,8 @@ namespace IUUT.Core.Editing;
 /// </summary>
 public sealed class CharacterEditService
 {
-    /// <summary>The rank a maxed character talent is set to; the game clamps each row to its true max on load (§8.3).</summary>
+    /// <summary>Fallback max rank for talents without a mined <c>maxRank</c> (unlock-style/unknown
+    /// rows); the game clamps each row to its true max on load regardless (§8.3).</summary>
     public const int MaxTalentRank = 4;
 
     /// <summary>Sets total experience.</summary>
@@ -78,28 +80,31 @@ public sealed class CharacterEditService
 
     /// <summary>
     /// Maxes this character's talents only (not XP/flags — that's Lazy Max): every existing
-    /// non-<c>*Reroute*</c> talent → <see cref="MaxTalentRank"/>, plus the 16 Genetics rows added at
-    /// max. Returns the number of talents at max afterwards.
+    /// non-<c>*Reroute*</c> talent → its true mined max from <paramref name="talents"/> (fallback
+    /// <see cref="MaxTalentRank"/> when no catalog / unknown row), plus the 16 Genetics rows added
+    /// at max. Returns the number of talents at their max afterwards.
     /// </summary>
-    public int MaxTalents(CharacterModel character)
+    public int MaxTalents(CharacterModel character, CatalogTable? talents = null)
     {
         ArgumentNullException.ThrowIfNull(character);
+
+        int MaxOf(string rowName) => talents?.MaxRank(rowName, MaxTalentRank) ?? MaxTalentRank;
 
         var present = new HashSet<string>(character.Talents.Select(t => t.RowName), StringComparer.Ordinal);
         foreach (var talent in character.Talents.Where(t => !IsReroute(t.RowName)))
         {
-            talent.Rank = MaxTalentRank;
+            talent.Rank = MaxOf(talent.RowName);
         }
 
         foreach (var genetics in LazyMaxService.GeneticsTalents)
         {
             if (present.Add(genetics))
             {
-                character.Talents.Add(new Talent { RowName = genetics, Rank = MaxTalentRank });
+                character.Talents.Add(new Talent { RowName = genetics, Rank = MaxOf(genetics) });
             }
         }
 
-        return character.Talents.Count(t => t.Rank == MaxTalentRank);
+        return character.Talents.Count(t => t.Rank == MaxOf(t.RowName));
     }
 
     private static bool IsReroute(string rowName) => rowName.Contains("Reroute", StringComparison.Ordinal);

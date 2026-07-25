@@ -26,6 +26,15 @@ public sealed class CatalogRow
     [JsonPropertyName("live")]
     public bool Live { get; set; } = true;
 
+    /// <summary>
+    /// For a talent row: the true maximum rank, mined from the game's <c>Talent.Rewards</c> count
+    /// (one reward entry per rank — e.g. <c>Genetics_Twins</c> = 2, a few creature talents = 5).
+    /// <c>null</c> for unlock-style rows (workshop/prospect/reroute, which have no per-rank rewards)
+    /// and rows the mine doesn't know — callers fall back to a permissive default.
+    /// </summary>
+    [JsonPropertyName("maxRank")]
+    public int? MaxRank { get; set; }
+
     /// <summary>Any additional table-specific fields (max rank, tree, durability …), preserved verbatim.</summary>
     [JsonExtensionData]
     public Dictionary<string, JsonElement>? Extra { get; set; }

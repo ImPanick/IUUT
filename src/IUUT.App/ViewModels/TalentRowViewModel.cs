@@ -12,15 +12,20 @@ public sealed class TalentRowViewModel : ObservableObject
 {
     private int _rank;
 
-    /// <summary>Creates a talent row.</summary>
-    public TalentRowViewModel(string rowName, string label, int rank, bool isLive = true)
+    /// <summary>Creates a talent row. <paramref name="maxRank"/> is the row's true max from the
+    /// catalog mine (null → the permissive <see cref="CharacterEditService.MaxTalentRank"/> fallback).</summary>
+    public TalentRowViewModel(string rowName, string label, int rank, bool isLive = true, int? maxRank = null)
     {
         ArgumentException.ThrowIfNullOrEmpty(rowName);
         RowName = rowName;
         Label = string.IsNullOrEmpty(label) ? rowName : label;
         IsLive = isLive;
+        Maximum = maxRank ?? CharacterEditService.MaxTalentRank;
         _rank = Clamp(rank);
     }
+
+    /// <summary>The row's max rank (slider ceiling): the mined true max, else the fallback.</summary>
+    public int Maximum { get; }
 
     /// <summary>The <c>D_Talents</c> row key — never edited.</summary>
     public string RowName { get; }
@@ -35,12 +40,12 @@ public sealed class TalentRowViewModel : ObservableObject
     /// <summary>A short suffix the UI appends to <see cref="Label"/> for not-live rows.</summary>
     public string LiveBadge => IsLive ? "" : "  · not live";
 
-    /// <summary>The editable rank, clamped to 0..<see cref="CharacterEditService.MaxTalentRank"/>.</summary>
+    /// <summary>The editable rank, clamped to 0..<see cref="Maximum"/>.</summary>
     public int Rank
     {
         get => _rank;
         set => SetProperty(ref _rank, Clamp(value));
     }
 
-    private static int Clamp(int rank) => Math.Clamp(rank, 0, CharacterEditService.MaxTalentRank);
+    private int Clamp(int rank) => Math.Clamp(rank, 0, Maximum);
 }

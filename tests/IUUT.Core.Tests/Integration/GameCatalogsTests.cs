@@ -56,6 +56,17 @@ public class GameCatalogsTests
         _catalogs.Talents.LiveRowNames.Should().Contain("Workshop_Envirosuit");
     }
 
+    [Fact] // Sprint A: true per-talent max ranks mined from Talent.Rewards count.
+    public void Talents_CarryTrueMaxRanks_FromTheMine()
+    {
+        _catalogs.Talents.MaxRank("Genetics_Twins", fallback: 4).Should().Be(2, "two reward tiers = max rank 2 in-game");
+        _catalogs.Talents.MaxRank("Creature_Chew_InventorySlots", fallback: 4).Should().Be(5, "one of the three rank-5 creature talents the old blind 0-4 clamp under-ranked");
+        _catalogs.Talents.MaxRank("Workshop_Envirosuit", fallback: 4).Should().Be(4, "unlock-style rows have no mined max and use the fallback");
+        _catalogs.Talents.Rows.Count(r => r.MaxRank is not null).Should().BeGreaterThan(800, "the mined maxRank coverage");
+        _catalogs.Talents.Rows.Where(r => r.MaxRank is not null)
+            .Should().OnlyContain(r => r.MaxRank >= 1 && r.MaxRank <= 5, "sane mined range");
+    }
+
     [Fact]
     public void Accolades_And_Bestiary_AreSeeded()
     {
