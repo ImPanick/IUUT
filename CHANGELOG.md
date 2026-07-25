@@ -12,6 +12,8 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [1.8.0] — 2026-07-25
+
 ### Added
 
 - **Runtime catalog self-refresh** — IUUT now mines the installed game's `data.pak` itself.
