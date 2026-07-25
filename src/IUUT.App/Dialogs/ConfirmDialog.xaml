@@ -1,0 +1,46 @@
+<Window x:Class="IUUT.App.Dialogs.ConfirmDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize"
+        SizeToContent="Height" Width="480" ShowInTaskbar="False"
+        Background="{StaticResource BgBaseBrush}">
+
+    <!-- DE-2 primitive: the confirm-with-diff shell. Every destructive apply routes through
+         this (replacing OS MessageBox), so backups/atomicity read the same everywhere and
+         Tier-2 flows (Return to Stash, mission reset) inherit the per-file change list. -->
+    <Border Style="{StaticResource GlassCard}" Margin="10" Padding="18">
+        <StackPanel>
+            <TextBlock x:Name="HeadingText" Style="{StaticResource TitleText}" TextWrapping="Wrap" />
+            <TextBlock x:Name="MessageText" Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,10,0,0" />
+
+            <!-- Optional per-file change rows (the "diff") -->
+            <Border x:Name="ChangesPanel" Margin="0,12,0,0" Padding="10" CornerRadius="2"
+                    Background="{StaticResource SurfaceRowBrush}"
+                    BorderBrush="{StaticResource GridLineBrush}" BorderThickness="1"
+                    Visibility="Collapsed">
+                <ItemsControl x:Name="ChangesList">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding File}" Style="{StaticResource BodyText}" />
+                                <TextBlock Grid.Column="1" Text="{Binding Delta}" Style="{StaticResource MonoText}"
+                                           Foreground="{StaticResource StateStagedBrush}" Margin="12,0,0,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+
+            <TextBlock x:Name="NoteText" Style="{StaticResource MonoText}" TextWrapping="Wrap" Margin="0,12,0,0" />
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button Content="CANCEL" Style="{StaticResource GhostButton}" Margin="0,0,8,0" Click="OnCancel" IsCancel="True" />
+                <Button x:Name="ConfirmButton" Style="{StaticResource PrimaryButton}" Click="OnConfirm" IsDefault="True" />
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>

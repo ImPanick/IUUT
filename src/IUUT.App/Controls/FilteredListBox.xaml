@@ -1,0 +1,23 @@
+<UserControl x:Class="IUUT.App.Controls.FilteredListBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root">
+
+    <!-- DE-2 primitive: the one search-over-virtualized-list block. Bind Source to a
+         FilteredView; the ItemTemplate renders rows. Esc clears the search. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" Margin="0,0,0,10"
+                 Text="{Binding Source.SearchText, ElementName=Root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                 ToolTip="{Binding SearchHint, ElementName=Root}"
+                 PreviewKeyDown="OnSearchKeyDown" />
+
+        <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
+                      ItemsSource="{Binding Source.View, ElementName=Root}"
+                      ItemTemplate="{Binding ItemTemplate, ElementName=Root}" />
+    </Grid>
+</UserControl>

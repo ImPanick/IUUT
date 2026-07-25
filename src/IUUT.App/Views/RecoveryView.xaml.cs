@@ -41,8 +41,7 @@ public partial class RecoveryView : UserControl
             "restored from its newest clean backup, or rebuilt from a template when no backup exists.\n\n" +
             "Close Icarus, or sit on the Main Menu, before applying.";
 
-        var confirm = MessageBox.Show(message, "Confirm Recovery", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-        if (confirm == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Confirm Recovery", message, confirmLabel: "REPAIR"))
         {
             await vm.RepairAsync();
         }

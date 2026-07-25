@@ -38,7 +38,7 @@ public partial class CharacterEditorView : UserControl
             "after writing. A talent set to rank 0 is removed. The game clamps each talent to its " +
             "true max on load. Only changed files are written.";
 
-        if (MessageBox.Show(message, "Apply character changes", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply character changes", message))
         {
             await vm.ApplyAsync();
         }

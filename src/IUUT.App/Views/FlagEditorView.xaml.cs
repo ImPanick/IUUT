@@ -35,7 +35,7 @@ public partial class FlagEditorView : UserControl
             "them before replacing the original. These are low-level engine unlock IDs — only apply " +
             "changes you understand.";
 
-        if (MessageBox.Show(message, "Apply engine flags", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply engine flags", message))
         {
             await vm.ApplyAsync();
         }

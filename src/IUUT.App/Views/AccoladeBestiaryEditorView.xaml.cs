@@ -37,7 +37,7 @@ public partial class AccoladeBestiaryEditorView : UserControl
             "Timestamped backups are taken first, and each file is re-validated after writing. A " +
             "creature group set to 0 points is removed from tracking. Only changed files are written.";
 
-        if (MessageBox.Show(message, "Apply accolades & bestiary", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply accolades & bestiary", message))
         {
             await vm.ApplyAsync();
         }

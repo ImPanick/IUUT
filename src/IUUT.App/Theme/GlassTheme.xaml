@@ -198,6 +198,25 @@
         </Setter>
     </Style>
 
+    <!-- ============ Staged / applied chips (DE-2 dirty-state language) ============ -->
+    <Style x:Key="StagedDot" TargetType="Ellipse" BasedOn="{StaticResource ChannelDot}">
+        <Setter Property="Fill" Value="{StaticResource StateStagedBrush}" />
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="{StaticResource StateStagedColor}" BlurRadius="6" ShadowDepth="0" Opacity="0.7" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="StagedChip" TargetType="Border">
+        <Setter Property="BorderBrush" Value="{StaticResource StateStagedBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="Padding" Value="8,2" />
+    </Style>
+    <Style x:Key="StagedChipText" TargetType="TextBlock" BasedOn="{StaticResource LabelText}">
+        <Setter Property="Foreground" Value="{StaticResource StateStagedBrush}" />
+    </Style>
+
     <!-- ============ Mode tile (large graphite button) ============ -->
     <Style x:Key="ModeTile" TargetType="Button">
         <Setter Property="Cursor" Value="Hand" />

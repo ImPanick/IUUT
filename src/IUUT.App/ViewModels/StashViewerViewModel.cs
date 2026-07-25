@@ -156,7 +156,13 @@ public sealed class StashViewerViewModel : ObservableObject, Services.IDirtyEdit
     public bool HasChanges
     {
         get => _hasChanges;
-        private set => SetProperty(ref _hasChanges, value);
+        private set
+        {
+            if (SetProperty(ref _hasChanges, value))
+            {
+                OnPropertyChanged(nameof(IsDirty)); // the shell's staged chip binds to IsDirty
+            }
+        }
     }
 
     /// <inheritdoc />

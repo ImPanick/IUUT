@@ -38,7 +38,7 @@ public partial class GameTunerView : UserControl
             "variables — Icarus may ignore or clamp some of them. Restart the game for changes to take " +
             "effect. A bad Engine.ini is restorable from the backup.";
 
-        if (MessageBox.Show(message, "Apply Game Tuning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply Game Tuning", message))
         {
             await vm.ApplyAsync();
         }

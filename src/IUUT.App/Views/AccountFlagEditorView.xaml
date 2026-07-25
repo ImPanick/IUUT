@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:IUUT.App.Controls"
              mc:Ignorable="d">
 
     <!-- Account Flags checklist (#81, master §8.5). DataContext = AccountFlagEditorViewModel. -->
@@ -35,17 +36,9 @@
 
         <!-- Checklist -->
         <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Margin="0,0,0,10"
-                         Text="{Binding FlagsView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="Search account flags (name or RowName)" />
-                <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
-                              ItemsSource="{Binding FlagsView.View}">
-                    <ItemsControl.ItemTemplate>
+            <controls:FilteredListBox Source="{Binding FlagsView}"
+                                      SearchHint="Search account flags (name or RowName)">
+                <controls:FilteredListBox.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="0,0,0,4" Padding="12,6" CornerRadius="4"
                                     Background="{StaticResource DataBackdropBrush}"
@@ -67,9 +60,8 @@
                                 </Grid>
                             </Border>
                         </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
+                </controls:FilteredListBox.ItemTemplate>
+            </controls:FilteredListBox>
         </Border>
 
         <!-- Status + apply -->

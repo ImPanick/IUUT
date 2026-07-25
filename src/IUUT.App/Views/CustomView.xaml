@@ -10,6 +10,7 @@
 
     <!-- Editor panels are picked by the view-model type of CurrentEditor. -->
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
         <DataTemplate DataType="{x:Type vm:AccountEditorViewModel}">
             <views:AccountEditorView />
         </DataTemplate>
@@ -60,11 +61,21 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="PROFILE" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
                 <ComboBox Grid.Column="1" ItemsSource="{Binding Slots}" SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
                           DisplayMemberPath="DisplayLabel" Margin="0,0,10,0" />
-                <Button Grid.Column="2" Content="RELOAD" Command="{Binding LoadSavesCommand}" />
+                <!-- DE-2 staged chip: lit while the current editor holds unapplied edits
+                     (FallbackValue hides it for editors without dirty tracking). -->
+                <Border Grid.Column="2" Style="{StaticResource StagedChip}" VerticalAlignment="Center" Margin="0,0,10,0"
+                        Visibility="{Binding CurrentEditor.IsDirty, Converter={StaticResource BoolToVisibility}, FallbackValue=Collapsed}">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Style="{StaticResource StagedDot}" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Text="STAGED" Style="{StaticResource StagedChipText}" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Border>
+                <Button Grid.Column="3" Content="RELOAD" Command="{Binding LoadSavesCommand}" />
             </Grid>
         </Border>
 

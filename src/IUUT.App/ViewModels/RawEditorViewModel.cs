@@ -66,7 +66,13 @@ public sealed class RawEditorViewModel : ObservableObject, Services.IDirtyEditor
     public string Content
     {
         get => _content;
-        set => SetProperty(ref _content, value);
+        set
+        {
+            if (SetProperty(ref _content, value))
+            {
+                OnPropertyChanged(nameof(IsDirty)); // the shell's staged chip binds to IsDirty
+            }
+        }
     }
 
     /// <summary>Whether a file is selected (enables Save).</summary>
@@ -151,6 +157,7 @@ public sealed class RawEditorViewModel : ObservableObject, Services.IDirtyEditor
             if (result.Ok)
             {
                 _loadedContent = Content; // saved text is the new clean baseline
+                OnPropertyChanged(nameof(IsDirty));
             }
 
             StatusMessage = result.Ok
@@ -175,12 +182,14 @@ public sealed class RawEditorViewModel : ObservableObject, Services.IDirtyEditor
         {
             Content = "";
             _loadedContent = "";
+            OnPropertyChanged(nameof(IsDirty));
             return;
         }
 
         var text = await _files.ReadTextAsync(SelectedFile.Path);
         Content = text ?? "";
         _loadedContent = Content;
+        OnPropertyChanged(nameof(IsDirty));
         StatusMessage = text is null
             ? $"Could not read {SelectedFile.Name}."
             : $"{SelectedFile.Name} — {Content.Length:N0} chars.";

@@ -11,7 +11,7 @@ namespace IUUT.App.Services;
 /// default view — so filtering here cannot leak into other bindings of the same collection.
 /// Editing and Apply paths keep iterating the source collection, so a hidden row is still saved.
 /// </summary>
-public sealed class FilteredView<T> : INotifyPropertyChanged
+public sealed class FilteredView<T> : INotifyPropertyChanged, IFilteredView
     where T : class
 {
     private readonly Func<T, string, bool> _matches;

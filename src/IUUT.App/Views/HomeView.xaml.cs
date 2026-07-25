@@ -57,8 +57,7 @@ public partial class HomeView : UserControl
             "Make sure Icarus is closed, or sitting on the Main Menu, before applying." +
             warningLine;
 
-        var confirm = MessageBox.Show(message, "Confirm Lazy Max", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-        if (confirm == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Confirm Lazy Max", message, confirmLabel: "APPLY LAZY MAX"))
         {
             await vm.ApplyAsync(plan);
         }

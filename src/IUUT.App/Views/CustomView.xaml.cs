@@ -22,11 +22,11 @@ public partial class CustomView : UserControl
         }
 
         // Dirty guard dialog (Tier 1): asked before a category/slot switch discards staged edits.
-        vm.ConfirmDiscard ??= message => MessageBox.Show(
+        vm.ConfirmDiscard ??= message => Dialogs.ConfirmDialog.Show(
+            this,
+            "Discard staged changes?",
             message,
-            "Discard changes?",
-            MessageBoxButton.YesNo,
-            MessageBoxImage.Warning) == MessageBoxResult.Yes;
+            confirmLabel: "DISCARD");
 
         // Reload on first display OR when the shared save root changed since our last load
         // (singleton VM — an empty-only guard would ignore a root browsed on Home; review finding).

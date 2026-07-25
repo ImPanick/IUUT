@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:IUUT.App.Controls"
              mc:Ignorable="d">
 
     <!-- Accolades & Bestiary editor (master §11.7). DataContext = AccoladeBestiaryEditorViewModel. -->
@@ -44,36 +45,29 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="4,2,4,8">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="ACCOLADES" Style="{StaticResource LabelText}" />
                             <TextBlock Text="{Binding AccoladesSummary}" Style="{StaticResource MutedText}" Margin="0,2,0,0" />
                         </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                             <Button Content="Grant all" Command="{Binding GrantAllAccoladesCommand}" Padding="10,3" Margin="0,0,6,0" />
                             <Button Content="Revoke all" Command="{Binding RevokeAllAccoladesCommand}" Padding="10,3" />
                         </StackPanel>
-                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0"
-                                 Text="{Binding AccoladesView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 ToolTip="Search accolades (name or RowName)" />
                     </Grid>
-                    <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
-                                  ItemsSource="{Binding AccoladesView.View}">
-                        <ItemsControl.ItemTemplate>
+                    <controls:FilteredListBox Grid.Row="1" Source="{Binding AccoladesView}"
+                                              SearchHint="Search accolades (name or RowName)">
+                        <controls:FilteredListBox.ItemTemplate>
                             <DataTemplate>
                                 <CheckBox IsChecked="{Binding IsGranted, Mode=TwoWay}" Margin="4,5" VerticalContentAlignment="Center">
                                     <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
                                 </CheckBox>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </controls:FilteredListBox.ItemTemplate>
+                    </controls:FilteredListBox>
                 </Grid>
             </Border>
 
@@ -85,26 +79,19 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="4,2,4,8">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="BESTIARY" Style="{StaticResource LabelText}" />
                             <TextBlock Text="{Binding BestiarySummary}" Style="{StaticResource MutedText}" Margin="0,2,0,0" />
                         </StackPanel>
-                        <Button Grid.Row="0" Grid.Column="1" Content="Max all" Command="{Binding MaxAllBestiaryCommand}" Padding="10,3" VerticalAlignment="Center" />
-                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0"
-                                 Text="{Binding BestiaryView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                 ToolTip="Search creature groups (name or RowName)" />
+                        <Button Grid.Column="1" Content="Max all" Command="{Binding MaxAllBestiaryCommand}" Padding="10,3" VerticalAlignment="Center" />
                     </Grid>
-                    <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
-                                  ItemsSource="{Binding BestiaryView.View}">
-                        <ItemsControl.ItemTemplate>
+                    <controls:FilteredListBox Grid.Row="1" Source="{Binding BestiaryView}"
+                                              SearchHint="Search creature groups (name or RowName)">
+                        <controls:FilteredListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="4,4">
                                     <Grid.ColumnDefinitions>
@@ -117,8 +104,8 @@
                                              Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
                                 </Grid>
                             </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                        </controls:FilteredListBox.ItemTemplate>
+                    </controls:FilteredListBox>
                 </Grid>
             </Border>
         </Grid>

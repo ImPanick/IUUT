@@ -34,7 +34,7 @@ public partial class AccountFlagEditorView : UserControl
             "A timestamped backup is taken first, and the file is re-parsed to validate it before " +
             "replacing the original. Unchecking a flag re-locks whatever it gates.";
 
-        if (MessageBox.Show(message, "Apply account flags", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply account flags", message))
         {
             await vm.ApplyAsync();
         }

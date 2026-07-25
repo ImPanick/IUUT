@@ -35,7 +35,7 @@ public partial class ProspectsEditorView : UserControl
             "of the slot file is taken first, and it is re-validated after writing. The prospect's world " +
             "save is not touched — only this character's claim on it.";
 
-        if (MessageBox.Show(message, "Unstick prospect", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Unstick prospect", message, confirmLabel: "UNSTICK"))
         {
             await vm.UnstickSelectedAsync();
         }

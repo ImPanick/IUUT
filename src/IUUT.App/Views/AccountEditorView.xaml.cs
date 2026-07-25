@@ -37,7 +37,7 @@ public partial class AccountEditorView : UserControl
             "A timestamped backup of Profile.json is taken first, and the file is re-validated after " +
             "writing. The game clamps each currency to its own maximum on load. Only changed files are written.";
 
-        if (MessageBox.Show(message, "Apply currency changes", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply currency changes", message))
         {
             await vm.ApplyCurrenciesAsync();
         }
@@ -55,7 +55,7 @@ public partial class AccountEditorView : UserControl
             "This adds all known blueprint unlocks (rank 1) to Profile.json. A timestamped backup is " +
             "taken first and the file is re-validated. This is additive — it never removes existing unlocks.";
 
-        if (MessageBox.Show(message, "Unlock all blueprints", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Unlock all blueprints", message, confirmLabel: "UNLOCK ALL"))
         {
             await vm.UnlockAllBlueprintsAsync();
         }

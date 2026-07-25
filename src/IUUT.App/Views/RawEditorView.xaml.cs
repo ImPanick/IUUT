@@ -35,7 +35,7 @@ public partial class RawEditorView : UserControl
             "the original is kept. A timestamped backup is taken first. This is a direct edit: there are " +
             "no content checks beyond valid JSON, so save only what you intend.";
 
-        if (MessageBox.Show(message, "Save raw JSON", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Save raw JSON", message, confirmLabel: "SAVE"))
         {
             await vm.SaveAsync();
         }

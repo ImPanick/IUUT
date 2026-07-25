@@ -34,7 +34,7 @@ public partial class MountEditorView : UserControl
             "A timestamped backup of Mounts.json is taken first, and the file is re-validated after " +
             "writing. Only the name and level (display fields) change — the mount's stats blob is preserved.";
 
-        if (MessageBox.Show(message, "Apply mount changes", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+        if (Dialogs.ConfirmDialog.Show(this, "Apply mount changes", message))
         {
             await vm.ApplyAsync();
         }
