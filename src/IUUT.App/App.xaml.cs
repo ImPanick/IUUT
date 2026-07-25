@@ -3,6 +3,7 @@ using IUUT.App.Navigation;
 using IUUT.App.ViewModels;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
+using IUUT.Core.DataPak;
 using IUUT.Core.Editing;
 using IUUT.Core.GameTuning;
 using IUUT.Core.Io;
@@ -36,6 +37,23 @@ public partial class App : Application
         base.OnExit(e);
     }
 
+    private static void TryRefreshCatalogCache(AppPaths paths)
+    {
+#pragma warning disable CA1031 // Best-effort by design: any refresh failure must leave startup on the shipped snapshots.
+        try
+        {
+            if (CatalogRefreshRunner.LocatePak() is { } pak)
+            {
+                new CatalogRefreshRunner(paths).RefreshIfStale(pak);
+            }
+        }
+        catch
+        {
+            // Cache untouched; LoadWithCache falls back per file.
+        }
+#pragma warning restore CA1031
+    }
+
     private static ServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
@@ -48,7 +66,16 @@ public partial class App : Application
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)));
 
         // --- Catalogs + headline feature + apply pipeline (master §13.3) ------
-        services.AddSingleton(_ => GameCatalogs.LoadEmbedded());
+        // Self-refresh: when the installed game's data.pak changed, mine + merge it into the
+        // catalog cache before loading (offline, sanity-gated, failure-safe). Fresh stamp costs
+        // ~1ms; a real refresh runs once per game update (~1s). Any failure falls back to the
+        // cache/embedded snapshots — startup can never break because of the pak.
+        services.AddSingleton(sp =>
+        {
+            var paths = sp.GetRequiredService<AppPaths>();
+            TryRefreshCatalogCache(paths);
+            return GameCatalogs.LoadWithCache(paths.CatalogCacheDirectory);
+        });
         services.AddSingleton<LazyMaxService>();
         services.AddSingleton<BackupManager>();
         services.AddSingleton<ISafeSaveWriter, SafeSaveWriter>();

@@ -21,8 +21,4 @@
     <ProjectReference Include="..\IUUT.Catalog\IUUT.Catalog.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.8" />
-  </ItemGroup>
-
 </Project>
