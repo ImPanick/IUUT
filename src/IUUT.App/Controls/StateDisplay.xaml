@@ -1,0 +1,23 @@
+<UserControl x:Class="IUUT.App.Controls.StateDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root">
+
+    <!-- DE-2 primitive: the empty / loading / error state trio. One look for "nothing here",
+         "working on it", and "this broke (and where to go)" across every screen. -->
+    <Border x:Name="Frame" BorderThickness="1" CornerRadius="2" Padding="24,20"
+            BorderBrush="{StaticResource GridLineStrongBrush}">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid HorizontalAlignment="Center" Margin="0,0,0,8">
+                <TextBlock x:Name="Glyph" Style="{StaticResource DisplayText}"
+                           Foreground="{StaticResource TextLowBrush}" HorizontalAlignment="Center" />
+                <Ellipse x:Name="BusyDot" Style="{StaticResource ChannelDot}" Visibility="Collapsed"
+                         Fill="{StaticResource AccentBrush}" VerticalAlignment="Center" />
+            </Grid>
+            <TextBlock Text="{Binding Title, ElementName=Root}" Style="{StaticResource BodyText}"
+                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding Detail, ElementName=Root}" Style="{StaticResource MutedText}"
+                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,4,0,0" />
+        </StackPanel>
+    </Border>
+</UserControl>

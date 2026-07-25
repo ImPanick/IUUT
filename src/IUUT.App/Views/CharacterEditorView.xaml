@@ -151,11 +151,9 @@
                     </Style.Triggers>
                 </Style>
             </Border.Style>
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="No character selected" Style="{StaticResource BodyText}" HorizontalAlignment="Center" />
-                <TextBlock Text="Pick a save profile with characters, then choose one above."
-                           Style="{StaticResource MutedText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,4,0,0" />
-            </StackPanel>
+            <controls:StateDisplay Kind="Empty" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Title="No character selected"
+                                   Detail="Pick a save profile with characters, then choose one above." />
         </Border>
 
         <!-- Status + apply -->
