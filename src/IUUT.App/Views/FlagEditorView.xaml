@@ -59,7 +59,10 @@
                          ToolTip="Search set flags (id or name)" />
                 <Border Grid.Row="2" CornerRadius="4" Background="{StaticResource DataBackdropBrush}"
                         BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                    <!-- IsSynchronizedWithCurrentItem must stay off: a CollectionView ItemsSource silently
+                         turns currency sync ON, and a search refresh would then retarget SelectedFlag. -->
                     <ListBox ItemsSource="{Binding FlagsView.View}" SelectedItem="{Binding SelectedFlag, Mode=TwoWay}"
+                             IsSynchronizedWithCurrentItem="False"
                              Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

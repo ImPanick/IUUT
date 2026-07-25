@@ -60,8 +60,12 @@ public sealed class CatalogRefreshRunner
             return null;
         }
 
-        var mined = DataPakMiner.MineFile(pakPath, progress);
+        // Capture the pak identity BEFORE mining: if Steam replaces the pak mid-refresh, the
+        // pre-mine stamp no longer matches the new file, so the next run correctly re-refreshes
+        // (a post-mine stamp would mark stale content as fresh).
+        var stamp = Stamp(pakPath);
         var version = $"datapak-runtime-{File.GetLastWriteTimeUtc(pakPath):yyyyMMdd-HHmmss}";
+        var mined = DataPakMiner.MineFile(pakPath, progress);
         var result = CatalogRefreshService.Refresh(mined, CurrentCatalogJson, version);
         if (!result.Ok)
         {
@@ -77,12 +81,13 @@ public sealed class CatalogRefreshRunner
             File.Move(temp, target, overwrite: true);
         }
 
-        File.WriteAllText(Path.Combine(_paths.CatalogCacheDirectory, StampFileName), Stamp(pakPath));
+        File.WriteAllText(Path.Combine(_paths.CatalogCacheDirectory, StampFileName), stamp);
         progress?.Report("Catalog cache refreshed.");
         return result;
     }
 
     // The merge input: the cached catalog when present (so curated edits accumulate), else embedded.
+    // A corrupt cache file self-heals to embedded — otherwise every future refresh would reject on it.
     private string CurrentCatalogJson(string fileName)
     {
         var cached = Path.Combine(_paths.CatalogCacheDirectory, fileName);
@@ -90,11 +95,17 @@ public sealed class CatalogRefreshRunner
         {
             try
             {
-                return File.ReadAllText(cached);
+                var text = File.ReadAllText(cached);
+                using var _ = System.Text.Json.JsonDocument.Parse(text);
+                return text;
             }
             catch (IOException)
             {
                 // fall through to embedded
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                // corrupt cache — fall through to embedded (the refresh output then replaces it)
             }
         }
 

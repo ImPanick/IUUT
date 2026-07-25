@@ -214,6 +214,7 @@ public sealed class StashViewerViewModel : ObservableObject, Services.IDirtyEdit
                 : new HashSet<string>(_crossReference.ReferencedDatabaseGuids(loadouts), StringComparer.OrdinalIgnoreCase);
 
             _rowMaxDurability = ComputeRowMaxDurability(_stash);
+            OverlayCatalogMaxDurability(_rowMaxDurability);
             RebuildItems();
             HasChanges = false;
             StatusMessage = $"Loaded {Items.Count} stash item(s) for “{ProfileLabel}”.";
@@ -410,6 +411,21 @@ public sealed class StashViewerViewModel : ObservableObject, Services.IDirtyEdit
         }
 
         return repaired;
+    }
+
+    // The exact DurableData-join values baked into items.json override the observed-save guess —
+    // an item never seen at full durability would otherwise under-repair. Display/repair only;
+    // repair stays an explicit user action (CONSTITUTION VI).
+    private void OverlayCatalogMaxDurability(Dictionary<string, int> map)
+    {
+        foreach (var row in _catalogs.Items.Rows)
+        {
+            if (row.Extra is { } extra && extra.TryGetValue("maxDurability", out var value) &&
+                value.ValueKind == System.Text.Json.JsonValueKind.Number && value.TryGetInt32(out var max) && max > 0)
+            {
+                map[row.RowName] = max;
+            }
+        }
     }
 
     private static Dictionary<string, int> ComputeRowMaxDurability(MetaInventoryModel stash)

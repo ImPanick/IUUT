@@ -14,12 +14,34 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ### Added
 
+- **Runtime catalog self-refresh** — IUUT now mines the installed game's `data.pak` itself.
+  On startup (and via `iuut catalog-refresh`), a changed pak is inflated, its 257 DataTables
+  split, and every catalog re-merged under the codified weekly rules: superset talents
+  (vanished rows kept as not-live, curated names never overwritten), `Item.Meta` additions
+  with exact `maxDurability`, order-sensitive flag catalogs (pure append or full rejection),
+  regenerated missions/prospects. Any sanity-gate failure rejects the whole refresh and the
+  app stays on its shipped snapshots. Fully offline — the pak never leaves the machine.
+- **Headless CLI** (`iuut.exe`) — `check` (health scan, CI-friendly exit codes), `backup-all`,
+  `lazy-max` (preview by default, `--apply` to write), `catalog-refresh`.
+- **Search everywhere** — live search boxes over the 2.2k-row talent list (now virtualized),
+  accolades, bestiary, engine flags, account flags, and the Game Tuner settings.
+- **Unsaved-changes guard** — switching the Custom category or save profile with staged,
+  unapplied edits now asks before discarding (all seven stage-then-apply editors).
+- **Prospects catalog** — a new `D_ProspectList` catalog (197 prospects); the Prospects
+  editor shows in-game drop names ("ARCWOOD: Outpost") next to the raw association ids.
+
+## [1.7.0] — 2026-07-24
+
+### Added
+
 - **True per-talent max ranks** mined from `Talent.Rewards` — the talent editor, Lazy Max,
   and the rank sliders are exact per row (Genetics rows mine at 1–3; three creature talents at 5).
   Loaded save ranks are never coerced (a stale catalog must not downgrade earned ranks), and
   Lazy Max is raise-only for ranks, matching its currency/XP contract.
 - **Account Flags checklist editor** (#81) — `Profile.json` `UnlockedFlags` by friendly name.
 - **Stash add-picker filter** (#83 first slice) — substring search over the 380+ item picker.
+- **DataPakMiner + DataPakLocator** (Core) — the C# runtime data.pak miner that powers the
+  upcoming catalog self-refresh (257 tables in ~0.3s; Steam library discovery via VDF).
 
 ### Fixed
 

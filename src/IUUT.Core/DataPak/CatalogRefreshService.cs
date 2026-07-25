@@ -73,6 +73,18 @@ public static class CatalogRefreshService
             report.Add($"REFRESH REJECTED: {ex.Message} — keeping current catalogs.");
             return new CatalogRefreshResult(false, new Dictionary<string, string>(), report);
         }
+        catch (JsonException ex)
+        {
+            // Malformed input (a corrupt cached catalog, or garbage in a mined table) must reject,
+            // not escape — an escaping exception would silently kill self-refresh forever.
+            report.Add($"REFRESH REJECTED: malformed JSON input ({ex.Message}) — keeping current catalogs.");
+            return new CatalogRefreshResult(false, new Dictionary<string, string>(), report);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            report.Add($"REFRESH REJECTED: unexpected catalog shape ({ex.Message}) — keeping current catalogs.");
+            return new CatalogRefreshResult(false, new Dictionary<string, string>(), report);
+        }
     }
 
     private sealed class CatalogRefreshException(string message) : Exception(message);
@@ -276,7 +288,14 @@ public static class CatalogRefreshService
 
         var withDurability = rows.Count(r => r.MaxDurability is not null);
         report.Add($"items: {rows.Count} rows — +{added} new Item.Meta, {withDurability} with exact maxDurability");
-        return WriteCatalog(stamp, current.RootElement, null, "rows", rows.Select(r =>
+        var dataTable = current.RootElement.TryGetProperty("dataTable", out var dt) ? dt.GetString() : null;
+        return WriteCatalog(stamp, current.RootElement, header =>
+        {
+            if (dataTable is not null)
+            {
+                header.Append("  \"dataTable\": ").Append(JsonSerializer.Serialize(dataTable)).Append(",\n");
+            }
+        }, "rows", rows.Select(r =>
         {
             var sb = new StringBuilder();
             sb.Append("    {\n      \"rowName\": ").Append(JsonSerializer.Serialize(r.RowName));

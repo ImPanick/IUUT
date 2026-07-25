@@ -34,6 +34,11 @@ competitors paywall.
 
 ## Tier 1 — Core elevation (foundation that raises every screen)
 
+**Status: shipped in v1.8.0** — self-refresh (miner + merge rules + startup wiring + CLI),
+search/virtualization (`FilteredView<T>`), dirty guard (`IDirtyEditor`), prospects catalog.
+Remaining: `ItemableData` tooltips + mounts catalog (folded into Tier 2 polish); signing
+stays owner-gated (procurement + CICD §8 amendment).
+
 | Item | Impact / Effort | Notes |
 | --- | --- | --- |
 | **Runtime catalog self-refresh** | transformative / medium | Port `extract-datapak.ps1` to a C# `DataPakMiner` (BCL DeflateStream + JsonDocument, ~1–2s) + `DataPakLocator` (Steam path, libraryfolders.vdf, override). Catalogs regenerate from the *user's own* game; embedded JSON becomes fallback with sanity gates (talents≥1000, flags≥86, `Mission_Olympus_Unlock` present). Ends the weekly release treadmill. **Never auto-regenerate metaresources.json** (curated whitelist). |

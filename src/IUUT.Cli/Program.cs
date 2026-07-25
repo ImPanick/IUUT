@@ -15,16 +15,21 @@ if (args.Length == 0 || args[0] is "help" or "--help" or "-h")
     return 0;
 }
 
-var options = ParseOptions(args);
+string[] rootOnly = ["--root"];
+string[] lazyMaxValues = ["--profile", "--root"];
+string[] applyFlag = ["--apply"];
+string[] pakValue = ["--pak"];
+string[] forceFlag = ["--force"];
+string[] none = [];
 
 try
 {
     return args[0] switch
     {
-        "check" => Check(options),
-        "backup-all" => BackupAll(options),
-        "lazy-max" => await LazyMaxAsync(options).ConfigureAwait(false),
-        "catalog-refresh" => CatalogRefresh(options),
+        "check" => Check(ParseOptions(args, rootOnly, none)),
+        "backup-all" => BackupAll(ParseOptions(args, rootOnly, none)),
+        "lazy-max" => await LazyMaxAsync(ParseOptions(args, lazyMaxValues, applyFlag)).ConfigureAwait(false),
+        "catalog-refresh" => CatalogRefresh(ParseOptions(args, pakValue, forceFlag)),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -59,18 +64,36 @@ static void PrintUsage()
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
 }
 
-static Dictionary<string, string?> ParseOptions(string[] args)
+// Strict per-command parsing: an unknown option or a missing value is an error, never a silent
+// no-op (a typo like --froce or a forgotten --root value must not quietly change behavior).
+static Dictionary<string, string?> ParseOptions(string[] args, string[] valueOptions, string[] flags)
 {
     var options = new Dictionary<string, string?>(StringComparer.Ordinal);
     for (var i = 1; i < args.Length; i++)
     {
-        if (!args[i].StartsWith("--", StringComparison.Ordinal))
+        var name = args[i];
+        if (!name.StartsWith("--", StringComparison.Ordinal))
         {
-            throw new ArgumentException($"unexpected argument '{args[i]}' (options start with --)");
+            throw new ArgumentException($"unexpected argument '{name}' (options start with --)");
         }
 
-        var hasValue = i + 1 < args.Length && !args[i + 1].StartsWith("--", StringComparison.Ordinal);
-        options[args[i]] = hasValue ? args[++i] : null;
+        if (flags.Contains(name))
+        {
+            options[name] = null;
+            continue;
+        }
+
+        if (!valueOptions.Contains(name))
+        {
+            throw new ArgumentException($"unknown option '{name}' for this command — run `iuut help`");
+        }
+
+        if (i + 1 >= args.Length || args[i + 1].StartsWith("--", StringComparison.Ordinal))
+        {
+            throw new ArgumentException($"option '{name}' requires a value");
+        }
+
+        options[name] = args[++i];
     }
 
     return options;
@@ -118,6 +141,7 @@ static int BackupAll(Dictionary<string, string?> options)
     var backups = new BackupManager(new SystemClock());
     var count = 0;
 
+    var failed = 0;
     foreach (var profile in profiles)
     {
         foreach (var file in Directory.EnumerateFiles(profile.FolderPath, "*", SearchOption.AllDirectories))
@@ -127,27 +151,51 @@ static int BackupAll(Dictionary<string, string?> options)
                 continue; // never back up a backup
             }
 
-            backups.CreateBackup(file);
-            count++;
+#pragma warning disable CA1031 // Per-file resilience: one locked/vanished file must not abort the whole backup run.
+            try
+            {
+                backups.CreateBackup(file);
+                count++;
+            }
+            catch (Exception ex)
+            {
+                failed++;
+                Console.Error.WriteLine($"  FAILED: {file} — {ex.Message}");
+            }
+#pragma warning restore CA1031
         }
 
         Console.WriteLine($"{profile.SteamId64}: backed up");
     }
 
-    Console.WriteLine($"{count} file(s) backed up across {profiles.Count} profiles.");
-    return 0;
+    Console.WriteLine(failed == 0
+        ? $"{count} file(s) backed up across {profiles.Count} profiles."
+        : $"{count} file(s) backed up across {profiles.Count} profiles; {failed} FAILED (see above).");
+    return failed == 0 ? 0 : 1;
 }
 
 static async Task<int> LazyMaxAsync(Dictionary<string, string?> options)
 {
     var target = options.GetValueOrDefault("--profile")
         ?? throw new ArgumentException("lazy-max requires --profile <steamid-or-path>");
-    var folder = Directory.Exists(target)
-        ? target
-        : Path.Combine(ResolveRoot(options), SaveDiscoveryService.PlayerDataFolder, target);
-    if (!Directory.Exists(folder))
+    string folder;
+    if (Directory.Exists(target))
     {
-        throw new ArgumentException($"profile folder not found: '{folder}'");
+        folder = target;
+    }
+    else if (target.Contains(Path.DirectorySeparatorChar, StringComparison.Ordinal)
+          || target.Contains(Path.AltDirectorySeparatorChar, StringComparison.Ordinal))
+    {
+        // A path was given — do not resolve the save root, whose error would mislead.
+        throw new ArgumentException($"profile folder not found: '{target}'");
+    }
+    else
+    {
+        folder = Path.Combine(ResolveRoot(options), SaveDiscoveryService.PlayerDataFolder, target);
+        if (!Directory.Exists(folder))
+        {
+            throw new ArgumentException($"profile folder not found: '{folder}'");
+        }
     }
 
     var paths = AppPaths.Resolve();
@@ -162,7 +210,7 @@ static async Task<int> LazyMaxAsync(Dictionary<string, string?> options)
         Console.WriteLine($"Preview: {r.CharactersMaxed} characters ({r.TalentsPerCharacter} talents each), "
             + $"{r.MetaResourcesMaxed} currencies, +{r.WorkshopUnlocksAdded} workshop unlocks, "
             + $"+{r.AccoladesAdded} accolades, +{r.BestiaryGroupsAdded} bestiary groups, "
-            + $"{r.MissionFlagsSet} mission flags — {plan.Files.Count} file(s) would change.");
+            + $"{r.MissionFlagsSet} mission flags — {plan.Files.Count} file(s) would be written.");
     }
 
     if (!plan.CanApply)
@@ -194,6 +242,13 @@ static async Task<int> LazyMaxAsync(Dictionary<string, string?> options)
 
 static int CatalogRefresh(Dictionary<string, string?> options)
 {
+    if (options.GetValueOrDefault("--pak") is { } pakOverride && !File.Exists(pakOverride))
+    {
+        // An explicit --pak must be honored or rejected — never silently swapped for the Steam pak.
+        Console.Error.WriteLine($"--pak path not found: '{pakOverride}'");
+        return 1;
+    }
+
     var pak = CatalogRefreshRunner.LocatePak(options.GetValueOrDefault("--pak"));
     if (pak is null)
     {
@@ -202,7 +257,9 @@ static int CatalogRefresh(Dictionary<string, string?> options)
     }
 
     var runner = new CatalogRefreshRunner(AppPaths.Resolve());
-    var progress = new Progress<string>(Console.WriteLine);
+    // NOT Progress<T>: with no SynchronizationContext its callbacks queue to the thread pool and
+    // can print out of order or be dropped at process exit.
+    var progress = new ConsoleProgress();
     var result = runner.RefreshIfStale(pak, force: options.ContainsKey("--force"), progress);
     if (result is null)
     {
@@ -230,4 +287,11 @@ static int UnknownCommand(string command)
 {
     Console.Error.WriteLine($"unknown command '{command}' — run `iuut help`.");
     return 1;
+}
+
+/// <summary>Synchronous console progress (miner phase lines print in order, before the summary).</summary>
+internal sealed class ConsoleProgress : IProgress<string>
+{
+    /// <inheritdoc />
+    public void Report(string value) => Console.WriteLine(value);
 }

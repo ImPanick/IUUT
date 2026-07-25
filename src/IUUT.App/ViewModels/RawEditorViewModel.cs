@@ -10,13 +10,14 @@ namespace IUUT.App.ViewModels;
 /// save it back through <see cref="CustomFileService"/> (backup + JSON re-parse + atomic — malformed
 /// JSON is rejected, leaving the original intact). For power users; the confirm lives in the view.
 /// </summary>
-public sealed class RawEditorViewModel : ObservableObject
+public sealed class RawEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomFileService _files;
     private readonly string _saveFolder;
 
     private NamedFileViewModel? _selectedFile;
     private string _content = "";
+    private string _loadedContent = "";
     private bool _isBusy;
     private string _statusMessage = "Loading the selected save…";
 
@@ -88,6 +89,9 @@ public sealed class RawEditorViewModel : ObservableObject
     /// <summary>True once the JSON files were listed and the editor is usable.</summary>
     public bool IsLoaded { get; private set; }
 
+    /// <summary>Hand-typed text that differs from the file on disk (switch-away guard).</summary>
+    public bool IsDirty => !string.Equals(_content, _loadedContent, StringComparison.Ordinal);
+
     /// <summary>Lists (or relists) the save's JSON files.</summary>
     public async Task LoadAsync()
     {
@@ -144,6 +148,11 @@ public sealed class RawEditorViewModel : ObservableObject
         try
         {
             var result = await _files.SaveJsonTextAsync(SelectedFile.Path, Content);
+            if (result.Ok)
+            {
+                _loadedContent = Content; // saved text is the new clean baseline
+            }
+
             StatusMessage = result.Ok
                 ? $"Saved {SelectedFile.Name} — a backup was taken."
                 : $"Not saved — the text is not valid JSON (the original {SelectedFile.Name} is unchanged).";
@@ -165,11 +174,13 @@ public sealed class RawEditorViewModel : ObservableObject
         if (SelectedFile is null)
         {
             Content = "";
+            _loadedContent = "";
             return;
         }
 
         var text = await _files.ReadTextAsync(SelectedFile.Path);
         Content = text ?? "";
+        _loadedContent = Content;
         StatusMessage = text is null
             ? $"Could not read {SelectedFile.Name}."
             : $"{SelectedFile.Name} — {Content.Length:N0} chars.";
