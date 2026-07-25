@@ -1,7 +1,7 @@
 {
-  "catalogVersion": "datapak-week239-2026-07",
+  "catalogVersion": "datapak-week242-2026-07",
   "dataTable": "D_Talents",
-  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-03. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-24. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
     {
       "rowName": "Stone_Axe",
@@ -1345,7 +1345,8 @@
     },
     {
       "rowName": "Re_route_iron_tool_0",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "Steel_Bolt",
@@ -8874,6 +8875,26 @@
     },
     {
       "rowName": "Workshop_Oxite_Dissolver_Printed",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Flashlight",
+      "displayName": null
+    },
+    {
+      "rowName": "Reroute_T2_Lights",
+      "displayName": null
+    },
+    {
+      "rowName": "Rudimentary_Grenade",
+      "displayName": null
+    },
+    {
+      "rowName": "Rudimentary_Smoke",
+      "displayName": null
+    },
+    {
+      "rowName": "GH_R_E",
       "displayName": null
     }
   ]
