@@ -18,9 +18,16 @@ public sealed class HomeViewModel : ObservableObject
     private readonly LazyMaxApplyService _apply;
     private readonly INavigationService _navigation;
     private readonly Services.SaveRootState _saveRootState;
+    private readonly IUUT.Core.Catalog.GameCatalogs _catalogs;
 
     private string _saveRoot;
     private bool _isBusy;
+
+    /// <summary>Whether the catalogs came from the user's own pak (v1.8.0 self-refresh) or the shipped snapshot.</summary>
+    public string CatalogStatus { get; }
+
+    /// <summary>The catalog version stamp (tooltip detail).</summary>
+    public string CatalogVersion { get; }
     private bool _saveRootFound;
     private HomeSaveSlot? _selectedSlot;
     private bool _gameRunning;
@@ -28,19 +35,25 @@ public sealed class HomeViewModel : ObservableObject
     private string _statusMessage = "Ready.";
 
     /// <summary>Creates the Home view-model over the Home + Lazy Max services and the navigation shell.</summary>
-    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation, Services.SaveRootState saveRootState)
+    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation, Services.SaveRootState saveRootState, IUUT.Core.Catalog.GameCatalogs catalogs)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(navigation);
         ArgumentNullException.ThrowIfNull(saveRootState);
+        ArgumentNullException.ThrowIfNull(catalogs);
         _home = home;
         _apply = apply;
         _navigation = navigation;
         _saveRootState = saveRootState;
+        _catalogs = catalogs;
         _saveRoot = saveRootState.Current;
 
         Slots = [];
+        CatalogStatus = _catalogs.Talents.CatalogVersion.StartsWith("datapak-runtime-", StringComparison.Ordinal)
+            ? "Catalogs · refreshed from your game"
+            : "Catalogs · shipped snapshot";
+        CatalogVersion = _catalogs.Talents.CatalogVersion;
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         OpenRecoveryCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.RecoveryKey));
         OpenCustomCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.CustomKey));

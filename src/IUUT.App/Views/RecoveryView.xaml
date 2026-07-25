@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:controls="clr-namespace:IUUT.App.Controls"
              mc:Ignorable="d">
 
     <!-- Broken Save Recovery (master §10.1, §11.3). DataContext = RecoveryViewModel. -->
@@ -115,8 +116,13 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
-                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,12,0" />
+            <Grid Grid.Column="0" Margin="0,0,12,0">
+                <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
+                           VerticalAlignment="Center" TextWrapping="Wrap" />
+                <!-- DE-3: the long-operation surface takes over the status area while working. -->
+                <controls:ProgressPanel Title="Working on this profile…" Phase="{Binding StatusMessage}"
+                                        Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibility}}" />
+            </Grid>
             <Button Grid.Column="1" Content="REPAIR" Style="{StaticResource PrimaryButton}"
                     IsEnabled="{Binding CanRepair}" Click="OnRepair" />
         </Grid>

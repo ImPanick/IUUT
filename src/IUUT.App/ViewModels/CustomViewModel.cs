@@ -263,11 +263,14 @@ public sealed class CustomViewModel : ObservableObject
         };
     }
 
+    // DE-3 IA: intent groups (Progression / World / Rescue / Advanced) with Tier-2 homes
+    // pre-placed as disabled entries, so upcoming features land in an obvious place.
     private static IReadOnlyList<CustomCategory> BuildCategories() =>
     [
         new()
         {
             Key = "account",
+            Group = "PROGRESSION",
             Glyph = SymbolRegular.WalletCreditCard24,
             Label = "Account & Currencies",
             Description = "Orbital currencies and the workshop/prospect blueprint checklist.",
@@ -276,6 +279,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "characters",
+            Group = "PROGRESSION",
             Glyph = SymbolRegular.Person24,
             Label = "Characters & Talents",
             Description = "Per-character XP, debt, revive, rename, and per-talent rank (with a per-character max).",
@@ -284,6 +288,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "accolades",
+            Group = "PROGRESSION",
             Glyph = SymbolRegular.Trophy24,
             Label = "Accolades & Bestiary",
             Description = "Grant or remove accolades; set a creature group's scan points.",
@@ -291,39 +296,8 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
-            Key = "stash",
-            Glyph = SymbolRegular.Box24,
-            Label = "Orbital Stash",
-            Description = "MetaInventory items: durability/stack, repair, replace, add, remove — with fresh GUIDs.",
-            Status = "Wired — StashEditService + visual grid.",
-        },
-        new()
-        {
-            Key = "loadouts",
-            Glyph = SymbolRegular.Backpack24,
-            Label = "Loadouts",
-            Description = "Per-prospect loadouts; cross-reference item GUIDs with the stash.",
-            Status = "Wired — LoadoutCrossReference.",
-        },
-        new()
-        {
-            Key = "prospects",
-            Glyph = SymbolRegular.Map24,
-            Label = "Prospects",
-            Description = "Unstick a stuck character's prospect association (world blob preserved).",
-            Status = "Wired — ProspectEditService (header editing is roadmap Tier 2).",
-        },
-        new()
-        {
-            Key = "mounts",
-            Glyph = SymbolRegular.AnimalPawPrint24,
-            Label = "Mounts",
-            Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
-            Status = "Wired — MountEditService.",
-        },
-        new()
-        {
             Key = "accountflags",
+            Group = "PROGRESSION",
             Glyph = SymbolRegular.CheckboxChecked24,
             Label = "Account Flags",
             Description = "Profile.json UnlockedFlags — map/talent-grant unlocks as a named checklist.",
@@ -332,6 +306,7 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "flags",
+            Group = "PROGRESSION",
             Glyph = SymbolRegular.Flag24,
             Label = "Engine Flags",
             Description = "The binary flags_*.dat engine unlock flag IDs.",
@@ -339,7 +314,77 @@ public sealed class CustomViewModel : ObservableObject
         },
         new()
         {
+            Key = "missions",
+            Group = "PROGRESSION",
+            Glyph = SymbolRegular.Flag24,
+            Label = "Missions",
+            Description = "Mission checklist with prerequisite closure (Core service is ready).",
+            Status = "Tier 2 — lands here.",
+            Enabled = false,
+            Tier = "T2",
+        },
+        new()
+        {
+            Key = "stash",
+            Group = "WORLD",
+            Glyph = SymbolRegular.Box24,
+            Label = "Orbital Stash",
+            Description = "MetaInventory items: durability/stack, repair, replace, add, remove — with fresh GUIDs.",
+            Status = "Wired — StashEditService + visual grid.",
+        },
+        new()
+        {
+            Key = "loadouts",
+            Group = "WORLD",
+            Glyph = SymbolRegular.Backpack24,
+            Label = "Loadouts",
+            Description = "Per-prospect loadouts; cross-reference item GUIDs with the stash.",
+            Status = "Wired — LoadoutCrossReference.",
+        },
+        new()
+        {
+            Key = "prospects",
+            Group = "WORLD",
+            Glyph = SymbolRegular.Map24,
+            Label = "Prospects",
+            Description = "Unstick a stuck character's prospect association (world blob preserved).",
+            Status = "Wired — ProspectEditService (header editing is roadmap Tier 2).",
+        },
+        new()
+        {
+            Key = "mounts",
+            Group = "WORLD",
+            Glyph = SymbolRegular.AnimalPawPrint24,
+            Label = "Mounts",
+            Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
+            Status = "Wired — MountEditService.",
+        },
+        new()
+        {
+            Key = "returntostash",
+            Group = "RESCUE",
+            Glyph = SymbolRegular.Box24,
+            Label = "Return to Stash",
+            Description = "Recover items from a prospect back to the orbital stash (Core service is ready).",
+            Status = "Tier 2 — lands here.",
+            Enabled = false,
+            Tier = "T2",
+        },
+        new()
+        {
+            Key = "backupmanager",
+            Group = "RESCUE",
+            Glyph = SymbolRegular.Archive24,
+            Label = "Backup Manager",
+            Description = "Browse, restore, and prune IUUT's timestamped backups.",
+            Status = "Tier 2 — lands here.",
+            Enabled = false,
+            Tier = "T2",
+        },
+        new()
+        {
             Key = "raw",
+            Group = "ADVANCED",
             Glyph = SymbolRegular.Code24,
             Label = "Advanced / Raw",
             Description = "Raw JSON viewer and export/import for any save file.",

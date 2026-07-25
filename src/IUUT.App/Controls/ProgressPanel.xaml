@@ -1,0 +1,20 @@
+<UserControl x:Class="IUUT.App.Controls.ProgressPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="Root">
+
+    <!-- DE-2/3 primitive: the long-operation surface — title, thin accent bar, phase line.
+         Consumers: Recovery scan/repair now; blob operations and backup snapshots (Tier 2). -->
+    <Border BorderBrush="{StaticResource GridLineBrush}" BorderThickness="1" CornerRadius="2"
+            Background="{StaticResource SurfaceRowBrush}" Padding="14,10">
+        <StackPanel>
+            <TextBlock Text="{Binding Title, ElementName=Root}" Style="{StaticResource BodyText}" FontWeight="SemiBold" />
+            <ProgressBar IsIndeterminate="{Binding IsIndeterminate, ElementName=Root}"
+                         Value="{Binding Percent, ElementName=Root}" Maximum="100"
+                         Height="4" Margin="0,8,0,6" BorderThickness="0"
+                         Background="{StaticResource GridLineBrush}"
+                         Foreground="{StaticResource AccentBrush}" />
+            <TextBlock Text="{Binding Phase, ElementName=Root}" Style="{StaticResource MutedText}" TextWrapping="Wrap" />
+        </StackPanel>
+    </Border>
+</UserControl>

@@ -164,9 +164,9 @@
         <StackPanel Grid.Row="2">
             <Rectangle Height="1" Margin="0,0,0,9" Fill="{StaticResource GridLineBrush}" />
             <Grid>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" ToolTip="{Binding CatalogVersion}">
                     <Ellipse Style="{StaticResource ChannelDot}" VerticalAlignment="Center" Margin="0,0,7,0" />
-                    <TextBlock Text="Catalogs loaded" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding CatalogStatus}" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
                 </StackPanel>
                 <TextBlock Text="{Binding StatusMessage}" Style="{StaticResource MonoText}"
                            HorizontalAlignment="Right" VerticalAlignment="Center" />

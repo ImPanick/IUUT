@@ -10,7 +10,12 @@
 
     <!-- Editor panels are picked by the view-model type of CurrentEditor. -->
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+        <!-- DE-3 IA: sidebar grouped by intent (Progression / World / Rescue / Advanced). -->
+        <CollectionViewSource x:Key="GroupedCategories" Source="{Binding Categories}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Group" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
         <DataTemplate DataType="{x:Type vm:AccountEditorViewModel}">
             <views:AccountEditorView />
         </DataTemplate>
@@ -87,15 +92,42 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="6" Margin="0,0,12,0">
-                <ListBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
-                         Background="Transparent" BorderThickness="0">
+                <!-- IsSynchronizedWithCurrentItem stays off: a CollectionView ItemsSource would
+                     silently enable currency sync (the Engine Flags lesson). -->
+                <ListBox ItemsSource="{Binding Source={StaticResource GroupedCategories}}"
+                         SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                         IsSynchronizedWithCurrentItem="False"
+                         Background="Transparent" BorderThickness="0"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                            <Setter Property="IsEnabled" Value="{Binding Enabled}" />
+                            <Setter Property="ToolTip" Value="{Binding Description}" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource LabelText}" Margin="8,10,0,4" />
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="4,7">
-                                <ui:SymbolIcon Symbol="{Binding Glyph}" FontSize="16" Margin="0,0,10,0"
+                            <Grid Margin="4,7">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ui:SymbolIcon Grid.Column="0" Symbol="{Binding Glyph}" FontSize="16" Margin="0,0,10,0"
                                                VerticalAlignment="Center" Foreground="{StaticResource TextMidBrush}" />
-                                <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
-                            </StackPanel>
+                                <TextBlock Grid.Column="1" Text="{Binding Label}" Style="{StaticResource BodyText}" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{Binding Tier}" Style="{StaticResource LabelText}"
+                                           VerticalAlignment="Center" Margin="8,0,2,0" />
+                            </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

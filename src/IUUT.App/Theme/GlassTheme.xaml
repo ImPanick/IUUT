@@ -11,6 +11,9 @@
         values, so the view XAML needs no churn. New keys are added at the end of each group.
     -->
 
+    <!-- ============ Shared converters ============ -->
+    <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+
     <!-- ============ Fonts ============ -->
     <FontFamily x:Key="MonoFontFamily">Cascadia Code, Cascadia Mono, Consolas, monospace</FontFamily>
 

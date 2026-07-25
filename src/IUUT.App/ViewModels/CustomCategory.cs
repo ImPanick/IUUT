@@ -19,4 +19,13 @@ public sealed record CustomCategory
 
     /// <summary>Build status (which Core service backs it; "future"; etc.).</summary>
     public required string Status { get; init; }
+
+    /// <summary>Sidebar intent group (DE-3 IA): Rescue / Progression / World / Advanced.</summary>
+    public string Group { get; init; } = "";
+
+    /// <summary>False for pre-placed Tier-2 homes (shown greyed with a tier tag, not selectable).</summary>
+    public bool Enabled { get; init; } = true;
+
+    /// <summary>Tier tag shown on disabled entries (e.g. "T2"); empty for live entries.</summary>
+    public string Tier { get; init; } = "";
 }

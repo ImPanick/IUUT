@@ -33,12 +33,7 @@
                 </StackPanel>
                 <Button Grid.Row="0" Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="12,4" />
 
-                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,12,0,0">
-                    <TextBlock Text="CHARACTER" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
-                    <ComboBox MinWidth="260" ItemsSource="{Binding Characters}"
-                              SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
-                              DisplayMemberPath="DisplayLabel" />
-                </StackPanel>
+<!-- DE-3: the character picker moved into the card rail below (card/detail layout). -->
             </Grid>
         </Border>
 
@@ -59,10 +54,35 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Fields -->
-            <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="18" Margin="0,0,12,0"
-                    DataContext="{Binding SelectedCharacter}">
-                <StackPanel>
+            <!-- Character cards + fields (DE-3 card/detail) -->
+            <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="12" Margin="0,0,12,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <ListBox Grid.Row="0" ItemsSource="{Binding Characters}"
+                             SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
+                             Background="Transparent" BorderThickness="0" Margin="0,0,0,10"
+                             MaxHeight="230" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="4,5">
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource BodyText}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,1,0,0">
+                                        <TextBlock Text="{Binding ChrSlot, StringFormat=Slot {0}}" Style="{StaticResource MutedText}" />
+                                        <TextBlock Text="  · dead — revive here" Style="{StaticResource MutedText}"
+                                                   Foreground="{StaticResource StateDangerBrush}"
+                                                   Visibility="{Binding IsDead, Converter={StaticResource BoolToVisibility}}" />
+                                    </StackPanel>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel DataContext="{Binding SelectedCharacter}" Margin="6,0">
                     <TextBlock Text="NAME" Style="{StaticResource LabelText}" />
                     <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="0,4,0,12" />
 
@@ -90,6 +110,8 @@
                                 Padding="12,4" />
                     </StackPanel>
                 </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </Border>
 
             <!-- Talents -->
