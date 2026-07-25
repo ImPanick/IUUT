@@ -50,7 +50,15 @@ public sealed class CharacterSlotViewModel : ObservableObject
                 _catalogs.Talents.IsLive(talent.RowName),
                 _catalogs.Talents.MaxRank(talent.RowName, CharacterEditService.MaxTalentRank)));
         }
+
+        TalentsView = new Services.FilteredView<TalentRowViewModel>(
+            Talents,
+            static (t, s) => t.Label.Contains(s, StringComparison.OrdinalIgnoreCase)
+                          || t.RowName.Contains(s, StringComparison.OrdinalIgnoreCase));
     }
+
+    /// <summary>Searchable projection of <see cref="Talents"/> (2.2k rows; the list virtualizes).</summary>
+    public Services.FilteredView<TalentRowViewModel> TalentsView { get; }
 
     /// <summary>The underlying model this wrapper edits (reconciled on apply).</summary>
     public CharacterModel Model { get; }

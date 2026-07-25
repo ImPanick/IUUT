@@ -38,6 +38,10 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Flags = [];
+        FlagsView = new Services.FilteredView<AccountFlagRowViewModel>(
+            Flags,
+            static (f, s) => f.Label.Contains(s, StringComparison.OrdinalIgnoreCase)
+                          || f.RowName.Contains(s, StringComparison.OrdinalIgnoreCase));
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         EnableAllCommand = new RelayCommand(EnableAll, () => !IsBusy && _bundle is not null);
     }
@@ -47,6 +51,9 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
 
     /// <summary>Every account flag with its checkbox state (staged until Apply).</summary>
     public ObservableCollection<AccountFlagRowViewModel> Flags { get; }
+
+    /// <summary>Searchable projection of <see cref="Flags"/>.</summary>
+    public Services.FilteredView<AccountFlagRowViewModel> FlagsView { get; }
 
     /// <summary>Reloads the save into the editor.</summary>
     public IAsyncRelayCommand LoadCommand { get; }

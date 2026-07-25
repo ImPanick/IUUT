@@ -44,30 +44,36 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="4,2,4,8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="ACCOLADES" Style="{StaticResource LabelText}" />
                             <TextBlock Text="{Binding AccoladesSummary}" Style="{StaticResource MutedText}" Margin="0,2,0,0" />
                         </StackPanel>
-                        <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
                             <Button Content="Grant all" Command="{Binding GrantAllAccoladesCommand}" Padding="10,3" Margin="0,0,6,0" />
                             <Button Content="Revoke all" Command="{Binding RevokeAllAccoladesCommand}" Padding="10,3" />
                         </StackPanel>
+                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0"
+                                 Text="{Binding AccoladesView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Search accolades (name or RowName)" />
                     </Grid>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Accolades}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsGranted, Mode=TwoWay}" Margin="4,5" VerticalContentAlignment="Center">
-                                        <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
-                                    </CheckBox>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                    <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
+                                  ItemsSource="{Binding AccoladesView.View}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsGranted, Mode=TwoWay}" Margin="4,5" VerticalContentAlignment="Center">
+                                    <TextBlock Text="{Binding Label}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                </CheckBox>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </Border>
 
@@ -79,34 +85,40 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="4,2,4,8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                        <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">
                             <TextBlock Text="BESTIARY" Style="{StaticResource LabelText}" />
                             <TextBlock Text="{Binding BestiarySummary}" Style="{StaticResource MutedText}" Margin="0,2,0,0" />
                         </StackPanel>
-                        <Button Grid.Column="1" Content="Max all" Command="{Binding MaxAllBestiaryCommand}" Padding="10,3" VerticalAlignment="Center" />
+                        <Button Grid.Row="0" Grid.Column="1" Content="Max all" Command="{Binding MaxAllBestiaryCommand}" Padding="10,3" VerticalAlignment="Center" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,8,0,0"
+                                 Text="{Binding BestiaryView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="Search creature groups (name or RowName)" />
                     </Grid>
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                        <ItemsControl ItemsSource="{Binding Bestiary}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid Margin="4,4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Label}" Style="{StaticResource BodyText}"
-                                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="0,0,10,0" />
-                                        <TextBox Grid.Column="1" Width="90" VerticalAlignment="Center" TextAlignment="Right"
-                                                 Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </ScrollViewer>
+                    <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
+                                  ItemsSource="{Binding BestiaryView.View}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="4,4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="{Binding Label}" Style="{StaticResource BodyText}"
+                                               VerticalAlignment="Center" TextTrimming="CharacterEllipsis" Margin="0,0,10,0" />
+                                    <TextBox Grid.Column="1" Width="90" VerticalAlignment="Center" TextAlignment="Right"
+                                             Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </Border>
         </Grid>

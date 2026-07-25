@@ -48,6 +48,14 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
 
         Accolades = [];
         Bestiary = [];
+        AccoladesView = new Services.FilteredView<AccoladeRowViewModel>(
+            Accolades,
+            static (a, s) => a.Label.Contains(s, StringComparison.OrdinalIgnoreCase)
+                          || a.RowName.Contains(s, StringComparison.OrdinalIgnoreCase));
+        BestiaryView = new Services.FilteredView<BestiaryRowViewModel>(
+            Bestiary,
+            static (b, s) => b.Label.Contains(s, StringComparison.OrdinalIgnoreCase)
+                          || b.RowName.Contains(s, StringComparison.OrdinalIgnoreCase));
         LoadCommand = new AsyncRelayCommand(LoadAsync);
         GrantAllAccoladesCommand = new RelayCommand(() => SetAllAccolades(true));
         RevokeAllAccoladesCommand = new RelayCommand(() => SetAllAccolades(false));
@@ -62,6 +70,12 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
 
     /// <summary>The catalog creature groups (+ any tracked group the catalog doesn't know).</summary>
     public ObservableCollection<BestiaryRowViewModel> Bestiary { get; }
+
+    /// <summary>Searchable projection of <see cref="Accolades"/>.</summary>
+    public Services.FilteredView<AccoladeRowViewModel> AccoladesView { get; }
+
+    /// <summary>Searchable projection of <see cref="Bestiary"/>.</summary>
+    public Services.FilteredView<BestiaryRowViewModel> BestiaryView { get; }
 
     /// <summary>Reloads the save into the editor.</summary>
     public IAsyncRelayCommand LoadCommand { get; }

@@ -25,6 +25,9 @@
                     <TextBlock Text="Performance &amp; visual tweaks — toggle effects off, set quality/FPS. Standard Unreal cvars; restart Icarus to apply. A backup is taken before any write."
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,6,0,0" />
                     <TextBlock Text="{Binding EngineIniPath}" Style="{StaticResource MonoText}" Margin="0,6,0,0" TextTrimming="CharacterEllipsis" />
+                    <TextBox Margin="0,8,0,0" MaxWidth="360" HorizontalAlignment="Left" MinWidth="240"
+                             Text="{Binding SettingsView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="Search settings (name or description)" />
                 </StackPanel>
                 <Button Grid.Column="1" Content="RELOAD" Command="{Binding LoadCommand}" VerticalAlignment="Top" />
             </Grid>
@@ -33,7 +36,7 @@
         <!-- Settings list (grouped: Visual FX / Frame Rate / Performance) -->
         <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="10" Margin="0,10,0,0">
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Settings}">
+                <ItemsControl ItemsSource="{Binding SettingsView.View}">
                     <ItemsControl.GroupStyle>
                         <GroupStyle>
                             <GroupStyle.HeaderTemplate>

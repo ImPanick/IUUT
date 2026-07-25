@@ -47,6 +47,9 @@ public sealed class FlagEditorViewModel : ObservableObject
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
         Flags = [];
+        FlagsView = new Services.FilteredView<FlagRowViewModel>(
+            Flags,
+            static (f, s) => f.Display.Contains(s, StringComparison.OrdinalIgnoreCase));
         AvailableFlags = catalog.Ids
             .Select(id => new FlagRowViewModel((uint)id, catalog.Label(id), catalog.IsMissionFlag(id)))
             .ToList();
@@ -62,6 +65,9 @@ public sealed class FlagEditorViewModel : ObservableObject
 
     /// <summary>The character flags currently set (decoded to names).</summary>
     public ObservableCollection<FlagRowViewModel> Flags { get; }
+
+    /// <summary>Searchable projection of <see cref="Flags"/>.</summary>
+    public Services.FilteredView<FlagRowViewModel> FlagsView { get; }
 
     /// <summary>Every known character flag, for the add-by-name picker.</summary>
     public IReadOnlyList<FlagRowViewModel> AvailableFlags { get; }

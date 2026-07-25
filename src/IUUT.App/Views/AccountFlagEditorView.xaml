@@ -35,8 +35,16 @@
 
         <!-- Checklist -->
         <Border Grid.Row="1" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl ItemsSource="{Binding Flags}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Margin="0,0,0,10"
+                         Text="{Binding FlagsView.SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Search account flags (name or RowName)" />
+                <ItemsControl Grid.Row="1" Style="{StaticResource VirtualizedList}"
+                              ItemsSource="{Binding FlagsView.View}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="0,0,0,4" Padding="12,6" CornerRadius="4"
@@ -61,7 +69,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </ScrollViewer>
+            </Grid>
         </Border>
 
         <!-- Status + apply -->

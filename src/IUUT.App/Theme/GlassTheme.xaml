@@ -209,4 +209,30 @@
     <!-- Lazy Max now shares the standard tile treatment (amber identity retired; doc §0/§2). -->
     <Style x:Key="ModeTileAmber" TargetType="Button" BasedOn="{StaticResource ModeTile}" />
 
+    <!-- ============ Virtualized list ============ -->
+    <!-- For long item lists (talents 2.2k, accolades 447): ItemsControl alone materializes every
+         row; this template gives it its own ScrollViewer so VirtualizingStackPanel engages.
+         Not for grouped lists (grouping needs IsVirtualizingWhenGrouping and its own tuning). -->
+    <Style x:Key="VirtualizedList" TargetType="ItemsControl">
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True" />
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ItemsControl">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" CanContentScroll="True" Focusable="False">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
