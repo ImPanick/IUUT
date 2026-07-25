@@ -74,8 +74,9 @@ BenchmarkDotNet.Artifacts/
 *.usmap
 *.dat
 oo2core*.dll
-# data.pak re-mine dumps (scripts/extract-datapak.ps1 writes under artifacts/, already ignored)
-datapak/
+# data.pak re-mine dumps (scripts/extract-datapak.ps1 writes under artifacts/, already ignored).
+# Anchored: the bare "datapak/" pattern also swallowed src/IUUT.Core/DataPak/ source code.
+/artifacts/datapak/
 
 # More IDE / build tooling
 *.code-workspace
