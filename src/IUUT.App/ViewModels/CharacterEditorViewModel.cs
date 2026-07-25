@@ -14,7 +14,7 @@ namespace IUUT.App.ViewModels;
 /// "Max talents" / "Max XP" helpers), then previews + applies through <see cref="CustomApplyService"/>
 /// — backed up and atomic. The confirm dialog lives in the view; this view-model stays WPF-free.
 /// </summary>
-public sealed class CharacterEditorViewModel : ObservableObject
+public sealed class CharacterEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomApplyService _apply;
     private readonly CharacterEditService _service;
@@ -24,6 +24,7 @@ public sealed class CharacterEditorViewModel : ObservableObject
     private SaveEditBundle? _bundle;
     private CharacterSlotViewModel? _selectedCharacter;
     private bool _isBusy;
+    private bool _isDirty;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -126,7 +127,15 @@ public sealed class CharacterEditorViewModel : ObservableObject
 
             foreach (var character in _bundle.Characters.OrderBy(c => c.ChrSlot))
             {
-                Characters.Add(new CharacterSlotViewModel(character, _catalogs));
+                var slot = new CharacterSlotViewModel(character, _catalogs);
+                // Any field or talent-rank edit marks the editor dirty (switch-away guard).
+                slot.PropertyChanged += OnCharacterEdited;
+                foreach (var talent in slot.Talents)
+                {
+                    talent.PropertyChanged += OnCharacterEdited;
+                }
+
+                Characters.Add(slot);
             }
 
             SelectedCharacter = Characters.Count > 0 ? Characters[0] : null;
@@ -142,9 +151,20 @@ public sealed class CharacterEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
         }
     }
+
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
+    private void OnCharacterEdited(object? sender, System.ComponentModel.PropertyChangedEventArgs e) =>
+        IsDirty = true;
 
     /// <summary>Applies the edited roster (call after a user confirm).</summary>
     public async Task ApplyAsync()

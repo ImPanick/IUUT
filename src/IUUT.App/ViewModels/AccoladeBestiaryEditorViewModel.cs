@@ -13,7 +13,7 @@ namespace IUUT.App.ViewModels;
 /// revoke) and creature-group scan points, edited in memory then previewed + applied through
 /// <see cref="CustomApplyService"/> — backed up and atomic. The confirm dialog lives in the view.
 /// </summary>
-public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
+public sealed class AccoladeBestiaryEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     /// <summary>The "max" scan points the <see cref="MaxAllBestiaryCommand"/> sets (shared with Lazy Max).</summary>
     public const long MaxBestiaryPoints = LazyMaxService.MaxedBestiaryPoints;
@@ -25,6 +25,7 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
 
     private SaveEditBundle? _bundle;
     private bool _isBusy;
+    private bool _isDirty;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -112,6 +113,13 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
     /// <summary>True once the save's files parsed and the editor is usable.</summary>
     public bool IsLoaded => _bundle is not null;
 
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
     /// <summary>Loads (or reloads) the save into the editor.</summary>
     public async Task LoadAsync()
     {
@@ -142,6 +150,7 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
         }
     }
@@ -261,7 +270,7 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
         var seen = new HashSet<string>(StringComparer.Ordinal);
         foreach (var row in _catalogs.Bestiary.Rows.OrderBy(r => r.Label, StringComparer.OrdinalIgnoreCase))
         {
-            Bestiary.Add(new BestiaryRowViewModel(row.RowName, row.Label, points.GetValueOrDefault(row.RowName)));
+            AddBestiaryRow(row.RowName, row.Label, points.GetValueOrDefault(row.RowName));
             seen.Add(row.RowName);
         }
 
@@ -269,9 +278,16 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
         {
             if (seen.Add(name))
             {
-                Bestiary.Add(new BestiaryRowViewModel(name, name, value));
+                AddBestiaryRow(name, name, value);
             }
         }
+    }
+
+    private void AddBestiaryRow(string rowName, string label, long points)
+    {
+        var row = new BestiaryRowViewModel(rowName, label, points);
+        row.PropertyChanged += OnBestiaryChanged;
+        Bestiary.Add(row);
     }
 
     private void AddAccoladeRow(string rowName, string label, bool isGranted)
@@ -288,12 +304,22 @@ public sealed class AccoladeBestiaryEditorViewModel : ObservableObject
             row.PropertyChanged -= OnAccoladeChanged;
         }
 
+        foreach (var row in Bestiary)
+        {
+            row.PropertyChanged -= OnBestiaryChanged;
+        }
+
         Accolades.Clear();
         Bestiary.Clear();
     }
 
-    private void OnAccoladeChanged(object? sender, PropertyChangedEventArgs e) =>
+    private void OnAccoladeChanged(object? sender, PropertyChangedEventArgs e)
+    {
         OnPropertyChanged(nameof(AccoladesSummary));
+        IsDirty = true;
+    }
+
+    private void OnBestiaryChanged(object? sender, PropertyChangedEventArgs e) => IsDirty = true;
 
     private void SetAllAccolades(bool granted)
     {

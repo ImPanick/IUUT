@@ -11,7 +11,7 @@ namespace IUUT.App.ViewModels;
 /// Ids the profile has beyond the catalog stay visible and are never dropped (CONSTITUTION VI).
 /// Previews + applies through <see cref="CustomApplyService"/> — backed up and atomic.
 /// </summary>
-public sealed class AccountFlagEditorViewModel : ObservableObject
+public sealed class AccountFlagEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomApplyService _apply;
     private readonly AccountFlagEditService _service;
@@ -19,6 +19,7 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
 
     private SaveEditBundle? _bundle;
     private bool _isBusy;
+    private bool _isDirty;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -87,6 +88,13 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
     /// <summary>True once the save's Profile.json parsed and the editor is usable.</summary>
     public bool IsLoaded => _bundle is not null;
 
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
     /// <summary>Loads (or reloads) the profile's flags into the checklist.</summary>
     public async Task LoadAsync()
     {
@@ -111,6 +119,7 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
                     if (args.PropertyName == nameof(AccountFlagRowViewModel.IsEnabled))
                     {
                         OnPropertyChanged(nameof(Summary));
+                        IsDirty = true;
                     }
                 };
                 Flags.Add(row);
@@ -127,6 +136,7 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
         }
     }

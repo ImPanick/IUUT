@@ -31,6 +31,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
     private int _loadedRootVersion = -1;
+    private bool _suppressDirtyGuard;
 
     private HomeSaveSlot? _selectedSlot;
     private CustomCategory? _selectedCategory;
@@ -100,16 +101,32 @@ public sealed class CustomViewModel : ObservableObject
     /// <summary>(Re)lists save profiles.</summary>
     public IAsyncRelayCommand LoadSavesCommand { get; }
 
+    /// <summary>
+    /// Asks the user to confirm discarding unapplied edits (wired by the view to a dialog).
+    /// When unset, switches proceed without asking.
+    /// </summary>
+    public Func<string, bool>? ConfirmDiscard { get; set; }
+
     /// <summary>The save profile being edited.</summary>
     public HomeSaveSlot? SelectedSlot
     {
         get => _selectedSlot;
         set
         {
-            if (SetProperty(ref _selectedSlot, value))
+            if (Equals(_selectedSlot, value))
             {
-                UpdateEditor();
+                return;
             }
+
+            if (!ConfirmSwitchAway())
+            {
+                SnapBack(nameof(SelectedSlot));
+                return;
+            }
+
+            _selectedSlot = value;
+            OnPropertyChanged();
+            UpdateEditor();
         }
     }
 
@@ -119,10 +136,20 @@ public sealed class CustomViewModel : ObservableObject
         get => _selectedCategory;
         set
         {
-            if (SetProperty(ref _selectedCategory, value))
+            if (Equals(_selectedCategory, value))
             {
-                UpdateEditor();
+                return;
             }
+
+            if (!ConfirmSwitchAway())
+            {
+                SnapBack(nameof(SelectedCategory));
+                return;
+            }
+
+            _selectedCategory = value;
+            OnPropertyChanged();
+            UpdateEditor();
         }
     }
 
@@ -154,7 +181,14 @@ public sealed class CustomViewModel : ObservableObject
 
     private async Task LoadSavesAsync()
     {
+        // One up-front confirm covers the whole reload (which re-selects a slot below).
+        if (!ConfirmSwitchAway())
+        {
+            return;
+        }
+
         IsBusy = true;
+        _suppressDirtyGuard = true;
         try
         {
             // The shared root browsed on Home — not the hardcoded default (elevation audit bug fix).
@@ -177,9 +211,21 @@ public sealed class CustomViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            _suppressDirtyGuard = false;
             IsBusy = false;
         }
     }
+
+    // The Tier 1 dirty guard: an editor with staged edits must not be silently replaced.
+    private bool ConfirmSwitchAway() =>
+        _suppressDirtyGuard
+        || CurrentEditor is not Services.IDirtyEditor { IsDirty: true }
+        || ConfirmDiscard is null
+        || ConfirmDiscard("This editor has changes that were not applied. Discard them?");
+
+    // Re-raise after the in-flight binding completes so the sidebar/selector snaps back.
+    private void SnapBack(string propertyName) =>
+        System.Windows.Application.Current?.Dispatcher.BeginInvoke(() => OnPropertyChanged(propertyName));
 
     private void UpdateEditor()
     {

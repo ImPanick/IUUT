@@ -15,7 +15,7 @@ namespace IUUT.App.ViewModels;
 /// <see cref="CustomFileService"/> (backup + atomic). Edits via <see cref="StashEditService"/>; the
 /// loadout coupling via <see cref="LoadoutCrossReference"/>. The confirm lives in the view.
 /// </summary>
-public sealed class StashViewerViewModel : ObservableObject
+public sealed class StashViewerViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomFileService _files;
     private readonly StashEditService _stashEdit;
@@ -158,6 +158,9 @@ public sealed class StashViewerViewModel : ObservableObject
         get => _hasChanges;
         private set => SetProperty(ref _hasChanges, value);
     }
+
+    /// <inheritdoc />
+    public bool IsDirty => HasChanges;
 
     /// <summary>Item-count summary.</summary>
     public string Summary => $"{Items.Count:N0} items · {Items.Count(i => i.IsReferenced):N0} referenced by loadouts";

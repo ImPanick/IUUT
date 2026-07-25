@@ -14,7 +14,7 @@ namespace IUUT.App.ViewModels;
 /// previews (diff + validate) and applies through <see cref="CustomApplyService"/> — backed up and
 /// atomic. The confirm dialog lives in the view; this view-model stays WPF-free.
 /// </summary>
-public sealed class AccountEditorViewModel : ObservableObject
+public sealed class AccountEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     /// <summary>The "max" amount the <see cref="MaxAllCurrenciesCommand"/> sets (shared with Lazy Max).</summary>
     public const long MaxCurrencyAmount = LazyMaxService.MaxedMetaResourceCount;
@@ -26,6 +26,7 @@ public sealed class AccountEditorViewModel : ObservableObject
 
     private SaveEditBundle? _bundle;
     private bool _isBusy;
+    private bool _isDirty;
     private int _blueprintsUnlocked;
     private int _blueprintsTotal;
     private bool _includeUnreleasedBlueprints;
@@ -142,6 +143,13 @@ public sealed class AccountEditorViewModel : ObservableObject
     /// <summary>True once the save's Profile.json parsed and the editor is usable.</summary>
     public bool IsLoaded => _bundle is not null;
 
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
     /// <summary>Loads (or reloads) the save's Profile.json into the editor.</summary>
     public async Task LoadAsync()
     {
@@ -166,7 +174,7 @@ public sealed class AccountEditorViewModel : ObservableObject
             foreach (var row in _catalogs.MetaResources.Rows)
             {
                 var existing = profile.MetaResources.FirstOrDefault(m => string.Equals(m.MetaRow, row.RowName, StringComparison.Ordinal));
-                Currencies.Add(new CurrencyRowViewModel(row.RowName, row.Label, existing?.Count ?? 0));
+                AddCurrencyRow(new CurrencyRowViewModel(row.RowName, row.Label, existing?.Count ?? 0));
                 seen.Add(row.RowName);
             }
 
@@ -175,7 +183,7 @@ public sealed class AccountEditorViewModel : ObservableObject
             {
                 if (seen.Add(meta.MetaRow))
                 {
-                    Currencies.Add(new CurrencyRowViewModel(meta.MetaRow, meta.MetaRow, meta.Count));
+                    AddCurrencyRow(new CurrencyRowViewModel(meta.MetaRow, meta.MetaRow, meta.Count));
                 }
             }
 
@@ -190,9 +198,17 @@ public sealed class AccountEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
             MaxAllCurrenciesCommand.NotifyCanExecuteChanged();
         }
+    }
+
+    // Any staged amount edit marks the editor dirty (switch-away guard).
+    private void AddCurrencyRow(CurrencyRowViewModel row)
+    {
+        row.PropertyChanged += (_, _) => IsDirty = true;
+        Currencies.Add(row);
     }
 
     /// <summary>Applies the edited currency amounts (call after a user confirm).</summary>

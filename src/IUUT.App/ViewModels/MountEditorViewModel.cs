@@ -11,7 +11,7 @@ namespace IUUT.App.ViewModels;
 /// their denormalized level, then writes through <see cref="CustomFileService"/> (backed up +
 /// atomic). The authoritative RecorderBlob round-trips verbatim. Confirm lives in the view.
 /// </summary>
-public sealed class MountEditorViewModel : ObservableObject
+public sealed class MountEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomFileService _files;
     private readonly MountEditService _service;
@@ -19,6 +19,7 @@ public sealed class MountEditorViewModel : ObservableObject
 
     private MountsModel? _model;
     private bool _isBusy;
+    private bool _isDirty;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -73,6 +74,13 @@ public sealed class MountEditorViewModel : ObservableObject
     /// <summary>True once <c>Mounts.json</c> parsed and the editor is usable.</summary>
     public bool IsLoaded => _model is not null;
 
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
     /// <summary>Loads (or reloads) the save's mounts into the editor.</summary>
     public async Task LoadAsync()
     {
@@ -96,7 +104,10 @@ public sealed class MountEditorViewModel : ObservableObject
             {
                 foreach (var mount in _model.SavedMounts)
                 {
-                    Mounts.Add(new MountSlotViewModel(mount));
+                    var slot = new MountSlotViewModel(mount);
+                    // Any name/level edit marks the editor dirty (switch-away guard).
+                    slot.PropertyChanged += (_, _) => IsDirty = true;
+                    Mounts.Add(slot);
                 }
             }
 
@@ -120,6 +131,7 @@ public sealed class MountEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
         }
     }

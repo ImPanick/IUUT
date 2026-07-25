@@ -14,7 +14,7 @@ namespace IUUT.App.ViewModels;
 /// flag — e.g. the Olympus map-unlock gate + the Mission_* rewards). Writes through
 /// <see cref="CustomFileService"/> (backup + atomic). The confirm lives in the view.
 /// </summary>
-public sealed class FlagEditorViewModel : ObservableObject
+public sealed class FlagEditorViewModel : ObservableObject, Services.IDirtyEditor
 {
     private readonly CustomFileService _files;
     private readonly FlagsEditService _service;
@@ -25,6 +25,7 @@ public sealed class FlagEditorViewModel : ObservableObject
     private FlagRowViewModel? _selectedFlag;
     private FlagRowViewModel? _selectedAvailableFlag;
     private bool _isBusy;
+    private bool _isDirty;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
@@ -138,6 +139,13 @@ public sealed class FlagEditorViewModel : ObservableObject
     /// <summary>True once the flags file decoded and the editor is usable.</summary>
     public bool IsLoaded => _model is not null;
 
+    /// <inheritdoc />
+    public bool IsDirty
+    {
+        get => _isDirty;
+        private set => SetProperty(ref _isDirty, value);
+    }
+
     /// <summary>Loads (or reloads) the flags file into the editor.</summary>
     public async Task LoadAsync()
     {
@@ -160,6 +168,7 @@ public sealed class FlagEditorViewModel : ObservableObject
 #pragma warning restore CA1031
         finally
         {
+            IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
             AddFlagCommand.NotifyCanExecuteChanged();
             CompleteMissionsCommand.NotifyCanExecuteChanged();
@@ -216,9 +225,16 @@ public sealed class FlagEditorViewModel : ObservableObject
         }
 
         var flag = SelectedAvailableFlag;
-        StatusMessage = _service.AddFlag(_model, flag.Id)
-            ? $"Added {flag.Label} (staged) — review, then Apply."
-            : $"{flag.Label} is already present.";
+        if (_service.AddFlag(_model, flag.Id))
+        {
+            StatusMessage = $"Added {flag.Label} (staged) — review, then Apply.";
+            IsDirty = true;
+        }
+        else
+        {
+            StatusMessage = $"{flag.Label} is already present.";
+        }
+
         RebuildFlags();
     }
 
@@ -233,6 +249,7 @@ public sealed class FlagEditorViewModel : ObservableObject
         if (_service.RemoveFlag(_model, flag.Id))
         {
             StatusMessage = $"Removed {flag.Label} (staged) — review, then Apply.";
+            IsDirty = true;
             RebuildFlags();
         }
     }
@@ -254,6 +271,11 @@ public sealed class FlagEditorViewModel : ObservableObject
         }
 
         RebuildFlags();
+        if (added > 0)
+        {
+            IsDirty = true;
+        }
+
         StatusMessage = added > 0
             ? $"Set {added} mission/story flag(s) incl. map unlocks (staged) — review, then Apply."
             : "All mission/story flags are already set.";
