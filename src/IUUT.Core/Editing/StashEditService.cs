@@ -8,7 +8,7 @@ namespace IUUT.Core.Editing;
 /// Custom-mode edits to the orbital stash (<c>MetaInventory.json</c>, master doc §8.6, §10.4).
 /// Adds items with a freshly-minted <c>DatabaseGUID</c> and removes by GUID. Pure in-memory
 /// mutation; uniqueness is enforced by <c>ValidationEngine.ValidateUniqueDatabaseGuids</c> and the
-/// write goes through <c>CustomApplyService</c>. The visual stash grid (WP-24) is parked with the UI.
+/// write goes through <c>CustomApplyService</c>. The visual stash grid (WP-24) shipped in the App.
 /// </summary>
 public sealed class StashEditService
 {

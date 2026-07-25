@@ -69,9 +69,10 @@
                         </Ellipse>
                         <TextBlock Text="Save path" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0"
+                                ToolTip="Built-in guarantee: every write takes a timestamped backup first — this is not a toggle.">
                         <Ellipse Style="{StaticResource ChannelDot}" VerticalAlignment="Center" Margin="0,0,7,0" />
-                        <TextBlock Text="Backups on" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
+                        <TextBlock Text="Backups built in" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Ellipse VerticalAlignment="Center" Margin="0,0,7,0">

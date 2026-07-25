@@ -242,7 +242,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Box24,
             Label = "Orbital Stash",
             Description = "MetaInventory items: durability/stack, repair, replace, add, remove — with fresh GUIDs.",
-            Status = "Core ready — StashEditService. Visual grid coming.",
+            Status = "Wired — StashEditService + visual grid.",
         },
         new()
         {
@@ -290,7 +290,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Code24,
             Label = "Advanced / Raw",
             Description = "Raw JSON viewer and export/import for any save file.",
-            Status = "Coming.",
+            Status = "Wired — read-only viewer + validated import/export.",
         },
     ];
 }

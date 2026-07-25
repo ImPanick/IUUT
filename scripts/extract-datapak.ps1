@@ -75,16 +75,31 @@ for ($i = 0; $i -lt $text.Length; $i++) {
 }
 Write-Host "top-level DataTable objects: $($objs.Count)"
 
-# 3) Write each out by its RowStruct (unique per table).
+# 3) Write each out by its RowStruct. RowStructs are NOT guaranteed unique (e.g. two ProcessorRecipe
+#    tables exist) — collisions get a _2/_3 suffix instead of silently overwriting, and every table
+#    (wanted or not) is listed in _inventory.csv so a weekly run spots brand-new tables for free.
 $wanted = 'AccountFlag','CharacterFlag','Talent','ItemStaticData','AccoladeData','BestiaryData','MetaCurrency','FactionMission'
+$seen = @{}
+$inventory = New-Object System.Collections.Generic.List[string]
+$inventory.Add('rowStruct,rowsApprox,extracted')
 foreach ($o in $objs) {
     $m = [regex]::Match($o, '"RowStruct"\s*:\s*"/Script/Icarus\.([^"]+)"')
     if (-not $m.Success) { continue }
     $rs = $m.Groups[1].Value
-    if ($wanted -notcontains $rs) { continue }
     $rows = ([regex]::Matches($o, '"Name"\s*:')).Count
+    $extract = $wanted -contains $rs
+    $inventory.Add("$rs,$rows,$extract")
+    if (-not $extract) { continue }
+    if ($seen.ContainsKey($rs)) {
+        $seen[$rs]++
+        $suffixed = "$rs`_$($seen[$rs])"
+        Write-Warning "RowStruct collision: a second '$rs' table -> writing $suffixed.json (verify which one the catalog wants)"
+        $rs = $suffixed
+    } else { $seen[$m.Groups[1].Value] = 1 }
     $path = Join-Path $OutDir "$rs.json"
     [System.IO.File]::WriteAllText($path, $o)
     Write-Host ("  {0,-16} rows~{1,-5} -> {2}" -f $rs, $rows, $path)
 }
+[System.IO.File]::WriteAllLines((Join-Path $OutDir '_inventory.csv'), $inventory)
+Write-Host ("  _inventory.csv    {0} tables listed (diff week-over-week to spot new tables)" -f ($inventory.Count - 1))
 Write-Host "`nDone. Regenerate src/IUUT.Catalog/Embedded/*.json from these per docs/DATA-PROVENANCE.md." -ForegroundColor Green
