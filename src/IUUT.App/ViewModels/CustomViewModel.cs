@@ -26,6 +26,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly StashEditService _stash;
     private readonly LoadoutCrossReference _loadoutCrossReference;
     private readonly FlagsEditService _flags;
+    private readonly AccountFlagEditService _accountFlags;
     private readonly ProspectEditService _prospect;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
@@ -48,12 +49,15 @@ public sealed class CustomViewModel : ObservableObject
         StashEditService stash,
         LoadoutCrossReference loadoutCrossReference,
         FlagsEditService flags,
+        AccountFlagEditService accountFlags,
         ProspectEditService prospect,
         GameCatalogs catalogs,
         Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(saveRootState);
+        ArgumentNullException.ThrowIfNull(accountFlags);
         _saveRootState = saveRootState;
+        _accountFlags = accountFlags;
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(files);
@@ -196,6 +200,8 @@ public sealed class CustomViewModel : ObservableObject
                 new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
             ("flags", not null) =>
                 new FlagEditorViewModel(_files, _flags, _catalogs.CharacterFlags, slot.FolderPath, slot.DisplayLabel),
+            ("accountflags", not null) =>
+                new AccountFlagEditorViewModel(_apply, _accountFlags, slot.FolderPath, slot.DisplayLabel),
             ("prospects", not null) =>
                 new ProspectsEditorViewModel(_files, _prospect, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
@@ -261,6 +267,14 @@ public sealed class CustomViewModel : ObservableObject
             Label = "Mounts",
             Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
             Status = "Core ready — MountEditService.",
+        },
+        new()
+        {
+            Key = "accountflags",
+            Glyph = SymbolRegular.CheckboxChecked24,
+            Label = "Account Flags",
+            Description = "Profile.json UnlockedFlags — map/talent-grant unlocks as a named checklist.",
+            Status = "Wired — AccountFlagEditService.",
         },
         new()
         {

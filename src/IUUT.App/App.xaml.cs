@@ -84,6 +84,7 @@ public partial class App : Application
         services.AddSingleton<StashEditService>();
         services.AddSingleton<LoadoutCrossReference>();
         services.AddSingleton<FlagsEditService>();
+        services.AddSingleton(sp => new AccountFlagEditService(sp.GetRequiredService<GameCatalogs>().AccountFlags));
         services.AddSingleton<ProspectEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------

@@ -56,9 +56,19 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="ADD ITEM" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
-                <ComboBox Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0"
-                          ItemsSource="{Binding CatalogItems}" SelectedItem="{Binding SelectedCatalogItem, Mode=TwoWay}"
-                          DisplayMemberPath="Label" IsTextSearchEnabled="True" />
+                <Grid Grid.Column="1" VerticalAlignment="Center" Margin="0,0,12,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <!-- #83: substring filter over the 380+ item picker (label or RowName). -->
+                    <TextBox Grid.Column="0" Margin="0,0,8,0" VerticalAlignment="Center"
+                             Text="{Binding PickerFilter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="Filter items (name or RowName)" />
+                    <ComboBox Grid.Column="1" VerticalAlignment="Center"
+                              ItemsSource="{Binding FilteredCatalogItems}" SelectedItem="{Binding SelectedCatalogItem, Mode=TwoWay}"
+                              DisplayMemberPath="Label" IsTextSearchEnabled="True" />
+                </Grid>
                 <TextBlock Grid.Column="2" Text="STACK" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,6,0" />
                 <TextBox Grid.Column="3" Width="56" VerticalAlignment="Center" TextAlignment="Right" Margin="0,0,10,0"
                          Text="{Binding AddQuantity, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />

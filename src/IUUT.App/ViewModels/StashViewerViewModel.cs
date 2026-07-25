@@ -32,6 +32,7 @@ public sealed class StashViewerViewModel : ObservableObject
     private bool _hasChanges;
     private bool _isBusy;
     private string _statusMessage = "Loading the selected save…";
+    private string _pickerFilter = "";
 
     /// <summary>Creates the builder for one save profile folder.</summary>
     public StashViewerViewModel(
@@ -73,6 +74,27 @@ public sealed class StashViewerViewModel : ObservableObject
 
     /// <summary>The catalog items available to add (embedded D_ItemsStatic, sorted by label).</summary>
     public IReadOnlyList<CatalogRow> CatalogItems { get; }
+
+    /// <summary>Case-insensitive substring filter over the add-item picker (label or RowName). (#83)</summary>
+    public string PickerFilter
+    {
+        get => _pickerFilter;
+        set
+        {
+            if (SetProperty(ref _pickerFilter, value))
+            {
+                OnPropertyChanged(nameof(FilteredCatalogItems));
+            }
+        }
+    }
+
+    /// <summary>The picker's items with <see cref="PickerFilter"/> applied.</summary>
+    public IEnumerable<CatalogRow> FilteredCatalogItems =>
+        string.IsNullOrWhiteSpace(_pickerFilter)
+            ? CatalogItems
+            : CatalogItems.Where(r =>
+                r.Label.Contains(_pickerFilter, StringComparison.OrdinalIgnoreCase) ||
+                r.RowName.Contains(_pickerFilter, StringComparison.OrdinalIgnoreCase));
 
     /// <summary>Reloads the save into the builder (discards staged changes).</summary>
     public IAsyncRelayCommand LoadCommand { get; }
