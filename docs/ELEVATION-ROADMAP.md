@@ -43,6 +43,25 @@ competitors paywall.
 | CLI buildout | high / medium | `iuut check / backup-all / restore / lazy-max / catalog-refresh / prospect-report`; every service already tested; hand-rolled verb dispatch (dependency gate per SCOPE_GUARDRAILS §2.6). |
 | Authenticode signing | high / small | Azure Trusted Signing (~$10/mo) + one release.yml step. SmartScreen reputation is per-file-hash: weekly unsigned exes = permanent scare screens. Needs owner procurement + a CICD §8 amendment (CI secret). |
 
+## Tier 1.5 — Divine Elevation (owner-named UI/UX overhaul + platform prep)
+
+A dedicated visual/interaction overhaul between the foundation and the signature features —
+and explicitly **prep work for Tiers 2–3**: the overhaul must produce the primitives those
+features will live in, not just restyle what exists.
+
+| Item | Notes |
+| --- | --- |
+| **Design system pass** | Consolidate the glass theme into a token set (spacing/type/color/elevation roles) every view consumes; kill per-view one-off styles. |
+| **Reusable primitives** | The components later tiers need, built once: `FilteredListBox` (search + virtualization — Tier 1's filters migrate into it), a card/detail layout, an empty/error/loading state trio, a confirm-with-diff dialog shell (Return-to-Stash and mission reset will need it), a progress/long-operation surface (blob operations, backup snapshots). |
+| **Navigation + IA rework** | The Custom sidebar is a flat 11-item list; regroup by intent (Rescue / Progression / World / Advanced) so Tier-2 panels (Return-to-Stash, Backup manager, Missions) land in obvious homes. |
+| **Dirty/busy/undo affordances** | Visual language for staged-vs-applied state (pairs with Tier 1's dirty tracking). |
+| **Accessibility + polish** | Keyboard flow, focus visuals, tooltips, consistent iconography. |
+
+**Standing rule for Tier 1 (prep-aware building):** anything Tier 1 adds that Tier 1.5 will
+restyle must be built as a *reusable* piece, not copy-paste per view — e.g. the
+search/filter work ships as one control/behavior, the miner reports progress through the
+long-operation surface's interface, new views use the token styles only.
+
 ## Tier 2 — Signature features (surface the finished-but-invisible Core)
 
 | Item | Impact / Effort | Notes |

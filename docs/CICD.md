@@ -120,16 +120,19 @@ bootstrap reality, not a standing license to push to a protected branch.
 Releases are **human-triggered** (agents propose readiness, humans tag — see
 `.agent/HANDOFF_PROTOCOL.md` §9). SemVer per master doc §19.
 
-### Versioning policy (SemVer)
+### Versioning policy (X = Major · Y = Content · Z = Bug-fixes)
+
+Owner-set scheme (2026-07, supersedes the original table which had catalog refreshes as
+patches — practice had already followed the owner's Week-235 "weekly content = minor" call):
 
 | Bump | When |
 | --- | --- |
-| **Major** (`X.0.0`) | Breaking change to save-file handling, public `IUUT.Core` API removal, or a locked-decision change. |
-| **Minor** (`0.X.0`) | New feature (a new preset, a new editable category) — backward compatible. |
-| **Patch** (`0.0.X`) | Bug fix, catalog refresh, doc-only release. |
+| **Major** (`X.0.0`) | Breaking change to save-file handling, public `IUUT.Core` API removal, a locked-decision change, or a headline overhaul (e.g. the Divine Elevation UI/UX rework). |
+| **Content** (`x.Y.0`) | Anything that adds capability or content — new features, new editable categories, **weekly game-catalog refreshes** — backward compatible. |
+| **Bug-fix** (`x.y.Z`) | Bug fixes ONLY (plus doc-only releases). A release containing any new content/feature takes a Y bump even if it also carries fixes. |
 
-Milestones map to master doc §16: `0.1` MVP (Lazy Max + backup + Main-Menu verified),
-`0.2` Recovery, `0.3`–`0.4` Custom, `1.0` full Custom + public release.
+Already-published tags are immutable and keep their historical numbers (renumbering a
+public release breaks downloads/attestations). Mixed releases take the highest applicable bump.
 
 ### Release runbook
 
