@@ -63,6 +63,10 @@ public sealed class AppPaths
     /// </summary>
     public string RuntimeExtractDirectory => Path.Combine(StateRoot, RuntimeFolderName);
 
+    /// <summary>Where runtime-refreshed catalogs live (self-refresh from the local data.pak);
+    /// loaded in preference to the embedded snapshots when present.</summary>
+    public string CatalogCacheDirectory => Path.Combine(StateRoot, "CatalogCache");
+
     /// <summary>Resolves paths from the running exe's directory and the user's roaming AppData.</summary>
     public static AppPaths Resolve() =>
         Resolve(AppContext.BaseDirectory, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
