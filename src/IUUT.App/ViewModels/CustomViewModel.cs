@@ -256,7 +256,7 @@ public sealed class CustomViewModel : ObservableObject
             ("accountflags", not null) =>
                 new AccountFlagEditorViewModel(_apply, _accountFlags, slot.FolderPath, slot.DisplayLabel),
             ("prospects", not null) =>
-                new ProspectsEditorViewModel(_files, _prospect, slot.FolderPath, slot.DisplayLabel),
+                new ProspectsEditorViewModel(_files, _prospect, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
                 new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),

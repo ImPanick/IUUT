@@ -30,7 +30,7 @@ public partial class ProspectsEditorView : UserControl
         }
 
         var message =
-            $"Remove the prospect association “{vm.SelectedAssociation}”?\n\n" +
+            $"Remove the prospect association “{vm.SelectedAssociation.Display}”?\n\n" +
             "Use this to free a character stuck on a phantom Continue-menu entry. A timestamped backup " +
             "of the slot file is taken first, and it is re-validated after writing. The prospect's world " +
             "save is not touched — only this character's claim on it.";

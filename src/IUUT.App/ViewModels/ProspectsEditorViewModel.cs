@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IUUT.Core.Catalog;
 using IUUT.Core.Editing;
 using IUUT.Core.Models;
 
@@ -16,23 +17,26 @@ public sealed class ProspectsEditorViewModel : ObservableObject
 {
     private readonly CustomFileService _files;
     private readonly ProspectEditService _service;
+    private readonly GameCatalogs _catalogs;
     private readonly string _saveFolder;
 
     private AssociatedProspectsModel? _model;
     private NamedFileViewModel? _selectedFile;
-    private string? _selectedAssociation;
+    private ProspectAssociationViewModel? _selectedAssociation;
     private bool _isBusy;
     private string _statusMessage = "Loading the selected save…";
 
     /// <summary>Creates the editor for one save profile folder.</summary>
-    public ProspectsEditorViewModel(CustomFileService files, ProspectEditService service, string saveFolder, string profileLabel)
+    public ProspectsEditorViewModel(CustomFileService files, ProspectEditService service, GameCatalogs catalogs, string saveFolder, string profileLabel)
     {
         ArgumentNullException.ThrowIfNull(files);
         ArgumentNullException.ThrowIfNull(service);
+        ArgumentNullException.ThrowIfNull(catalogs);
         ArgumentException.ThrowIfNullOrEmpty(saveFolder);
 
         _files = files;
         _service = service;
+        _catalogs = catalogs;
         _saveFolder = saveFolder;
         ProfileLabel = string.IsNullOrEmpty(profileLabel) ? "this save" : profileLabel;
 
@@ -48,8 +52,8 @@ public sealed class ProspectsEditorViewModel : ObservableObject
     /// <summary>The per-slot association files.</summary>
     public ObservableCollection<NamedFileViewModel> Files { get; }
 
-    /// <summary>The selected file's prospect-association ids.</summary>
-    public ObservableCollection<string> Associations { get; }
+    /// <summary>The selected file's prospect associations (raw id + catalog drop name when known).</summary>
+    public ObservableCollection<ProspectAssociationViewModel> Associations { get; }
 
     /// <summary>Reloads the list of slot files.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
@@ -71,7 +75,7 @@ public sealed class ProspectsEditorViewModel : ObservableObject
     }
 
     /// <summary>The selected association (the unstick target).</summary>
-    public string? SelectedAssociation
+    public ProspectAssociationViewModel? SelectedAssociation
     {
         get => _selectedAssociation;
         set
@@ -156,7 +160,7 @@ public sealed class ProspectsEditorViewModel : ObservableObject
             return;
         }
 
-        var prospectId = SelectedAssociation;
+        var prospectId = SelectedAssociation.ProspectId;
         var path = SelectedFile.Path;
         IsBusy = true;
         try
@@ -208,7 +212,9 @@ public sealed class ProspectsEditorViewModel : ObservableObject
 
             foreach (var prospect in _model.Prospects)
             {
-                Associations.Add(prospect.ProspectId);
+                // Display-only enrichment: the catalog can label, never gatekeep (CONSTITUTION VI).
+                var label = _catalogs.Prospects.TryGet(prospect.ProspectId, out var row) ? row.Label : null;
+                Associations.Add(new ProspectAssociationViewModel(prospect.ProspectId, label));
             }
 
             StatusMessage = $"{SelectedFile.Name}: {Associations.Count} association(s).";

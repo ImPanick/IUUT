@@ -56,6 +56,17 @@ public class CatalogRefreshServiceTests
 
     private static string NameRow(string name) => $"{{\"Name\": \"{name}\"}}";
 
+    private static string ProspectRow(string name, string? dropName = null)
+    {
+        var json = "{\"Name\": \"" + name + "\"";
+        if (dropName is not null)
+        {
+            json += ", \"DropName\": \"NSLOCTEXT(\\\"D_ProspectList\\\", \\\"" + name + "-DropName\\\", \\\"" + dropName + "\\\")\"";
+        }
+
+        return json + "}";
+    }
+
     private static List<MinedTable> DefaultMine(
         IEnumerable<string>? talentRows = null,
         IEnumerable<string>? accountFlagNames = null)
@@ -86,6 +97,8 @@ public class CatalogRefreshServiceTests
         var characterFlags = Enumerable.Range(0, 45).Select(i => NameRow($"CFlag_{i}"));
         var accolades = Enumerable.Range(0, 401).Select(i => NameRow($"Accolade_{i}"));
         var bestiary = Enumerable.Range(0, 101).Select(i => NameRow($"Creature_{i}"));
+        var prospects = Enumerable.Range(0, 150).Select(i => ProspectRow($"Map_Prospect_{i}"))
+            .Append(ProspectRow("Outpost_Forest", dropName: "ARCWOOD: Outpost"));
 
         return
         [
@@ -96,6 +109,7 @@ public class CatalogRefreshServiceTests
             Table("CharacterFlag", characterFlags),
             Table("AccoladeData", accolades),
             Table("BestiaryData", bestiary),
+            Table("IcarusProspect", prospects),
         ];
     }
 
@@ -120,6 +134,8 @@ public class CatalogRefreshServiceTests
             Enumerable.Range(0, 101).Select(i => $"{{\"rowName\": \"Creature_{i}\", \"displayName\": null}}")),
         "missions.json" => Catalog("missions", null,
             ["{\"rowName\": \"Prospect_Old\", \"tree\": \"T\", \"requires\": [], \"defaultUnlocked\": false}"]),
+        "prospects.json" => Catalog("rows", "\"dataTable\": \"D_ProspectList\",",
+            ["{\"rowName\": \"Old_Prospect\", \"displayName\": null}"]),
         _ => throw new InvalidOperationException(fileName),
     };
 
@@ -217,6 +233,22 @@ public class CatalogRefreshServiceTests
         rows.Should().HaveCount(141, "missions are fully derived from the mined Prospect_* rows");
         rows[0].GetProperty("requires").EnumerateArray().Select(e => e.GetString())
             .Should().Contain("Prospect_Root");
+    }
+
+    [Fact]
+    public void Refresh_RegeneratesProspects_WithDropNames()
+    {
+        var result = Run();
+
+        result.Ok.Should().BeTrue(string.Join(" | ", result.Report));
+        using var prospects = JsonDocument.Parse(result.UpdatedCatalogs["prospects.json"]);
+        var rows = prospects.RootElement.GetProperty("rows").EnumerateArray()
+            .ToDictionary(r => r.GetProperty("rowName").GetString()!, r => r);
+
+        rows.Should().HaveCount(151, "prospects are fully regenerated from the mined IcarusProspect table");
+        rows.Should().NotContainKey("Old_Prospect", "regeneration replaces the prior list");
+        rows["Outpost_Forest"].GetProperty("displayName").GetString().Should().Be("ARCWOOD: Outpost", "the drop name is the display name");
+        rows["Map_Prospect_0"].GetProperty("displayName").ValueKind.Should().Be(JsonValueKind.Null);
     }
 
     [Fact]

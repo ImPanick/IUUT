@@ -63,6 +63,7 @@ public static class CatalogRefreshService
             updated["accolades.json"] = RefreshSetCatalog(Rows(tables, "AccoladeData"), currentCatalogJson("accolades.json"), versionStamp, "accolades", minimum: 400, report);
             updated["bestiary.json"] = RefreshSetCatalog(Rows(tables, "BestiaryData"), currentCatalogJson("bestiary.json"), versionStamp, "bestiary", minimum: 100, report);
             updated["missions.json"] = RefreshMissions(Rows(tables, "Talent"), currentCatalogJson("missions.json"), versionStamp, report);
+            updated["prospects.json"] = RefreshProspects(Rows(tables, "IcarusProspect"), currentCatalogJson("prospects.json"), versionStamp, report);
             // metaresources.json: curated whitelist — deliberately never regenerated (DATA-PROVENANCE.md).
 
             return new CatalogRefreshResult(true, updated, report);
@@ -95,9 +96,11 @@ public static class CatalogRefreshService
     private static string? Name(JsonElement row) =>
         row.TryGetProperty("Name", out var n) && n.ValueKind == JsonValueKind.String ? n.GetString() : null;
 
-    private static string? DisplayName(JsonElement row)
+    private static string? DisplayName(JsonElement row) => LocText(row, "DisplayName");
+
+    private static string? LocText(JsonElement row, string property)
     {
-        if (!row.TryGetProperty("DisplayName", out var d) || d.ValueKind != JsonValueKind.String)
+        if (!row.TryGetProperty(property, out var d) || d.ValueKind != JsonValueKind.String)
         {
             return null;
         }
@@ -455,6 +458,35 @@ public static class CatalogRefreshService
             sb.Append("\n    }");
             return sb.ToString();
         }));
+    }
+
+    // ---- prospects (fully derived from the IcarusProspect list) --------------
+
+    private static string RefreshProspects(List<JsonElement> liveProspects, string currentJson, string stamp, List<string> report)
+    {
+        var rows = new List<(string RowName, string? Display)>();
+        foreach (var row in liveProspects)
+        {
+            if (Name(row) is { } name)
+            {
+                // Prospect display names live in DropName (e.g. "ARCWOOD: Outpost"), not DisplayName.
+                rows.Add((name, LocText(row, "DropName")));
+            }
+        }
+
+        if (rows.Count < 150)
+        {
+            throw new CatalogRefreshException($"prospects sanity: only {rows.Count} rows (expected ≥ 150)");
+        }
+
+        report.Add($"prospects: {rows.Count} rows (regenerated from IcarusProspect)");
+        using var current = JsonDocument.Parse(currentJson);
+        return WriteCatalog(stamp, current.RootElement, header =>
+        {
+            header.Append("  \"dataTable\": \"D_ProspectList\",\n");
+        }, "rows", rows.Select(r =>
+            "    {\n      \"rowName\": " + JsonSerializer.Serialize(r.RowName) +
+            ",\n      \"displayName\": " + (r.Display is null ? "null" : JsonSerializer.Serialize(r.Display)) + "\n    }"));
     }
 
     // ---- shared writer (matches the embedded 2-space style) ------------------

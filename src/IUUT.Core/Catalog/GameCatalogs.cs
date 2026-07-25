@@ -13,6 +13,7 @@ public sealed class GameCatalogs
         CatalogTable accolades,
         CatalogTable bestiary,
         CatalogTable metaResources,
+        CatalogTable prospects,
         FlagCatalog accountFlags,
         FlagCatalog characterFlags,
         MissionCatalog missions)
@@ -22,6 +23,7 @@ public sealed class GameCatalogs
         Accolades = accolades;
         Bestiary = bestiary;
         MetaResources = metaResources;
+        Prospects = prospects;
         AccountFlags = accountFlags;
         CharacterFlags = characterFlags;
         Missions = missions;
@@ -42,6 +44,9 @@ public sealed class GameCatalogs
     /// <summary><c>D_MetaResources</c> — account currencies (with display names).</summary>
     public CatalogTable MetaResources { get; }
 
+    /// <summary><c>D_ProspectList</c> — prospects with their in-game drop names (e.g. "ARCWOOD: Outpost").</summary>
+    public CatalogTable Prospects { get; }
+
     /// <summary><c>D_AccountFlags</c> — <c>Profile.UnlockedFlags</c> ids (mission rewards, story grants, blueprints).</summary>
     public FlagCatalog AccountFlags { get; }
 
@@ -58,6 +63,7 @@ public sealed class GameCatalogs
         CatalogLoader.LoadEmbedded("accolades.json"),
         CatalogLoader.LoadEmbedded("bestiary.json"),
         CatalogLoader.LoadEmbedded("metaresources.json"),
+        CatalogLoader.LoadEmbedded("prospects.json"),
         FlagCatalogLoader.LoadEmbedded("accountflags.json"),
         FlagCatalogLoader.LoadEmbedded("characterflags.json"),
         MissionCatalogLoader.LoadEmbedded("missions.json"));
@@ -78,6 +84,7 @@ public sealed class GameCatalogs
             Cached(cacheDirectory, "accolades.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "bestiary.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
             CatalogLoader.LoadEmbedded("metaresources.json"),
+            Cached(cacheDirectory, "prospects.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "accountflags.json", FlagCatalogLoader.Load, FlagCatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "characterflags.json", FlagCatalogLoader.Load, FlagCatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "missions.json", MissionCatalogLoader.Load, MissionCatalogLoader.LoadEmbedded));

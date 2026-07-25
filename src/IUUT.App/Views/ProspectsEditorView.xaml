@@ -53,7 +53,7 @@
                              Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" Margin="6,4" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding Display}" Style="{StaticResource MonoText}" Margin="6,4" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

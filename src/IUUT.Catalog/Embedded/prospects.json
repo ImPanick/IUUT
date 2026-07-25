@@ -1,0 +1,795 @@
+{
+  "catalogVersion": "datapak-live-2026-07-25",
+  "dataTable": "D_ProspectList",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-25. Self-refreshes at runtime from the local pak (DATA-PROVENANCE.md).",
+  "rows": [
+    {
+      "rowName": "Outpost002_Forest",
+      "displayName": "ARCWOOD: Outpost"
+    },
+    {
+      "rowName": "Outpost003_Arctic",
+      "displayName": "ICEHOLM: Outpost"
+    },
+    {
+      "rowName": "Outpost004_Deset",
+      "displayName": "TECTON: Outpost"
+    },
+    {
+      "rowName": "Outpost005_Forest",
+      "displayName": "HOLDFAST: Outpost"
+    },
+    {
+      "rowName": "Outpost006_Forest",
+      "displayName": "EVERBARK: Outpost"
+    },
+    {
+      "rowName": "Outpost007_Desert",
+      "displayName": "CACTUS: Outpost"
+    },
+    {
+      "rowName": "Outpost008_Arctic",
+      "displayName": "ARCTICUS: Outpost"
+    },
+    {
+      "rowName": "Outpost006_Olympus",
+      "displayName": "Olympus - Open World"
+    },
+    {
+      "rowName": "Tier1_Forest_Recon_0",
+      "displayName": "BEACHHEAD"
+    },
+    {
+      "rowName": "Tier1_Forest_Scan_0",
+      "displayName": "LIVEWIRE"
+    },
+    {
+      "rowName": "Tier1_Forest_Survey_0",
+      "displayName": "HEADSTONE"
+    },
+    {
+      "rowName": "Tier1_Forest_Stockpile",
+      "displayName": "ACCUMULATION"
+    },
+    {
+      "rowName": "Tier1_Forest_Research_0",
+      "displayName": "STRANGE HARVEST"
+    },
+    {
+      "rowName": "Tier1_Forest_Extermination_0",
+      "displayName": "KILL LIST"
+    },
+    {
+      "rowName": "Tier1_Forest_Exploration_0",
+      "displayName": "ARGOS"
+    },
+    {
+      "rowName": "Tier1_Farming",
+      "displayName": "AGRICULTURE"
+    },
+    {
+      "rowName": "Tier1_Forest_Defence",
+      "displayName": "FORSAKEN"
+    },
+    {
+      "rowName": "Tier1_Forest_Construction",
+      "displayName": "RUSTIC"
+    },
+    {
+      "rowName": "Tier2_Glacier_Expedition_0",
+      "displayName": "ICESTORM"
+    },
+    {
+      "rowName": "Tier2_Glacier_Scan_0",
+      "displayName": "SEARCHLIGHT"
+    },
+    {
+      "rowName": "Tier2_Glacier_Recovery_0",
+      "displayName": "BROKEN ARROW"
+    },
+    {
+      "rowName": "Tier2_Glacier_Construction_0",
+      "displayName": "INFLUX"
+    },
+    {
+      "rowName": "Tier2_Glacier_Survey_0",
+      "displayName": "ICE LINE"
+    },
+    {
+      "rowName": "Tier2_Glacier_Research_0",
+      "displayName": "RESURGENCE"
+    },
+    {
+      "rowName": "Tier2_Glacier_Extraction_0",
+      "displayName": "DEEP VEIN"
+    },
+    {
+      "rowName": "Tier2_Glacier_Exploration_0",
+      "displayName": "HIGH WIRE"
+    },
+    {
+      "rowName": "Tier2_Canyon_Expedition_0",
+      "displayName": "DRY RUN"
+    },
+    {
+      "rowName": "Tier2_Canyon_Scan_0",
+      "displayName": "DEATH RAY"
+    },
+    {
+      "rowName": "Tier2_Canyon_Recovery_0",
+      "displayName": "FIELD TEST"
+    },
+    {
+      "rowName": "Tier2_Canyon_Research_0",
+      "displayName": "BIOSHOCK"
+    },
+    {
+      "rowName": "Tier2_Canyon_Survey_0",
+      "displayName": "SPIRIT LEVEL"
+    },
+    {
+      "rowName": "Tier2_Canyon_Construction_0",
+      "displayName": "PYRAMID"
+    },
+    {
+      "rowName": "Tier2_Canyon_Exploration_0",
+      "displayName": "SANDBLAST"
+    },
+    {
+      "rowName": "Tier2_Canyon_Stockpile",
+      "displayName": "SOLID METAL"
+    },
+    {
+      "rowName": "Tier2_Canyon_Stockpile2",
+      "displayName": "PRESERVATION"
+    },
+    {
+      "rowName": "Tier2_Canyon_LongSurvey_0",
+      "displayName": "SANDY BRIDGES"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Expedition_0",
+      "displayName": "WATERFALL"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Scan_0",
+      "displayName": "INCURSION"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Extermination_0",
+      "displayName": "WET WORK"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Survey_0",
+      "displayName": "CLUSTERED"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Research_0",
+      "displayName": "UPLIFT"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Exploration_0",
+      "displayName": "EDELWEISS"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Stockpile_0",
+      "displayName": "RAMP UP"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Stockpile_2",
+      "displayName": "BIG SHOT"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Construction",
+      "displayName": "LIFE LINE"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Delivery",
+      "displayName": "FIRE WALK"
+    },
+    {
+      "rowName": "Tier3_RiverLands_Extraction",
+      "displayName": "MERIDIAN"
+    },
+    {
+      "rowName": "Tier4_Arctic_Expedition_0",
+      "displayName": "AVALANCHE"
+    },
+    {
+      "rowName": "Tier4_Arctic_Scan_0",
+      "displayName": "SNOWBLIND"
+    },
+    {
+      "rowName": "Tier4_Arctic_Extraction_0",
+      "displayName": "PAYDAY"
+    },
+    {
+      "rowName": "Tier4_Arctic_Extermination_0",
+      "displayName": "CLEAN UP"
+    },
+    {
+      "rowName": "Tier4_Arctic_Recovery_0",
+      "displayName": "SNOWCRASH"
+    },
+    {
+      "rowName": "Tier4_Arctic_Survey_0",
+      "displayName": "STATION TO STATION"
+    },
+    {
+      "rowName": "Tier4_Arctic_Stockpile",
+      "displayName": "ADVANCED ORDER"
+    },
+    {
+      "rowName": "Tier4_Arctic_Exploration_0",
+      "displayName": "TUNDRA"
+    },
+    {
+      "rowName": "Tier4_Desert_Expedition_0",
+      "displayName": "EL CAMINO"
+    },
+    {
+      "rowName": "Tier4_Desert_Scan_0",
+      "displayName": "SEVEN PILLARS"
+    },
+    {
+      "rowName": "Tier4_Desert_Extermination_0",
+      "displayName": "DUST UP"
+    },
+    {
+      "rowName": "Tier4_Desert_Extermination_2",
+      "displayName": "LOOSE ENDS"
+    },
+    {
+      "rowName": "Tier4_Desert_Research_0",
+      "displayName": "NIGHTWATCH"
+    },
+    {
+      "rowName": "Tier4_Desert_Research_2",
+      "displayName": "CARAPACE"
+    },
+    {
+      "rowName": "Tier4_Desert_Recovery",
+      "displayName": "CONCEALMENT"
+    },
+    {
+      "rowName": "Tier4_Desert_Recovery_2",
+      "displayName": "RELOCATED"
+    },
+    {
+      "rowName": "Tier4_Desert_Construction_0",
+      "displayName": "SANDBOX"
+    },
+    {
+      "rowName": "Tier4_Desert_Exploration_0",
+      "displayName": "PROMISED LAND"
+    },
+    {
+      "rowName": "Tier4_Desert_Survey",
+      "displayName": "MIGRATING SANDS"
+    },
+    {
+      "rowName": "Tier5_Omni_Exploration_0",
+      "displayName": "SPIRIT WALK"
+    },
+    {
+      "rowName": "Tier5_Omni_Recovery",
+      "displayName": "VOYAGER"
+    },
+    {
+      "rowName": "Tier5_Omni_Research",
+      "displayName": "UNEARTHED"
+    },
+    {
+      "rowName": "Tier5_Omni_Research_2",
+      "displayName": "CRYOGENIC"
+    },
+    {
+      "rowName": "Tier5_Omni_Olympus",
+      "displayName": "NIGHTFALL"
+    },
+    {
+      "rowName": "STYX_A_Expedition",
+      "displayName": "OMPHALOS"
+    },
+    {
+      "rowName": "STYX_A_Exploration",
+      "displayName": "HEADLONG"
+    },
+    {
+      "rowName": "STYX_A_Extermination",
+      "displayName": "HUSK"
+    },
+    {
+      "rowName": "STYX_B_Expedition",
+      "displayName": "MAELSTROM"
+    },
+    {
+      "rowName": "STYX_B_Exploration",
+      "displayName": "ADAGIO"
+    },
+    {
+      "rowName": "STYX_B_Extermination",
+      "displayName": "HALCYON"
+    },
+    {
+      "rowName": "STYX_C_Expedition",
+      "displayName": "RICOCHET"
+    },
+    {
+      "rowName": "STYX_C_Exploration",
+      "displayName": "KISMET"
+    },
+    {
+      "rowName": "STYX_C_Construction",
+      "displayName": "ALCAZAR"
+    },
+    {
+      "rowName": "STYX_C_Extermination",
+      "displayName": "BALLISTIC"
+    },
+    {
+      "rowName": "STYX_D_Expedition",
+      "displayName": "ZEPHYR"
+    },
+    {
+      "rowName": "STYX_D_Exploration",
+      "displayName": "CAVALCADE"
+    },
+    {
+      "rowName": "STYX_D_Extermination",
+      "displayName": "LUPINE"
+    },
+    {
+      "rowName": "STYX_D_Delivery",
+      "displayName": "RENDEZVOUS"
+    },
+    {
+      "rowName": "STYX_D_Recovery",
+      "displayName": "GENESIS"
+    },
+    {
+      "rowName": "STYX_D_Research",
+      "displayName": "GOSSAMER"
+    },
+    {
+      "rowName": "STYX_D_Research_2",
+      "displayName": "ABYSS"
+    },
+    {
+      "rowName": "STYX_E_Expedition",
+      "displayName": "VERTIGO"
+    },
+    {
+      "rowName": "STYX_E_Exploration",
+      "displayName": "DUST"
+    },
+    {
+      "rowName": "STYX_E_Survey",
+      "displayName": "CRESCENDO"
+    },
+    {
+      "rowName": "STYX_E_Research",
+      "displayName": "FLATLINE"
+    },
+    {
+      "rowName": "STYX_A_Construction",
+      "displayName": "HIGHRISE"
+    },
+    {
+      "rowName": "Tier1_Forest_Range",
+      "displayName": "POTSHOT"
+    },
+    {
+      "rowName": "PRO_Story_1",
+      "displayName": "NOMAD"
+    },
+    {
+      "rowName": "PRO_Story_2",
+      "displayName": "OFFENDER"
+    },
+    {
+      "rowName": "PRO_A_Exploration",
+      "displayName": "HORIZON"
+    },
+    {
+      "rowName": "PRO_A_Extraction",
+      "displayName": "CRYSTAL"
+    },
+    {
+      "rowName": "PRO_B_Exploration",
+      "displayName": "ENDEAVOR"
+    },
+    {
+      "rowName": "PRO_B_Extermination",
+      "displayName": "MAGMATIC"
+    },
+    {
+      "rowName": "PRO_C_Exploration",
+      "displayName": "TERRA"
+    },
+    {
+      "rowName": "PRO_C_Construction",
+      "displayName": "TREEHUT"
+    },
+    {
+      "rowName": "PRO_C_Research",
+      "displayName": "MIASMIC"
+    },
+    {
+      "rowName": "PRO_Story_3",
+      "displayName": "SHADOWED"
+    },
+    {
+      "rowName": "PRO_Story_4",
+      "displayName": "TEMPEST"
+    },
+    {
+      "rowName": "PRO_Story_5",
+      "displayName": "DISPATCH"
+    },
+    {
+      "rowName": "PRO_Story_6",
+      "displayName": "FRACTURE"
+    },
+    {
+      "rowName": "STYX_B_Stockpile",
+      "displayName": "OPULENCE"
+    },
+    {
+      "rowName": "Tier1_Forest_WS_Stockpile",
+      "displayName": "SPELUNKING"
+    },
+    {
+      "rowName": "OpenWorld_Styx",
+      "displayName": "Styx - Open World"
+    },
+    {
+      "rowName": "STYX_C_Extermination2",
+      "displayName": "AUGMENTATION"
+    },
+    {
+      "rowName": "STYX_E_Extraction",
+      "displayName": "REMNANT"
+    },
+    {
+      "rowName": "OpenWorld_Prometheus",
+      "displayName": "Prometheus - Open World"
+    },
+    {
+      "rowName": "STYX_B_Research",
+      "displayName": "IRONCLAD"
+    },
+    {
+      "rowName": "STYX_A_Extermination2",
+      "displayName": "ENCROACHMENT"
+    },
+    {
+      "rowName": "PRO_A_Stockpile",
+      "displayName": "CELEBRITY CHEF"
+    },
+    {
+      "rowName": "STYX_C_Fishing",
+      "displayName": "OASIS"
+    },
+    {
+      "rowName": "PRO_Ashlands_Story",
+      "displayName": "ASHLANDS"
+    },
+    {
+      "rowName": "PRO_Icesheet_Story",
+      "displayName": "ICE SHEET"
+    },
+    {
+      "rowName": "STYX_A_Research",
+      "displayName": "REPOPULATION"
+    },
+    {
+      "rowName": "PRO_D_Transport",
+      "displayName": "CARAVAN"
+    },
+    {
+      "rowName": "PRO_D_Research",
+      "displayName": "COMPOSITION"
+    },
+    {
+      "rowName": "PRO_E_Research",
+      "displayName": "DROVER"
+    },
+    {
+      "rowName": "GH_RG_A",
+      "displayName": "MISSING MINERS"
+    },
+    {
+      "rowName": "GH_RG_B",
+      "displayName": "HABITAT"
+    },
+    {
+      "rowName": "GH_RG_C",
+      "displayName": "LIBERATION"
+    },
+    {
+      "rowName": "GH_RG_C2",
+      "displayName": "RESEARCH"
+    },
+    {
+      "rowName": "GH_RG_D",
+      "displayName": "BRILLIANCE"
+    },
+    {
+      "rowName": "GH_RG_D2",
+      "displayName": "REPERCUSSION"
+    },
+    {
+      "rowName": "GH_RG_E",
+      "displayName": "REBUILDING"
+    },
+    {
+      "rowName": "GH_RG_F",
+      "displayName": "ELIMINATION"
+    },
+    {
+      "rowName": "GH_RG_O1",
+      "displayName": "PROTOTYPE"
+    },
+    {
+      "rowName": "GH_RG_O2",
+      "displayName": "WEAKNESS"
+    },
+    {
+      "rowName": "GH_RG_Final",
+      "displayName": "EARTHQUAKE"
+    },
+    {
+      "rowName": "PRO_D_Recovery",
+      "displayName": "CRISIS"
+    },
+    {
+      "rowName": "PRO_D_Resupply",
+      "displayName": "STRANDED"
+    },
+    {
+      "rowName": "PRO_D_Rescue",
+      "displayName": "RESCUE"
+    },
+    {
+      "rowName": "PRO_Nullsector_Story",
+      "displayName": "NULL SECTOR"
+    },
+    {
+      "rowName": "Outpost009_IceVolcano",
+      "displayName": "FROSTFALL: Outpost"
+    },
+    {
+      "rowName": "OpenWorld_Elysium",
+      "displayName": "Elysium - Open World"
+    },
+    {
+      "rowName": "GH_Ape_A",
+      "displayName": "BREAKOUT"
+    },
+    {
+      "rowName": "GH_Ape_B",
+      "displayName": "ENCLAVE"
+    },
+    {
+      "rowName": "GH_Ape_C",
+      "displayName": "COMPLIANCE"
+    },
+    {
+      "rowName": "GH_Ape_C2",
+      "displayName": "EXPURGATION"
+    },
+    {
+      "rowName": "GH_Ape_D",
+      "displayName": "SELLOUT"
+    },
+    {
+      "rowName": "GH_Ape_D2",
+      "displayName": "ETHICS"
+    },
+    {
+      "rowName": "GH_Ape_E",
+      "displayName": "CURIOSITY"
+    },
+    {
+      "rowName": "GH_Ape_E2",
+      "displayName": "BLOOD THIRST"
+    },
+    {
+      "rowName": "GH_Ape_F",
+      "displayName": "STRANGE TROOP"
+    },
+    {
+      "rowName": "GH_Ape_G",
+      "displayName": "APE ESCAPE"
+    },
+    {
+      "rowName": "GH_Ape_O1",
+      "displayName": "OBLITERATION"
+    },
+    {
+      "rowName": "GH_Ape_O2",
+      "displayName": "PURSUIT"
+    },
+    {
+      "rowName": "GH_Ape_Final",
+      "displayName": "EXTINCTION"
+    },
+    {
+      "rowName": "GH_IM_A",
+      "displayName": "RESEARCH"
+    },
+    {
+      "rowName": "GH_IM_A2",
+      "displayName": "EXPERIMENTS"
+    },
+    {
+      "rowName": "GH_IM_B",
+      "displayName": "MUTATION"
+    },
+    {
+      "rowName": "GH_IM_C",
+      "displayName": "HYPOTHESIS"
+    },
+    {
+      "rowName": "GH_IM_C2",
+      "displayName": "FIELDWORK"
+    },
+    {
+      "rowName": "GH_IM_D",
+      "displayName": "DESTRUCTION"
+    },
+    {
+      "rowName": "GH_IM_D2",
+      "displayName": "PREVENTION"
+    },
+    {
+      "rowName": "GH_IM_O1",
+      "displayName": "SURVIVORS"
+    },
+    {
+      "rowName": "GH_IM_O2",
+      "displayName": "SUPPLEMENTARY"
+    },
+    {
+      "rowName": "GH_IM_O3",
+      "displayName": "PROPAGATION"
+    },
+    {
+      "rowName": "GH_IM_Final",
+      "displayName": "GLACIATION"
+    },
+    {
+      "rowName": "GreatHunt_Ape",
+      "displayName": "GARGANUTAN"
+    },
+    {
+      "rowName": "GreatHunt_RockGolem",
+      "displayName": "QUARRITE"
+    },
+    {
+      "rowName": "GreatHunt_IceMammoth",
+      "displayName": "RIMETUSK"
+    },
+    {
+      "rowName": "Outpost_012",
+      "displayName": "AQUATICA ISLE: Outpost"
+    },
+    {
+      "rowName": "ELY_Story_1",
+      "displayName": "LOST"
+    },
+    {
+      "rowName": "ELY_Story_2",
+      "displayName": "RELICS"
+    },
+    {
+      "rowName": "ELY_Story_3",
+      "displayName": "NEXUS"
+    },
+    {
+      "rowName": "ELY_Story_4",
+      "displayName": "FALLOUT"
+    },
+    {
+      "rowName": "ELY_Story_5",
+      "displayName": "RIFT"
+    },
+    {
+      "rowName": "ELY_Story_6",
+      "displayName": "RECKONING"
+    },
+    {
+      "rowName": "ELY_SQ_Igloo",
+      "displayName": "IGLOO"
+    },
+    {
+      "rowName": "ELY_SQ_Yeti",
+      "displayName": "EVOLUTION"
+    },
+    {
+      "rowName": "ELY_SQ_Fish",
+      "displayName": "ANGLER"
+    },
+    {
+      "rowName": "OLY_SQ_Farmer",
+      "displayName": "CULTIVATION SPECIALIST"
+    },
+    {
+      "rowName": "STYX_SQ_Farmer",
+      "displayName": "CULTIVATION SPECIALIST"
+    },
+    {
+      "rowName": "PRO_SQ_Farmer",
+      "displayName": "CULTIVATION SPECIALIST"
+    },
+    {
+      "rowName": "ELY_SQ_Farmer",
+      "displayName": "CULTIVATION SPECIALIST"
+    },
+    {
+      "rowName": "ELY_SQ_Norex",
+      "displayName": "BLACK MARKET"
+    },
+    {
+      "rowName": "PRO_SQ_Norex",
+      "displayName": "BLACK MARKET"
+    },
+    {
+      "rowName": "STYX_SQ_Norex",
+      "displayName": "BLACK MARKET"
+    },
+    {
+      "rowName": "OLY_SQ_Norex",
+      "displayName": "BLACK MARKET"
+    },
+    {
+      "rowName": "ELY_SQ_Hunter",
+      "displayName": "PREDATOR SPECIALIST"
+    },
+    {
+      "rowName": "PRO_SQ_Hunter",
+      "displayName": "PREDATOR SPECIALIST"
+    },
+    {
+      "rowName": "STYX_SQ_Hunter",
+      "displayName": "PREDATOR SPECIALIST"
+    },
+    {
+      "rowName": "OLY_SQ_Hunter",
+      "displayName": "PREDATOR SPECIALIST"
+    },
+    {
+      "rowName": "OLY_SQ_Fisher",
+      "displayName": "FISHERIES OFFICER"
+    },
+    {
+      "rowName": "STYX_SQ_Fisher",
+      "displayName": "FISHERIES OFFICER"
+    },
+    {
+      "rowName": "PRO_SQ_Fisher",
+      "displayName": "FISHERIES OFFICER"
+    },
+    {
+      "rowName": "ELY_SQ_Fisher",
+      "displayName": "FISHERIES OFFICER"
+    },
+    {
+      "rowName": "ELY_SQ_Ambush",
+      "displayName": "AMBUSH"
+    },
+    {
+      "rowName": "ELY_SQ_Lifeline",
+      "displayName": "LIFELINE"
+    },
+    {
+      "rowName": "ELY_SQ_Courier",
+      "displayName": "COURIER"
+    },
+    {
+      "rowName": "ELY_SQ_Trials",
+      "displayName": "TRIALS"
+    }
+  ]
+}
