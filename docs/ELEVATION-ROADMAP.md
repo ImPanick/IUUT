@@ -50,6 +50,12 @@ stays owner-gated (procurement + CICD §8 amendment).
 
 ## Tier 1.5 — Divine Elevation (owner-named UI/UX overhaul + platform prep)
 
+**Status: shipped in v2.0.0** — token set (+ staged role), all five primitives
+(FilteredListBox, state trio, confirm-with-diff, staged/busy chips, long-op surface),
+intent-grouped sidebar with T2 homes pre-placed, Characters card/detail, Home catalog
+provenance. Remaining polish rides along with Tier 2 screens as they land (full Recovery
+three-step re-layout, Prospects/Mounts card layouts, deeper keyboard pass).
+
 A dedicated visual/interaction overhaul between the foundation and the signature features —
 and explicitly **prep work for Tiers 2–3**: the overhaul must produce the primitives those
 features will live in, not just restyle what exists.

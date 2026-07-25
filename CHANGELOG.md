@@ -12,6 +12,35 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.0.0] — 2026-07-25
+
+**Divine Elevation** — the owner-named UI/UX overhaul (roadmap Tier 1.5). The graphite
+glass console stays; it becomes a *system*: one token set, five reusable primitives, and
+navigation regrouped by intent — explicitly built as the foundation Tier-2 features
+(Return to Stash, Missions, Backup Manager) will land in.
+
+### Changed
+
+- **Intent-grouped sidebar** — the flat 11-item Custom list becomes PROGRESSION / WORLD /
+  RESCUE / ADVANCED, with Tier-2 homes pre-placed as tier-tagged (disabled) entries.
+- **Characters & Talents card/detail** — character cards (name, slot, dead-revive marker)
+  replace the combo box; the 2.2k-row talent list lives in the shared search control.
+- **One confirm shell** — every destructive apply (8 editors, unstick, raw save, Lazy Max,
+  Recovery repair, the discard guard) uses the same themed confirm-with-diff dialog
+  instead of the OS message box.
+- **Staged-state language** — a dedicated amber "staged" color: the Custom header lights a
+  STAGED chip while any editor holds unapplied edits.
+- **Design tokens** — type scale, spacing scale, state roles consolidated in the theme;
+  the last per-view style one-offs removed.
+
+### Added
+
+- `FilteredListBox`, `StateDisplay` (empty/loading/error trio), `ProgressPanel`
+  (long-operation surface, first used by Recovery), `ConfirmDialog` — the reusable
+  primitive set later tiers build on.
+- Home now shows catalog provenance: "refreshed from your game" vs "shipped snapshot",
+  with the exact stamp in the tooltip.
+
 ## [1.8.0] — 2026-07-25
 
 ### Added
