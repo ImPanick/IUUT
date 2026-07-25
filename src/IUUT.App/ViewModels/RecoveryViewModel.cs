@@ -21,6 +21,7 @@ public sealed class RecoveryViewModel : ObservableObject
     private readonly RecoveryPlanner _planner;
     private readonly RecoveryService _service;
     private readonly AppPaths _paths;
+    private readonly Services.SaveRootState _saveRootState;
 
     private RecoveryPlan? _plan;
     private HomeSaveSlot? _selectedSlot;
@@ -29,16 +30,18 @@ public sealed class RecoveryViewModel : ObservableObject
     private string _statusMessage = "Pick a save profile, then Scan it for problems.";
 
     /// <summary>Creates the Recovery page over the Home, planner, executor, and app-paths services.</summary>
-    public RecoveryViewModel(HomeService home, RecoveryPlanner planner, RecoveryService service, AppPaths paths)
+    public RecoveryViewModel(HomeService home, RecoveryPlanner planner, RecoveryService service, AppPaths paths, Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(planner);
         ArgumentNullException.ThrowIfNull(service);
         ArgumentNullException.ThrowIfNull(paths);
+        ArgumentNullException.ThrowIfNull(saveRootState);
         _home = home;
         _planner = planner;
         _service = service;
         _paths = paths;
+        _saveRootState = saveRootState;
 
         Slots = [];
         ActionLines = [];
@@ -112,7 +115,8 @@ public sealed class RecoveryViewModel : ObservableObject
         IsBusy = true;
         try
         {
-            var state = await _home.LoadAsync(HomeService.DefaultSaveRoot);
+            // The shared root browsed on Home — not the hardcoded default (elevation audit bug fix).
+            var state = await _home.LoadAsync(_saveRootState.Current);
             Slots.Clear();
             foreach (var slot in state.Slots)
             {

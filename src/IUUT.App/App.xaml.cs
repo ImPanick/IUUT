@@ -91,6 +91,7 @@ public partial class App : Application
         services.AddSingleton<GameTuningService>();
 
         // --- UI shell + pages -------------------------------------------------
+        services.AddSingleton<IUUT.App.Services.SaveRootState>();
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
         services.AddSingleton<HomeViewModel>();

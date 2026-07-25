@@ -17,6 +17,7 @@ public sealed class HomeViewModel : ObservableObject
     private readonly HomeService _home;
     private readonly LazyMaxApplyService _apply;
     private readonly INavigationService _navigation;
+    private readonly Services.SaveRootState _saveRootState;
 
     private string _saveRoot;
     private bool _isBusy;
@@ -27,15 +28,17 @@ public sealed class HomeViewModel : ObservableObject
     private string _statusMessage = "Ready.";
 
     /// <summary>Creates the Home view-model over the Home + Lazy Max services and the navigation shell.</summary>
-    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation)
+    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation, Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(navigation);
+        ArgumentNullException.ThrowIfNull(saveRootState);
         _home = home;
         _apply = apply;
         _navigation = navigation;
-        _saveRoot = HomeService.DefaultSaveRoot;
+        _saveRootState = saveRootState;
+        _saveRoot = saveRootState.Current;
 
         Slots = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
@@ -59,11 +62,18 @@ public sealed class HomeViewModel : ObservableObject
     /// <summary>Opens the Game Tuner (Engine.ini) page.</summary>
     public IRelayCommand OpenGameTunerCommand { get; }
 
-    /// <summary>The save root being scanned (editable; Browse updates it).</summary>
+    /// <summary>The save root being scanned (editable; Browse updates it). Written through to the
+    /// shared <see cref="Services.SaveRootState"/> so Custom/Recovery/Game Tuner follow it.</summary>
     public string SaveRoot
     {
         get => _saveRoot;
-        set => SetProperty(ref _saveRoot, value);
+        set
+        {
+            if (SetProperty(ref _saveRoot, value))
+            {
+                _saveRootState.Current = value;
+            }
+        }
     }
 
     /// <summary>True while a load or apply is in flight (drives the busy indicator / disables actions).</summary>

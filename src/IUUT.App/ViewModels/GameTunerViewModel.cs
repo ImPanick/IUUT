@@ -17,19 +17,22 @@ public sealed class GameTunerViewModel : ObservableObject
 {
     private readonly GameTuningService _service;
     private readonly GameTuningCatalog _catalog;
+    private readonly Services.SaveRootState _saveRootState;
 
     private string _saveRoot;
     private bool _isBusy;
     private string _statusMessage = "Reads the game's Engine.ini.";
 
     /// <summary>Creates the Game Tuner over the tuning service + catalog.</summary>
-    public GameTunerViewModel(GameTuningService service, GameTuningCatalog catalog)
+    public GameTunerViewModel(GameTuningService service, GameTuningCatalog catalog, Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(service);
         ArgumentNullException.ThrowIfNull(catalog);
+        ArgumentNullException.ThrowIfNull(saveRootState);
         _service = service;
         _catalog = catalog;
-        _saveRoot = SaveDiscoveryService.ResolveDefaultSaveRoot();
+        _saveRootState = saveRootState;
+        _saveRoot = saveRootState.Current;
 
         Settings = [];
         // Group the default view (Visual FX / Frame Rate / Performance) — drives the XAML GroupStyle.
@@ -73,6 +76,8 @@ public sealed class GameTunerViewModel : ObservableObject
     {
         try
         {
+            // Follow the root browsed on Home (the VM is a singleton; the view has no root input).
+            SaveRoot = _saveRootState.Current;
             Settings.Clear();
             foreach (var state in _service.ReadCurrent(SaveRoot, _catalog))
             {

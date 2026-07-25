@@ -28,6 +28,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly FlagsEditService _flags;
     private readonly ProspectEditService _prospect;
     private readonly GameCatalogs _catalogs;
+    private readonly Services.SaveRootState _saveRootState;
 
     private HomeSaveSlot? _selectedSlot;
     private CustomCategory? _selectedCategory;
@@ -48,8 +49,11 @@ public sealed class CustomViewModel : ObservableObject
         LoadoutCrossReference loadoutCrossReference,
         FlagsEditService flags,
         ProspectEditService prospect,
-        GameCatalogs catalogs)
+        GameCatalogs catalogs,
+        Services.SaveRootState saveRootState)
     {
+        ArgumentNullException.ThrowIfNull(saveRootState);
+        _saveRootState = saveRootState;
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(files);
@@ -143,7 +147,8 @@ public sealed class CustomViewModel : ObservableObject
         IsBusy = true;
         try
         {
-            var state = await _home.LoadAsync(HomeService.DefaultSaveRoot);
+            // The shared root browsed on Home — not the hardcoded default (elevation audit bug fix).
+            var state = await _home.LoadAsync(_saveRootState.Current);
             Slots.Clear();
             foreach (var slot in state.Slots)
             {
