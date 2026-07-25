@@ -30,6 +30,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly ProspectEditService _prospect;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
+    private int _loadedRootVersion = -1;
 
     private HomeSaveSlot? _selectedSlot;
     private CustomCategory? _selectedCategory;
@@ -146,12 +147,18 @@ public sealed class CustomViewModel : ObservableObject
         private set => SetProperty(ref _statusMessage, value);
     }
 
+    /// <summary>True when the shared save root changed since this page last loaded its slot list
+    /// (the view's Loaded handler reloads on navigation when stale — singleton VMs otherwise only
+    /// auto-load once; review finding).</summary>
+    public bool IsSaveRootStale => _loadedRootVersion != _saveRootState.Version;
+
     private async Task LoadSavesAsync()
     {
         IsBusy = true;
         try
         {
             // The shared root browsed on Home — not the hardcoded default (elevation audit bug fix).
+            _loadedRootVersion = _saveRootState.Version;
             var state = await _home.LoadAsync(_saveRootState.Current);
             Slots.Clear();
             foreach (var slot in state.Slots)
@@ -226,7 +233,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Person24,
             Label = "Characters & Talents",
             Description = "Per-character XP, debt, revive, rename, and per-talent rank (with a per-character max).",
-            Status = "Core ready — CharacterEditService.",
+            Status = "Wired — CharacterEditService.",
         },
         new()
         {
@@ -234,7 +241,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Trophy24,
             Label = "Accolades & Bestiary",
             Description = "Grant or remove accolades; set a creature group's scan points.",
-            Status = "Core ready — AccoladeBestiaryEditService.",
+            Status = "Wired — AccoladeBestiaryEditService.",
         },
         new()
         {
@@ -250,15 +257,15 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Backpack24,
             Label = "Loadouts",
             Description = "Per-prospect loadouts; cross-reference item GUIDs with the stash.",
-            Status = "Core ready — LoadoutCrossReference.",
+            Status = "Wired — LoadoutCrossReference.",
         },
         new()
         {
             Key = "prospects",
             Glyph = SymbolRegular.Map24,
             Label = "Prospects",
-            Description = "Unstick a stuck character's prospect association; edit world headers (world blob preserved).",
-            Status = "Core ready — ProspectEditService / ProspectBlobCodec.",
+            Description = "Unstick a stuck character's prospect association (world blob preserved).",
+            Status = "Wired — ProspectEditService (header editing is roadmap Tier 2).",
         },
         new()
         {
@@ -266,7 +273,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.AnimalPawPrint24,
             Label = "Mounts",
             Description = "Mount name and level (the authoritative RecorderBlob is preserved).",
-            Status = "Core ready — MountEditService.",
+            Status = "Wired — MountEditService.",
         },
         new()
         {
@@ -282,7 +289,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Flag24,
             Label = "Engine Flags",
             Description = "The binary flags_*.dat engine unlock flag IDs.",
-            Status = "Core ready — FlagsFileCodec.",
+            Status = "Wired — FlagsFileCodec.",
         },
         new()
         {

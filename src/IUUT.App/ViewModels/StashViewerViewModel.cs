@@ -88,11 +88,14 @@ public sealed class StashViewerViewModel : ObservableObject
         }
     }
 
-    /// <summary>The picker's items with <see cref="PickerFilter"/> applied.</summary>
+    /// <summary>The picker's items with <see cref="PickerFilter"/> applied. The current selection is
+    /// always included even when it no longer matches — otherwise the ComboBox's TwoWay binding
+    /// pushes null into the selection mid-typing and silently disables Add (review finding).</summary>
     public IEnumerable<CatalogRow> FilteredCatalogItems =>
         string.IsNullOrWhiteSpace(_pickerFilter)
             ? CatalogItems
             : CatalogItems.Where(r =>
+                ReferenceEquals(r, SelectedCatalogItem) ||
                 r.Label.Contains(_pickerFilter, StringComparison.OrdinalIgnoreCase) ||
                 r.RowName.Contains(_pickerFilter, StringComparison.OrdinalIgnoreCase));
 
@@ -270,7 +273,10 @@ public sealed class StashViewerViewModel : ObservableObject
         // Reload from disk, but keep the apply outcome visible in the status bar.
         var appliedStatus = StatusMessage;
         await LoadAsync();
-        StatusMessage = appliedStatus;
+        if (IsLoaded)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
     }
 
     private void AddItem()

@@ -205,7 +205,10 @@ public sealed class CharacterEditorViewModel : ObservableObject
         var keepSlot = SelectedCharacter?.ChrSlot;
         var appliedStatus = StatusMessage;
         await LoadAsync();
-        StatusMessage = appliedStatus;
+        if (IsLoaded)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
         if (keepSlot is not null)
         {
             SelectedCharacter = Characters.FirstOrDefault(c => c.ChrSlot == keepSlot) ?? SelectedCharacter;

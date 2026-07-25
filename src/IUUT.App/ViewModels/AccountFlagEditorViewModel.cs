@@ -97,7 +97,16 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
 
             foreach (var state in _service.List(_bundle.Profile))
             {
-                Flags.Add(new AccountFlagRowViewModel(state.Id, state.Label, state.Name, state.Enabled));
+                var row = new AccountFlagRowViewModel(state.Id, state.Label, state.Name, state.Enabled);
+                // Keep the "N of M set" header live as individual checkboxes toggle (review finding).
+                row.PropertyChanged += (_, args) =>
+                {
+                    if (args.PropertyName == nameof(AccountFlagRowViewModel.IsEnabled))
+                    {
+                        OnPropertyChanged(nameof(Summary));
+                    }
+                };
+                Flags.Add(row);
             }
 
             OnPropertyChanged(nameof(Summary));
@@ -172,7 +181,10 @@ public sealed class AccountFlagEditorViewModel : ObservableObject
         // Reload from disk, but keep the apply outcome visible in the status bar.
         var appliedStatus = StatusMessage;
         await LoadAsync();
-        StatusMessage = appliedStatus;
+        if (IsLoaded)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
     }
 
     private void EnableAll()

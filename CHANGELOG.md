@@ -15,7 +15,9 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 ### Added
 
 - **True per-talent max ranks** mined from `Talent.Rewards` — the talent editor, Lazy Max,
-  and the rank sliders are exact per row (Genetics rows max at 2; three creature talents at 5).
+  and the rank sliders are exact per row (Genetics rows mine at 1–3; three creature talents at 5).
+  Loaded save ranks are never coerced (a stale catalog must not downgrade earned ranks), and
+  Lazy Max is raise-only for ranks, matching its currency/XP contract.
 - **Account Flags checklist editor** (#81) — `Profile.json` `UnlockedFlags` by friendly name.
 - **Stash add-picker filter** (#83 first slice) — substring search over the 380+ item picker.
 

@@ -93,7 +93,8 @@ public sealed class CharacterEditService
         var present = new HashSet<string>(character.Talents.Select(t => t.RowName), StringComparer.Ordinal);
         foreach (var talent in character.Talents.Where(t => !IsReroute(t.RowName)))
         {
-            talent.Rank = MaxOf(talent.RowName);
+            // Raise-only: never regress a rank already above the (possibly stale) mined max.
+            talent.Rank = Math.Max(talent.Rank, MaxOf(talent.RowName));
         }
 
         foreach (var genetics in LazyMaxService.GeneticsTalents)

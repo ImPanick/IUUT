@@ -16,7 +16,10 @@ public partial class GameTunerView : UserControl
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (DataContext is GameTunerViewModel vm && vm.Settings.Count == 0)
+        // Reload on first display OR when the shared save root changed — Settings is never empty
+        // after the first load (one state per catalog entry), so an empty-only guard could never
+        // re-fire on this page (review finding).
+        if (DataContext is GameTunerViewModel vm && (vm.Settings.Count == 0 || vm.IsSaveRootStale))
         {
             vm.LoadCommand.Execute(null);
         }

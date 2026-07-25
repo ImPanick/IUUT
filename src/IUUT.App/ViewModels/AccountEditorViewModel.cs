@@ -281,7 +281,10 @@ public sealed class AccountEditorViewModel : ObservableObject
         // outcome visible (the reload would otherwise overwrite "Applied … a backup was taken").
         var appliedStatus = StatusMessage;
         await LoadAsync();
-        StatusMessage = appliedStatus;
+        if (IsLoaded)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
     }
 
     private void RefreshBlueprintSummary(ProfileModel profile)

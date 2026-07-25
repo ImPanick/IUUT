@@ -219,11 +219,13 @@ public sealed class LazyMaxService
             foreach (var rowName in union)
             {
                 // Exact per-row max from the mined catalog (Genetics_Twins = 2, three creature
-                // talents = 5, …); fallback for unlock-style/unknown rows.
+                // talents = 5, …); fallback for unlock-style/unknown rows. NEVER lowers a rank
+                // already above the mined max (same raise-only contract as currencies/XP — a stale
+                // catalog after a cap-raising game update must not regress an earned rank).
                 var rank = _catalogs.Talents.MaxRank(rowName, MaxTalentRank);
                 if (existing.TryGetValue(rowName, out var talent))
                 {
-                    talent.Rank = rank;
+                    talent.Rank = Math.Max(talent.Rank, rank);
                 }
                 else
                 {

@@ -22,6 +22,7 @@ public sealed class RecoveryViewModel : ObservableObject
     private readonly RecoveryService _service;
     private readonly AppPaths _paths;
     private readonly Services.SaveRootState _saveRootState;
+    private int _loadedRootVersion = -1;
 
     private RecoveryPlan? _plan;
     private HomeSaveSlot? _selectedSlot;
@@ -52,6 +53,11 @@ public sealed class RecoveryViewModel : ObservableObject
 
     /// <summary>Discovered save profiles to recover.</summary>
     public ObservableCollection<HomeSaveSlot> Slots { get; }
+
+    /// <summary>True when the shared save root changed since this page last loaded its slot list
+    /// (the view's Loaded handler reloads on navigation when stale; review finding — Recovery has
+    /// no manual reload button, so scanning a stale root would repair the wrong profiles).</summary>
+    public bool IsSaveRootStale => _loadedRootVersion != _saveRootState.Version;
 
     /// <summary>One human-readable line per file the plan would touch.</summary>
     public ObservableCollection<string> ActionLines { get; }
@@ -116,6 +122,7 @@ public sealed class RecoveryViewModel : ObservableObject
         try
         {
             // The shared root browsed on Home — not the hardcoded default (elevation audit bug fix).
+            _loadedRootVersion = _saveRootState.Version;
             var state = await _home.LoadAsync(_saveRootState.Current);
             Slots.Clear();
             foreach (var slot in state.Slots)

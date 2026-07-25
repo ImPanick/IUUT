@@ -165,6 +165,9 @@ public sealed class MountEditorViewModel : ObservableObject
         // Reload from disk, but keep the apply outcome visible in the status bar.
         var appliedStatus = StatusMessage;
         await LoadAsync();
-        StatusMessage = appliedStatus;
+        if (IsLoaded)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
     }
 }

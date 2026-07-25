@@ -18,6 +18,7 @@ public sealed class GameTunerViewModel : ObservableObject
     private readonly GameTuningService _service;
     private readonly GameTuningCatalog _catalog;
     private readonly Services.SaveRootState _saveRootState;
+    private int _loadedRootVersion = -1;
 
     private string _saveRoot;
     private bool _isBusy;
@@ -51,8 +52,19 @@ public sealed class GameTunerViewModel : ObservableObject
     public string SaveRoot
     {
         get => _saveRoot;
-        set => SetProperty(ref _saveRoot, value);
+        set
+        {
+            if (SetProperty(ref _saveRoot, value))
+            {
+                OnPropertyChanged(nameof(EngineIniPath)); // the displayed path derives from the root
+            }
+        }
     }
+
+    /// <summary>True when the shared save root changed since this page last loaded (the view's
+    /// Loaded handler reloads on navigation when stale — Settings is never empty after first load,
+    /// so a Count==0 guard alone can never re-fire; review finding).</summary>
+    public bool IsSaveRootStale => _loadedRootVersion != _saveRootState.Version;
 
     /// <summary>The resolved Engine.ini path (for display).</summary>
     public string EngineIniPath => GameTuningService.ResolveEngineIniPath(SaveRoot);
@@ -77,6 +89,7 @@ public sealed class GameTunerViewModel : ObservableObject
         try
         {
             // Follow the root browsed on Home (the VM is a singleton; the view has no root input).
+            _loadedRootVersion = _saveRootState.Version;
             SaveRoot = _saveRootState.Current;
             Settings.Clear();
             foreach (var state in _service.ReadCurrent(SaveRoot, _catalog))
@@ -124,6 +137,9 @@ public sealed class GameTunerViewModel : ObservableObject
         // Refresh from Engine.ini, but keep the apply outcome visible in the status bar.
         var appliedStatus = StatusMessage;
         Load();
-        StatusMessage = appliedStatus;
+        if (Settings.Count > 0)
+        {
+            StatusMessage = appliedStatus; // only over a healthy reload — a reload FAILURE must stay visible
+        }
     }
 }

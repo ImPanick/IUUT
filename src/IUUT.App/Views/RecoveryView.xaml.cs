@@ -19,7 +19,10 @@ public partial class RecoveryView : UserControl
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (DataContext is RecoveryViewModel vm && vm.Slots.Count == 0)
+        // Reload on first display OR when the shared save root changed since our last load —
+        // Recovery has no manual reload button, and scanning a stale root would repair the
+        // wrong profiles (review finding).
+        if (DataContext is RecoveryViewModel vm && (vm.Slots.Count == 0 || vm.IsSaveRootStale))
         {
             vm.LoadSavesCommand.Execute(null);
         }

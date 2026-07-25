@@ -13,18 +13,22 @@ public sealed class TalentRowViewModel : ObservableObject
     private int _rank;
 
     /// <summary>Creates a talent row. <paramref name="maxRank"/> is the row's true max from the
-    /// catalog mine (null → the permissive <see cref="CharacterEditService.MaxTalentRank"/> fallback).</summary>
+    /// catalog mine (null → the permissive <see cref="CharacterEditService.MaxTalentRank"/> fallback).
+    /// The LOADED rank is never coerced — catalog data must not gatekeep save data (CONSTITUTION VI;
+    /// a stale catalog would silently downgrade earned ranks on the next Apply). The slider ceiling
+    /// stretches to accommodate an above-catalog loaded value instead.</summary>
     public TalentRowViewModel(string rowName, string label, int rank, bool isLive = true, int? maxRank = null)
     {
         ArgumentException.ThrowIfNullOrEmpty(rowName);
         RowName = rowName;
         Label = string.IsNullOrEmpty(label) ? rowName : label;
         IsLive = isLive;
-        Maximum = maxRank ?? CharacterEditService.MaxTalentRank;
-        _rank = Clamp(rank);
+        Maximum = Math.Max(maxRank ?? CharacterEditService.MaxTalentRank, rank);
+        _rank = Math.Max(0, rank); // loaded value preserved verbatim (floor 0 only)
     }
 
-    /// <summary>The row's max rank (slider ceiling): the mined true max, else the fallback.</summary>
+    /// <summary>The row's max rank (slider ceiling): the mined true max — stretched to the loaded
+    /// rank when the save is already above it, so the loaded value round-trips untouched.</summary>
     public int Maximum { get; }
 
     /// <summary>The <c>D_Talents</c> row key — never edited.</summary>

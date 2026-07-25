@@ -72,6 +72,8 @@ public sealed class AccountFlagEditService
             return true;
         }
 
-        return profile.UnlockedFlags.Remove(id);
+        // RemoveAll, not Remove: a duplicated id (seen in the wild) must clear in ONE apply,
+        // otherwise the checklist shows it still checked while the status says "Applied".
+        return profile.UnlockedFlags.RemoveAll(f => f == id) > 0;
     }
 }
