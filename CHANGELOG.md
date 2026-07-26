@@ -12,6 +12,17 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.5.0] — 2026-07-25
+
+### Added
+
+- **Quest reset** (`iuut quest-reset --prospect <name> [--apply]`) — reset a prospect's
+  mission progress so it can be replayed. Preview by default; `--apply` writes with a
+  backup first. Every write is in-place and size-preserving: items, mounts, bases, and
+  every other recorder stay byte-identical (the gate tests count the exact bytes that
+  change). The category leader's flagship paid feature — offline and free. CLI-first by
+  design; the app panel follows.
+
 ## [2.4.0] — 2026-07-25
 
 Tier 3 opens: the quest-state research track reaches its read-only milestone.
