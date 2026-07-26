@@ -12,6 +12,19 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.4.0] — 2026-07-25
+
+Tier 3 opens: the quest-state research track reaches its read-only milestone.
+
+### Added
+
+- **Quest-state decoding (read-only)** — IUUT now reads the faction mission and every
+  quest step's completion state directly from a prospect's world blob. No writes: per the
+  roadmap's research-track rule, quest *reset* only lands after round-trip fixtures pass.
+- **`iuut prospect-report`** — a per-prospect report over the world saves: mission +
+  step-by-step `[done]` state, and trapped-item totals (pointing at Return to Stash).
+  `--profile` is optional and defaults to the save root's first profile.
+
 ## [2.3.0] — 2026-07-25
 
 **Tier 2 complete** — the last two community hand-edits, made safe:

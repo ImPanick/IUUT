@@ -92,7 +92,7 @@ rename, level/XP decode) and prospect diagnosis fold into Tier 3's blob work.
 
 | Item | Impact / Effort | Notes |
 | --- | --- | --- |
-| Mission/quest reset inside prospect saves | high / large | Decode `IcarusQuestManagerRecorderComponent`; read-only CLI report first, then gated writes. The category leader's flagship paid feature, offline and free. |
+| Mission/quest reset inside prospect saves | high / large | **Read-only milestone SHIPPED (v2.4.0):** `ProspectQuestReader` decodes the manager (`FactionMissionName` + `bMissionComplete`) and per-step recorders (`QuestName` + `VariableRecords.QuestComplete`); surfaced via `iuut prospect-report`. NEXT: gated writes (reset = flip step variables + manager flag) only after lossless blob round-trip fixtures pass. The category leader's flagship paid feature, offline and free. |
 | **Homestead pack-up / base relocation** | transformative / large | Extract deployable/container actor subtrees from one prospect blob and inject into another. Paywalled at ~$4/28-days elsewhere. Full actor-graph read/write; do not announce until round-trip fixtures pass. |
 | Offline map + deployable viewer | medium / large | Plot containers/deployables from the local blob over terrain maps; click a crate → see contents → jump to Return-to-Stash. The privacy-preserving alternative to upload-based cartographers. |
 
