@@ -279,6 +279,8 @@ public sealed class CustomViewModel : ObservableObject
                 new ReturnToStashViewModel(_files, _prospectReturn, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("backupmanager", not null) =>
                 new BackupManagerViewModel(_backups, slot.FolderPath, slot.DisplayLabel),
+            ("prospectquests", not null) =>
+                new ProspectQuestsViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
                 new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
@@ -369,6 +371,15 @@ public sealed class CustomViewModel : ObservableObject
             Label = "Prospects",
             Description = "Unstick a stuck character's prospect association (world blob preserved).",
             Status = "Wired — ProspectEditService (header editing is roadmap Tier 2).",
+        },
+        new()
+        {
+            Key = "prospectquests",
+            Group = "WORLD",
+            Glyph = SymbolRegular.Flag24,
+            Label = "Prospect Quests",
+            Description = "Mission state inside each prospect's world save — reset a mission to replay it.",
+            Status = "Wired — ProspectQuestReader/Editor.",
         },
         new()
         {
