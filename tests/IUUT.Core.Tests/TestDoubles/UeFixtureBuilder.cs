@@ -44,6 +44,10 @@ internal static class UeFixtureBuilder
     /// <summary>An <c>IntProperty</c>.</summary>
     public static byte[] IntProp(string name, int value) => Tag(name, "IntProperty", BitConverter.GetBytes(value), meta: null);
 
+    /// <summary>A <c>BoolProperty</c>: size 0, the value byte lives in the tag before HasPropertyGuid.</summary>
+    public static byte[] BoolProp(string name, bool value) =>
+        Tag(name, "BoolProperty", [], meta: [value ? (byte)1 : (byte)0]);
+
     /// <summary>A <c>StructProperty</c> whose payload is the given child property tags + a <c>None</c> terminator.</summary>
     public static byte[] StructProp(string name, string structName, params byte[][] childProps)
     {

@@ -37,6 +37,23 @@ public static class UePropertyReader
     }
 
     /// <summary>
+    /// A <c>BoolProperty</c>'s value. It lives in the property TAG (the byte before the trailing
+    /// HasPropertyGuid byte), not in the value span — <see cref="UeProperty.ValueOffset"/> points
+    /// past both, so the value byte sits at <c>ValueOffset - 2</c>.
+    /// </summary>
+    public static bool ReadBool(byte[] d, UeProperty property)
+    {
+        ArgumentNullException.ThrowIfNull(d);
+        ArgumentNullException.ThrowIfNull(property);
+        if (!string.Equals(property.Type, "BoolProperty", StringComparison.Ordinal))
+        {
+            throw new ArgumentException($"Not a BoolProperty: {property.Name} ({property.Type}).", nameof(property));
+        }
+
+        return d[property.ValueOffset - 2] != 0;
+    }
+
+    /// <summary>
     /// Reads an <c>FString</c> at <paramref name="pos"/> (advancing it): <c>int32</c> length then the
     /// chars incl. null terminator — positive length is ASCII/Latin-1, negative is UTF-16LE. Returns
     /// <c>null</c> (without advancing past a sane point) when the length is implausible.

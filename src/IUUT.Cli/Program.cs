@@ -6,6 +6,7 @@ using System.Globalization;
 using IUUT.Core.Abstractions;
 using IUUT.Core.Catalog;
 using IUUT.Core.DataPak;
+using IUUT.Core.Editing;
 using IUUT.Core.Io;
 using IUUT.Core.Services;
 
@@ -16,7 +17,7 @@ if (args.Length == 0 || args[0] is "help" or "--help" or "-h")
 }
 
 string[] rootOnly = ["--root"];
-string[] lazyMaxValues = ["--profile", "--root"];
+string[] profileAndRoot = ["--profile", "--root"];
 string[] applyFlag = ["--apply"];
 string[] pakValue = ["--pak"];
 string[] forceFlag = ["--force"];
@@ -28,8 +29,9 @@ try
     {
         "check" => Check(ParseOptions(args, rootOnly, none)),
         "backup-all" => BackupAll(ParseOptions(args, rootOnly, none)),
-        "lazy-max" => await LazyMaxAsync(ParseOptions(args, lazyMaxValues, applyFlag)).ConfigureAwait(false),
+        "lazy-max" => await LazyMaxAsync(ParseOptions(args, profileAndRoot, applyFlag)).ConfigureAwait(false),
         "catalog-refresh" => CatalogRefresh(ParseOptions(args, pakValue, forceFlag)),
+        "prospect-report" => ProspectReport(ParseOptions(args, profileAndRoot, none)),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -59,6 +61,10 @@ static void PrintUsage()
     Console.WriteLine("  catalog-refresh  [--pak <path>] [--force]");
     Console.WriteLine("                   Refresh the catalog cache from the installed game's data.pak");
     Console.WriteLine("                   (offline; sanity-gated; a rejected refresh changes nothing).");
+    Console.WriteLine("  prospect-report  [--profile <steamid-or-path>] [--root <path>]");
+    Console.WriteLine("                   Read-only report over each prospect world save: faction");
+    Console.WriteLine("                   mission + quest-step state, and trapped-item totals.");
+    Console.WriteLine("                   Defaults to the root's first profile.");
     Console.WriteLine("  recover          Guided save recovery lives in the IUUT app — it needs the UI.");
     Console.WriteLine();
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
@@ -273,6 +279,103 @@ static int CatalogRefresh(Dictionary<string, string?> options)
 
     Console.WriteLine(result.Ok ? "Catalog cache refreshed." : "Refresh REJECTED — cache untouched.");
     return result.Ok ? 0 : 1;
+}
+
+static int ProspectReport(Dictionary<string, string?> options)
+{
+    var folder = ResolveProfileFolder(options);
+    var prospectsDir = Path.Combine(folder, "Prospects");
+    if (!Directory.Exists(prospectsDir))
+    {
+        Console.WriteLine("No prospect world saves in this profile.");
+        return 0;
+    }
+
+    var quests = new IUUT.Core.Prospects.World.ProspectQuestReader();
+    var trappedPreview = new ProspectReturnService(new StashEditService(new SystemGuidProvider()));
+
+    foreach (var file in Directory.EnumerateFiles(prospectsDir, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
+    {
+        Console.WriteLine($"\n== {Path.GetFileNameWithoutExtension(file)} ==");
+        IUUT.Core.Models.ProspectFileModel model;
+        try
+        {
+            model = IUUT.Core.Parsers.ProspectFileParser.Parse(File.ReadAllText(file));
+        }
+        catch (Exception ex) when (ex is System.Text.Json.JsonException or FormatException or IOException)
+        {
+            Console.WriteLine($"  unreadable ({ex.GetType().Name}) — the Recovery screen can help.");
+            continue;
+        }
+
+        try
+        {
+            var state = quests.ReadBlob(model.ProspectBlob);
+            if (state.HasMission)
+            {
+                Console.WriteLine($"  mission: {state.MissionName} — {(state.MissionComplete ? "COMPLETE" : "in progress")}");
+                Console.WriteLine($"  steps:   {state.Steps.Count(s => s.IsComplete)}/{state.Steps.Count} complete");
+                foreach (var step in state.Steps)
+                {
+                    Console.WriteLine($"    {(step.IsComplete ? "[done]" : "[    ]")} {step.QuestName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("  mission: none (open world)");
+            }
+
+            var trapped = trappedPreview.Preview(model);
+            Console.WriteLine(trapped.Count == 0
+                ? "  items:   nothing trapped"
+                : $"  items:   {trapped.Count} kind(s), {trapped.Sum(t => t.TotalQuantity)} total — recover via Return to Stash");
+        }
+        catch (Exception ex) when (ex is InvalidDataException or FormatException)
+        {
+            Console.WriteLine($"  blob unreadable ({ex.Message})");
+        }
+    }
+
+    return 0;
+}
+
+// --profile <steamid-or-path>, defaulting to the root's first profile when omitted.
+static string ResolveProfileFolder(Dictionary<string, string?> options)
+{
+    if (options.GetValueOrDefault("--profile") is { } target)
+    {
+        if (Directory.Exists(target))
+        {
+            return target;
+        }
+
+        if (target.Contains(Path.DirectorySeparatorChar, StringComparison.Ordinal)
+         || target.Contains(Path.AltDirectorySeparatorChar, StringComparison.Ordinal))
+        {
+            throw new ArgumentException($"profile folder not found: '{target}'");
+        }
+
+        var byId = Path.Combine(ResolveRoot(options), SaveDiscoveryService.PlayerDataFolder, target);
+        if (!Directory.Exists(byId))
+        {
+            throw new ArgumentException($"profile folder not found: '{byId}'");
+        }
+
+        return byId;
+    }
+
+    var profiles = new SaveDiscoveryService().DiscoverProfiles(ResolveRoot(options));
+    if (profiles.Count == 0)
+    {
+        throw new ArgumentException("no save profiles found (pass --profile or --root)");
+    }
+
+    if (profiles.Count > 1)
+    {
+        Console.WriteLine($"({profiles.Count} profiles — using {profiles[0].SteamId64}; pass --profile to pick another)");
+    }
+
+    return profiles[0].FolderPath;
 }
 
 static int Recover()
