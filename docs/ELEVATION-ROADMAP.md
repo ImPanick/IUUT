@@ -75,6 +75,10 @@ long-operation surface's interface, new views use the token styles only.
 
 ## Tier 2 — Signature features (surface the finished-but-invisible Core)
 
+**Status: in flight** — Missions checklist + Return to Stash shipped in v2.1.0.
+Next: Backup Manager (needs a small Core list/restore/prune service over the
+BackupChainWalker), mount rescue, loadout recovery.
+
 | Item | Impact / Effort | Notes |
 | --- | --- | --- |
 | **Return-to-Stash + in-prospect editing panel** | transformative / medium | The headline rescue feature is **fully built and tested in Core** (`ProspectWorldEditor`, `SlotOwner`, `ProspectReturnService`, `ProspectReturnFileService` — stash-saved-first ordering) but is **not registered in DI and has zero UI**. ~3 lines of DI + the EXECUTION-PLAN Phase 3 panel. |

@@ -12,6 +12,21 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.1.0] — 2026-07-25
+
+Tier 2 begins: two Core services that were fully built and tested but had no UI are now
+reachable, in the sidebar homes Divine Elevation pre-placed for them.
+
+### Added
+
+- **Missions checklist** (PROGRESSION) — every catalog mission with its completion state;
+  staging a mission completes it *and* its full prerequisite chain on apply. Additive and
+  idempotent — completed missions are never revoked. Searchable, stage-all, dirty-guarded.
+- **Return to Stash** (RESCUE) — pick a prospect world save, preview the items trapped in
+  it, and return them all to the orbital stash. The stash is written first, so a
+  mid-operation failure can only duplicate items (recoverable from backup), never lose
+  them. Both files are backed up and re-validated.
+
 ## [2.0.0] — 2026-07-25
 
 **Divine Elevation** — the owner-named UI/UX overhaul (roadmap Tier 1.5). The graphite
