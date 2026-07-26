@@ -12,6 +12,15 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.2.0] — 2026-07-25
+
+### Added
+
+- **Backup Manager** (RESCUE) — browse every timestamped IUUT backup in the save folder
+  (searchable, newest first), restore any of them (the current file is backed up first, so
+  a restore is itself reversible), and prune old backups keeping the newest 3 per file.
+  Only `.iuut-backup-` files are ever touched — save files are never deletion candidates.
+
 ## [2.1.0] — 2026-07-25
 
 Tier 2 begins: two Core services that were fully built and tested but had no UI are now

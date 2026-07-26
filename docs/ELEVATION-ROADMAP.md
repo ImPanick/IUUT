@@ -75,9 +75,8 @@ long-operation surface's interface, new views use the token styles only.
 
 ## Tier 2 — Signature features (surface the finished-but-invisible Core)
 
-**Status: in flight** — Missions checklist + Return to Stash shipped in v2.1.0.
-Next: Backup Manager (needs a small Core list/restore/prune service over the
-BackupChainWalker), mount rescue, loadout recovery.
+**Status: in flight** — Missions checklist + Return to Stash shipped in v2.1.0;
+Backup Manager shipped in v2.2.0. Next: mount rescue, loadout recovery.
 
 | Item | Impact / Effort | Notes |
 | --- | --- | --- |
