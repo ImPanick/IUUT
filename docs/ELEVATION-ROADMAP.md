@@ -75,8 +75,9 @@ long-operation surface's interface, new views use the token styles only.
 
 ## Tier 2 — Signature features (surface the finished-but-invisible Core)
 
-**Status: in flight** — Missions checklist + Return to Stash shipped in v2.1.0;
-Backup Manager shipped in v2.2.0. Next: mount rescue, loadout recovery.
+**Status: COMPLETE** — Missions + Return to Stash (v2.1.0), Backup Manager (v2.2.0),
+loadout recovery + mount rescue slice 1 (v2.3.0). Remaining mount slices (in-prospect
+rename, level/XP decode) and prospect diagnosis fold into Tier 3's blob work.
 
 | Item | Impact / Effort | Notes |
 | --- | --- | --- |

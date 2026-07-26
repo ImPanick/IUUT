@@ -12,6 +12,19 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.3.0] — 2026-07-25
+
+**Tier 2 complete** — the last two community hand-edits, made safe:
+
+### Added
+
+- **Loadout recovery** — INSURE ALL flips `bInsured` on every uninsured loadout (the fix
+  for gear stuck with an offline host; only the one boolean changes), and RESTORE MISSING
+  recreates stash items the loadouts reference but that vanished — exact GUID and item row,
+  so the loadout is whole again. Both additive, both backed up and re-validated.
+- **Mount rescue (roster restore/clone)** — the "Mount Reviver": clone any roster mount as
+  a staged deep copy (its binary stats blob carried byte-for-byte), rename it, Apply.
+
 ## [2.2.0] — 2026-07-25
 
 ### Added
