@@ -12,6 +12,16 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.6.0] — 2026-07-25
+
+### Added
+
+- **Prospect Quests panel** (WORLD) — quest reset arrives in the app: pick a prospect, see
+  its mission and step-by-step completion read straight from the world save, and RESET
+  MISSION to replay it. Same gated engine as `iuut quest-reset` — in-place and
+  size-preserving, so items, mounts, and bases stay byte-identical; backed up and
+  re-validated on every write.
+
 ## [2.5.0] — 2026-07-25
 
 ### Added
