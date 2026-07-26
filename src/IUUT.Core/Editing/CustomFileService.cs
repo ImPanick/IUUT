@@ -72,6 +72,17 @@ public sealed class CustomFileService
     public Task<LoadoutsModel?> LoadLoadoutsAsync(string saveFolder, CancellationToken cancellationToken = default) =>
         LoadJsonAsync(LoadoutsPath(saveFolder), LoadoutsParser.Parse, cancellationToken);
 
+    /// <summary>Safely writes <c>Loadout\Loadouts.json</c> (backup + re-parse + atomic) — the loadout-recovery write path.</summary>
+    public Task<SafeSaveResult> SaveLoadoutsAsync(string saveFolder, LoadoutsModel model, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        return _writer.WriteAsync(
+            LoadoutsPath(saveFolder),
+            LoadoutsSerializer.Serialize(model),
+            content => LoadoutsParser.Parse(content),
+            cancellationToken);
+    }
+
     /// <summary>
     /// Reads the mounts deployed inside each <c>Prospects\*.json</c> world save, grouped per prospect
     /// (only prospects that actually have mounts). These are SEPARATE from the <c>Mounts.json</c>

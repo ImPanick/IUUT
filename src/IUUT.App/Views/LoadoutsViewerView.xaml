@@ -22,11 +22,19 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
                     <TextBlock Text="LOADOUTS" Style="{StaticResource LabelText}" />
-                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and the gear they carry for “{0}” (read-only).}"
+                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and the gear they carry for “{0}” — with recovery for stuck gear.}"
                                Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
                     <TextBlock Text="{Binding Summary}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
                 </StackPanel>
-                <Button Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}" VerticalAlignment="Top" Padding="12,4" />
+                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
+                    <Button Content="{Binding UninsuredCount, StringFormat=Insure all ({0})}" Click="OnInsureAll"
+                            IsEnabled="{Binding CanInsure}" Padding="12,4" Margin="0,0,6,0"
+                            ToolTip="The safe version of the community bInsured hand-edit — recovers gear stuck with an offline host." />
+                    <Button Content="{Binding RestorableCount, StringFormat=Restore missing ({0})}" Click="OnRestoreMissing"
+                            IsEnabled="{Binding CanRestore}" Padding="12,4" Margin="0,0,6,0"
+                            ToolTip="Recreates stash items the loadouts reference but that vanished — exact GUID and item row." />
+                    <Button Content="Reload" Command="{Binding LoadCommand}" Padding="12,4" />
+                </StackPanel>
             </Grid>
         </Border>
 

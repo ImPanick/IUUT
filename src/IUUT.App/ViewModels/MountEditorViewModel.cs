@@ -37,6 +37,7 @@ public sealed class MountEditorViewModel : ObservableObject, Services.IDirtyEdit
         Mounts = [];
         ProspectMountGroups = [];
         LoadCommand = new AsyncRelayCommand(LoadAsync);
+        CloneCommand = new RelayCommand<MountSlotViewModel>(Clone, _ => !IsBusy && _model is not null);
     }
 
     /// <summary>The profile being edited (for the header).</summary>
@@ -50,6 +51,9 @@ public sealed class MountEditorViewModel : ObservableObject, Services.IDirtyEdit
 
     /// <summary>Reloads the save into the editor.</summary>
     public IAsyncRelayCommand LoadCommand { get; }
+
+    /// <summary>Restores/clones a roster mount (mount-rescue slice 1; staged until Apply).</summary>
+    public IRelayCommand<MountSlotViewModel> CloneCommand { get; }
 
     /// <summary>Whether the profile roster has at least one mount (drives the empty state).</summary>
     public bool HasMounts => Mounts.Count > 0;
@@ -134,6 +138,23 @@ public sealed class MountEditorViewModel : ObservableObject, Services.IDirtyEdit
             IsDirty = false; // freshly loaded state is clean
             IsBusy = false;
         }
+    }
+
+    private void Clone(MountSlotViewModel? source)
+    {
+        if (source is null || _model is null)
+        {
+            return;
+        }
+
+        // Deep copy incl. the verbatim RecorderBlob; staged in the roster until Apply writes it.
+        var clone = _service.Clone(_model, source.Model, source.Name + " (revived)");
+        var slot = new MountSlotViewModel(clone);
+        slot.PropertyChanged += (_, _) => IsDirty = true;
+        Mounts.Add(slot);
+        IsDirty = true;
+        OnPropertyChanged(nameof(HasMounts));
+        StatusMessage = $"Cloned “{source.Name}” — rename the copy if you like, then Apply.";
     }
 
     /// <summary>Applies the edited mounts (call after a user confirm).</summary>

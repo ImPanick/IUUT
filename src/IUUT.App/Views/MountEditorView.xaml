@@ -47,6 +47,7 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding MountType}" Style="{StaticResource MonoText}"
                                                    VerticalAlignment="Center" Margin="0,0,12,0" Width="120" TextTrimming="CharacterEllipsis" />
@@ -55,6 +56,10 @@
                                         <TextBlock Grid.Column="2" Text="LVL" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,6,0" />
                                         <TextBox Grid.Column="3" Width="64" VerticalAlignment="Center" TextAlignment="Right"
                                                  Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
+                                        <Button Grid.Column="4" Content="Clone" Padding="10,3" Margin="12,0,0,0" VerticalAlignment="Center"
+                                                Command="{Binding DataContext.CloneCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding}"
+                                                ToolTip="Mount rescue: a staged deep copy of this mount (blob carried verbatim) — the community 'Mount Reviver'." />
                                     </Grid>
                                 </Border>
                             </DataTemplate>

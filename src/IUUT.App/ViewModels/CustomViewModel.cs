@@ -31,6 +31,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly MissionCompletionService _missions;
     private readonly ProspectReturnFileService _prospectReturn;
     private readonly IUUT.Core.Io.BackupInventoryService _backups;
+    private readonly LoadoutRecoveryService _loadoutRecovery;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
     private int _loadedRootVersion = -1;
@@ -59,9 +60,12 @@ public sealed class CustomViewModel : ObservableObject
         MissionCompletionService missions,
         ProspectReturnFileService prospectReturn,
         IUUT.Core.Io.BackupInventoryService backups,
+        LoadoutRecoveryService loadoutRecovery,
         GameCatalogs catalogs,
         Services.SaveRootState saveRootState)
     {
+        ArgumentNullException.ThrowIfNull(loadoutRecovery);
+        _loadoutRecovery = loadoutRecovery;
         ArgumentNullException.ThrowIfNull(saveRootState);
         ArgumentNullException.ThrowIfNull(accountFlags);
         ArgumentNullException.ThrowIfNull(missions);
@@ -260,7 +264,7 @@ public sealed class CustomViewModel : ObservableObject
             ("stash", not null) =>
                 new StashViewerViewModel(_files, _stash, _loadoutCrossReference, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("loadouts", not null) =>
-                new LoadoutsViewerViewModel(_files, _loadoutCrossReference, _catalogs, slot.FolderPath, slot.DisplayLabel),
+                new LoadoutsViewerViewModel(_files, _loadoutCrossReference, _loadoutRecovery, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("mounts", not null) =>
                 new MountEditorViewModel(_files, _mount, slot.FolderPath, slot.DisplayLabel),
             ("flags", not null) =>
