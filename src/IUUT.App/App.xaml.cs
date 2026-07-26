@@ -118,6 +118,7 @@ public partial class App : Application
         services.AddSingleton(sp => new MissionCompletionService(sp.GetRequiredService<GameCatalogs>().Missions));
         services.AddSingleton<ProspectReturnService>();
         services.AddSingleton<ProspectReturnFileService>();
+        services.AddSingleton<BackupInventoryService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

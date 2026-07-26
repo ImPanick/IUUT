@@ -30,6 +30,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly ProspectEditService _prospect;
     private readonly MissionCompletionService _missions;
     private readonly ProspectReturnFileService _prospectReturn;
+    private readonly IUUT.Core.Io.BackupInventoryService _backups;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
     private int _loadedRootVersion = -1;
@@ -57,6 +58,7 @@ public sealed class CustomViewModel : ObservableObject
         ProspectEditService prospect,
         MissionCompletionService missions,
         ProspectReturnFileService prospectReturn,
+        IUUT.Core.Io.BackupInventoryService backups,
         GameCatalogs catalogs,
         Services.SaveRootState saveRootState)
     {
@@ -64,8 +66,10 @@ public sealed class CustomViewModel : ObservableObject
         ArgumentNullException.ThrowIfNull(accountFlags);
         ArgumentNullException.ThrowIfNull(missions);
         ArgumentNullException.ThrowIfNull(prospectReturn);
+        ArgumentNullException.ThrowIfNull(backups);
         _missions = missions;
         _prospectReturn = prospectReturn;
+        _backups = backups;
         _saveRootState = saveRootState;
         _accountFlags = accountFlags;
         ArgumentNullException.ThrowIfNull(home);
@@ -269,6 +273,8 @@ public sealed class CustomViewModel : ObservableObject
                 new MissionsEditorViewModel(_apply, _missions, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("returntostash", not null) =>
                 new ReturnToStashViewModel(_files, _prospectReturn, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("backupmanager", not null) =>
+                new BackupManagerViewModel(_backups, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
                 new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
@@ -385,9 +391,7 @@ public sealed class CustomViewModel : ObservableObject
             Glyph = SymbolRegular.Archive24,
             Label = "Backup Manager",
             Description = "Browse, restore, and prune IUUT's timestamped backups.",
-            Status = "Tier 2 — lands here.",
-            Enabled = false,
-            Tier = "T2",
+            Status = "Wired — BackupInventoryService.",
         },
         new()
         {

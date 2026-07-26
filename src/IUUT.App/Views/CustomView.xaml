@@ -49,6 +49,9 @@
         <DataTemplate DataType="{x:Type vm:ReturnToStashViewModel}">
             <views:ReturnToStashView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:BackupManagerViewModel}">
+            <views:BackupManagerView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:RawEditorViewModel}">
             <views:RawEditorView />
         </DataTemplate>
