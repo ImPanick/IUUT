@@ -28,6 +28,8 @@ public sealed class CustomViewModel : ObservableObject
     private readonly FlagsEditService _flags;
     private readonly AccountFlagEditService _accountFlags;
     private readonly ProspectEditService _prospect;
+    private readonly MissionCompletionService _missions;
+    private readonly ProspectReturnFileService _prospectReturn;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
     private int _loadedRootVersion = -1;
@@ -53,11 +55,17 @@ public sealed class CustomViewModel : ObservableObject
         FlagsEditService flags,
         AccountFlagEditService accountFlags,
         ProspectEditService prospect,
+        MissionCompletionService missions,
+        ProspectReturnFileService prospectReturn,
         GameCatalogs catalogs,
         Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(saveRootState);
         ArgumentNullException.ThrowIfNull(accountFlags);
+        ArgumentNullException.ThrowIfNull(missions);
+        ArgumentNullException.ThrowIfNull(prospectReturn);
+        _missions = missions;
+        _prospectReturn = prospectReturn;
         _saveRootState = saveRootState;
         _accountFlags = accountFlags;
         ArgumentNullException.ThrowIfNull(home);
@@ -257,6 +265,10 @@ public sealed class CustomViewModel : ObservableObject
                 new AccountFlagEditorViewModel(_apply, _accountFlags, slot.FolderPath, slot.DisplayLabel),
             ("prospects", not null) =>
                 new ProspectsEditorViewModel(_files, _prospect, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("missions", not null) =>
+                new MissionsEditorViewModel(_apply, _missions, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("returntostash", not null) =>
+                new ReturnToStashViewModel(_files, _prospectReturn, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
                 new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
@@ -318,10 +330,8 @@ public sealed class CustomViewModel : ObservableObject
             Group = "PROGRESSION",
             Glyph = SymbolRegular.Flag24,
             Label = "Missions",
-            Description = "Mission checklist with prerequisite closure (Core service is ready).",
-            Status = "Tier 2 — lands here.",
-            Enabled = false,
-            Tier = "T2",
+            Description = "Mission checklist — completing a mission also completes its prerequisites.",
+            Status = "Wired — MissionCompletionService.",
         },
         new()
         {
@@ -365,10 +375,8 @@ public sealed class CustomViewModel : ObservableObject
             Group = "RESCUE",
             Glyph = SymbolRegular.Box24,
             Label = "Return to Stash",
-            Description = "Recover items from a prospect back to the orbital stash (Core service is ready).",
-            Status = "Tier 2 — lands here.",
-            Enabled = false,
-            Tier = "T2",
+            Description = "Recover items trapped in a prospect's world save back to the orbital stash.",
+            Status = "Wired — ProspectReturnFileService.",
         },
         new()
         {

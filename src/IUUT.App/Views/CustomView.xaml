@@ -43,6 +43,12 @@
         <DataTemplate DataType="{x:Type vm:ProspectsEditorViewModel}">
             <views:ProspectsEditorView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:MissionsEditorViewModel}">
+            <views:MissionsEditorView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ReturnToStashViewModel}">
+            <views:ReturnToStashView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:RawEditorViewModel}">
             <views:RawEditorView />
         </DataTemplate>

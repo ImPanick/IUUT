@@ -199,6 +199,16 @@ public sealed class CustomFileService
         }
     }
 
+    /// <summary>The save folder's <c>Prospects\*.json</c> world-save files, sorted by name.</summary>
+    public IReadOnlyList<string> ResolveProspectFiles(string saveFolder)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        var directory = Path.Combine(saveFolder, "Prospects");
+        return Directory.Exists(directory)
+            ? Directory.EnumerateFiles(directory, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase).ToList()
+            : [];
+    }
+
     // --- Prospect associations (per-slot AssociatedProspects_Slot_N.json) ------
 
     /// <summary>The save folder's <c>AssociatedProspects_Slot_*.json</c> files, sorted by name.</summary>

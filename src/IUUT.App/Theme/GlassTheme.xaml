@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:converters="clr-namespace:IUUT.App.Converters">
 
     <!--
         IUUT "Telemetry Console" theme tokens + base styles (docs/UI-DESIGN-CONCEPT.md v2).
@@ -13,6 +14,7 @@
 
     <!-- ============ Shared converters ============ -->
     <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+    <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility" />
 
     <!-- ============ Fonts ============ -->
     <FontFamily x:Key="MonoFontFamily">Cascadia Code, Cascadia Mono, Consolas, monospace</FontFamily>

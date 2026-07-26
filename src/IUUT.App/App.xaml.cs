@@ -114,6 +114,11 @@ public partial class App : Application
         services.AddSingleton(sp => new AccountFlagEditService(sp.GetRequiredService<GameCatalogs>().AccountFlags));
         services.AddSingleton<ProspectEditService>();
 
+        // --- Tier 2: surfacing the finished Core (roadmap Tier 2) --------------
+        services.AddSingleton(sp => new MissionCompletionService(sp.GetRequiredService<GameCatalogs>().Missions));
+        services.AddSingleton<ProspectReturnService>();
+        services.AddSingleton<ProspectReturnFileService>();
+
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();
         services.AddSingleton<GameTuningService>();
