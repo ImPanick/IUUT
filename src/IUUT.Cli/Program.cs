@@ -32,6 +32,7 @@ try
         "lazy-max" => await LazyMaxAsync(ParseOptions(args, profileAndRoot, applyFlag)).ConfigureAwait(false),
         "catalog-refresh" => CatalogRefresh(ParseOptions(args, pakValue, forceFlag)),
         "prospect-report" => ProspectReport(ParseOptions(args, profileAndRoot, none)),
+        "quest-reset" => await QuestResetAsync(ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -65,6 +66,10 @@ static void PrintUsage()
     Console.WriteLine("                   Read-only report over each prospect world save: faction");
     Console.WriteLine("                   mission + quest-step state, and trapped-item totals.");
     Console.WriteLine("                   Defaults to the root's first profile.");
+    Console.WriteLine("  quest-reset      --prospect <name> [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   Reset a prospect's mission progress so it can be replayed.");
+    Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
+    Console.WriteLine("                   size-preserving — items, mounts, and bases are untouched).");
     Console.WriteLine("  recover          Guided save recovery lives in the IUUT app — it needs the UI.");
     Console.WriteLine();
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
@@ -376,6 +381,65 @@ static string ResolveProfileFolder(Dictionary<string, string?> options)
     }
 
     return profiles[0].FolderPath;
+}
+
+static async Task<int> QuestResetAsync(Dictionary<string, string?> options)
+{
+    var prospectName = options.GetValueOrDefault("--prospect")
+        ?? throw new ArgumentException("quest-reset requires --prospect <name> (see prospect-report for names)");
+    var folder = ResolveProfileFolder(options);
+    var path = Path.Combine(folder, "Prospects", prospectName + ".json");
+    if (!File.Exists(path))
+    {
+        Console.Error.WriteLine($"prospect not found: '{path}'");
+        return 1;
+    }
+
+    var model = IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false));
+    var reader = new IUUT.Core.Prospects.World.ProspectQuestReader();
+    var before = reader.ReadBlob(model.ProspectBlob);
+    if (!before.HasMission && before.Steps.Count == 0)
+    {
+        Console.WriteLine("This prospect has no mission or quest state to reset.");
+        return 0;
+    }
+
+    Console.WriteLine($"mission: {before.MissionName} — {(before.MissionComplete ? "COMPLETE" : "in progress")}");
+    Console.WriteLine($"steps:   {before.Steps.Count(s => s.IsComplete)}/{before.Steps.Count} complete");
+
+    var result = IUUT.Core.Prospects.World.ProspectQuestEditor.ResetMission(model);
+    Console.WriteLine($"reset would clear: {result.StepsReset} step(s), {result.VariablesCleared} variable(s)"
+        + (result.ManagerCleared ? ", the mission-complete flag" : ""));
+
+    if (!result.Changed)
+    {
+        Console.WriteLine("Nothing to reset — the mission is already at its initial state.");
+        return 0;
+    }
+
+    if (!options.ContainsKey("--apply"))
+    {
+        Console.WriteLine("Preview only. Re-run with --apply to write (a backup is taken first).");
+        return 0;
+    }
+
+    var clock = new SystemClock();
+    var files = new CustomFileService(
+        new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
+        new BackupManager(clock));
+    var save = await files
+        .SaveJsonTextAsync(path, IUUT.Core.Serializers.ProspectFileSerializer.Serialize(model))
+        .ConfigureAwait(false);
+    if (!save.Ok)
+    {
+        Console.Error.WriteLine($"Write failed; the original prospect is unchanged. {save.Error?.Message}");
+        return 1;
+    }
+
+    var after = reader.ReadBlob(
+        IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false)).ProspectBlob);
+    Console.WriteLine($"APPLIED: steps now {after.Steps.Count(s => s.IsComplete)}/{after.Steps.Count} complete — backup at {save.BackupPath}");
+    return 0;
 }
 
 static int Recover()
