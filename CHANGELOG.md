@@ -12,6 +12,16 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.7.0] — 2026-07-25
+
+### Added
+
+- **Rename mounts deployed in a prospect** — the "DEPLOYED IN PROSPECTS" list in the Mounts
+  editor is no longer read-only: each mount gets a Rename button that rewrites the name
+  inside the prospect's world save. The name can grow or shrink freely; everything else in
+  the world — stats, inventories, bases, quest state — stays byte-identical, and the file is
+  backed up and re-validated as always.
+
 ## [2.6.0] — 2026-07-25
 
 ### Added
