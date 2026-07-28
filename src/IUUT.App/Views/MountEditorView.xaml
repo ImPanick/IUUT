@@ -91,7 +91,7 @@
                                 </Style.Triggers>
                             </Style>
                         </StackPanel.Style>
-                        <TextBlock Text="DEPLOYED IN PROSPECTS  (read-only)" Style="{StaticResource LabelText}" Margin="4,0,0,8" />
+                        <TextBlock Text="DEPLOYED IN PROSPECTS" Style="{StaticResource LabelText}" Margin="4,0,0,8" />
                         <ItemsControl ItemsSource="{Binding ProspectMountGroups}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -103,7 +103,17 @@
                                             <ItemsControl ItemsSource="{Binding Mounts}" Margin="0,4,0,0">
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding}" Style="{StaticResource MonoText}" Margin="10,2,0,0" />
+                                                        <Grid Margin="10,2,0,0">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBlock Grid.Column="0" Text="{Binding Label}" Style="{StaticResource MonoText}"
+                                                                       VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                                            <Button Grid.Column="1" Content="Rename" Padding="8,2" Margin="10,0,0,0"
+                                                                    Click="OnRenameDeployed"
+                                                                    ToolTip="Rename this mount inside the prospect's world save (length-safe blob write; everything else stays byte-identical)." />
+                                                        </Grid>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>

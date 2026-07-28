@@ -210,6 +210,40 @@ public sealed class CustomFileService
         }
     }
 
+    /// <summary>
+    /// Renames the <paramref name="mountIndex"/>-th deployed mount (document order, matching
+    /// <see cref="LoadProspectMountsAsync"/>) inside <c>Prospects\&lt;prospectName&gt;.json</c>
+    /// via the length-fixup blob writer. Returns <c>null</c> when the file or index is missing;
+    /// otherwise the safe-write result (backup + re-parse + atomic).
+    /// </summary>
+    public async Task<SafeSaveResult?> RenameProspectMountAsync(
+        string saveFolder, string prospectName, int mountIndex, string newName, CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(saveFolder);
+        ArgumentException.ThrowIfNullOrEmpty(prospectName);
+        ArgumentException.ThrowIfNullOrEmpty(newName);
+
+        var path = Path.Combine(saveFolder, "Prospects", prospectName + ".json");
+        var json = await ReadTextAsync(path, cancellationToken).ConfigureAwait(false);
+        if (json is null)
+        {
+            return null;
+        }
+
+        var model = ProspectFileParser.Parse(json);
+        var editor = new ProspectMountEditor(
+            UeBlob.Parse(ProspectBlob.ProspectBlobCodec.Decompress(model.ProspectBlob.BinaryBlob)));
+        var mounts = editor.FindMounts();
+        if (mountIndex < 0 || mountIndex >= mounts.Count)
+        {
+            return null;
+        }
+
+        editor.Rename(mounts[mountIndex], newName);
+        ProspectBlob.ProspectBlobCodec.SetUncompressed(model.ProspectBlob, editor.Serialize());
+        return await SaveJsonTextAsync(path, ProspectFileSerializer.Serialize(model), cancellationToken).ConfigureAwait(false);
+    }
+
     /// <summary>The save folder's <c>Prospects\*.json</c> world-save files, sorted by name.</summary>
     public IReadOnlyList<string> ResolveProspectFiles(string saveFolder)
     {

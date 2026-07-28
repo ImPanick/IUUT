@@ -22,6 +22,29 @@ public partial class MountEditorView : UserControl
         }
     }
 
+    private async void OnRenameDeployed(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is not MountEditorViewModel vm ||
+            (sender as FrameworkElement)?.DataContext is not DeployedMountViewModel mount)
+        {
+            return;
+        }
+
+        var newName = Dialogs.PromptDialog.Show(
+            this,
+            "Rename deployed mount",
+            $"New name for “{mount.Name}” (deployed in {mount.ProspectName}).\n\n" +
+            "The prospect's world save is backed up first; only the name changes — stats, " +
+            "inventory, and everything else in the world stay byte-identical.",
+            initialValue: mount.Name,
+            confirmLabel: "RENAME");
+
+        if (newName is not null && !string.Equals(newName, mount.Name, StringComparison.Ordinal))
+        {
+            await vm.RenameDeployedAsync(mount, newName);
+        }
+    }
+
     private async void OnApply(object sender, RoutedEventArgs e)
     {
         if (DataContext is not MountEditorViewModel vm)

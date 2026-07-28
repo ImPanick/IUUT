@@ -157,6 +157,46 @@ public sealed class MountEditorViewModel : ObservableObject, Services.IDirtyEdit
         StatusMessage = $"Cloned “{source.Name}” — rename the copy if you like, then Apply.";
     }
 
+    /// <summary>
+    /// Renames a mount deployed in a prospect's world save (Tier 3 length-fixup blob write;
+    /// call after the user confirmed the new name). Writes immediately — backup + atomic.
+    /// </summary>
+    public async Task RenameDeployedAsync(DeployedMountViewModel mount, string newName)
+    {
+        ArgumentNullException.ThrowIfNull(mount);
+        ArgumentException.ThrowIfNullOrEmpty(newName);
+        if (IsBusy)
+        {
+            return;
+        }
+
+        IsBusy = true;
+        try
+        {
+            var result = await _files.RenameProspectMountAsync(_saveFolder, mount.ProspectName, mount.Index, newName);
+            StatusMessage = result is null
+                ? "Could not rename — the prospect file or mount was not found."
+                : result.Ok
+                    ? $"Renamed “{mount.Name}” to “{newName}” in {mount.ProspectName} — a backup was taken."
+                    : $"Rename failed; the prospect is unchanged. {result.Error?.Message}";
+        }
+#pragma warning disable CA1031 // UI boundary: surface, never crash.
+        catch (Exception ex)
+        {
+            StatusMessage = $"Rename failed: {ex.Message}";
+        }
+#pragma warning restore CA1031
+        finally
+        {
+            IsBusy = false;
+        }
+
+        // Reload so the deployed listing reflects the rename (keep the outcome visible).
+        var outcome = StatusMessage;
+        await LoadAsync();
+        StatusMessage = outcome;
+    }
+
     /// <summary>Applies the edited mounts (call after a user confirm).</summary>
     public async Task ApplyAsync()
     {

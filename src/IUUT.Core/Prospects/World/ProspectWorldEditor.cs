@@ -245,7 +245,8 @@ public sealed class ProspectWorldEditor
             ? BitConverter.ToInt32(leaf.ReplacementValue, 0)
             : BitConverter.ToInt32(_blob.Data, leaf.ValueStart);
 
-    private static byte[] EncodeFString(string s)
+    // Shared with ProspectMountEditor (string rewrites use the same replacement encoding).
+    internal static byte[] EncodeFString(string s)
     {
         using var ms = new MemoryStream();
         if (string.IsNullOrEmpty(s))
