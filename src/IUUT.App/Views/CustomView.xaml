@@ -46,6 +46,9 @@
         <DataTemplate DataType="{x:Type vm:MissionsEditorViewModel}">
             <views:MissionsEditorView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:FieldGuideViewModel}">
+            <views:FieldGuideView />
+        </DataTemplate>
         <DataTemplate DataType="{x:Type vm:ReturnToStashViewModel}">
             <views:ReturnToStashView />
         </DataTemplate>

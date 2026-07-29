@@ -64,6 +64,8 @@ public static class CatalogRefreshService
             updated["bestiary.json"] = RefreshSetCatalog(Rows(tables, "BestiaryData"), currentCatalogJson("bestiary.json"), versionStamp, "bestiary", minimum: 100, report);
             updated["missions.json"] = RefreshMissions(Rows(tables, "Talent"), currentCatalogJson("missions.json"), versionStamp, report);
             updated["prospects.json"] = RefreshProspects(Rows(tables, "IcarusProspect"), currentCatalogJson("prospects.json"), versionStamp, report);
+            updated["fish.json"] = RefreshFish(Rows(tables, "FishData"), currentCatalogJson("fish.json"), versionStamp, report);
+            updated["playertrackers.json"] = RefreshTrackers(Rows(tables, "PlayerTracker"), currentCatalogJson("playertrackers.json"), versionStamp, report);
             // metaresources.json: curated whitelist — deliberately never regenerated (DATA-PROVENANCE.md).
 
             return new CatalogRefreshResult(true, updated, report);
@@ -506,6 +508,90 @@ public static class CatalogRefreshService
         }, "rows", rows.Select(r =>
             "    {\n      \"rowName\": " + JsonSerializer.Serialize(r.RowName) +
             ",\n      \"displayName\": " + (r.Display is null ? "null" : JsonSerializer.Serialize(r.Display)) + "\n    }"));
+    }
+
+    // ---- field guide: fish + player trackers (fully derived) -----------------
+
+    private static string RefreshFish(List<JsonElement> liveFish, string currentJson, string stamp, List<string> report)
+    {
+        // Fish carry no DisplayName anywhere in the pak — only Lore. We never invent a name
+        // (W239 lesson): displayName stays null and the UI humanizes the row, while the real
+        // lore text rides along for the Field Guide.
+        var rows = new List<(string RowName, string? Lore)>();
+        foreach (var row in liveFish)
+        {
+            if (Name(row) is { } name)
+            {
+                rows.Add((name, LocText(row, "Lore")));
+            }
+        }
+
+        if (rows.Count < 40)
+        {
+            throw new CatalogRefreshException($"fish sanity: only {rows.Count} rows (expected ≥ 40)");
+        }
+
+        report.Add($"fish: {rows.Count} rows ({rows.Count(r => r.Lore is not null)} with lore)");
+        using var current = JsonDocument.Parse(currentJson);
+        return WriteCatalog(stamp, current.RootElement, header =>
+        {
+            header.Append("  \"dataTable\": \"D_FishData\",\n");
+        }, "rows", rows.Select(r =>
+        {
+            var sb = new StringBuilder();
+            sb.Append("    {\n      \"rowName\": ").Append(JsonSerializer.Serialize(r.RowName));
+            sb.Append(",\n      \"displayName\": null");
+            if (r.Lore is not null)
+            {
+                sb.Append(",\n      \"lore\": ").Append(JsonSerializer.Serialize(r.Lore));
+            }
+
+            sb.Append("\n    }");
+            return sb.ToString();
+        }));
+    }
+
+    private static string RefreshTrackers(List<JsonElement> liveTrackers, string currentJson, string stamp, List<string> report)
+    {
+        var rows = new List<(string RowName, string? Display, string? Category)>();
+        foreach (var row in liveTrackers)
+        {
+            if (Name(row) is not { } name)
+            {
+                continue;
+            }
+
+            var category = row.TryGetProperty("TrackerCategory", out var c) && c.ValueKind == JsonValueKind.Object &&
+                           c.TryGetProperty("RowName", out var rn) && rn.ValueKind == JsonValueKind.String &&
+                           rn.GetString() is { Length: > 0 } value && value != "None"
+                ? value
+                : null;
+            rows.Add((name, DisplayName(row), category));
+        }
+
+        if (rows.Count < 100)
+        {
+            throw new CatalogRefreshException($"playertrackers sanity: only {rows.Count} rows (expected ≥ 100)");
+        }
+
+        report.Add($"playertrackers: {rows.Count} rows ({rows.Count(r => r.Display is not null)} named)");
+        using var current = JsonDocument.Parse(currentJson);
+        return WriteCatalog(stamp, current.RootElement, header =>
+        {
+            header.Append("  \"dataTable\": \"D_PlayerTrackers\",\n");
+        }, "rows", rows.Select(r =>
+        {
+            var sb = new StringBuilder();
+            sb.Append("    {\n      \"rowName\": ").Append(JsonSerializer.Serialize(r.RowName));
+            sb.Append(",\n      \"displayName\": ").Append(r.Display is null ? "null" : JsonSerializer.Serialize(r.Display));
+            if (r.Category is not null)
+            {
+                sb.Append(",\n      \"category\": ").Append(JsonSerializer.Serialize(r.Category));
+            }
+
+            sb.Append("\n    }");
+            return sb.ToString();
+        }));
     }
 
     // ---- shared writer (matches the embedded 2-space style) ------------------

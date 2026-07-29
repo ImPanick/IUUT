@@ -120,6 +120,7 @@ public partial class App : Application
         services.AddSingleton<ProspectReturnFileService>();
         services.AddSingleton<BackupInventoryService>();
         services.AddSingleton<LoadoutRecoveryService>();
+        services.AddSingleton<FieldGuideEditService>();
 
         // --- Game Tuning (Engine.ini, master §20.1) ---------------------------
         services.AddSingleton<GameTuningCatalog>();

@@ -56,6 +56,33 @@ public class CatalogRefreshServiceTests
 
     private static string NameRow(string name) => $"{{\"Name\": \"{name}\"}}";
 
+    private static string LoreRow(string name, string? lore = null)
+    {
+        var json = "{\"Name\": \"" + name + "\"";
+        if (lore is not null)
+        {
+            json += ", \"Lore\": \"NSLOCTEXT(\\\"D_FishData\\\", \\\"" + name + "-Lore\\\", \\\"" + lore + "\\\")\"";
+        }
+
+        return json + "}";
+    }
+
+    private static string TrackerRow(string name, string? display = null, string? category = null)
+    {
+        var json = "{\"Name\": \"" + name + "\"";
+        if (display is not null)
+        {
+            json += ", \"DisplayName\": \"NSLOCTEXT(\\\"D_PlayerTrackers\\\", \\\"" + name + "-DisplayName\\\", \\\"" + display + "\\\")\"";
+        }
+
+        if (category is not null)
+        {
+            json += ", \"TrackerCategory\": {\"RowName\": \"" + category + "\"}";
+        }
+
+        return json + "}";
+    }
+
     private static string ProspectRow(string name, string? dropName = null)
     {
         var json = "{\"Name\": \"" + name + "\"";
@@ -99,6 +126,10 @@ public class CatalogRefreshServiceTests
         var bestiary = Enumerable.Range(0, 101).Select(i => NameRow($"Creature_{i}"));
         var prospects = Enumerable.Range(0, 150).Select(i => ProspectRow($"Map_Prospect_{i}"))
             .Append(ProspectRow("Outpost_Forest", dropName: "ARCWOOD: Outpost"));
+        var fishRows = Enumerable.Range(0, 40).Select(i => LoreRow($"Fish_{i:00}"))
+            .Append(LoreRow("Fish_Spotted", lore: "These fish have spots."));
+        var trackerRows = Enumerable.Range(0, 100).Select(i => TrackerRow($"Tracker_{i}"))
+            .Append(TrackerRow("CreatureKills", display: "Creatures Killed", category: "Creatures"));
 
         return
         [
@@ -110,6 +141,8 @@ public class CatalogRefreshServiceTests
             Table("AccoladeData", accolades),
             Table("BestiaryData", bestiary),
             Table("IcarusProspect", prospects),
+            Table("FishData", fishRows),
+            Table("PlayerTracker", trackerRows),
         ];
     }
 
@@ -136,6 +169,10 @@ public class CatalogRefreshServiceTests
             ["{\"rowName\": \"Prospect_Old\", \"tree\": \"T\", \"requires\": [], \"defaultUnlocked\": false}"]),
         "prospects.json" => Catalog("rows", "\"dataTable\": \"D_ProspectList\",",
             ["{\"rowName\": \"Old_Prospect\", \"displayName\": null}"]),
+        "fish.json" => Catalog("rows", "\"dataTable\": \"D_FishData\",",
+            ["{\"rowName\": \"Old_Fish\", \"displayName\": null}"]),
+        "playertrackers.json" => Catalog("rows", "\"dataTable\": \"D_PlayerTrackers\",",
+            ["{\"rowName\": \"Old_Tracker\", \"displayName\": null}"]),
         _ => throw new InvalidOperationException(fileName),
     };
 
@@ -249,6 +286,29 @@ public class CatalogRefreshServiceTests
         rows.Should().NotContainKey("Old_Prospect", "regeneration replaces the prior list");
         rows["Outpost_Forest"].GetProperty("displayName").GetString().Should().Be("ARCWOOD: Outpost", "the drop name is the display name");
         rows["Map_Prospect_0"].GetProperty("displayName").ValueKind.Should().Be(JsonValueKind.Null);
+    }
+
+    [Fact]
+    public void Refresh_RegeneratesTheFieldGuideCatalogs()
+    {
+        var result = Run();
+
+        result.Ok.Should().BeTrue(string.Join(" | ", result.Report));
+
+        using var fish = JsonDocument.Parse(result.UpdatedCatalogs["fish.json"]);
+        var fishRows = fish.RootElement.GetProperty("rows").EnumerateArray()
+            .ToDictionary(r => r.GetProperty("rowName").GetString()!, r => r);
+        fishRows.Should().HaveCount(41).And.NotContainKey("Old_Fish", "fish are fully regenerated");
+        fishRows["Fish_Spotted"].GetProperty("lore").GetString().Should().Be("These fish have spots.");
+        fishRows["Fish_00"].GetProperty("displayName").ValueKind.Should().Be(JsonValueKind.Null,
+            "the game ships no display name for fish — we never invent one");
+
+        using var trackers = JsonDocument.Parse(result.UpdatedCatalogs["playertrackers.json"]);
+        var trackerRows = trackers.RootElement.GetProperty("rows").EnumerateArray()
+            .ToDictionary(r => r.GetProperty("rowName").GetString()!, r => r);
+        trackerRows.Should().HaveCount(101).And.NotContainKey("Old_Tracker");
+        trackerRows["CreatureKills"].GetProperty("displayName").GetString().Should().Be("Creatures Killed");
+        trackerRows["CreatureKills"].GetProperty("category").GetString().Should().Be("Creatures");
     }
 
     [Fact]

@@ -32,6 +32,7 @@ public sealed class CustomViewModel : ObservableObject
     private readonly ProspectReturnFileService _prospectReturn;
     private readonly IUUT.Core.Io.BackupInventoryService _backups;
     private readonly LoadoutRecoveryService _loadoutRecovery;
+    private readonly FieldGuideEditService _fieldGuide;
     private readonly GameCatalogs _catalogs;
     private readonly Services.SaveRootState _saveRootState;
     private int _loadedRootVersion = -1;
@@ -61,11 +62,14 @@ public sealed class CustomViewModel : ObservableObject
         ProspectReturnFileService prospectReturn,
         IUUT.Core.Io.BackupInventoryService backups,
         LoadoutRecoveryService loadoutRecovery,
+        FieldGuideEditService fieldGuide,
         GameCatalogs catalogs,
         Services.SaveRootState saveRootState)
     {
         ArgumentNullException.ThrowIfNull(loadoutRecovery);
+        ArgumentNullException.ThrowIfNull(fieldGuide);
         _loadoutRecovery = loadoutRecovery;
+        _fieldGuide = fieldGuide;
         ArgumentNullException.ThrowIfNull(saveRootState);
         ArgumentNullException.ThrowIfNull(accountFlags);
         ArgumentNullException.ThrowIfNull(missions);
@@ -275,6 +279,8 @@ public sealed class CustomViewModel : ObservableObject
                 new ProspectsEditorViewModel(_files, _prospect, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("missions", not null) =>
                 new MissionsEditorViewModel(_apply, _missions, _catalogs, slot.FolderPath, slot.DisplayLabel),
+            ("fieldguide", not null) =>
+                new FieldGuideViewModel(_apply, _fieldGuide, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("returntostash", not null) =>
                 new ReturnToStashViewModel(_files, _prospectReturn, _catalogs, slot.FolderPath, slot.DisplayLabel),
             ("backupmanager", not null) =>
@@ -317,6 +323,15 @@ public sealed class CustomViewModel : ObservableObject
             Label = "Accolades & Bestiary",
             Description = "Grant or remove accolades; set a creature group's scan points.",
             Status = "Wired — AccoladeBestiaryEditService.",
+        },
+        new()
+        {
+            Key = "fieldguide",
+            Group = "PROGRESSION",
+            Glyph = SymbolRegular.Book24,
+            Label = "Field Guide",
+            Description = "Tracked statistics, fishing records, and checklists — the counters behind many accolades.",
+            Status = "Wired — FieldGuideEditService.",
         },
         new()
         {

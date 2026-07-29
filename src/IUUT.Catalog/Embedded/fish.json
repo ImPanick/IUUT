@@ -1,0 +1,362 @@
+{
+  "catalogVersion": "datapak-live-2026-07-28",
+  "dataTable": "D_FishData",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-28. Self-refreshes at runtime from the local pak (DATA-PROVENANCE.md).",
+  "rows": [
+    {
+      "rowName": "Fish_01",
+      "displayName": null,
+      "lore": "These fish have spots as a form of camouflage, which helps them blend in with their surroundings and avoid predators."
+    },
+    {
+      "rowName": "Fish_01_Var2",
+      "displayName": null,
+      "lore": "These fish have spots as a form of camouflage, which helps them blend in with their surroundings and avoid predators."
+    },
+    {
+      "rowName": "Fish_01_Var3",
+      "displayName": null,
+      "lore": "These fish have spots as a form of camouflage, which helps them blend in with their surroundings and avoid predators."
+    },
+    {
+      "rowName": "Fish_01_Var4",
+      "displayName": null,
+      "lore": "These fish have spots as a form of camouflage, which helps them blend in with their surroundings and avoid predators."
+    },
+    {
+      "rowName": "Fish_02",
+      "displayName": null,
+      "lore": "The coloration of this fish allows it to hide in the shadows or blend in with the sandy or rocky bottom of its habitat, especially at night."
+    },
+    {
+      "rowName": "Fish_02_Var2",
+      "displayName": null,
+      "lore": "The coloration of this fish allows it to hide in the shadows or blend in with the sandy or rocky bottom of its habitat, especially at night."
+    },
+    {
+      "rowName": "Fish_02_Var3",
+      "displayName": null,
+      "lore": "The coloration of this fish allows it to hide in the shadows or blend in with the sandy or rocky bottom of its habitat, especially at night."
+    },
+    {
+      "rowName": "Fish_02_Var4",
+      "displayName": null,
+      "lore": "The coloration of this fish allows it to hide in the shadows or blend in with the sandy or rocky bottom of its habitat, especially at night."
+    },
+    {
+      "rowName": "Fish_03",
+      "displayName": null,
+      "lore": "The reflective scales of this species can help to confuse predators or attract prey, as the shimmering appearance may be mistaken for the movement of small fish or other prey."
+    },
+    {
+      "rowName": "Fish_03_Var2",
+      "displayName": null,
+      "lore": "The reflective scales of this species can help to confuse predators or attract prey, as the shimmering appearance may be mistaken for the movement of small fish or other prey."
+    },
+    {
+      "rowName": "Fish_03_Var3",
+      "displayName": null,
+      "lore": "The reflective scales of this species can help to confuse predators or attract prey, as the shimmering appearance may be mistaken for the movement of small fish or other prey."
+    },
+    {
+      "rowName": "Fish_03_Var4",
+      "displayName": null,
+      "lore": "The reflective scales of this species can help to confuse predators or attract prey, as the shimmering appearance may be mistaken for the movement of small fish or other prey."
+    },
+    {
+      "rowName": "Fish_04",
+      "displayName": null,
+      "lore": "The Ripjaw is a fierce predator that feeds on a variety of prey items, including smaller fish and invertebrates"
+    },
+    {
+      "rowName": "Fish_04_Var2",
+      "displayName": null,
+      "lore": "The Ripjaw is a fierce predator that feeds on a variety of prey items, including smaller fish and invertebrates"
+    },
+    {
+      "rowName": "Fish_04_Var3",
+      "displayName": null,
+      "lore": "The Ripjaw is a fierce predator that feeds on a variety of prey items, including smaller fish and invertebrates"
+    },
+    {
+      "rowName": "Fish_04_Var4",
+      "displayName": null,
+      "lore": "The Ripjaw is a fierce predator that feeds on a variety of prey items, including smaller fish and invertebrates"
+    },
+    {
+      "rowName": "Fish_05",
+      "displayName": null,
+      "lore": "This fish is adapted for fast swimming and maneuverability in the open ocean with it\\\u0027s streamlined body that allows it to move through the water with minimal resistance."
+    },
+    {
+      "rowName": "Fish_05_Var2",
+      "displayName": null,
+      "lore": "This fish is adapted for fast swimming and maneuverability in the open ocean with it\\\u0027s streamlined body that allows it to move through the water with minimal resistance."
+    },
+    {
+      "rowName": "Fish_05_Var3",
+      "displayName": null,
+      "lore": "This fish is adapted for fast swimming and maneuverability in the open ocean with it\\\u0027s streamlined body that allows it to move through the water with minimal resistance."
+    },
+    {
+      "rowName": "Fish_05_Var4",
+      "displayName": null,
+      "lore": "This fish is adapted for fast swimming and maneuverability in the open ocean with it\\\u0027s streamlined body that allows it to move through the water with minimal resistance."
+    },
+    {
+      "rowName": "Fish_06",
+      "displayName": null,
+      "lore": "The Triggerfish exhibits territorial behavior and courtship displays, which help it to find and attract mates or defend its territory from other fish."
+    },
+    {
+      "rowName": "Fish_06_Var2",
+      "displayName": null,
+      "lore": "The Triggerfish exhibits territorial behavior and courtship displays, which help it to find and attract mates or defend its territory from other fish."
+    },
+    {
+      "rowName": "Fish_06_Var3",
+      "displayName": null,
+      "lore": "The Triggerfish exhibits territorial behavior and courtship displays, which help it to find and attract mates or defend its territory from other fish."
+    },
+    {
+      "rowName": "Fish_06_Var4",
+      "displayName": null,
+      "lore": "The Triggerfish exhibits territorial behavior and courtship displays, which help it to find and attract mates or defend its territory from other fish."
+    },
+    {
+      "rowName": "Fish_07",
+      "displayName": null,
+      "lore": "The shiny scales of this fish help it to blend in with the reflective and shimmering surfaces of its environment."
+    },
+    {
+      "rowName": "Fish_07_Var2",
+      "displayName": null,
+      "lore": "The shiny scales of this fish help it to blend in with the reflective and shimmering surfaces of its environment."
+    },
+    {
+      "rowName": "Fish_07_Var3",
+      "displayName": null,
+      "lore": "The shiny scales of this fish help it to blend in with the reflective and shimmering surfaces of its environment."
+    },
+    {
+      "rowName": "Fish_07_Var4",
+      "displayName": null,
+      "lore": "The shiny scales of this fish help it to blend in with the reflective and shimmering surfaces of its environment."
+    },
+    {
+      "rowName": "Fish_08",
+      "displayName": null,
+      "lore": "This fish uses it\\\u0027s stripes to signal to other fish in its school or potential mates."
+    },
+    {
+      "rowName": "Fish_08_Var2",
+      "displayName": null,
+      "lore": "This fish uses it\\\u0027s stripes to signal to other fish in its school or potential mates."
+    },
+    {
+      "rowName": "Fish_08_Var3",
+      "displayName": null,
+      "lore": "This fish uses it\\\u0027s stripes to signal to other fish in its school or potential mates."
+    },
+    {
+      "rowName": "Fish_08_Var4",
+      "displayName": null,
+      "lore": "This fish uses it\\\u0027s stripes to signal to other fish in its school or potential mates."
+    },
+    {
+      "rowName": "Fish_09",
+      "displayName": null,
+      "lore": "This fish has adapted to swim against strong currents and navigate through rocky rapids."
+    },
+    {
+      "rowName": "Fish_09_Var2",
+      "displayName": null,
+      "lore": "This fish has adapted to swim against strong currents and navigate through rocky rapids."
+    },
+    {
+      "rowName": "Fish_09_Var3",
+      "displayName": null,
+      "lore": "This fish has adapted to swim against strong currents and navigate through rocky rapids."
+    },
+    {
+      "rowName": "Fish_09_Var4",
+      "displayName": null,
+      "lore": "This fish has adapted to swim against strong currents and navigate through rocky rapids."
+    },
+    {
+      "rowName": "Fish_10",
+      "displayName": null,
+      "lore": "A small freshwater fish known for its striking coloration and active personality."
+    },
+    {
+      "rowName": "Fish_10_Var2",
+      "displayName": null,
+      "lore": "A small freshwater fish known for its striking coloration and active personality."
+    },
+    {
+      "rowName": "Fish_10_Var3",
+      "displayName": null,
+      "lore": "A small freshwater fish known for its striking coloration and active personality."
+    },
+    {
+      "rowName": "Fish_10_Var4",
+      "displayName": null,
+      "lore": "A small freshwater fish known for its striking coloration and active personality."
+    },
+    {
+      "rowName": "Fish_11",
+      "displayName": null,
+      "lore": "This species\\\u0027 firm, white flesh and mild flavor make it a favorite among seafood enthusiasts."
+    },
+    {
+      "rowName": "Fish_11_Var2",
+      "displayName": null,
+      "lore": "This species\\\u0027 firm, white flesh and mild flavor make it a favorite among seafood enthusiasts."
+    },
+    {
+      "rowName": "Fish_11_Var3",
+      "displayName": null,
+      "lore": "This species\\\u0027 firm, white flesh and mild flavor make it a favorite among seafood enthusiasts."
+    },
+    {
+      "rowName": "Fish_11_Var4",
+      "displayName": null,
+      "lore": "This species\\\u0027 firm, white flesh and mild flavor make it a favorite among seafood enthusiasts."
+    },
+    {
+      "rowName": "Fish_12",
+      "displayName": null,
+      "lore": "This fish is known for its vibrant coloration and elongated body shape."
+    },
+    {
+      "rowName": "Fish_12_Var2",
+      "displayName": null,
+      "lore": "This fish is known for its vibrant coloration and elongated body shape."
+    },
+    {
+      "rowName": "Fish_12_Var3",
+      "displayName": null,
+      "lore": "This fish is known for its vibrant coloration and elongated body shape."
+    },
+    {
+      "rowName": "Fish_12_Var4",
+      "displayName": null,
+      "lore": "This fish is known for its vibrant coloration and elongated body shape."
+    },
+    {
+      "rowName": "Fish_13",
+      "displayName": null,
+      "lore": "Anglers prize this species for its fighting spirit and delicious flesh; though its fine bones can cause issues if eaten."
+    },
+    {
+      "rowName": "Fish_13_Var2",
+      "displayName": null,
+      "lore": "Anglers prize this species for its fighting spirit and delicious flesh; though its fine bones can cause issues if eaten."
+    },
+    {
+      "rowName": "Fish_13_Var3",
+      "displayName": null,
+      "lore": "Anglers prize this species for its fighting spirit and delicious flesh; though its fine bones can cause issues if eaten."
+    },
+    {
+      "rowName": "Fish_13_Var4",
+      "displayName": null,
+      "lore": "Anglers prize this species for its fighting spirit and delicious flesh; though its fine bones can cause issues if eaten."
+    },
+    {
+      "rowName": "Fish_14",
+      "displayName": null,
+      "lore": "This fish is highly regarded for it\\\u0027s soft and easily cooked flesh, but has been known to cause disturbing hallucinations in a few rare cases."
+    },
+    {
+      "rowName": "Fish_14_Var2",
+      "displayName": null,
+      "lore": "This fish is highly regarded for it\\\u0027s soft and easily cooked flesh, but has been known to cause disturbing hallucinations in a few rare cases."
+    },
+    {
+      "rowName": "Fish_14_Var3",
+      "displayName": null,
+      "lore": "This fish is highly regarded for it\\\u0027s soft and easily cooked flesh, but has been known to cause disturbing hallucinations in a few rare cases."
+    },
+    {
+      "rowName": "Fish_14_Var4",
+      "displayName": null,
+      "lore": "This fish is highly regarded for it\\\u0027s soft and easily cooked flesh, but has been known to cause disturbing hallucinations in a few rare cases."
+    },
+    {
+      "rowName": "Fish_15",
+      "displayName": null,
+      "lore": "This elusive fish is only found in the Styx region of Icarus. The UDA advises that any contractors that catch and consume this species do so at their own risk."
+    },
+    {
+      "rowName": "Fish_15_Var2",
+      "displayName": null,
+      "lore": "This elusive fish is only found in the Styx region of Icarus. The UDA advises that any contractors that catch and consume this species do so at their own risk."
+    },
+    {
+      "rowName": "Fish_16",
+      "displayName": null,
+      "lore": "Found only in the Olympus region of Icarus, scientists are unsure if this fish is a result of exotic mutation or if it is truly native to the planet."
+    },
+    {
+      "rowName": "Fish_16_Var2",
+      "displayName": null,
+      "lore": "Found only in the Olympus region of Icarus, scientists are unsure if this fish is a result of exotic mutation or if it is truly native to the planet."
+    },
+    {
+      "rowName": "Fish_17",
+      "displayName": null,
+      "lore": "Unique to the Prometheus region, these fish are known for their elongated snouts, and extremely thin fins."
+    },
+    {
+      "rowName": "Fish_17_Var2",
+      "displayName": null,
+      "lore": "Unique to the Prometheus region, these fish are known for their elongated snouts, and extremely thin fins."
+    },
+    {
+      "rowName": "Fish_18",
+      "displayName": null,
+      "lore": "These uncommon fish are known for their pockmarked scales, hazardous spikes, and bulging eyes. "
+    },
+    {
+      "rowName": "Fish_18_Var2",
+      "displayName": null,
+      "lore": "These uncommon fish are known for their pockmarked scales, hazardous spikes, and bulging eyes. "
+    },
+    {
+      "rowName": "Fish_18_Var3",
+      "displayName": null,
+      "lore": "These uncommon fish are known for their pockmarked scales, hazardous spikes, and bulging eyes. "
+    },
+    {
+      "rowName": "Fish_18_Var4",
+      "displayName": null,
+      "lore": "These uncommon fish are known for their pockmarked scales, hazardous spikes, and bulging eyes. "
+    },
+    {
+      "rowName": "Fish_19",
+      "displayName": null,
+      "lore": "Heavily affected by exotics, this odd looking fish is known for its tiny but extremely sharp teeth, and the strange mutation of its eyes. "
+    },
+    {
+      "rowName": "Fish_19_Var2",
+      "displayName": null,
+      "lore": "Heavily affected by exotics, this odd looking fish is known for its tiny but extremely sharp teeth, and the strange mutation of its eyes. "
+    },
+    {
+      "rowName": "Fish_19_Var3",
+      "displayName": null,
+      "lore": "Heavily affected by exotics, this odd looking fish is known for its tiny but extremely sharp teeth, and the strange mutation of its eyes. "
+    },
+    {
+      "rowName": "Fish_19_Var4",
+      "displayName": null,
+      "lore": "Heavily affected by exotics, this odd looking fish is known for its tiny but extremely sharp teeth, and the strange mutation of its eyes. "
+    },
+    {
+      "rowName": "Fish_20",
+      "displayName": null,
+      "lore": "Heavily affected by radiation, this odd looking fish is known for its strange mutation of its eyes. "
+    }
+  ]
+}

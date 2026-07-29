@@ -1,0 +1,658 @@
+{
+  "catalogVersion": "datapak-live-2026-07-28",
+  "dataTable": "D_PlayerTrackers",
+  "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-28. Self-refreshes at runtime from the local pak (DATA-PROVENANCE.md).",
+  "rows": [
+    {
+      "rowName": "LevelReached",
+      "displayName": "Player Level"
+    },
+    {
+      "rowName": "MIssionsCompleted",
+      "displayName": "Missions Completed"
+    },
+    {
+      "rowName": "CreatureKills",
+      "displayName": "Creatures Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BabyCreatureKills",
+      "displayName": "Baby Creatures Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "DeerKills",
+      "displayName": "Deer Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BabyDeerKills",
+      "displayName": "Baby Deer Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "GoatKills",
+      "displayName": "Goat Kills",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "WolfKills",
+      "displayName": "Wolves Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BearKills",
+      "displayName": "Bears Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "ChamoisKills",
+      "displayName": "Chamois Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "ElephantKills",
+      "displayName": "ElephantsKilled",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "PolarBearKills",
+      "displayName": "Polar Bears Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "LionKills",
+      "displayName": "Lions Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "MammothKills",
+      "displayName": "Mammoths Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "RabbitKills",
+      "displayName": "Rabbits Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "JaguarKills",
+      "displayName": "Jaguars Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "RaccoonKills",
+      "displayName": "Raccoons Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "LeopardKills",
+      "displayName": "Leopards Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BuffaloKills",
+      "displayName": "Buffalos Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BoarKills",
+      "displayName": "Boars Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "ZebraKills",
+      "displayName": "Zebras Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "SandwormsKilled",
+      "displayName": "Sandworms Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "CaveWormKills",
+      "displayName": "Cave Worms Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "FishKills",
+      "displayName": "Fish Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "BossKills",
+      "displayName": "Bosses Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "SandwormBossKills",
+      "displayName": "Sandworm Bosses Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "MammothBossKills",
+      "displayName": "Mammoth Bosses Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "JaguarBossKills",
+      "displayName": "Jaguar Bosses Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "WolfBossKills",
+      "displayName": "Wolf Bosses Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "VoxelsHit",
+      "displayName": "Voxels Hit"
+    },
+    {
+      "rowName": "VoxelsCompleted",
+      "displayName": "Voxels Completed"
+    },
+    {
+      "rowName": "StoneMined",
+      "displayName": "Stone Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "IronMined",
+      "displayName": "Iron Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "OxiteMined",
+      "displayName": "Oxite Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "CopperMined",
+      "displayName": "Copper Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "BauxiteMined",
+      "displayName": "Bauxite Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "SulfurMined",
+      "displayName": "Sulfur Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "SilicaMined",
+      "displayName": "Silica Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "IceMined",
+      "displayName": "Ice Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "TitaniumMined",
+      "displayName": "Titanium Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "PlatinumMined",
+      "displayName": "Platinum Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "CoalMined",
+      "displayName": "Coal Mined",
+      "category": "Mining"
+    },
+    {
+      "rowName": "MeleeKills",
+      "displayName": "Melee Weapon Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "AxeKills",
+      "displayName": "Axe Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "PickaxeKills",
+      "displayName": "Pickaxe Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "KnifeKills",
+      "displayName": "Knife Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "SpearKills",
+      "displayName": "Spear Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "FistKills",
+      "displayName": "Fist Kills",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "RangedKills",
+      "displayName": "Ranged Weapon Kills",
+      "category": "RangedWeapons"
+    },
+    {
+      "rowName": "BowKills",
+      "displayName": "Bow Kills",
+      "category": "RangedWeapons"
+    },
+    {
+      "rowName": "ArrowsFired",
+      "displayName": "Arrows Fired",
+      "category": "ProjectilesFired"
+    },
+    {
+      "rowName": "FirearmKills",
+      "displayName": "Firearm Kills",
+      "category": "RangedWeapons"
+    },
+    {
+      "rowName": "BulletsFired",
+      "displayName": "Bullets Fired",
+      "category": "ProjectilesFired"
+    },
+    {
+      "rowName": "CriticalHits",
+      "displayName": "Critical Hits"
+    },
+    {
+      "rowName": "StealthAttacks",
+      "displayName": "Stealth Attacks"
+    },
+    {
+      "rowName": "KillcamKills",
+      "displayName": "Killcam Kills"
+    },
+    {
+      "rowName": "CreaturesSkinned",
+      "displayName": "Creatures Skinned"
+    },
+    {
+      "rowName": "BoneCollected",
+      "displayName": "Bone Collected",
+      "category": "Skinning"
+    },
+    {
+      "rowName": "LeatherCollected",
+      "displayName": "Leather Collected",
+      "category": "Skinning"
+    },
+    {
+      "rowName": "FurCollected",
+      "displayName": "Fur Collected",
+      "category": "Skinning"
+    },
+    {
+      "rowName": "MeatCollected",
+      "displayName": "Meat Collected",
+      "category": "Skinning"
+    },
+    {
+      "rowName": "PrimeMeatCollected",
+      "displayName": "Prime Meat Collected",
+      "category": "Skinning"
+    },
+    {
+      "rowName": "TreesFelled",
+      "displayName": "Trees Felled"
+    },
+    {
+      "rowName": "WoodCollected",
+      "displayName": "Wood Collected",
+      "category": "Logging"
+    },
+    {
+      "rowName": "FibreCollected",
+      "displayName": "Fibre Collected",
+      "category": "Gathering"
+    },
+    {
+      "rowName": "BerriesCollected",
+      "displayName": "Berries Collected",
+      "category": "Gathering"
+    },
+    {
+      "rowName": "TimeSurvived",
+      "displayName": "Time Survived"
+    },
+    {
+      "rowName": "TimeSurvivedInForest",
+      "displayName": "Time Survived in Forest Biome"
+    },
+    {
+      "rowName": "TimeSurvivedInOutpost",
+      "displayName": "Time Survived in Outposts"
+    },
+    {
+      "rowName": "HoursSurvivedInOutpost",
+      "displayName": "Time Survived in Outposts"
+    },
+    {
+      "rowName": "TimeSurvivedInDesert",
+      "displayName": "Time Survived in Desert Biome"
+    },
+    {
+      "rowName": "TimeSurvivedInArctic",
+      "displayName": "Time Survived in Arctic Biome"
+    },
+    {
+      "rowName": "TimeSurvivedInCaves",
+      "displayName": "Time Survived in Caves"
+    },
+    {
+      "rowName": "NightsSlept",
+      "displayName": "Nights Slept"
+    },
+    {
+      "rowName": "DistanceTraveled",
+      "displayName": "Distance Traveled"
+    },
+    {
+      "rowName": "DistanceTraveledInForest",
+      "displayName": "Distance Traveled in Forest Biome"
+    },
+    {
+      "rowName": "DistanceTraveledInDesert",
+      "displayName": "Distance Traveled in Desert Biome"
+    },
+    {
+      "rowName": "DistanceTraveledInArctic",
+      "displayName": "Distance Traveled in Arctic Biome"
+    },
+    {
+      "rowName": "DistanceTraveledInCaves",
+      "displayName": "Distance Traveled in Caves"
+    },
+    {
+      "rowName": "DownedCount",
+      "displayName": "Times Downed"
+    },
+    {
+      "rowName": "RevivedCount",
+      "displayName": "Times Revived"
+    },
+    {
+      "rowName": "RespawnCount",
+      "displayName": "Times Respawned"
+    },
+    {
+      "rowName": "OtherPlayersRevivedCount",
+      "displayName": "Times Reviving Other Players"
+    },
+    {
+      "rowName": "FoodConsumed",
+      "displayName": "Food Consumed",
+      "category": "Consume"
+    },
+    {
+      "rowName": "BuildingsCrafted",
+      "displayName": "Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "ThatchBuildingsCrafted",
+      "displayName": "Thatch Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "WoodBuildingsCrafted",
+      "displayName": "Wood Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "InteriorWoodBuildingsCrafted",
+      "displayName": "Interior Wood Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "StoneBuildingsCrafted",
+      "displayName": "Stone Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "ConcreteBuildingsCrafted",
+      "displayName": "Concrete Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "IronBuildingsCrafted",
+      "displayName": "Iron Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "GlassBuildingsCrafted",
+      "displayName": "Glass Building Pieces Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "DeployablesCrafted",
+      "displayName": "Deployables Crafted",
+      "category": "Crafting"
+    },
+    {
+      "rowName": "FiresExtinguished",
+      "displayName": "Fires Extinguished"
+    },
+    {
+      "rowName": "CornHarvested",
+      "displayName": "Corn Harvested",
+      "category": "Farming"
+    },
+    {
+      "rowName": "PumpkinHarvested",
+      "displayName": "Pumpkins Harvested",
+      "category": "Farming"
+    },
+    {
+      "rowName": "MushroomHarvested",
+      "displayName": "Mushrooms Harvested",
+      "category": "Farming"
+    },
+    {
+      "rowName": "SquashHarvested",
+      "displayName": "Squash Harvested",
+      "category": "Farming"
+    },
+    {
+      "rowName": "WatermelonHarvested",
+      "displayName": "Watermelon Harvested",
+      "category": "Farming"
+    },
+    {
+      "rowName": "MoaKills",
+      "displayName": "Moas Killed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "PlayerKills",
+      "displayName": "Players Killed"
+    },
+    {
+      "rowName": "StruckByLightningCount",
+      "displayName": "Times Struck by Lightning"
+    },
+    {
+      "rowName": "VisitBiomesList",
+      "displayName": "Biomes Visited"
+    },
+    {
+      "rowName": "OreTypesMinedList",
+      "displayName": "Ore Types Mined"
+    },
+    {
+      "rowName": "PlantTypesCollectedList",
+      "displayName": "Plant Types Collected"
+    },
+    {
+      "rowName": "FoodsCraftedList",
+      "displayName": "Foods Cooked"
+    },
+    {
+      "rowName": "ItemsAltered",
+      "displayName": "Items Altered"
+    },
+    {
+      "rowName": "ThumperActivations",
+      "displayName": "ThumperActivations"
+    },
+    {
+      "rowName": "ThumperCompletions",
+      "displayName": "Thumper runs completed"
+    },
+    {
+      "rowName": "VoxelsRegenerated",
+      "displayName": "Voxels Regenerated"
+    },
+    {
+      "rowName": "OreRegenerated",
+      "displayName": "Ore Regenerated"
+    },
+    {
+      "rowName": "CreditsEarned",
+      "displayName": "Ren Earned"
+    },
+    {
+      "rowName": "ExoticsEarned",
+      "displayName": "Exotics Earned"
+    },
+    {
+      "rowName": "StyxMissionCompletionList",
+      "displayName": "Styx Missions Completed"
+    },
+    {
+      "rowName": "OlympusMissionCompletionList",
+      "displayName": "Olympus Missions Completed"
+    },
+    {
+      "rowName": "BlueprintsUnlockedT1List",
+      "displayName": "Blueprints Unlocked in Tier 1"
+    },
+    {
+      "rowName": "BlueprintsUnlockedT2List",
+      "displayName": "Blueprints Unlocked in Tier 2"
+    },
+    {
+      "rowName": "BlueprintsUnlockedT3List",
+      "displayName": "Blueprints Unlocked in Tier 3"
+    },
+    {
+      "rowName": "BlueprintsUnlockedT4List",
+      "displayName": "Blueprints Unlocked in Tier 4"
+    },
+    {
+      "rowName": "FishTypesCaughtList",
+      "displayName": "Fish Types Caught"
+    },
+    {
+      "rowName": "BestiaryEntriesCompletedList",
+      "displayName": "Bestiary Entries Completed"
+    },
+    {
+      "rowName": "StealthCriticalKills",
+      "displayName": "Stealth Critical Kills"
+    },
+    {
+      "rowName": "BiomassExtracted",
+      "displayName": "Biomass Extracted"
+    },
+    {
+      "rowName": "RockGolemMissionList",
+      "displayName": "Quarrite Missions Complete"
+    },
+    {
+      "rowName": "IceMammothMissionList",
+      "displayName": "Rimetusk Missions Complete"
+    },
+    {
+      "rowName": "ApeMissionList",
+      "displayName": "Garganutan Missions Complete"
+    },
+    {
+      "rowName": "OlympusDynamicMissionsComplete",
+      "displayName": null
+    },
+    {
+      "rowName": "StyxDynamicMissionsComplete",
+      "displayName": null
+    },
+    {
+      "rowName": "PrometheusDynamicMissionsComplete",
+      "displayName": null
+    },
+    {
+      "rowName": "TimeSurvivedInNullSec",
+      "displayName": "Time Survived in Null Sector"
+    },
+    {
+      "rowName": "HoursSurvivedInNullSec",
+      "displayName": "Time Survived in Null Sector"
+    },
+    {
+      "rowName": "RedExoticsEarned",
+      "displayName": "Red Exotics Earned"
+    },
+    {
+      "rowName": "CreaturesTamed",
+      "displayName": "Creatures Tamed",
+      "category": "Creatures"
+    },
+    {
+      "rowName": "ProStoryMissionCompletionList",
+      "displayName": "Prometheus Story Missions Completed"
+    },
+    {
+      "rowName": "NullsecStoryMissionCompletionList",
+      "displayName": "Null Sector Story Missions Completed"
+    },
+    {
+      "rowName": "ShieldResist",
+      "displayName": "Damage Resisted By Shield",
+      "category": "MeleeWeapons"
+    },
+    {
+      "rowName": "OutpostBuildingsPlaced",
+      "displayName": "Buildings Placed on Outposts"
+    },
+    {
+      "rowName": "OpenWorldsDynamicMissionsComplete",
+      "displayName": "Open World Dynamic Missions Complete"
+    },
+    {
+      "rowName": "ResourcePacksRequested",
+      "displayName": "Resource Packs Requested"
+    },
+    {
+      "rowName": "ElysiumMissionList",
+      "displayName": null
+    },
+    {
+      "rowName": "DronesKilled",
+      "displayName": null
+    },
+    {
+      "rowName": "UraniumExoticsEarned",
+      "displayName": null
+    },
+    {
+      "rowName": "BlueprintsUnlockedT5List",
+      "displayName": "Blueprints Unlocked in Tier 5"
+    },
+    {
+      "rowName": "BestiaryEntriesCompletedList2",
+      "displayName": "Bestiary Entries Completed"
+    }
+  ]
+}

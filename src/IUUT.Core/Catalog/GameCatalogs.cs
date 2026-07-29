@@ -14,6 +14,8 @@ public sealed class GameCatalogs
         CatalogTable bestiary,
         CatalogTable metaResources,
         CatalogTable prospects,
+        CatalogTable fish,
+        CatalogTable playerTrackers,
         FlagCatalog accountFlags,
         FlagCatalog characterFlags,
         MissionCatalog missions)
@@ -24,6 +26,8 @@ public sealed class GameCatalogs
         Bestiary = bestiary;
         MetaResources = metaResources;
         Prospects = prospects;
+        Fish = fish;
+        PlayerTrackers = playerTrackers;
         AccountFlags = accountFlags;
         CharacterFlags = characterFlags;
         Missions = missions;
@@ -47,6 +51,12 @@ public sealed class GameCatalogs
     /// <summary><c>D_ProspectList</c> — prospects with their in-game drop names (e.g. "ARCWOOD: Outpost").</summary>
     public CatalogTable Prospects { get; }
 
+    /// <summary><c>D_FishData</c> — every catchable fish (no in-game display name exists; lore rides in <c>Extra</c>).</summary>
+    public CatalogTable Fish { get; }
+
+    /// <summary><c>D_PlayerTrackers</c> — the tracked statistics, with their in-game names and categories.</summary>
+    public CatalogTable PlayerTrackers { get; }
+
     /// <summary><c>D_AccountFlags</c> — <c>Profile.UnlockedFlags</c> ids (mission rewards, story grants, blueprints).</summary>
     public FlagCatalog AccountFlags { get; }
 
@@ -64,6 +74,8 @@ public sealed class GameCatalogs
         CatalogLoader.LoadEmbedded("bestiary.json"),
         CatalogLoader.LoadEmbedded("metaresources.json"),
         CatalogLoader.LoadEmbedded("prospects.json"),
+        CatalogLoader.LoadEmbedded("fish.json"),
+        CatalogLoader.LoadEmbedded("playertrackers.json"),
         FlagCatalogLoader.LoadEmbedded("accountflags.json"),
         FlagCatalogLoader.LoadEmbedded("characterflags.json"),
         MissionCatalogLoader.LoadEmbedded("missions.json"));
@@ -85,6 +97,8 @@ public sealed class GameCatalogs
             Cached(cacheDirectory, "bestiary.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
             CatalogLoader.LoadEmbedded("metaresources.json"),
             Cached(cacheDirectory, "prospects.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
+            Cached(cacheDirectory, "fish.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
+            Cached(cacheDirectory, "playertrackers.json", CatalogLoader.Load, CatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "accountflags.json", FlagCatalogLoader.Load, FlagCatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "characterflags.json", FlagCatalogLoader.Load, FlagCatalogLoader.LoadEmbedded),
             Cached(cacheDirectory, "missions.json", MissionCatalogLoader.Load, MissionCatalogLoader.LoadEmbedded));
