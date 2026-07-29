@@ -12,6 +12,25 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.8.0] — 2026-07-28
+
+### Added
+
+- **Field Guide** (PROGRESSION) — the tracked data the game keeps and IUUT previously only
+  preserved without showing: **144 statistics** with their in-game names and categories
+  (distance travelled, time survived, creatures killed…), **fishing records** for all 71
+  catchable fish — listed whether or not you've caught them, with the game's own lore — and
+  the **completion checklists** (e.g. visit every biome). All editable, backed up and
+  validated like every other editor.
+- Two new self-refreshing catalogs mined from your `data.pak`: `fish.json` and
+  `playertrackers.json`.
+
+### Notes
+
+- Investigated removing the minimap fog: it is **not stored in the save**. Every prospect's
+  map record (`TileFlags`, `RadarV3Scans`) is empty even on heavily-explored worlds, and the
+  game exposes no fog setting — so no save editor can reveal the map.
+
 ## [2.7.0] — 2026-07-25
 
 ### Added
