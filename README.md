@@ -1,6 +1,6 @@
 # Icarus Ultimate Utility Tool (IUUT)
 
-A free, **offline**, open-source Windows tool that **repairs broken [Icarus](https://www.surviveicarus.com/) (RocketWerkz) save files** and lets players **safely edit their own local progression** — with automatic backups, atomic writes, and **zero telemetry**.
+A free, **offline**, open-source Windows tool that **repairs broken [Icarus](https://www.surviveicarus.com/) (RocketWerkz) save files**, **rescues what the game has trapped**, and lets players **safely edit their own local progression** — with automatic backups, atomic writes, and **zero telemetry**.
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/920c16bf5898406495629923788e394f)](https://app.codacy.com/gh/ImPanick/IUUT/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Build & Test](https://github.com/ImPanick/IUUT/actions/workflows/build.yml/badge.svg)](https://github.com/ImPanick/IUUT/actions/workflows/build.yml)
@@ -9,24 +9,23 @@ A free, **offline**, open-source Windows tool that **repairs broken [Icarus](htt
 ![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4)
 ![Platform: Windows x64](https://img.shields.io/badge/platform-Windows%20x64-0078D6)
 [![Code style: dotnet format](https://img.shields.io/badge/code%20style-dotnet%20format-success)](.editorconfig)
-<!-- After connecting the repo at https://app.codacy.com, paste the generated badge here:
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/<PROJECT_ID>)](https://app.codacy.com/gh/ImPanick/IUUT/dashboard) -->
 
-> **Status — feature-complete, pre-release.** All three workflows and every save-editing
-> category are implemented and tested; the solution builds clean (0 warnings / 0 errors,
-> warnings-as-errors), **300+ tests pass**, and `dotnet format` + the governance linter
-> verify clean. v1.0.0 ships once it's code-signed and tagged.
+> **Status — shipping.** Latest release **v2.7.0**. The solution builds clean (0 warnings /
+> 0 errors, warnings-as-errors), **363 tests pass**, and `dotnet format` + the governance
+> linter verify clean. Releases are built and attested by CI; binaries are **not yet
+> Authenticode-signed**, so Windows SmartScreen will warn on first run — verify the checksum
+> and build attestation instead ([below](#verify-your-download)).
 
 ---
 
 ## Mission
 
-Editing an Icarus save means hand-surgery on fragile JSON (and a binary blob or two) that the
-game will silently reject — or that a mid-write crash, a Steam Cloud conflict, or a bad patch
-can corrupt outright. **IUUT exists so no Icarus player has to do that by hand, and so a broken
-save is recoverable instead of lost.** It is a community tool, unaffiliated with RocketWerkz, that
-reads and writes the exact same files the game already does — on your own PC, fully offline, never
-without a backup.
+Editing an Icarus save means hand-surgery on fragile JSON (and a compressed binary world blob)
+that the game will silently reject — or that a mid-write crash, a Steam Cloud conflict, or a bad
+patch can corrupt outright. **IUUT exists so no Icarus player has to do that by hand, and so a
+broken save is recoverable instead of lost.** It is a community tool, unaffiliated with
+RocketWerkz, that reads and writes the exact same files the game already does — on your own PC,
+fully offline, never without a backup.
 
 **Non-negotiables** (enforced by an in-repo contract + CI, not just promised):
 
@@ -34,47 +33,73 @@ without a backup.
   backup is made before any change, and a write that wouldn't round-trip is refused, never applied.
 - **Offline & private.** No telemetry, analytics, crash reporting, cloud upload, accounts, or
   auto-update. The *only* network call is an optional Steam name lookup with your own API key.
+  Your save never leaves your machine — a claim the upload-and-paywall portals structurally
+  cannot make.
 - **No PII, ever.** Real SteamID64s / character names / persona names never enter the repo (CI-enforced).
 - **No install.** One self-contained `IUUT.exe` — no setup wizard, no admin, no registry, no .NET required.
 
 ## What IUUT does
 
-Three workflows from one Windows desktop app:
+### 🛠 Rescue — the reason IUUT exists
 
-### 🛠 Broken-Save Recovery
-Full health scan (parses every JSON + checksums every prospect blob) → backup-chain restore
-(finds and ranks every `*.backup*` by parse-OK + recency) → template repair (rebuilds a valid
-skeleton and salvages what it can) → a plain-English advisor for the *non*-corruption causes
-(Steam Cloud conflict, Controlled Folder Access, OneDrive conflicted copies, schema mismatch).
+| | |
+| --- | --- |
+| **Broken-save recovery** | Full health scan (parses every JSON, checksums every prospect blob) → backup-chain restore (ranks every candidate by parse-OK + recency) → template repair (rebuilds a valid skeleton and salvages what it can) → a plain-English advisor for the *non*-corruption causes (Steam Cloud conflict, Controlled Folder Access, OneDrive conflicted copies, schema mismatch). |
+| **Return to Stash** | Items stranded in a prospect you can't re-enter — because the host is gone, or the world won't resume — pulled back into your orbital stash. The stash is written *first*, so an interrupted rescue can only duplicate (recoverable), never lose. |
+| **Backup Manager** | Browse every timestamped IUUT backup, restore any of them (the current file is backed up first — restores are themselves reversible), prune the rest. |
+| **Loadout recovery** | The two community hand-edits, made safe: flip `bInsured` to free gear held by an offline host, and recreate stash items a loadout references but that vanished — exact GUID and item row, so the loadout is whole again. |
+| **Mount rescue** | Clone a roster mount (its binary stats blob carried byte-for-byte), and rename mounts deployed *inside* a prospect. |
 
 ### ⚡ Lazy Max
-One click, non-breaking: unlock all character talents (the game clamps each to its true max on
-load), max currencies, unlock all workshop/prospect blueprints, complete the accolade + bestiary
-logs, and set the account/character mission-unlock flags — across the four core save files, with a
-confirmation dialog and an automatic backup. It deliberately leaves your stash, loadouts, prospects,
-mounts, and config untouched.
+
+One click, non-breaking: unlock all character talents (each clamped to its **true** max, mined
+from the game's own reward tables), max currencies, unlock all workshop/prospect blueprints,
+complete the accolade + bestiary logs, and set the mission-unlock flags — with a confirmation
+dialog and an automatic backup. It deliberately leaves your stash, loadouts, prospects, mounts,
+and config untouched.
 
 ### 🎛 Custom editor
-Pick exactly what to change, **Preview → Apply** with a diff:
 
-| Category | What you can edit |
+Pick exactly what to change, **Preview → Apply**, always behind a confirm dialog that names the
+files it will touch. The sidebar is grouped by intent:
+
+| Group | Editors |
 | --- | --- |
-| Account & Currencies | every MetaResource amount |
-| Workshop Blueprints | searchable unlock checklist |
-| Account Flags | `UnlockedFlags` by name |
-| Characters & Talents | rename, XP/debt, revive, per-talent ranks, bulk-max trees |
-| Accolades & Bestiary | grant/complete accolades, set creature scan points |
-| **Orbital Stash** (signature) | visual item grid, durability bars, **repair**, add/remove, stack editing, loadout-aware warnings |
-| Loadouts | per-prospect viewer (stash cross-reference) |
-| Mounts | name, level, type |
-| Engine Flags | `flags_<SteamID>.dat` checklist by name |
-| Prospects | unstick a stuck character; state/difficulty/insurance |
-| **Prospect worlds** (new) | edit items *inside* a prospect and **return trapped items to your orbital stash** — IUUT reverse-engineers the game's UE binary world blob to do this losslessly |
-| Game Tuner | toggle-owned `Engine.ini` tweaks (FPS, fog, …) |
-| Advanced / Raw | read-only JSON viewer + validated import/export |
+| **Progression** | Account & Currencies · Characters & Talents (rename, XP/debt, revive, per-talent ranks) · Accolades & Bestiary · Account Flags · Engine Flags · **Missions** (complete a mission *and* its full prerequisite chain) |
+| **World** | **Orbital Stash** (visual grid, durability bars, repair, add/remove, stack editing, loadout-aware warnings) · Loadouts · Prospects (unstick a stuck character) · Mounts · **Prospect Quests** (reset a mission so it can be replayed) |
+| **Rescue** | Return to Stash · Backup Manager (broken-save Recovery is its own top-level screen) |
+| **Advanced** | Game Tuner (`Engine.ini` tweaks — FPS, fog, quality) · Raw JSON viewer + validated import/export |
 
-Catalog-driven: every internal RowName is shown as its human name, re-mined directly from the
-game's current `data.pak` (see [docs/DATA-PROVENANCE.md](docs/DATA-PROVENANCE.md)).
+Search boxes and virtualized lists throughout (the talent list alone is 2,200+ rows), a staged-edit
+indicator, and an unsaved-changes guard so a stray click never discards your work.
+
+### 🔄 Always current — no update treadmill
+
+IUUT **mines your own installed `data.pak` at runtime**. When Icarus patches, the tool re-reads
+the game's 257 data tables and merges them into its catalogs on next launch — 2,221 talents, 447
+accolades, 197 prospects, and every item and flag, named the way the game names them. The merge is
+sanity-gated: if anything looks wrong, the refresh is rejected wholesale and IUUT keeps its shipped
+snapshot. Nothing is downloaded; the pak never leaves your disk.
+
+### 🧭 The prospect world blob
+
+IUUT reverse-engineers the game's compressed Unreal world save losslessly — the technical moat no
+other maintained local tool has finished. Today that powers Return to Stash, deployed-mount
+listing and renaming, and **quest reset** (the category leader's flagship *paid* feature, here
+offline and free). Every blob write is gated by round-trip fixtures before it ships.
+
+## Command line
+
+The same engine, headless — for scripting, CI, and power users:
+
+```
+iuut check              # health scan every profile (exit 2 = issues found)
+iuut backup-all         # timestamped backups of every save file
+iuut lazy-max           # preview by default; --apply to write
+iuut catalog-refresh    # re-mine catalogs from your data.pak
+iuut prospect-report    # per-prospect mission + quest-step state, trapped-item totals
+iuut quest-reset        # reset a prospect's mission (preview; --apply to write)
+```
 
 ## Get IUUT
 
@@ -90,8 +115,8 @@ file next to `IUUT.exe`). Removal = delete the exe + that folder.
 
 ### Verify your download
 
-The published `IUUT.exe` is self-contained (no .NET install needed) and is built reproducibly by
-CI. Verify before running:
+The published `IUUT.exe` is self-contained (no .NET install needed) and is built by CI. Because it
+is not yet code-signed, verifying is how you establish trust:
 
 ```powershell
 # 1) checksum — compare against the SHA256SUMS.txt shipped with the release
@@ -112,8 +137,22 @@ If you built it yourself, `scripts/publish-release.ps1` writes the matching hash
 | **Stack** | .NET 8, WPF (WPF-UI), self-contained single-file `IUUT.exe` |
 | **Save root** | `%LOCALAPPDATA%\Icarus\Saved\` |
 | **Target** | `PlayerData\<SteamID>\` (shown in UI as your Steam **display name**) |
+| **Game data** | Self-refreshed from your local `Icarus\Content\Data\data.pak` |
 | **Online** | Optional Steam name lookup only; **all editing works fully offline** |
 | **Telemetry** | **None.** No analytics, no cloud, no accounts. |
+
+## Where IUUT is going
+
+The current arc is tracked in **[docs/ELEVATION-ROADMAP.md](docs/ELEVATION-ROADMAP.md)**. Tiers 0–2
+(foundation, self-refresh, UI overhaul, and surfacing every finished Core capability) are complete;
+Tier 3 spends the blob moat on features competitors paywall:
+
+| Next | What it is |
+| --- | --- |
+| **Homestead pack-up** | Extract your base's actor subtree from one prospect and inject it into another — relocation without rebuilding. Gated: lossless round-trip fixtures must pass before it is even announced. |
+| **Offline map + deployable viewer** | Plot your containers and bases from the local blob over terrain maps; click a crate → see contents → jump to Return to Stash. The privacy-preserving alternative to upload-based cartographers. |
+| **Deeper prospect diagnosis** | Header repair and host reassignment for the "failed to resume prospect" threads that today have no tool at all. |
+| **Code signing** | Authenticode via Azure Trusted Signing, to retire the SmartScreen warning. |
 
 ## Build & run
 
@@ -125,7 +164,7 @@ cd IUUT
 pwsh -File scripts/install-hooks.ps1               # REQUIRED governance hook
 
 dotnet build IcarusUltimateUtilityTool.sln -c Release   # 0 warnings / 0 errors
-dotnet test  IcarusUltimateUtilityTool.sln -c Release   # 300+ tests
+dotnet test  IcarusUltimateUtilityTool.sln -c Release   # 363 tests
 dotnet run   --project src/IUUT.App                     # launch the app
 
 # produce the shippable single-file IUUT.exe + SHA256SUMS.txt
@@ -142,12 +181,15 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **300+ xUnit tests** (round-trip parse/serialize, edit services, recovery, codecs, validation).
+- **363 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+  catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
+  test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
+- **Adversarial review** before releases: multi-agent passes that must confirm a finding against
+  the real code before it counts.
 
-External grading is via **[Codacy](https://www.codacy.com/)**. To activate it: sign in to
-[app.codacy.com](https://app.codacy.com) with GitHub, add `ImPanick/IUUT`, and paste the generated
-**Grade** badge into the badge row above. The repo ships a [`.codacy.yaml`](.codacy.yaml) that excludes
-embedded game-data catalogs, fixtures, docs, and mockups so the grade reflects real source code.
+External grading is via **[Codacy](https://www.codacy.com/)**. The repo ships a
+[`.codacy.yaml`](.codacy.yaml) that excludes embedded game-data catalogs, fixtures, docs, and
+mockups so the grade reflects real source code.
 
 ---
 
@@ -160,16 +202,20 @@ IUUT/
 ├── .github/  .githooks/          ← CI workflows + commit-msg governance hook
 ├── docs/
 │   ├── IUUT-PROJECT-DOCUMENTATION.md   ← master spec (what to build)
-│   ├── EXECUTION-PLAN.md               ← phased path to v1.0
-│   ├── DATA-PROVENANCE.md              ← where the catalog data comes from + how to re-mine
-│   ├── DEVELOPMENT.md / CICD.md        ← dev runbook / pipelines
+│   ├── ELEVATION-ROADMAP.md            ← the current arc: tiers, status, what's next
+│   ├── DATA-PROVENANCE.md              ← where the catalog data comes from + how it refreshes
+│   ├── DEVELOPMENT.md / CICD.md        ← dev runbook / pipelines + versioning policy
 │   └── INSTALL.md                      ← operator guide (get, verify, run, remove)
 ├── Icarus-Analysis.md            ← save-format field guide (technical source of truth)
 ├── src/
-│   ├── IUUT.Core/                ← domain logic (zero UI deps): editing, recovery, prospect blobs
-│   ├── IUUT.Catalog/             ← embedded D_* catalog data (re-mined from data.pak)
-│   ├── IUUT.App/                 ← WPF shell
-│   └── IUUT.Cli/                 ← headless CLI (scaffold)
+│   ├── IUUT.Core/                ← domain logic (zero UI deps)
+│   │   ├── DataPak/              ←   runtime miner + sanity-gated catalog refresh
+│   │   ├── Prospects/World/      ←   UE world-blob reader/writer (items, mounts, quests)
+│   │   ├── Editing/  Recovery/   ←   edit + rescue services
+│   │   └── Io/                   ←   safe writer, backups, backup inventory
+│   ├── IUUT.Catalog/             ← embedded catalog snapshots (fallback for the self-refresh)
+│   ├── IUUT.App/                 ← WPF shell — Controls/ Dialogs/ Theme/ ViewModels/ Views/
+│   └── IUUT.Cli/                 ← headless CLI (check, backup-all, lazy-max, …)
 ├── tests/IUUT.Core.Tests/        ← xUnit + FluentAssertions
 └── scripts/                      ← publish, extract-datapak, governance-lint, install-hooks
 ```
@@ -184,8 +230,8 @@ Antigravity) **and humans**, all bound by an enforceable contract. Before touchi
 3. **[CONTRIBUTING.md](CONTRIBUTING.md)** — the contribution loop.
 
 Every commit cites the docs it consulted and declares its agent identity; the `commit-msg` hook and
-CI enforce this. See **[docs/CICD.md](docs/CICD.md)** for the pipeline and **[SECURITY.md](SECURITY.md)**
-for disclosure.
+CI enforce this. See **[docs/CICD.md](docs/CICD.md)** for the pipeline and versioning policy
+(`X` = major/overhaul, `Y` = content, `Z` = fixes), and **[SECURITY.md](SECURITY.md)** for disclosure.
 
 ## Disclaimer
 
