@@ -34,7 +34,7 @@ try
         "prospect-report" => ProspectReport(ParseOptions(args, profileAndRoot, none)),
         "quest-reset" => await QuestResetAsync(ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
         "homestead-move" => await HomesteadMoveAsync(
-            ParseOptions(args, ["--prospect", "--profile", "--root", "--build", "--by", "--radius"], applyFlag)).ConfigureAwait(false),
+            ParseOptions(args, ["--prospect", "--profile", "--root", "--build", "--by", "--radius"], ["--apply", "--snap"])).ConfigureAwait(false),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -73,12 +73,13 @@ static void PrintUsage()
     Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
     Console.WriteLine("                   size-preserving — items, mounts, and bases are untouched).");
     Console.WriteLine("  homestead-move   --prospect <name> [--build <n>] [--by <x,y,z>] [--radius <m>]");
-    Console.WriteLine("                   [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   [--snap] [--profile <steamid-or-path>] [--apply]");
     Console.WriteLine("                   List what you have built, grouped into separate builds; with");
     Console.WriteLine("                   --build and --by, relocate one build by that many metres.");
-    Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
-    Console.WriteLine("                   size-preserving). Moves geometry only — it cannot know the");
-    Console.WriteLine("                   ground height at the destination.");
+    Console.WriteLine("                   Reports the estimated ground height at the destination and");
+    Console.WriteLine("                   how sure it is; --snap picks the z offset that lands the");
+    Console.WriteLine("                   build on it. Preview by default; --apply writes (backup");
+    Console.WriteLine("                   first, atomic, size-preserving).");
     Console.WriteLine("  recover          Guided save recovery lives in the IUUT app — it needs the UI.");
     Console.WriteLine();
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
@@ -547,6 +548,27 @@ static async Task<int> HomesteadMoveAsync(Dictionary<string, string?> options)
     }
 
     var target = clusters[index];
+
+    // Estimate the ground at both ends. Comparing the two preserves the build's relationship to
+    // the terrain — sitting 2 m proud of the ground here means sitting 2 m proud there — without
+    // needing to know how the build is footed.
+    var terrain = IUUT.Core.Prospects.World.TerrainHeightField.FromProspect(model);
+    var here = terrain.EstimateAt(target.CentreX, target.CentreY);
+    var there = terrain.EstimateAt(target.CentreX + dx, target.CentreY + dy);
+    double? suggestedDz = here is not null && there is not null ? there.HeightMetres - here.HeightMetres : null;
+
+    if (options.ContainsKey("--snap"))
+    {
+        if (suggestedDz is null)
+        {
+            Console.Error.WriteLine("--snap needs a ground estimate at both ends, and this prospect has too few "
+                                  + "world actors to give one. Re-run with an explicit z offset.");
+            return 1;
+        }
+
+        dz = suggestedDz.Value;
+    }
+
     var result = IUUT.Core.Prospects.World.ProspectHomesteadEditor.MoveCluster(model, target, dx, dy, dz);
     if (!result.Changed)
     {
@@ -558,8 +580,36 @@ static async Task<int> HomesteadMoveAsync(Dictionary<string, string?> options)
     Console.WriteLine($"  from ({target.CentreX:N0}, {target.CentreY:N0}, {target.CentreZ:N0}) m");
     Console.WriteLine($"  to   ({target.CentreX + dx:N0}, {target.CentreY + dy:N0}, {target.CentreZ + dz:N0}) m");
     Console.WriteLine("  Structures keep their shape, contents, and anchoring; nothing else in the save changes.");
-    Console.WriteLine("  This moves geometry only — IUUT cannot know the ground height where the build lands,");
-    Console.WriteLine("  so it may end up floating or buried. Small hops on flat ground are the safe case.");
+
+    // Ground report. IUUT infers this from the world's own actors — say so, and say how sure it is.
+    Console.WriteLine($"\n  Ground height (estimated from {terrain.SampleCount:N0} world features, not surveyed):");
+    if (there is null)
+    {
+        Console.WriteLine("    Not enough world features in this prospect to estimate. Treat the drop as unknown.");
+    }
+    else
+    {
+        Console.WriteLine($"    at the destination: {there.HeightMetres:N0} m — {there.Confidence} confidence");
+        Console.WriteLine($"      {there.Explanation}");
+        if (suggestedDz is not null)
+        {
+            var landing = dz - suggestedDz.Value;
+            Console.WriteLine(Math.Abs(landing) < 1
+                ? "    The build should land about level with the ground."
+                : $"    The build would land about {Math.Abs(landing):N0} m {(landing > 0 ? "ABOVE" : "BELOW")} the ground"
+                  + $" — {(landing > 0 ? "floating" : "buried")}.");
+
+            if (!options.ContainsKey("--snap") && Math.Abs(landing) >= 1)
+            {
+                Console.WriteLine($"    Add --snap to use a z offset of {suggestedDz.Value:N0} m instead and sit it on the ground.");
+            }
+        }
+
+        if (there.Confidence == IUUT.Core.Prospects.World.TerrainHeightConfidence.Low)
+        {
+            Console.WriteLine("    LOW CONFIDENCE — this is a guess. Move somewhere flatter, or expect to re-level by hand.");
+        }
+    }
 
     if (!options.ContainsKey("--apply"))
     {

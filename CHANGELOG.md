@@ -12,6 +12,43 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.13.0] — 2026-08-07
+
+### Added
+
+- **IUUT now knows roughly how high the ground is.** `iuut homestead-move` reports the estimated
+  ground height where your build would land, how confident it is, and whether the build would end
+  up floating or buried. `--snap` picks the z offset that sits it on the ground instead of making
+  you work it out.
+
+  ```
+  Ground height (estimated from 1,088 world features, not surveyed):
+    at the destination: -172 m — Low confidence
+      nothing within 60 m to measure against — the closest is 65 m away
+    The build would land about 67 m BELOW the ground — buried.
+    Add --snap to use a z offset of 67 m instead and sit it on the ground.
+  ```
+
+This closes the caveat v2.12.0 shipped with, and it is the piece the planned click-and-deploy map
+needs: a map click gives X and Y, and this gives Z.
+
+**Where the number comes from.** Icarus does ship real landscape heightmaps, but they are
+Oodle-compressed inside the game's pakchunks and the game links Oodle statically — there is no
+decompressor IUUT could reach without bundling proprietary code, so that route is closed (recorded
+so nobody re-opens it). The save answers the question anyway: every actor that is not player-built
+— resource deposits, voxels, cave mouths — sits on the terrain, and v2.11.0 decodes all of their
+positions. That is a scattered height field, free and offline.
+
+**What it is worth.** Measured against 1,010 real placements whose true height is known, across
+seven prospects: overall median error 2.0 m, p90 8.5 m — but the tail reaches 191 m, which is why
+confidence exists rather than a bare number. Every catastrophic miss falls in the low-confidence
+buckets. Restricted to high confidence, 66% of placements are covered at a median of 1.6 m, p90
+4.4 m, worst 16.9 m. Two calibration results shaped it, both contradicting the obvious guess:
+filtering to "clean" resource-deposit samples is four times *worse* than using every world actor
+(density beats purity), and cave actors barely bias anything, so they stay in.
+
+It is an estimate and says so on every line that reports it. It is never presented as a survey.
+
 ## [2.12.0] — 2026-08-07
 
 ### Added

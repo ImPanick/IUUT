@@ -49,7 +49,7 @@ fully offline, never without a backup.
 | **Backup Manager** | Browse every timestamped IUUT backup, restore any of them (the current file is backed up first — restores are themselves reversible), prune the rest. |
 | **Loadout recovery** | The two community hand-edits, made safe: flip `bInsured` to free gear held by an offline host, and recreate stash items a loadout references but that vanished — exact GUID and item row, so the loadout is whole again. |
 | **Mount rescue** | Clone a roster mount (its binary stats blob carried byte-for-byte), and rename mounts deployed *inside* a prospect. |
-| **Base relocation** | Built somewhere you regret? IUUT groups your structures into separate builds and moves one of them, contents and anchoring intact, without rebuilding a thing. It moves geometry only — it can't know the ground height where the build lands — so the preview tells you that before you commit. |
+| **Base relocation** | Built somewhere you regret? IUUT groups your structures into separate builds and moves one of them, contents and anchoring intact, without rebuilding a thing. It also works out roughly how high the ground is where the build would land — inferred from the world's own features, graded by how sure it is, and never dressed up as a survey — so you can drop it level instead of floating or buried. |
 
 ### ⚡ Lazy Max
 
@@ -101,6 +101,7 @@ iuut catalog-refresh    # re-mine catalogs from your data.pak
 iuut prospect-report    # per-prospect mission + quest-step state, trapped-item totals
 iuut quest-reset        # reset a prospect's mission (preview; --apply to write)
 iuut homestead-move     # list your builds; relocate one (preview; --apply to write)
+                        #   --snap sits the build on the estimated ground height
 ```
 
 ## Get IUUT
@@ -153,7 +154,7 @@ Tier 3 spends the blob moat on features competitors paywall:
 | --- | --- |
 | **Homestead pack-up** | Moving a base *within* its prospect ships today. The remaining half is carrying it to a **different** prospect — extracting the actor subtree and re-homing its ids in the destination world. Gated: lossless round-trip fixtures must pass before it is even announced. |
 | **Offline map + deployable viewer** | Plot your containers and bases from the local blob over terrain maps; click a crate → see contents → jump to Return to Stash. The privacy-preserving alternative to upload-based cartographers. |
-| **Click-and-deploy relocation** | Base relocation, on the map: pick a build, click where you want it, done. The move already works — what the map adds is picking the spot by eye instead of typing coordinates, and solving the one thing IUUT can't currently know. Your save turns out to carry the answer: every resource deposit and cave mouth in the world sits on the terrain, so the blob holds a rough height map of your planet. It lands a build within about a metre of the ground, and tells you when it's guessing. |
+| **Click-and-deploy relocation** | Base relocation, on the map: pick a build, click where you want it, done. Both halves now exist — the move (v2.12.0) and the ground height (v2.13.0) — so what's left is letting you pick the spot by eye instead of typing coordinates. |
 | **Deeper prospect diagnosis** | Header repair and host reassignment for the "failed to resume prospect" threads that today have no tool at all. |
 | **Code signing** | Authenticode via Azure Trusted Signing, to retire the SmartScreen warning. |
 
@@ -184,7 +185,7 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **379 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+- **385 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
   catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
   test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
 - **Adversarial review** before releases: multi-agent passes that must confirm a finding against
