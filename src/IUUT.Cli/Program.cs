@@ -64,8 +64,8 @@ static void PrintUsage()
     Console.WriteLine("                   (offline; sanity-gated; a rejected refresh changes nothing).");
     Console.WriteLine("  prospect-report  [--profile <steamid-or-path>] [--root <path>]");
     Console.WriteLine("                   Read-only report over each prospect world save: faction");
-    Console.WriteLine("                   mission + quest-step state, and trapped-item totals.");
-    Console.WriteLine("                   Defaults to the root's first profile.");
+    Console.WriteLine("                   mission + quest-step state, trapped-item totals, and what");
+    Console.WriteLine("                   you have built. Defaults to the root's first profile.");
     Console.WriteLine("  quest-reset      --prospect <name> [--profile <steamid-or-path>] [--apply]");
     Console.WriteLine("                   Reset a prospect's mission progress so it can be replayed.");
     Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
@@ -334,6 +334,30 @@ static int ProspectReport(Dictionary<string, string?> options)
             Console.WriteLine(trapped.Count == 0
                 ? "  items:   nothing trapped"
                 : $"  items:   {trapped.Count} kind(s), {trapped.Sum(t => t.TotalQuantity)} total — recover via Return to Stash");
+
+            var homestead = new IUUT.Core.Prospects.World.ProspectHomesteadReader().ReadBlob(model.ProspectBlob);
+            if (homestead.Structures.Count == 0)
+            {
+                Console.WriteLine($"  base:    nothing built ({homestead.TotalActors} world actors)");
+            }
+            else
+            {
+                Console.WriteLine($"  base:    {homestead.Structures.Count} structure(s) of {homestead.TotalActors} actors");
+                foreach (var (rowName, count) in homestead.ByKind.Take(8))
+                {
+                    Console.WriteLine($"    {count,4}x {rowName}");
+                }
+
+                if (homestead.ByKind.Count > 8)
+                {
+                    Console.WriteLine($"    … {homestead.ByKind.Count - 8} more kind(s)");
+                }
+
+                Console.WriteLine($"    links:  {homestead.FoundationLinked} anchored to a foundation, " +
+                                  $"{homestead.WhitelistLinked} with a tame whitelist");
+                Console.WriteLine($"    ids:    {homestead.DistinctActorGuids} actor ids in use (max {homestead.MaxActorGuid}), " +
+                                  $"{homestead.TileNames.Count} terrain tile(s) referenced");
+            }
         }
         catch (Exception ex) when (ex is InvalidDataException or FormatException)
         {
