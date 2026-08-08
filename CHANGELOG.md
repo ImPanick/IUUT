@@ -12,6 +12,21 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.10.0] — 2026-08-07
+
+### Added
+
+- **See what you've built.** `iuut prospect-report` now lists the structures in each prospect
+  alongside its mission state and trapped items — benches, beds, windows, lights, crates, and
+  the rest, picked out of the world save and counted by type. On a fully built homestead that's
+  114 structures among 1,820 world actors.
+
+This is the read-only first step of **homestead pack-up** (moving a base between prospects).
+Alongside the inventory it measures what such a move would have to reconcile — the actor-id
+space, the foundation anchors and tame whitelists that link pieces together, and the terrain
+tiles a base is bound to. Per the project's own rule for this feature, nothing is written until
+lossless round-trip fixtures pass.
+
 ## [2.9.0] — 2026-08-07
 
 Catalog refresh for the latest game patch (build 24590233).
