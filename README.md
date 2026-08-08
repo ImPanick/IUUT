@@ -153,6 +153,7 @@ Tier 3 spends the blob moat on features competitors paywall:
 | --- | --- |
 | **Homestead pack-up** | Moving a base *within* its prospect ships today. The remaining half is carrying it to a **different** prospect — extracting the actor subtree and re-homing its ids in the destination world. Gated: lossless round-trip fixtures must pass before it is even announced. |
 | **Offline map + deployable viewer** | Plot your containers and bases from the local blob over terrain maps; click a crate → see contents → jump to Return to Stash. The privacy-preserving alternative to upload-based cartographers. |
+| **Click-and-deploy relocation** | Base relocation, on the map: pick a build, click where you want it, done. The move already works — what the map adds is picking the spot by eye instead of typing coordinates, and solving the one thing IUUT can't currently know. Your save turns out to carry the answer: every resource deposit and cave mouth in the world sits on the terrain, so the blob holds a rough height map of your planet. It lands a build within about a metre of the ground, and tells you when it's guessing. |
 | **Deeper prospect diagnosis** | Header repair and host reassignment for the "failed to resume prospect" threads that today have no tool at all. |
 | **Code signing** | Authenticode via Azure Trusted Signing, to retire the SmartScreen warning. |
 
