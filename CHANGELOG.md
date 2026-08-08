@@ -12,6 +12,18 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.11.0] — 2026-08-07
+
+### Added
+
+- **Where your base is.** `iuut prospect-report` now shows each base's centre, elevation, and
+  how far it's spread — decoded straight from the world save. Real saves range from a tight
+  21-piece camp to 460 structures scattered across 7 km.
+
+Under the hood this decodes each structure's world placement (position, rotation, scale), which
+was previously unreadable. It's the prerequisite for two features: relocating a base between
+prospects, and the planned offline map viewer.
+
 ## [2.10.0] — 2026-08-07
 
 ### Added
