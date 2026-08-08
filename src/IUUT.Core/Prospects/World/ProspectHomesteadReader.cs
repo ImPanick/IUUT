@@ -9,7 +9,8 @@ public sealed record HomesteadActor(
     string RecorderClass,
     int ActorGuid,
     int FoundationUid,
-    int WhitelistedActorCount)
+    int WhitelistedActorCount,
+    ProspectTransform? Placement = null)
 {
     /// <summary>Whether this piece is anchored to another actor (a foundation link that a move must preserve).</summary>
     public bool HasFoundation => FoundationUid >= 0;
@@ -47,6 +48,34 @@ public sealed record HomesteadSurvey(
 
     /// <summary>Pieces with a tame whitelist — another set of cross-actor references.</summary>
     public int WhitelistLinked => Structures.Count(s => s.WhitelistedActorCount > 0);
+
+    /// <summary>The placements that decoded (structures whose world position is known).</summary>
+    public IReadOnlyList<ProspectTransform> Placements =>
+        Structures.Where(s => s.Placement is not null).Select(s => s.Placement!).ToList();
+
+    /// <summary>
+    /// The base's centre in metres and its longest span — the footprint a relocation would move.
+    /// Null when no structure's placement decoded.
+    /// </summary>
+    public (double X, double Y, double Z, double SpanMetres)? Footprint
+    {
+        get
+        {
+            var placements = Placements;
+            if (placements.Count == 0)
+            {
+                return null;
+            }
+
+            var cx = placements.Average(p => (double)p.X);
+            var cy = placements.Average(p => (double)p.Y);
+            var cz = placements.Average(p => (double)p.Z);
+            var span = placements.Count < 2
+                ? 0
+                : placements.Max(a => placements.Max(a.DistanceTo));
+            return (cx / 100.0, cy / 100.0, cz / 100.0, span);
+        }
+    }
 }
 
 /// <summary>
@@ -112,12 +141,14 @@ public sealed class ProspectHomesteadReader
                 continue;
             }
 
+            var transformNode = Find(actor, "ActorTransform");
             structures.Add(new HomesteadActor(
                 FindString(actor, decompressed, "StaticItemDataRowName") ?? "",
                 componentClass,
                 FindInt(actor, decompressed, "IcarusActorGUID") ?? -1,
                 FindInt(actor, decompressed, "FoundationActorIcarusUID") ?? -1,
-                CountWhitelisted(actor)));
+                CountWhitelisted(actor),
+                transformNode is null ? null : ProspectTransformReader.Read(decompressed, transformNode)));
         }
 
         return new HomesteadSurvey(structures, total, guids.Count, guids.Count == 0 ? 0 : guids.Max(), [.. tiles]);

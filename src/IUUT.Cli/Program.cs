@@ -353,6 +353,12 @@ static int ProspectReport(Dictionary<string, string?> options)
                     Console.WriteLine($"    … {homestead.ByKind.Count - 8} more kind(s)");
                 }
 
+                if (homestead.Footprint is { } fp)
+                {
+                    Console.WriteLine($"    where:  centre ({fp.X:N0}, {fp.Y:N0}) m, elevation {fp.Z:N0} m, " +
+                                      $"spread {fp.SpanMetres:N0} m across {homestead.Placements.Count} placed piece(s)");
+                }
+
                 Console.WriteLine($"    links:  {homestead.FoundationLinked} anchored to a foundation, " +
                                   $"{homestead.WhitelistLinked} with a tame whitelist");
                 Console.WriteLine($"    ids:    {homestead.DistinctActorGuids} actor ids in use (max {homestead.MaxActorGuid}), " +

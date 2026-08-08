@@ -44,6 +44,32 @@ internal static class UeFixtureBuilder
     /// <summary>An <c>IntProperty</c>.</summary>
     public static byte[] IntProp(string name, int value) => Tag(name, "IntProperty", BitConverter.GetBytes(value), meta: null);
 
+    /// <summary>
+    /// A <c>StructProperty</c> whose payload is RAW bytes (a native leaf struct such as Vector or
+    /// Quat) rather than a nested tagged-property list.
+    /// </summary>
+    public static byte[] RawStructProp(string name, string structName, params float[] values)
+    {
+        var payload = Concat(values.Select(BitConverter.GetBytes).ToArray());
+        var meta = Concat(FString(structName), new byte[16]);
+        return Tag(name, "StructProperty", payload, meta);
+    }
+
+    /// <summary>
+    /// An <c>ActorTransform</c> exactly as Icarus writes it: a <c>Transform</c> struct whose payload
+    /// is the tagged sub-properties Rotation (Quat), Translation (Vector), and Scale3D (Vector).
+    /// </summary>
+    public static byte[] ActorTransform(float x, float y, float z, float scale = 1f)
+    {
+        var payload = Concat(
+            RawStructProp("Rotation", "Quat", 0f, 0f, 0f, 1f),
+            RawStructProp("Translation", "Vector", x, y, z),
+            RawStructProp("Scale3D", "Vector", scale, scale, scale),
+            FString("None"));
+        var meta = Concat(FString("Transform"), new byte[16]);
+        return Tag("ActorTransform", "StructProperty", payload, meta);
+    }
+
     /// <summary>A <c>BoolProperty</c>: size 0, the value byte lives in the tag before HasPropertyGuid.</summary>
     public static byte[] BoolProp(string name, bool value) =>
         Tag(name, "BoolProperty", [], meta: [value ? (byte)1 : (byte)0]);
