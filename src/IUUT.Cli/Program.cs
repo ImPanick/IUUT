@@ -33,6 +33,8 @@ try
         "catalog-refresh" => CatalogRefresh(ParseOptions(args, pakValue, forceFlag)),
         "prospect-report" => ProspectReport(ParseOptions(args, profileAndRoot, none)),
         "quest-reset" => await QuestResetAsync(ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
+        "homestead-move" => await HomesteadMoveAsync(
+            ParseOptions(args, ["--prospect", "--profile", "--root", "--build", "--by", "--radius"], applyFlag)).ConfigureAwait(false),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -70,6 +72,13 @@ static void PrintUsage()
     Console.WriteLine("                   Reset a prospect's mission progress so it can be replayed.");
     Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
     Console.WriteLine("                   size-preserving — items, mounts, and bases are untouched).");
+    Console.WriteLine("  homestead-move   --prospect <name> [--build <n>] [--by <x,y,z>] [--radius <m>]");
+    Console.WriteLine("                   [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   List what you have built, grouped into separate builds; with");
+    Console.WriteLine("                   --build and --by, relocate one build by that many metres.");
+    Console.WriteLine("                   Preview by default; --apply writes (backup first, atomic,");
+    Console.WriteLine("                   size-preserving). Moves geometry only — it cannot know the");
+    Console.WriteLine("                   ground height at the destination.");
     Console.WriteLine("  recover          Guided save recovery lives in the IUUT app — it needs the UI.");
     Console.WriteLine();
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
@@ -471,6 +480,120 @@ static async Task<int> QuestResetAsync(Dictionary<string, string?> options)
     Console.WriteLine($"APPLIED: steps now {after.Steps.Count(s => s.IsComplete)}/{after.Steps.Count} complete — backup at {save.BackupPath}");
     return 0;
 }
+
+// Lists a prospect's builds, and — given --build and --by — relocates one of them.
+// Preview-first like every other write verb: --apply is the only thing that touches the save.
+static async Task<int> HomesteadMoveAsync(Dictionary<string, string?> options)
+{
+    var prospectName = options.GetValueOrDefault("--prospect")
+        ?? throw new ArgumentException("homestead-move requires --prospect <name> (see prospect-report for names)");
+    var folder = ResolveProfileFolder(options);
+    var path = Path.Combine(folder, "Prospects", prospectName + ".json");
+    if (!File.Exists(path))
+    {
+        Console.Error.WriteLine($"prospect not found: '{path}'");
+        return 1;
+    }
+
+    var radius = options.GetValueOrDefault("--radius") is { } radiusText
+        ? ParseMetres(radiusText, "--radius")
+        : 60;
+    if (radius <= 0)
+    {
+        throw new ArgumentException("--radius must be greater than 0 metres");
+    }
+
+    var model = IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false));
+    var reader = new IUUT.Core.Prospects.World.ProspectHomesteadReader();
+    var clusters = reader.ReadBlob(model.ProspectBlob).Clusters(radius);
+    if (clusters.Count == 0)
+    {
+        Console.WriteLine("Nothing built here that can be placed on the map.");
+        return 0;
+    }
+
+    Console.WriteLine($"{clusters.Count} build(s) in '{prospectName}' (pieces within {radius:N0} m count as one build):");
+    foreach (var build in clusters)
+    {
+        Console.WriteLine($"  [{build.Index}] {build.Count,4} piece(s) at ({build.CentreX:N0}, {build.CentreY:N0}) m, "
+            + $"elevation {build.CentreZ:N0} m, spread {build.SpanMetres:N0} m");
+        Console.WriteLine($"       {string.Join(", ", build.TopKinds)}");
+    }
+
+    if (options.GetValueOrDefault("--by") is not { } byText)
+    {
+        Console.WriteLine("\nPass --build <n> --by <x,y,z> (metres) to relocate one of these.");
+        return 0;
+    }
+
+    var offsets = byText.Split(',');
+    if (offsets.Length != 3)
+    {
+        throw new ArgumentException("--by takes three metre offsets: --by <x,y,z> (e.g. --by 250,-125,0)");
+    }
+
+    var dx = ParseMetres(offsets[0], "--by x");
+    var dy = ParseMetres(offsets[1], "--by y");
+    var dz = ParseMetres(offsets[2], "--by z");
+
+    var index = options.GetValueOrDefault("--build") is { } buildText
+        ? (int.TryParse(buildText, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : throw new ArgumentException($"--build takes a build number from the list above, not '{buildText}'"))
+        : 0;
+    if (index < 0 || index >= clusters.Count)
+    {
+        throw new ArgumentException($"--build {index} does not exist — pick 0..{clusters.Count - 1} from the list above");
+    }
+
+    var target = clusters[index];
+    var result = IUUT.Core.Prospects.World.ProspectHomesteadEditor.MoveCluster(model, target, dx, dy, dz);
+    if (!result.Changed)
+    {
+        Console.WriteLine("\nNothing to move — a zero offset leaves the build where it is.");
+        return 0;
+    }
+
+    Console.WriteLine($"\nMove build [{index}] — {result.StructuresMoved} piece(s) — by ({dx:N0}, {dy:N0}, {dz:N0}) m:");
+    Console.WriteLine($"  from ({target.CentreX:N0}, {target.CentreY:N0}, {target.CentreZ:N0}) m");
+    Console.WriteLine($"  to   ({target.CentreX + dx:N0}, {target.CentreY + dy:N0}, {target.CentreZ + dz:N0}) m");
+    Console.WriteLine("  Structures keep their shape, contents, and anchoring; nothing else in the save changes.");
+    Console.WriteLine("  This moves geometry only — IUUT cannot know the ground height where the build lands,");
+    Console.WriteLine("  so it may end up floating or buried. Small hops on flat ground are the safe case.");
+
+    if (!options.ContainsKey("--apply"))
+    {
+        Console.WriteLine("Preview only. Re-run with --apply to write (a backup is taken first).");
+        return 0;
+    }
+
+    var clock = new SystemClock();
+    var files = new CustomFileService(
+        new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
+        new BackupManager(clock));
+    var save = await files
+        .SaveJsonTextAsync(path, IUUT.Core.Serializers.ProspectFileSerializer.Serialize(model))
+        .ConfigureAwait(false);
+    if (!save.Ok)
+    {
+        Console.Error.WriteLine($"Write failed; the original prospect is unchanged. {save.Error?.Message}");
+        return 1;
+    }
+
+    var after = reader
+        .ReadBlob(IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false)).ProspectBlob)
+        .Clusters(radius);
+    var moved = after.FirstOrDefault(c => c.Count == target.Count);
+    Console.WriteLine(moved is null
+        ? $"APPLIED: {result.StructuresMoved} piece(s) moved — backup at {save.BackupPath}"
+        : $"APPLIED: {result.StructuresMoved} piece(s) now at ({moved.CentreX:N0}, {moved.CentreY:N0}) m — backup at {save.BackupPath}");
+    return 0;
+}
+
+static double ParseMetres(string text, string option) =>
+    double.TryParse(text.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var value)
+        ? value
+        : throw new ArgumentException($"{option} takes a distance in metres, not '{text.Trim()}'");
 
 static int Recover()
 {

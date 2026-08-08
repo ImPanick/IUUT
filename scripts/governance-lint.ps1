@@ -82,7 +82,10 @@ $hardcodedUsernamePattern = '[Cc]:\\[Uu]sers\\(?!<|%USERPROFILE%|josep)[A-Za-z0-
 $bomEncoderPatterns = @(
     '\[System\.Text\.Encoding\]::UTF8(?!Encoding)',
     'new\s+UTF8Encoding\s*\(\s*true\s*\)',
-    'Encoding\.UTF8(?!\s*\.\s*GetString)'  # heuristic; Encoding.UTF8.GetString is read-only
+    # Heuristic: the hazard is Encoding.UTF8 handed to a writer, whose preamble becomes a BOM.
+    # The direct conversion methods cannot emit one — GetString decodes, GetBytes encodes the
+    # text and nothing else — so both are exempt.
+    'Encoding\.UTF8(?!\s*\.\s*Get(String|Bytes))'
 )
 
 # Files that may legitimately contain steamId-shaped strings: governance docs

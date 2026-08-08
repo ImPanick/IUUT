@@ -23,6 +23,40 @@ public sealed record HomesteadActor(
         ? RowName
         : RecorderClass.Replace("/Script/Icarus.", "", StringComparison.Ordinal)
                        .Replace("RecorderComponent", "", StringComparison.Ordinal);
+
+    /// <summary>
+    /// Whether this is a real placed structure that a relocation could move. The world's container
+    /// registry (<c>ContainerManager</c>) classifies as player storage — correctly, because it holds
+    /// the player's items and item rescue needs it — but it is a singleton sitting at the world
+    /// origin, not something built on the ground. It stays in the survey and out of the builds.
+    /// </summary>
+    public bool IsPlaceable =>
+        Placement is not null &&
+        !RecorderClass.Contains("ContainerManager", StringComparison.OrdinalIgnoreCase);
+}
+
+/// <summary>
+/// One group of structures that sit together — a build. Players scatter deployables across a
+/// map (beacons, remote mining rigs), so "the base" is a cluster, not the whole structure list.
+/// </summary>
+public sealed record HomesteadCluster(
+    int Index,
+    IReadOnlyList<HomesteadActor> Structures,
+    double CentreX,
+    double CentreY,
+    double CentreZ,
+    double SpanMetres)
+{
+    /// <summary>How many pieces this build contains.</summary>
+    public int Count => Structures.Count;
+
+    /// <summary>The most common structure kinds in this build, for identifying it at a glance.</summary>
+    public IReadOnlyList<string> TopKinds =>
+        Structures.GroupBy(s => s.Label, StringComparer.Ordinal)
+            .OrderByDescending(g => g.Count())
+            .Select(g => $"{g.Count()}x {g.Key}")
+            .Take(3)
+            .ToList();
 }
 
 /// <summary>
@@ -52,6 +86,67 @@ public sealed record HomesteadSurvey(
     /// <summary>The placements that decoded (structures whose world position is known).</summary>
     public IReadOnlyList<ProspectTransform> Placements =>
         Structures.Where(s => s.Placement is not null).Select(s => s.Placement!).ToList();
+
+    /// <summary>
+    /// Groups the placed structures into builds by single-link clustering: two pieces join the
+    /// same build when they sit within <paramref name="radiusMetres"/> of each other. Ordered
+    /// largest first, so index 0 is "the base". Structures whose placement did not decode are
+    /// left out, as is the world container registry (see <see cref="HomesteadActor.IsPlaceable"/>) —
+    /// neither can be positioned on the ground, so neither can be moved.
+    /// </summary>
+    public IReadOnlyList<HomesteadCluster> Clusters(double radiusMetres = 60)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(radiusMetres);
+
+        var placed = Structures.Where(s => s.IsPlaceable).ToList();
+        var seen = new bool[placed.Count];
+        var groups = new List<List<HomesteadActor>>();
+
+        for (var i = 0; i < placed.Count; i++)
+        {
+            if (seen[i])
+            {
+                continue;
+            }
+
+            var group = new List<HomesteadActor>();
+            var queue = new Queue<int>();
+            queue.Enqueue(i);
+            seen[i] = true;
+
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                group.Add(placed[current]);
+                for (var j = 0; j < placed.Count; j++)
+                {
+                    if (!seen[j] && placed[current].Placement!.DistanceTo(placed[j].Placement!) <= radiusMetres)
+                    {
+                        seen[j] = true;
+                        queue.Enqueue(j);
+                    }
+                }
+            }
+
+            groups.Add(group);
+        }
+
+        return groups
+            .OrderByDescending(g => g.Count)
+            .Select((g, index) =>
+            {
+                var points = g.Select(s => s.Placement!).ToList();
+                var span = points.Count < 2 ? 0 : points.Max(a => points.Max(a.DistanceTo));
+                return new HomesteadCluster(
+                    index,
+                    g,
+                    points.Average(p => (double)p.X) / 100.0,
+                    points.Average(p => (double)p.Y) / 100.0,
+                    points.Average(p => (double)p.Z) / 100.0,
+                    span);
+            })
+            .ToList();
+    }
 
     /// <summary>
     /// The base's centre in metres and its longest span — the footprint a relocation would move.

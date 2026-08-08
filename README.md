@@ -49,6 +49,7 @@ fully offline, never without a backup.
 | **Backup Manager** | Browse every timestamped IUUT backup, restore any of them (the current file is backed up first — restores are themselves reversible), prune the rest. |
 | **Loadout recovery** | The two community hand-edits, made safe: flip `bInsured` to free gear held by an offline host, and recreate stash items a loadout references but that vanished — exact GUID and item row, so the loadout is whole again. |
 | **Mount rescue** | Clone a roster mount (its binary stats blob carried byte-for-byte), and rename mounts deployed *inside* a prospect. |
+| **Base relocation** | Built somewhere you regret? IUUT groups your structures into separate builds and moves one of them, contents and anchoring intact, without rebuilding a thing. It moves geometry only — it can't know the ground height where the build lands — so the preview tells you that before you commit. |
 
 ### ⚡ Lazy Max
 
@@ -99,6 +100,7 @@ iuut lazy-max           # preview by default; --apply to write
 iuut catalog-refresh    # re-mine catalogs from your data.pak
 iuut prospect-report    # per-prospect mission + quest-step state, trapped-item totals
 iuut quest-reset        # reset a prospect's mission (preview; --apply to write)
+iuut homestead-move     # list your builds; relocate one (preview; --apply to write)
 ```
 
 ## Get IUUT
@@ -149,7 +151,7 @@ Tier 3 spends the blob moat on features competitors paywall:
 
 | Next | What it is |
 | --- | --- |
-| **Homestead pack-up** | Extract your base's actor subtree from one prospect and inject it into another — relocation without rebuilding. Gated: lossless round-trip fixtures must pass before it is even announced. |
+| **Homestead pack-up** | Moving a base *within* its prospect ships today. The remaining half is carrying it to a **different** prospect — extracting the actor subtree and re-homing its ids in the destination world. Gated: lossless round-trip fixtures must pass before it is even announced. |
 | **Offline map + deployable viewer** | Plot your containers and bases from the local blob over terrain maps; click a crate → see contents → jump to Return to Stash. The privacy-preserving alternative to upload-based cartographers. |
 | **Deeper prospect diagnosis** | Header repair and host reassignment for the "failed to resume prospect" threads that today have no tool at all. |
 | **Code signing** | Authenticode via Azure Trusted Signing, to retire the SmartScreen warning. |
@@ -181,7 +183,7 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **363 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+- **379 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
   catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
   test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
 - **Adversarial review** before releases: multi-agent passes that must confirm a finding against

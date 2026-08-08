@@ -12,6 +12,32 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.12.0] — 2026-08-07
+
+### Added
+
+- **Move your base.** `iuut homestead-move --prospect <name>` lists what you've built as separate
+  builds — pieces within 60 m of each other count as one — and `--build <n> --by <x,y,z>` relocates
+  one of them by that many metres. Preview by default; `--apply` writes after taking a backup.
+  Useful when a base ends up somewhere you regret: too far from water, blocking a cave mouth, or
+  parked on the drop pod.
+
+  Structures keep their shape, contents, and anchoring, and nothing else in the save changes.
+  It moves geometry only — IUUT can't know the ground height where the build lands, so a big jump
+  can leave it floating or buried. Short hops on flat ground are the safe case, and the preview
+  says so before you commit.
+
+Moving a base *within* its own prospect turns out to need none of the three hard parts of a
+cross-prospect move: actor ids stay as they are (so nothing collides and no foundation link
+dangles), tame whitelists are untouched, and player-built structures carry no terrain binding at
+all — `TileName` is `None` and the level/record/instance indices are `-1` on every structure of
+every real prospect checked. That makes a relocation three overwritten floats per piece, the same
+low-risk in-place class as the quest reset. The blob's byte length is unchanged.
+
+Gated on a real save copied to scratch: a 23-piece base moved 250 m with its item slots (201),
+quest steps (11), other builds, and foundation links all intact, and the blob exactly the same
+size. Cross-prospect pack-up still waits on lossless round-trip fixtures.
+
 ## [2.11.0] — 2026-08-07
 
 ### Added
