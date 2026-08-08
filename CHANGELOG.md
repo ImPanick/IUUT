@@ -12,6 +12,29 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.9.0] — 2026-08-07
+
+Catalog refresh for the latest game patch (build 24590233).
+
+### Added
+
+- **New talents**: Carbon Fishing Rod, T2/T3/T4 Weapon Rack, and a T4 Decoration Reroute
+  (2,221 → 2,226 rows). The superseded `Decorations_Reroute` is kept and marked not-live
+  rather than deleted, so a save that still holds it is never misread.
+
+### Fixed
+
+- **Exact stash-repair durability now ships in the box.** The `ItemStaticData → DurableData`
+  join has worked at runtime since v1.8.0, but the *bundled* item catalog was never
+  regenerated with it — so a fresh install, before its first self-refresh, fell back to
+  guessing max durability from whatever the save happened to contain. The bundled catalog
+  now carries all 136 exact values.
+
+### Changed
+
+- `LegendaryWeapon_SlugLauncher` no longer declares a durability record in the game data
+  (exact-durability coverage 137 → 136).
+
 ## [2.8.0] — 2026-07-28
 
 ### Added
