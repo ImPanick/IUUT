@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-live-2026-05-31",
+  "catalogVersion": "datapak-live-2026-08-07",
   "rowStruct": "/Script/Icarus.CharacterFlag",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-05-31. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "names": [

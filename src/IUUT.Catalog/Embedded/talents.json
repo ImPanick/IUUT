@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-week242-2026-07",
+  "catalogVersion": "datapak-live-2026-08-07",
   "dataTable": "D_Talents",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-24. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
@@ -4614,7 +4614,8 @@
     },
     {
       "rowName": "Decorations_Reroute",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "Stone_Diagonal",
@@ -9796,6 +9797,26 @@
     },
     {
       "rowName": "GH_R_E",
+      "displayName": null
+    },
+    {
+      "rowName": "Carbon_Fishing_Rod",
+      "displayName": null
+    },
+    {
+      "rowName": "T2_Weapon_Rack",
+      "displayName": null
+    },
+    {
+      "rowName": "T3_Weapon_Rack",
+      "displayName": null
+    },
+    {
+      "rowName": "T4_Weapon_Rack",
+      "displayName": null
+    },
+    {
+      "rowName": "T4_Decoration_Reroute",
       "displayName": null
     }
   ]

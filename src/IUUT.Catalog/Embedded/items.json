@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-week242-2026-07",
+  "catalogVersion": "datapak-live-2026-08-07",
   "dataTable": "D_ItemsStatic",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-24. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
@@ -29,15 +29,18 @@
     },
     {
       "rowName": "Meta_Axe",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 500000
     },
     {
       "rowName": "Meta_Pickaxe",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 500000
     },
     {
       "rowName": "Meta_Knife",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 1000000
     },
     {
       "rowName": "Module_Player_Tracker",
@@ -69,23 +72,28 @@
     },
     {
       "rowName": "Carbon_Chest",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Carbon_Arms",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Carbon_Legs",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Carbon_Feet",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Carbon_Head",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Meta_Ration",
@@ -145,107 +153,133 @@
     },
     {
       "rowName": "Meta_Axe_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Axe_Shengong_Beta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Axe_Shengong_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Axe_Shengong_Echo",
-      "displayName": "Shengong CY7 Axe"
+      "displayName": "Shengong CY7 Axe",
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Beta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Pickaxe_Shengong_Echo",
-      "displayName": "Shengong UT5 Pickaxe"
+      "displayName": "Shengong UT5 Pickaxe",
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Knife_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Knife_Shengong_Beta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Knife_Shengong_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Knife_Shengong_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Knife_Shengong_Echo",
-      "displayName": "Shengong DL7 Knife"
+      "displayName": "Shengong DL7 Knife",
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Spear_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Spear_Shengong_Beta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Spear_Shengong_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Spear_Shengong_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Spear_Shengong_Echo",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Hammer_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Hammer_Shengong_Beta",
-      "displayName": "Shengong \u0022Akira\u0022 Hammer"
+      "displayName": "Shengong \u0022Akira\u0022 Hammer",
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Bow_Shengong_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Bow_Shengong_Beta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Bow_Shengong_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Bow_Shengong_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Bow_Shengong_Echo",
-      "displayName": "Shengong CZ4 Bow"
+      "displayName": "Shengong CZ4 Bow",
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Arrow_Shengong",
@@ -269,23 +303,28 @@
     },
     {
       "rowName": "Meta_Axe_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Knife_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Pickaxe_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Spear_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Firewhacker_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Arrow_Set_Printed_Alpha",
@@ -313,7 +352,8 @@
     },
     {
       "rowName": "Meta_Cot_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Antibiotic_Vaccine_Alpha",
@@ -369,27 +409,33 @@
     },
     {
       "rowName": "Mining_Backpack",
-      "displayName": "Gatherer\u0027s Backpack"
+      "displayName": "Gatherer\u0027s Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Basic_Quiver",
-      "displayName": "Archer\u0027s Backpack"
+      "displayName": "Archer\u0027s Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Basic_Bandolier",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Campfire_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Hammer_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Sickle_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Arrow_Inaris_Alpha",
@@ -421,75 +467,93 @@
     },
     {
       "rowName": "Meta_Axe_Inaris_Alpha",
-      "displayName": "Inaris \u0022Dias\u0022 Axe"
+      "displayName": "Inaris \u0022Dias\u0022 Axe",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Axe_Inaris_Bravo",
-      "displayName": "Inaris \u0022Sali\u0022 Axe"
+      "displayName": "Inaris \u0022Sali\u0022 Axe",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Axe_Inaris_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Axe_Inaris_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Knife_Inaris_Alpha",
-      "displayName": "Inaris \u0022Ventura\u0022 Knife"
+      "displayName": "Inaris \u0022Ventura\u0022 Knife",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Knife_Inaris_Bravo",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Knife_Inaris_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Knife_Inaris_Delta",
-      "displayName": "Inaris \u0022Cerulean\u0022 Knife"
+      "displayName": "Inaris \u0022Cerulean\u0022 Knife",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Alpha",
-      "displayName": "Inaris \u0022Neves\u0022 Pickaxe"
+      "displayName": "Inaris \u0022Neves\u0022 Pickaxe",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Bravo",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Charlie",
-      "displayName": "Inaris \u0022Claret\u0022 Pickaxe"
+      "displayName": "Inaris \u0022Claret\u0022 Pickaxe",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Pickaxe_Inaris_Delta",
-      "displayName": "Inaris \u0022Viridian\u0022 Pickaxe"
+      "displayName": "Inaris \u0022Viridian\u0022 Pickaxe",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Spear_Inaris_Alpha",
-      "displayName": "Inaris \u0022Gris\u0022 Spear"
+      "displayName": "Inaris \u0022Gris\u0022 Spear",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Spear_Inaris_Bravo",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Spear_Inaris_Charlie",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Spear_Inaris_Delta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Furnace_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Crate_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Meta_Arrow_Set_Inaris_Alpha",
@@ -541,31 +605,38 @@
     },
     {
       "rowName": "Survival_Backpack",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Axe_Larkwell",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Pickaxe_Larkwell",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Hammer_Larkwell",
-      "displayName": "Larkwell Martinez Hammer"
+      "displayName": "Larkwell Martinez Hammer",
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Sickle_Larkwell",
-      "displayName": "Larkwell Martinez Sickle"
+      "displayName": "Larkwell Martinez Sickle",
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Knife_Larkwell",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Spear_Larkwell",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Arrow_Larkwell_Standard",
@@ -593,55 +664,68 @@
     },
     {
       "rowName": "Meta_Bow_Larkwell",
-      "displayName": "Larkwell Martinez Compound Bow"
+      "displayName": "Larkwell Martinez Compound Bow",
+      "maxDurability": 40000
     },
     {
       "rowName": "Meta_Carbon_Head_Alpha",
-      "displayName": "ST-700 Head Armor"
+      "displayName": "ST-700 Head Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Chest_Alpha",
-      "displayName": "ST-700 Chest Armor"
+      "displayName": "ST-700 Chest Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Arms_Alpha",
-      "displayName": "ST-700 Arms Armor"
+      "displayName": "ST-700 Arms Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Legs_Alpha",
-      "displayName": "ST-700 Legs Armor"
+      "displayName": "ST-700 Legs Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Feet_Alpha",
-      "displayName": "ST-700 Feet Armor"
+      "displayName": "ST-700 Feet Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Head_Beta",
-      "displayName": "CX-400 Head Armor"
+      "displayName": "CX-400 Head Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Chest_Beta",
-      "displayName": "CX-400 Chest Armor"
+      "displayName": "CX-400 Chest Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Arms_Beta",
-      "displayName": "CX-400 Arms Armor"
+      "displayName": "CX-400 Arms Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Legs_Beta",
-      "displayName": "CX-400 Legs Armor"
+      "displayName": "CX-400 Legs Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Carbon_Feet_Beta",
-      "displayName": "CX-400 Feet Armor"
+      "displayName": "CX-400 Feet Armor",
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Backpack_Larkwell_Alpha",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5500
     },
     {
       "rowName": "Meta_Backpack_Larkwell_Beta",
-      "displayName": "Larkwell Martinez Tactical Backpack"
+      "displayName": "Larkwell Martinez Tactical Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Envirosuit_Inaris_Alpha",
@@ -665,11 +749,13 @@
     },
     {
       "rowName": "Radar_Meta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5000
     },
     {
       "rowName": "Extractor_Meta",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5000
     },
     {
       "rowName": "Biofuel_Can_Meta",
@@ -681,7 +767,8 @@
     },
     {
       "rowName": "Mission_Knife_Lion",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 120000
     },
     {
       "rowName": "Meta_Module_WorldBoss",
@@ -709,19 +796,23 @@
     },
     {
       "rowName": "Meta_Crossbow_Inaris_A",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Crossbow_Inaris_B",
-      "displayName": "Inaris \u0022Heavy\u0022 Crossbow"
+      "displayName": "Inaris \u0022Heavy\u0022 Crossbow",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Crossbow_Inaris_C",
-      "displayName": "Inaris \u0022Lune\u0022 Crossbow"
+      "displayName": "Inaris \u0022Lune\u0022 Crossbow",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Crossbow_Inaris_D",
-      "displayName": "Inaris \u0022Sole\u0022 Crossbow"
+      "displayName": "Inaris \u0022Sole\u0022 Crossbow",
+      "maxDurability": 60000
     },
     {
       "rowName": "Exotic_Red",
@@ -821,11 +912,13 @@
     },
     {
       "rowName": "Farming_CropPlot_Workshop",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 2000
     },
     {
       "rowName": "Workshop_Shovel",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Reed_Seed",
@@ -913,67 +1006,83 @@
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Head",
-      "displayName": "Larkwell Martinez Tachyon Head Armor"
+      "displayName": "Larkwell Martinez Tachyon Head Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Chest",
-      "displayName": "Larkwell Martinez Tachyon Chest Armor"
+      "displayName": "Larkwell Martinez Tachyon Chest Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Legs",
-      "displayName": "Larkwell Martinez Tachyon Legs Armor"
+      "displayName": "Larkwell Martinez Tachyon Legs Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Arms",
-      "displayName": "Larkwell Martinez Tachyon Arm Armor"
+      "displayName": "Larkwell Martinez Tachyon Arm Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Alpha_Feet",
-      "displayName": "Larkwell Martinez Tachyon Feet Armor"
+      "displayName": "Larkwell Martinez Tachyon Feet Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Farmers_Backpack",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5500
     },
     {
       "rowName": "Medic_Backpack",
-      "displayName": "Biomore Backpack"
+      "displayName": "Biomore Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Chefs_Backpack",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 5500
     },
     {
       "rowName": "Explorers_Backpack",
-      "displayName": "Explorer Backpack"
+      "displayName": "Explorer Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Tech_Backpack",
-      "displayName": "Ion Backpack"
+      "displayName": "Ion Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Hunters_Backpack",
-      "displayName": "Xenon Backpack"
+      "displayName": "Xenon Backpack",
+      "maxDurability": 5500
     },
     {
       "rowName": "Larkwell_Armor_Black_Head",
-      "displayName": "LM Beastmaster Head Armor"
+      "displayName": "LM Beastmaster Head Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Black_Chest",
-      "displayName": "LM Beastmaster Chest Armor"
+      "displayName": "LM Beastmaster Chest Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Black_Arms",
-      "displayName": "LM Beastmaster Arm Armor"
+      "displayName": "LM Beastmaster Arm Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Black_Legs",
-      "displayName": "LM Beastmaster Leg Armor"
+      "displayName": "LM Beastmaster Leg Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Larkwell_Armor_Black_Feet",
-      "displayName": "LM Beastmaster Feet Armor"
+      "displayName": "LM Beastmaster Feet Armor",
+      "maxDurability": 7500
     },
     {
       "rowName": "Biomass",
@@ -981,7 +1090,8 @@
     },
     {
       "rowName": "LegendaryWeapon_Black_Wolf_Revolver",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 35000
     },
     {
       "rowName": "IceMammoth_Attachment_Melee",
@@ -1017,27 +1127,33 @@
     },
     {
       "rowName": "LegendaryWeapon_Scorpion_Rifle",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 35000
     },
     {
       "rowName": "Meta_Sickle_Inaris_00",
-      "displayName": "Inaris \u0022Reaper\u0022 Sickle"
+      "displayName": "Inaris \u0022Reaper\u0022 Sickle",
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Sickle_Inaris_01",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Sickle_Inaris_02",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "Meta_Sickle_Inaris_03",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 60000
     },
     {
       "rowName": "LegendaryWeapon_Sandworm_Crossbow",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 20000
     },
     {
       "rowName": "Meta_SugarCane_Seed",
@@ -1053,7 +1169,8 @@
     },
     {
       "rowName": "Shotgun_CHAC",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 25000
     },
     {
       "rowName": "Workshop_Chicken",
@@ -1065,11 +1182,13 @@
     },
     {
       "rowName": "Pistol_CHAC",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 25000
     },
     {
       "rowName": "Rifle_CHAC",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 25000
     },
     {
       "rowName": "Workshop_Dog_A1",
@@ -1161,7 +1280,8 @@
     },
     {
       "rowName": "LegendaryWeapon_GolemGauntlet",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 140000
     },
     {
       "rowName": "Ape_Attachment",
@@ -1169,7 +1289,8 @@
     },
     {
       "rowName": "LegendaryWeapon_Ape_Club",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 25000
     },
     {
       "rowName": "Licence",
@@ -1229,11 +1350,13 @@
     },
     {
       "rowName": "Workshop_Heater",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Workshop_Cooker",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Workshop_Hydrazine_Container",
@@ -1281,11 +1404,13 @@
     },
     {
       "rowName": "LegendaryWeapon_LavaHunter_FlameThrower",
-      "displayName": "Heavy Flamethrower"
+      "displayName": "Heavy Flamethrower",
+      "maxDurability": 10000
     },
     {
       "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 40000
     },
     {
       "rowName": "LegendaryWeapon_IceMammoth_Sledgehammer_Ammo",
@@ -1301,7 +1426,8 @@
     },
     {
       "rowName": "Mission_Burner",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "Ammo_Shell_Workshop",
@@ -1321,11 +1447,13 @@
     },
     {
       "rowName": "LegendaryWeapon_Bow",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 30000
     },
     {
       "rowName": "LegendaryWeapon_Sniper",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Ammo_Sniper_Round",
@@ -1417,27 +1545,33 @@
     },
     {
       "rowName": "Bulky_Armor_Head",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Bulky_Armor_Chest",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Bulky_Armor_Arms",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Bulky_Armor_Legs",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Bulky_Armor_Feet",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 7500
     },
     {
       "rowName": "Solar_Backpack",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 4000
     },
     {
       "rowName": "Workshop_Dog_C2",
@@ -1501,7 +1635,8 @@
     },
     {
       "rowName": "LegendaryWeapon_Sandwyrm_Chainsaw",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 50000
     },
     {
       "rowName": "Meta_Resource_Pack_Lithium",
@@ -1517,7 +1652,8 @@
     },
     {
       "rowName": "Meta_Oxite_Dissolver_Printed",
-      "displayName": null
+      "displayName": null,
+      "maxDurability": 1000
     },
     {
       "rowName": "Meta_Resource_Pack_Salt",

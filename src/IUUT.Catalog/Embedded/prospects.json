@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-live-2026-07-25",
+  "catalogVersion": "datapak-live-2026-08-07",
   "dataTable": "D_ProspectList",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-25. Self-refreshes at runtime from the local pak (DATA-PROVENANCE.md).",
   "rows": [
