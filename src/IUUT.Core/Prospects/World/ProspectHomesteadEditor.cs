@@ -50,6 +50,27 @@ public static class ProspectHomesteadEditor
     }
 
     /// <summary>
+    /// Offsets an arbitrary set of actors by <c>IcarusActorGUID</c>, writing through
+    /// <see cref="ProspectBlobCodec.SetUncompressed"/> when anything changed. Same in-place,
+    /// size-preserving write as <see cref="MoveCluster"/> — used to bring a player's grave back
+    /// within reach without touching a single item inside it.
+    /// </summary>
+    public static HomesteadMoveResult MoveActors(
+        ProspectFileModel prospect, IEnumerable<int> actorGuids, double offsetXMetres, double offsetYMetres, double offsetZMetres)
+    {
+        ArgumentNullException.ThrowIfNull(prospect);
+
+        var data = ProspectBlobCodec.Decompress(prospect.ProspectBlob.BinaryBlob);
+        var result = Move(data, actorGuids, offsetXMetres, offsetYMetres, offsetZMetres);
+        if (result.Changed)
+        {
+            ProspectBlobCodec.SetUncompressed(prospect.ProspectBlob, data);
+        }
+
+        return result;
+    }
+
+    /// <summary>
     /// Offsets the structures whose <c>IcarusActorGUID</c> is in <paramref name="actorGuids"/>,
     /// mutating <paramref name="decompressed"/> in place. Offsets are metres; the save stores
     /// centimetres.

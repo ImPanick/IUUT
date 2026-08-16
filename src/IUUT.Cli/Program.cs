@@ -39,6 +39,8 @@ try
             ParseOptions(args, ["--prospect", "--profile", "--root", "--character", "--to"], ["--apply", "--snap", "--revive", "--inventory"])).ConfigureAwait(false),
         "return-to-stash" => await ReturnToStashAsync(
             ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
+        "rescue-grave" => await RescueGraveAsync(
+            ParseOptions(args, ["--prospect", "--profile", "--root", "--grave", "--to-character", "--to"], applyFlag)).ConfigureAwait(false),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -90,6 +92,11 @@ static void PrintUsage()
     Console.WriteLine("                   Pull items trapped in a prospect back into your orbital stash —");
     Console.WriteLine("                   for when the host is gone or the world will not resume. The stash");
     Console.WriteLine("                   is written first, so an interrupted return can only duplicate.");
+    Console.WriteLine("  rescue-grave     --prospect <name> [--grave <n>] [--to-character <n> | --to <x,y,z>]");
+    Console.WriteLine("                   [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   Find the bodies and grave markers in a prospect and bring one back");
+    Console.WriteLine("                   within reach. It MOVES the grave rather than transferring its");
+    Console.WriteLine("                   contents, so no item is converted or re-homed — you loot it in-game.");
     Console.WriteLine("  rescue-character --prospect <name> [--character <n>] [--to <x,y,z>] [--snap]");
     Console.WriteLine("                   [--revive] [--profile <steamid-or-path>] [--apply]");
     Console.WriteLine("                   List the characters recorded in a prospect and move one somewhere");
@@ -802,6 +809,147 @@ static async Task<int> ReturnToStashAsync(Dictionary<string, string?> options)
 
     Console.WriteLine($"APPLIED: {result.Moved?.TotalQuantity ?? 0} item(s) returned to the orbital stash "
         + $"as {result.Moved?.StashStacksAdded ?? 0} stack(s).");
+    Console.WriteLine("Everyone must be OUT of the prospect when you do this, or the running session will overwrite it.");
+    return 0;
+}
+
+// Brings a player's body back within reach instead of teleporting its contents anywhere.
+// Deliberately a MOVE, not a transfer: the items are never converted, re-typed, or handed to a
+// container that may not accept them, so there is nothing to get wrong about item types. You walk
+// up and loot it the way the game intends.
+static async Task<int> RescueGraveAsync(Dictionary<string, string?> options)
+{
+    var prospectName = options.GetValueOrDefault("--prospect")
+        ?? throw new ArgumentException("rescue-grave requires --prospect <name> (see prospect-report for names)");
+    var folder = ResolveProfileFolder(options);
+    var path = Path.Combine(folder, "Prospects", prospectName + ".json");
+    if (!File.Exists(path))
+    {
+        Console.Error.WriteLine($"prospect not found: '{path}'");
+        return 1;
+    }
+
+    var model = IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false));
+    var graves = new IUUT.Core.Prospects.World.ProspectGraveReader().ReadBlob(model.ProspectBlob);
+    var characters = new IUUT.Core.Prospects.World.ProspectCharacterReader().ReadBlob(model.ProspectBlob);
+
+    if (graves.Count == 0)
+    {
+        Console.WriteLine($"No bodies or grave markers in '{prospectName}' — nothing is stranded here.");
+        return 0;
+    }
+
+    Console.WriteLine($"{graves.Count} grave(s) in '{prospectName}':");
+    for (var i = 0; i < graves.Count; i++)
+    {
+        var g = graves[i];
+        var where = g.Placement is null ? "position unknown" : FormattableString.Invariant(
+            $"at ({g.Placement.Metres.X:N0}, {g.Placement.Metres.Y:N0}, {g.Placement.Metres.Z:N0}) m");
+        Console.WriteLine($"  [{i}] {g.Label} — {g.ItemSlots} item slot(s) — {where}");
+    }
+
+    var destination = options.GetValueOrDefault("--to");
+    var toCharacter = options.GetValueOrDefault("--to-character");
+    if (destination is null && toCharacter is null)
+    {
+        Console.WriteLine("\nPass --to-character <n> to bring a grave to that character (see rescue-character),");
+        Console.WriteLine("or --to <x,y,z> for a specific spot. The grave moves; its contents are never touched.");
+        return 0;
+    }
+
+    var index = options.GetValueOrDefault("--grave") is { } gt
+        ? (int.TryParse(gt, NumberStyles.Integer, CultureInfo.InvariantCulture, out var gi)
+            ? gi : throw new ArgumentException($"--grave takes a number from the list above, not '{gt}'"))
+        : 0;
+    if (index < 0 || index >= graves.Count)
+    {
+        throw new ArgumentException($"--grave {index} does not exist — pick 0..{graves.Count - 1}");
+    }
+
+    var grave = graves[index];
+    if (grave.Placement is null)
+    {
+        Console.Error.WriteLine("That grave has no decodable position, so it cannot be moved.");
+        return 1;
+    }
+
+    double tx, ty, tz;
+    if (toCharacter is not null)
+    {
+        if (!int.TryParse(toCharacter, NumberStyles.Integer, CultureInfo.InvariantCulture, out var ci)
+            || ci < 0 || ci >= characters.Count)
+        {
+            throw new ArgumentException($"--to-character must be 0..{Math.Max(0, characters.Count - 1)} "
+                                      + "(run rescue-character to list them)");
+        }
+
+        var target = characters[ci];
+        if (target.Location is null)
+        {
+            Console.Error.WriteLine("That character has no decodable position to bring the grave to.");
+            return 1;
+        }
+
+        // Just beside them, not inside them.
+        tx = target.Location.Metres.X + 2;
+        ty = target.Location.Metres.Y;
+        tz = target.Location.Metres.Z;
+        Console.WriteLine($"\nBringing grave [{index}] to player {target.MaskedPlayerId}:");
+    }
+    else
+    {
+        var parts = destination!.Split(',');
+        if (parts.Length != 3)
+        {
+            throw new ArgumentException("--to takes a world position in metres: --to <x,y,z>");
+        }
+
+        tx = ParseMetres(parts[0], "--to x");
+        ty = ParseMetres(parts[1], "--to y");
+        tz = ParseMetres(parts[2], "--to z");
+        Console.WriteLine($"\nMoving grave [{index}]:");
+    }
+
+    Console.WriteLine(FormattableString.Invariant(
+        $"  from ({grave.Placement.Metres.X:N0}, {grave.Placement.Metres.Y:N0}, {grave.Placement.Metres.Z:N0}) m"));
+    Console.WriteLine(FormattableString.Invariant($"  to   ({tx:N0}, {ty:N0}, {tz:N0}) m"));
+    Console.WriteLine($"  Its {grave.ItemSlots} item slot(s) ride along untouched — nothing is converted or");
+    Console.WriteLine("  re-homed, so no item can land somewhere that will not accept it. Loot it in-game.");
+
+    // Reuses the gated actor-relocation primitive: an offset applied to this actor's translation.
+    var result = IUUT.Core.Prospects.World.ProspectHomesteadEditor.MoveActors(
+        model,
+        [grave.ActorGuid],
+        tx - grave.Placement.Metres.X,
+        ty - grave.Placement.Metres.Y,
+        tz - grave.Placement.Metres.Z);
+
+    if (!result.Changed)
+    {
+        Console.WriteLine("\nThe grave is already there — nothing to do.");
+        return 0;
+    }
+
+    if (!options.ContainsKey("--apply"))
+    {
+        Console.WriteLine("Preview only. Re-run with --apply to write (a backup is taken first).");
+        return 0;
+    }
+
+    var clock = new SystemClock();
+    var files = new CustomFileService(
+        new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
+        new BackupManager(clock));
+    var save = await files
+        .SaveJsonTextAsync(path, IUUT.Core.Serializers.ProspectFileSerializer.Serialize(model))
+        .ConfigureAwait(false);
+    if (!save.Ok)
+    {
+        Console.Error.WriteLine($"Write failed; the original prospect is unchanged. {save.Error?.Message}");
+        return 1;
+    }
+
+    Console.WriteLine($"APPLIED — backup at {save.BackupPath}");
     Console.WriteLine("Everyone must be OUT of the prospect when you do this, or the running session will overwrite it.");
     return 0;
 }

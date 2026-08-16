@@ -24,6 +24,15 @@ public enum CharacterInventoryKind
     /// <summary>The light slot (id 12) — the lantern.</summary>
     Lantern,
 
+    /// <summary>A mount's saddle slot (id 17) — one slot, and what it holds grants the rest.</summary>
+    Saddle,
+
+    /// <summary>A mount's cargo hold (id 19). Starts at zero; every slot is granted.</summary>
+    MountCargo,
+
+    /// <summary>A mount's heavy cargo hold (id 20). Also starts at zero.</summary>
+    MountHeavyCargo,
+
     /// <summary>An inventory id this build does not recognise; shown, never hidden.</summary>
     Other,
 }
@@ -62,6 +71,9 @@ public sealed record CharacterInventory(
         CharacterInventoryKind.Equipment => "Character",
         CharacterInventoryKind.Auxiliary => "Auxiliary",
         CharacterInventoryKind.Lantern => "Light",
+        CharacterInventoryKind.Saddle => "Saddle",
+        CharacterInventoryKind.MountCargo => "Cargo",
+        CharacterInventoryKind.MountHeavyCargo => "Heavy cargo",
         _ => $"Inventory {InventoryId}",
     };
 
@@ -118,19 +130,28 @@ public sealed class ProspectInventoryReader
     /// <summary>Decodes every inventory belonging to <paramref name="character"/>.</summary>
     public IReadOnlyList<CharacterInventory> Read(byte[] decompressed, ProspectCharacter character)
     {
-        ArgumentNullException.ThrowIfNull(decompressed);
         ArgumentNullException.ThrowIfNull(character);
+        return ReadRecorder(decompressed, character.RecorderIndex);
+    }
+
+    /// <summary>
+    /// Decodes the inventories of any recorder by its index in the world's recorder array — a
+    /// character, a mount, or a gravestone all store them the same way.
+    /// </summary>
+    public IReadOnlyList<CharacterInventory> ReadRecorder(byte[] decompressed, int recorderIndex)
+    {
+        ArgumentNullException.ThrowIfNull(decompressed);
 
         var inventories = new List<CharacterInventory>();
         var tree = UePropertyReader.ReadStream(decompressed);
         var recorders = tree.FirstOrDefault(p =>
             string.Equals(p.Name, ProspectWorldReader.RecorderArray, StringComparison.Ordinal));
-        if (recorders is null || character.RecorderIndex < 0 || character.RecorderIndex >= recorders.Children.Count)
+        if (recorders is null || recorderIndex < 0 || recorderIndex >= recorders.Children.Count)
         {
             return inventories;
         }
 
-        var actor = recorders.Children[character.RecorderIndex];
+        var actor = recorders.Children[recorderIndex];
         var array = FindTyped(actor, SavedInventories, "ArrayProperty");
         if (array is null)
         {
@@ -170,6 +191,12 @@ public sealed class ProspectInventoryReader
         5 => CharacterInventoryKind.Equipment,
         11 => CharacterInventoryKind.Auxiliary,
         12 => CharacterInventoryKind.Lantern,
+        // Mounts. Saddle starts at one slot; both cargo holds start at ZERO
+        // (InventoryInfo: Mount_Saddle=1, Mount_Cargo=0, Mount_Heavy_Cargo=0), so every
+        // cargo slot a mount has was granted by its saddle or its creature talents.
+        17 => CharacterInventoryKind.Saddle,
+        19 => CharacterInventoryKind.MountCargo,
+        20 => CharacterInventoryKind.MountHeavyCargo,
         _ => CharacterInventoryKind.Other,
     };
 

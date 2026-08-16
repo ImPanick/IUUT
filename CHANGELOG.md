@@ -12,6 +12,48 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.16.0] — 2026-08-07
+
+### Added
+
+- **Find your body, and bring it to you.** `iuut rescue-grave` lists the bodies and grave markers in
+  a prospect — where each one is and how much it is holding — and moves one back within reach.
+
+  Icarus leaves two kinds: `Player_Gravestone_DBNO`, the downed body a teammate can still revive,
+  and `Player_Gravestone_MIA`, the marker left when a body is simply gone. MIA is the one nobody can
+  recover in-game, and it is what a zone reset or a boss that strands you leaves behind.
+
+  **It moves the grave, not the loot.** The contents are never converted, re-typed, or handed to a
+  different container, so no item can end up somewhere that will not accept it — you walk up and
+  loot it the way the game intends. Underneath it is the same in-place, size-preserving actor move
+  that base relocation already uses.
+
+  ```
+  1 grave(s) in 'PGH-5':
+    [0] missing-in-action marker — 41 item slot(s) — at (500, -250, 100) m
+
+  Bringing grave [0] to player …2784
+    Its 41 item slot(s) ride along untouched
+  ```
+
+- **Mount inventories are decoded.** A mount keeps three: the saddle slot (17), cargo (19), and
+  heavy cargo (20). Both cargo holds start at **zero** slots (`InventoryInfo`: `Mount_Cargo` = 0,
+  `Mount_Heavy_Cargo` = 0), so every cargo slot a mount has was granted — by its saddle or by
+  creature talents like `Creature_Base_InventorySlots_Horse` and `Creature_Buffalo_ExtraCarry`,
+  which the mount's recorder stores by row name and rank alongside its `Experience`.
+
+### Notes
+
+Gravestone detection is **not yet verified against a real grave** — no save on hand contains one,
+because nobody in them is dead. The row names and the 70-slot capacity come from the game's own
+tables and the recorder is the ordinary deployable shape, but the first real grave should be checked
+before this is trusted blindly. `rescue-grave` says plainly when it finds nothing.
+
+A related risk is now tracked rather than assumed away: `return-to-stash` adds recovered rows to the
+orbital stash without checking them against the catalog, and the stash is `Item.Meta` by design
+while a prospect holds Fur, Cooked_Meat, and Iron_Wall. For mixed loot, prefer `rescue-grave` — it
+converts nothing.
+
 ## [2.15.0] — 2026-08-07
 
 ### Added
