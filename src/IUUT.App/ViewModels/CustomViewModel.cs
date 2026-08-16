@@ -287,6 +287,8 @@ public sealed class CustomViewModel : ObservableObject
                 new BackupManagerViewModel(_backups, slot.FolderPath, slot.DisplayLabel),
             ("prospectquests", not null) =>
                 new ProspectQuestsViewModel(_files, slot.FolderPath, slot.DisplayLabel),
+            ("prospectrescue", not null) =>
+                new ProspectRescueViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             ("raw", not null) =>
                 new RawEditorViewModel(_files, slot.FolderPath, slot.DisplayLabel),
             _ => new PlaceholderEditorViewModel(category, needsProfile: slot is null),
@@ -418,6 +420,16 @@ public sealed class CustomViewModel : ObservableObject
                         + "resume, a zone reset behind you, a boss glitched. Pull the items back to your "
                         + "orbital stash (Return to Stash).",
             Status = "Wired — ProspectReturnFileService.",
+        },
+        new()
+        {
+            Key = "prospectrescue",
+            Group = "RESCUE",
+            Glyph = SymbolRegular.PersonSupport24,
+            Label = "Stranded in a prospect?",
+            Description = "A zone reset behind you, or a boss glitched and pinned a body somewhere "
+                        + "you can't reach. Find the bodies, bring one back, revive whoever died.",
+            Status = "Wired — ProspectCharacterEditor + ProspectGraveReader.",
         },
         new()
         {

@@ -70,6 +70,7 @@ files it will touch. The sidebar is grouped by intent:
 | --- | --- |
 | **Progression** | Account & Currencies · Characters & Talents (rename, XP/debt, revive, per-talent ranks) · Accolades & Bestiary · Account Flags · Engine Flags · **Missions** (complete a mission *and* its full prerequisite chain) |
 | **World** | **Orbital Stash** (visual grid, durability bars, repair, add/remove, stack editing, loadout-aware warnings) · Loadouts · Prospects (unstick a stuck character) · Mounts · **Prospect Quests** (reset a mission so it can be replayed) |
+| **Rescue** | **Stranded in a prospect?** (find every character and body in a world; bring a body to someone, send someone to their body, or revive them — click, don't type) · **Stuck in a prospect?** (pull trapped items back to your stash) · Backup Manager |
 | **Rescue** | Return to Stash · Backup Manager (broken-save Recovery is its own top-level screen) |
 | **Advanced** | Game Tuner (`Engine.ini` tweaks — FPS, fog, quality) · Raw JSON viewer + validated import/export |
 

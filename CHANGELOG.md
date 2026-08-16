@@ -12,6 +12,31 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.17.0] — 2026-08-07
+
+### Added
+
+- **"Stranded in a prospect?" — a rescue panel in the app.** RESCUE group, no commands, no
+  coordinates. Pick a prospect, see every character and every body in it side by side, click one of
+  each, and press a button:
+
+  - **BRING BODY TO CHARACTER** — moves the grave next to whoever you picked. Its contents ride
+    along untouched, so you loot it in-game exactly as normal.
+  - **SEND CHARACTER TO BODY** — the other direction, when it's easier to go to it. Everything they
+    carry travels with them.
+  - **REVIVE CHARACTER** — enabled only when the selected character is actually dead.
+
+  Characters show their state, health, position, and what they're carrying using the game's own
+  panel names (`Toolbelt 12 · Inventory 33 · Auxiliary 3`), so you can see what's at stake before
+  moving anyone. Player ids are shown masked.
+
+  Each action confirms first, states what it will do in plain language, takes a backup, and
+  re-reads the file afterwards so the panel reflects what's on disk rather than what was intended.
+  Every confirm repeats the one operational rule: everyone must be OUT of the prospect, or the
+  running session overwrites the file when it saves.
+
+This is the same engine as the `rescue-grave` / `rescue-character` verbs, surfaced where it belongs.
+
 ## [2.16.0] — 2026-08-07
 
 ### Added

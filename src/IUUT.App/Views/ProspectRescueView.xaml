@@ -1,0 +1,138 @@
+<UserControl x:Class="IUUT.App.Views.ProspectRescueView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:IUUT.App.Controls"
+             mc:Ignorable="d">
+
+    <!-- Prospect Rescue (RESCUE). DataContext = ProspectRescueViewModel.
+         Coordinate-free by design: you click who is stuck and where they should go. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header + prospect picker -->
+        <Border Grid.Row="0" Style="{StaticResource GlassCard}" Padding="16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="STRANDED IN A PROSPECT" Style="{StaticResource LabelText}" />
+                    <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0"
+                               Text="A zone reset behind you, a boss glitched and pinned a body somewhere unreachable, or the world won't resume. This is host-side — that state lives in the host's world save, so one person can free the whole group." />
+                </StackPanel>
+                <Button Grid.Row="0" Grid.Column="1" Content="Reload" Command="{Binding LoadCommand}"
+                        VerticalAlignment="Top" Padding="12,4" />
+
+                <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBlock Text="PROSPECT" Style="{StaticResource LabelText}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                    <ComboBox MinWidth="300" ItemsSource="{Binding Prospects}"
+                              SelectedItem="{Binding SelectedProspect, Mode=TwoWay}" DisplayMemberPath="Name" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Characters (left) and graves (right) -->
+        <Grid Grid.Row="1" Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="12" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Style="{StaticResource GlassCard}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="CHARACTERS" Style="{StaticResource LabelText}" Margin="0,0,0,8" />
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Characters}"
+                             SelectedItem="{Binding SelectedCharacter, Mode=TwoWay}"
+                             IsSynchronizedWithCurrentItem="False"
+                             HorizontalContentAlignment="Stretch" BorderThickness="0" Background="Transparent">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="2,6">
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding Detail}" Style="{StaticResource MonoText}" Margin="0,2,0,0" />
+                                    <TextBlock Text="{Binding Carrying}" Style="{StaticResource MutedText}"
+                                               TextWrapping="Wrap" Margin="0,2,0,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="2" Style="{StaticResource GlassCard}" Padding="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="BODIES &amp; GRAVE MARKERS" Style="{StaticResource LabelText}" Margin="0,0,0,8" />
+
+                    <Grid Grid.Row="1">
+                        <ListBox ItemsSource="{Binding Graves}"
+                                 SelectedItem="{Binding SelectedGrave, Mode=TwoWay}"
+                                 IsSynchronizedWithCurrentItem="False"
+                                 HorizontalContentAlignment="Stretch" BorderThickness="0" Background="Transparent">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="2,6">
+                                        <TextBlock Text="{Binding Title}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                        <TextBlock Text="{Binding Detail}" Style="{StaticResource MonoText}" Margin="0,2,0,0" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <controls:StateDisplay Kind="Empty" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               Title="No stranded bodies"
+                                               Detail="Nobody's body or grave marker is sitting in this prospect."
+                                               Visibility="{Binding HasGraves, Converter={StaticResource InverseBoolToVisibility}}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Status + the three rescue actions -->
+        <Border Grid.Row="2" Style="{StaticResource GlassCard}" Padding="12" Margin="0,12,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="{Binding StatusMessage}" Style="{StaticResource MutedText}"
+                           TextWrapping="Wrap" Margin="0,0,0,10" />
+
+                <WrapPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button Content="BRING BODY TO CHARACTER" Style="{StaticResource PrimaryButton}"
+                            IsEnabled="{Binding CanBringGrave}" Click="OnBringGrave" Margin="0,0,10,0"
+                            ToolTip="Moves the grave next to the selected character. Its contents are never converted or re-homed — you loot it in-game." />
+                    <Button Content="SEND CHARACTER TO BODY"
+                            IsEnabled="{Binding CanGoToGrave}" Click="OnGoToGrave" Margin="0,0,10,0" Padding="14,6"
+                            ToolTip="Moves the selected character to the grave. Everything they carry travels with them." />
+                    <Button Content="REVIVE CHARACTER"
+                            IsEnabled="{Binding CanRevive}" Click="OnRevive" Padding="14,6"
+                            ToolTip="Clears the death flag and restores enough health to stand up." />
+                </WrapPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
