@@ -12,6 +12,30 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.18.0] — 2026-08-07
+
+### Changed
+
+- **The rescue panel shows people, not id fragments.** Characters are listed by their actual name.
+  Every world keeps a `PlayerHistoryRecorderComponent` pairing each player's `UserID` with the
+  `CachedCharacterName` it last saw, which is the only human-readable record of who was in a world.
+  Resolution is 100% across every prospect available. Where a world has no record, the masked id is
+  shown rather than a guessed name, and a raw SteamID never reaches the screen either way.
+
+  Rows are laid out to be scanned: the name leads, an ALIVE/DEAD chip sits on the right where it
+  decides which buttons apply, then health and position, then what they're carrying. Confirmations
+  and status messages use the name too, so a rescue reads as "Move Wren to the missing-in-action
+  marker" instead of an id.
+
+- **Loadouts is framed as what it's for: getting lost gear back.** The recovery already existed and
+  was labelled `Restore missing (N)` — accurate, and unreadable when you have just lost everything.
+  The panel now explains that a loadout is the last record of your gear when everything else is
+  gone (a host who never came back, or a gravestone the game deleted), and the primary button reads
+  **PUT MY GEAR BACK**. `Insure all` becomes **Free gear held by a host**.
+
+  This is the backstop for gravestone loss: the gravestone holds the items, but the loadout holds
+  the *record* of them, so it still works when the grave itself is gone.
+
 ## [2.17.1] — 2026-08-07
 
 ### Fixed

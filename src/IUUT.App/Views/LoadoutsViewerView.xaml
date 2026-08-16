@@ -21,18 +21,19 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0">
-                    <TextBlock Text="LOADOUTS" Style="{StaticResource LabelText}" />
-                    <TextBlock Text="{Binding ProfileLabel, StringFormat=Per-prospect loadouts and the gear they carry for “{0}” — with recovery for stuck gear.}"
-                               Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                    <TextBlock Text="LOADOUTS — LOST GEAR RECOVERY" Style="{StaticResource LabelText}" />
+                    <TextBlock Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,4,0,0"
+                               Text="A loadout remembers what you took down with you, so it is the last record of your gear when everything else is gone — a host who never came back, or a gravestone the game deleted. These two buttons put that gear back in your orbital stash." />
                     <TextBlock Text="{Binding Summary}" Style="{StaticResource MonoText}" Margin="0,6,0,0" />
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Top">
-                    <Button Content="{Binding UninsuredCount, StringFormat=Insure all ({0})}" Click="OnInsureAll"
+                    <Button Content="{Binding RestorableCount, StringFormat=PUT MY GEAR BACK ({0})}" Click="OnRestoreMissing"
+                            Style="{StaticResource PrimaryButton}"
+                            IsEnabled="{Binding CanRestore}" Margin="0,0,6,0"
+                            ToolTip="Recreates the stash items your loadouts reference but that have vanished — exact GUID and item row, so the loadout is whole again. Use this when a gravestone is gone and the gear went with it." />
+                    <Button Content="{Binding UninsuredCount, StringFormat=Free gear held by a host ({0})}" Click="OnInsureAll"
                             IsEnabled="{Binding CanInsure}" Padding="12,4" Margin="0,0,6,0"
-                            ToolTip="The safe version of the community bInsured hand-edit — recovers gear stuck with an offline host." />
-                    <Button Content="{Binding RestorableCount, StringFormat=Restore missing ({0})}" Click="OnRestoreMissing"
-                            IsEnabled="{Binding CanRestore}" Padding="12,4" Margin="0,0,6,0"
-                            ToolTip="Recreates stash items the loadouts reference but that vanished — exact GUID and item row." />
+                            ToolTip="The safe version of the community bInsured hand-edit — releases gear stuck with a host who is offline or never coming back." />
                     <Button Content="Reload" Command="{Binding LoadCommand}" Padding="12,4" />
                 </StackPanel>
             </Grid>

@@ -65,12 +65,35 @@
                              HorizontalContentAlignment="Stretch" BorderThickness="0" Background="Transparent">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="2,6">
-                                    <TextBlock Text="{Binding Title}" Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
-                                    <TextBlock Text="{Binding Detail}" Style="{StaticResource MonoText}" Margin="0,2,0,0" />
-                                    <TextBlock Text="{Binding Carrying}" Style="{StaticResource MutedText}"
-                                               TextWrapping="Wrap" Margin="0,2,0,0" />
-                                </StackPanel>
+                                <Border Margin="0,3" Padding="10,8" CornerRadius="4"
+                                        Background="{StaticResource DataBackdropBrush}"
+                                        BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <!-- The name leads: a rescue is a decision about a person. -->
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="15" FontWeight="SemiBold"
+                                                   Style="{StaticResource BodyText}" TextTrimming="CharacterEllipsis" />
+                                        <Border Grid.Row="0" Grid.Column="1" CornerRadius="3" Padding="7,2" VerticalAlignment="Center"
+                                                Background="{StaticResource DataBackdropBrush}"
+                                                BorderBrush="{StaticResource GlassStrokeBrush}" BorderThickness="1">
+                                            <TextBlock Text="{Binding State}" Style="{StaticResource MonoText}" FontSize="11" />
+                                        </Border>
+
+                                        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Detail}"
+                                                   Style="{StaticResource MonoText}" Margin="0,4,0,0" />
+                                        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Carrying}"
+                                                   Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,3,0,0" />
+                                    </Grid>
+                                </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

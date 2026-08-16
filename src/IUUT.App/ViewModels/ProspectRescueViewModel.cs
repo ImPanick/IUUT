@@ -11,21 +11,28 @@ using IUUT.Core.Serializers;
 namespace IUUT.App.ViewModels;
 
 /// <summary>One character in the rescue panel, with what they are carrying.</summary>
-public sealed record RescueCharacterViewModel(ProspectCharacter Character, string Carrying)
+public sealed record RescueCharacterViewModel(ProspectCharacter Character, string Carrying, string DisplayName)
 {
-    /// <summary>Masked player id and character slot — never the raw SteamID (CONSTITUTION VII).</summary>
-    public string Title => $"Player {Character.MaskedPlayerId} · character slot {Character.CharacterSlot}";
+    /// <summary>
+    /// The character's name when the world remembers one, else a masked id. A rescue is a decision
+    /// about a person, and "…9282" is not a person — a raw SteamID is never shown either way.
+    /// </summary>
+    public string Title => DisplayName;
 
-    /// <summary>Vitals and position, in plain language.</summary>
+    /// <summary>Which character slot this is, kept out of the name so the name reads cleanly.</summary>
+    public string Slot => $"slot {Character.CharacterSlot} · {Character.MaskedPlayerId}";
+
+    /// <summary>Alive or dead, prominent because it decides which actions apply.</summary>
+    public string State => Character.IsAlive ? "ALIVE" : "DEAD";
+
+    /// <summary>Health and position.</summary>
     public string Detail => Character.Location is null
-        ? $"{State} · position unknown"
+        ? $"{Character.Health} hp · position unknown"
         : string.Create(CultureInfo.CurrentCulture,
-            $"{State} · {Character.Health} hp · at ({Character.Location.Metres.X:N0}, {Character.Location.Metres.Y:N0}) m");
+            $"{Character.Health} hp · at ({Character.Location.Metres.X:N0}, {Character.Location.Metres.Y:N0}) m");
 
     /// <summary>Whether this character is dead and would need reviving.</summary>
     public bool IsDead => !Character.IsAlive;
-
-    private string State => Character.IsAlive ? "alive" : "DEAD";
 }
 
 /// <summary>One body or grave marker in the rescue panel.</summary>
@@ -179,19 +186,19 @@ public sealed class ProspectRescueViewModel : ObservableObject
     public string BringGraveSummary => SelectedGrave is null || SelectedCharacter is null
         ? ""
         : $"Move the {SelectedGrave.Grave.Label} holding {SelectedGrave.Grave.ItemSlots} item slot(s) "
-        + $"next to player {SelectedCharacter.Character.MaskedPlayerId}. The grave moves — its contents are "
+        + $"next to {SelectedCharacter.DisplayName}. The grave moves — its contents are "
         + "never converted or re-homed, so you loot it in-game exactly as normal.";
 
     /// <summary>Confirmation text for sending a character to their grave.</summary>
     public string GoToGraveSummary => SelectedGrave is null || SelectedCharacter is null
         ? ""
-        : $"Move player {SelectedCharacter.Character.MaskedPlayerId} to the {SelectedGrave.Grave.Label}. "
+        : $"Move {SelectedCharacter.DisplayName} to the {SelectedGrave.Grave.Label}. "
         + "Everything they are carrying travels with them.";
 
     /// <summary>Confirmation text for reviving.</summary>
     public string ReviveSummary => SelectedCharacter is null
         ? ""
-        : $"Revive player {SelectedCharacter.Character.MaskedPlayerId} where they are, with enough health to stand up.";
+        : $"Revive {SelectedCharacter.DisplayName} where they are, with enough health to stand up.";
 
     /// <summary>Lists (or relists) the prospect world files.</summary>
     public async Task LoadAsync()
@@ -245,7 +252,7 @@ public sealed class ProspectRescueViewModel : ObservableObject
 
         return result.Changed
             ? $"Brought the {SelectedGrave.Grave.Label} ({SelectedGrave.Grave.ItemSlots} item slots) to player "
-              + $"{SelectedCharacter.Character.MaskedPlayerId}"
+              + $"{SelectedCharacter.DisplayName}"
             : null;
     });
 
@@ -257,7 +264,7 @@ public sealed class ProspectRescueViewModel : ObservableObject
             model, SelectedCharacter!.Character, grave.Metres.X + 2, grave.Metres.Y, grave.Metres.Z);
 
         return result.Changed
-            ? $"Moved player {SelectedCharacter.Character.MaskedPlayerId} to their {SelectedGrave.Grave.Label}"
+            ? $"Moved {SelectedCharacter.DisplayName} to their {SelectedGrave.Grave.Label}"
             : null;
     });
 
@@ -273,7 +280,7 @@ public sealed class ProspectRescueViewModel : ObservableObject
         var result = ProspectCharacterEditor.Rescue(
             model, SelectedCharacter.Character, at.Metres.X, at.Metres.Y, at.Metres.Z, revive: true);
 
-        return result.Revived ? $"Revived player {SelectedCharacter.Character.MaskedPlayerId}" : null;
+        return result.Revived ? $"Revived {SelectedCharacter.DisplayName}" : null;
     });
 
     // One write path for every action: read, mutate, save with a backup, then re-read so the
@@ -404,9 +411,13 @@ public sealed class ProspectRescueViewModel : ObservableObject
             var model = ProspectFileParser.Parse(json);
             var blob = ProspectBlobCodec.Decompress(model.ProspectBlob.BinaryBlob);
 
+            var names = ProspectPlayerNames.Read(blob);
             foreach (var character in _characters.Read(blob))
             {
-                Characters.Add(new RescueCharacterViewModel(character, DescribeCarrying(blob, character)));
+                Characters.Add(new RescueCharacterViewModel(
+                    character,
+                    DescribeCarrying(blob, character),
+                    ProspectPlayerNames.Describe(names, character)));
             }
 
             foreach (var grave in _graves.Read(blob))
