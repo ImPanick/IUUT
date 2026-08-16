@@ -29,10 +29,12 @@ public class ProspectBlobCodecTests
         compressed[0].Should().Be(0x78, "a 32K-window zlib stream always starts with the 0x78 CMF byte");
     }
 
+    // Was asserted as ^[0-9A-F]{40}$ — uppercase — which is not what Icarus writes. The assertion
+    // was self-consistent and wrong, and the game paid for it by regenerating a world.
     [Fact]
-    public void ComputeHash_IsUppercaseHexSha1Length()
+    public void ComputeHash_IsLowercaseHexSha1Length_AsTheGameWritesIt()
     {
-        ProspectBlobCodec.ComputeHash(SamplePayload()).Should().MatchRegex("^[0-9A-F]{40}$");
+        ProspectBlobCodec.ComputeHash(SamplePayload()).Should().MatchRegex("^[0-9a-f]{40}$");
     }
 
     [Fact]
@@ -45,7 +47,7 @@ public class ProspectBlobCodecTests
 
         blob.UncompressedLength.Should().Be(data.Length);
         blob.TotalLength.Should().Be(blob.DataLength).And.BeGreaterThan(0);
-        blob.Hash.Should().MatchRegex("^[0-9A-F]{40}$");
+        blob.Hash.Should().MatchRegex("^[0-9a-f]{40}$", "the game writes this field lowercase");
         ProspectBlobVerifier.VerifyHash(blob).Should().BeTrue("the re-stamped blob must pass the game's load-time hash check");
         ProspectBlobCodec.Decompress(blob.BinaryBlob).Should().Equal(data);
     }

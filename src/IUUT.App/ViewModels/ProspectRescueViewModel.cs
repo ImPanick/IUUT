@@ -304,9 +304,20 @@ public sealed class ProspectRescueViewModel : ObservableObject
             }
 
             var save = await _files.SaveJsonTextAsync(SelectedProspect.Path, ProspectFileSerializer.Serialize(model));
-            StatusMessage = save.Ok
-                ? $"{outcome} — a backup was taken. Everyone must be OUT of this prospect, or the running session will overwrite it."
-                : $"Write failed; the prospect is unchanged. {save.Error?.Message}";
+            if (!save.Ok)
+            {
+                StatusMessage = $"Write failed; the prospect is unchanged. {save.Error?.Message}";
+                return;
+            }
+
+            // Read the file back off disk and check it the way the game will. A blob the game
+            // rejects is not reported as an error — it silently discards the world and generates a
+            // new one — so the only safe assumption is that an unverified write is a broken write.
+            var verify = await VerifyOnDiskAsync(SelectedProspect.Path);
+            StatusMessage = verify is null
+                ? $"{outcome} — verified on disk, and a backup was taken. Everyone must be OUT of this prospect, or the running session will overwrite it."
+                : $"WROTE A FILE THAT DID NOT VERIFY: {verify}. Restore the backup beside the prospect "
+                  + $"({save.BackupPath}) before loading the world.";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.
         catch (Exception ex)
@@ -322,6 +333,47 @@ public sealed class ProspectRescueViewModel : ObservableObject
         var message = StatusMessage;
         await PreviewAsync();
         StatusMessage = message;
+    }
+
+    // Re-reads a written prospect and checks everything the game checks. Returns null when the
+    // file is sound, or a plain-English reason when it is not.
+    private async Task<string?> VerifyOnDiskAsync(string path)
+    {
+        try
+        {
+            var json = await _files.ReadTextAsync(path);
+            if (json is null)
+            {
+                return "the file could not be read back";
+            }
+
+            var reread = ProspectFileParser.Parse(json);
+            var blob = ProspectBlobCodec.Decompress(reread.ProspectBlob.BinaryBlob);
+
+            if (!ProspectBlobVerifier.VerifyHash(reread.ProspectBlob))
+            {
+                return "the world blob's hash does not match its contents";
+            }
+
+            var hash = reread.ProspectBlob.Hash;
+            if (!string.Equals(hash, hash.ToLowerInvariant(), StringComparison.Ordinal))
+            {
+                return "the world blob's hash is not in the game's lowercase form";
+            }
+
+            if (_characters.Read(blob).Count == 0)
+            {
+                return "no characters could be read back from the written world";
+            }
+
+            return null;
+        }
+#pragma warning disable CA1031 // Any failure to verify must be reported as a failure, whatever its type.
+        catch (Exception ex)
+        {
+            return $"reading it back failed ({ex.GetType().Name}: {ex.Message})";
+        }
+#pragma warning restore CA1031
     }
 
     private async Task PreviewAsync()

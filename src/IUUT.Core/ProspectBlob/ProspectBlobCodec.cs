@@ -23,13 +23,23 @@ public static class ProspectBlobCodec
     /// <summary>Compresses <paramref name="uncompressed"/> into a complete zlib stream and base64-encodes it.</summary>
     public static string CompressToBase64(byte[] uncompressed) => Convert.ToBase64String(Compress(uncompressed));
 
-    /// <summary>The game's blob hash: uppercase-hex SHA-1 of the <em>uncompressed</em> bytes.</summary>
+    /// <summary>
+    /// The game's blob hash: LOWERCASE-hex SHA-1 of the <em>uncompressed</em> bytes.
+    /// <para>
+    /// The case is not cosmetic. Icarus writes this field lowercase — verified on every prospect of
+    /// every profile available (9 of 9, zero uppercase) — and <c>Convert.ToHexString</c>
+    /// returns UPPERCASE. IUUT shipped the uppercase form, which round-tripped happily through its
+    /// own verifier (that comparison is case-insensitive) and so was never caught by a test, while
+    /// handing the game a hash that does not match what it wrote. Treat this as a byte-for-byte
+    /// interop format, not a hash: reproduce the game's spelling exactly.
+    /// </para>
+    /// </summary>
     public static string ComputeHash(byte[] uncompressed)
     {
         ArgumentNullException.ThrowIfNull(uncompressed);
         // SHA-1 is the game's blob-integrity format (field guide §8.1) — interop, NOT security.
 #pragma warning disable CA5350 // Do Not Use Weak Cryptographic Algorithms — interop with the game's hash.
-        return Convert.ToHexString(SHA1.HashData(uncompressed));
+        return Convert.ToHexString(SHA1.HashData(uncompressed)).ToLowerInvariant();
 #pragma warning restore CA5350
     }
 
@@ -51,6 +61,42 @@ public static class ProspectBlobCodec
         blob.UncompressedLength = uncompressed.Length;
         blob.TotalLength = compressed.Length;
         blob.DataLength = compressed.Length;
+
+        // Self-check before this can reach a save file. A blob the game rejects does not fail
+        // loudly — Icarus discards the world and regenerates it, which reads to the player as
+        // every base and every item gone. Nothing that has not round-tripped gets written.
+        VerifyRoundTrip(blob, uncompressed);
+    }
+
+    /// <summary>
+    /// Proves a re-encoded blob decodes back to exactly the bytes it was built from, and that its
+    /// stamped fields agree. Throws rather than let an unusable world reach disk.
+    /// </summary>
+    /// <exception cref="InvalidDataException">The blob does not round-trip.</exception>
+    public static void VerifyRoundTrip(ProspectBlobModel blob, byte[] expected)
+    {
+        ArgumentNullException.ThrowIfNull(blob);
+        ArgumentNullException.ThrowIfNull(expected);
+
+        var decoded = Decompress(blob.BinaryBlob);
+        if (!decoded.AsSpan().SequenceEqual(expected))
+        {
+            throw new InvalidDataException(
+                $"Blob round-trip failed: re-read {decoded.Length} bytes, expected {expected.Length}. Nothing was written.");
+        }
+
+        var hash = ComputeHash(expected);
+        if (!string.Equals(blob.Hash, hash, StringComparison.Ordinal))
+        {
+            throw new InvalidDataException(
+                "Blob hash does not match its bytes, or is not in the game's lowercase form. Nothing was written.");
+        }
+
+        if (blob.UncompressedLength != expected.Length)
+        {
+            throw new InvalidDataException(
+                $"Blob length field ({blob.UncompressedLength}) disagrees with its bytes ({expected.Length}). Nothing was written.");
+        }
     }
 
     private static byte[] Compress(byte[] uncompressed)

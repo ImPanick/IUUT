@@ -12,6 +12,44 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.17.1] — 2026-08-07
+
+### Fixed
+
+- **CRITICAL — every blob write since v2.5.0 stamped a hash the game would not accept.** Icarus
+  writes the world blob's SHA-1 in **lowercase** hex. IUUT wrote it in **uppercase**, because
+  `Convert.ToHexString` returns uppercase and nothing ever checked. The game treats a hash it did
+  not spell as a tampered blob and responds by discarding the world and generating a new one — so
+  the failure did not look like a failure, it looked like every base and every item being gone.
+
+  Verified against every prospect of every profile available: **9 of 9 lowercase, zero uppercase.**
+
+  This affected every path that re-encodes the world blob — quest reset, mount rename, return to
+  stash, base relocation, character rescue, and grave recovery.
+
+  **Why no test caught it:** IUUT's own verifier compares hashes case-insensitively, so a written
+  blob round-tripped through IUUT perfectly. The test asserting the format asserted
+  `^[0-9A-F]{40}$` — self-consistent, and wrong. The only observer that cared was the game, and no
+  gate ever asked it. Both tests are corrected, and the format is now pinned with an ordinal
+  comparison against an independently computed lowercase hash.
+
+### Added
+
+- **Writes verify themselves, twice.** `ProspectBlobCodec.SetUncompressed` now re-decodes what it
+  just encoded and refuses to hand back a blob that does not round-trip byte-for-byte, whose hash
+  disagrees with its bytes, or whose hash is not in the game's lowercase form — it throws instead,
+  so a broken world cannot be serialized. The rescue panel then re-reads the saved file from disk
+  and checks it the way the game will; if anything is off it says so and names the backup to
+  restore, rather than reporting success.
+
+### Note on what is still different
+
+An IUUT-written prospect is not byte-identical to a game-written one: the game indents with tabs and
+IUUT with spaces, and IUUT's zlib compresses a few percent worse. Both are JSON- and zlib-level
+formatting that any conformant reader ignores, and the length fields are re-stamped to match. That
+is an assessment, not a measurement — the same kind of "surely this is cosmetic" reasoning that hid
+the hash bug — so it is written down here rather than assumed away.
+
 ## [2.17.0] — 2026-08-07
 
 ### Added
