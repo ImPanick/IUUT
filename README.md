@@ -45,7 +45,8 @@ fully offline, never without a backup.
 | | |
 | --- | --- |
 | **Broken-save recovery** | Full health scan (parses every JSON, checksums every prospect blob) → backup-chain restore (ranks every candidate by parse-OK + recency) → template repair (rebuilds a valid skeleton and salvages what it can) → a plain-English advisor for the *non*-corruption causes (Steam Cloud conflict, Controlled Folder Access, OneDrive conflicted copies, schema mismatch). |
-| **Return to Stash** | Items stranded in a prospect you can't re-enter — because the host is gone, or the world won't resume — pulled back into your orbital stash. The stash is written *first*, so an interrupted rescue can only duplicate (recoverable), never lose. |
+| **Stuck in a prospect?** | Items stranded in a world you can't re-enter — the host is gone, the world won't resume, a zone reset behind you — pulled back into your orbital stash. The stash is written *first*, so an interrupted rescue can only duplicate (recoverable), never lose. |
+| **Stranded character rescue** | A boss glitches, a zone resets, and your body is somewhere the game won't let you reach — with everything you were carrying. IUUT moves the character somewhere reachable (on the ground, if you want), revives them if they died down there, and brings the gear along on the body. Host-side: that state lives in the host's world save, so one person can free the whole group. |
 | **Backup Manager** | Browse every timestamped IUUT backup, restore any of them (the current file is backed up first — restores are themselves reversible), prune the rest. |
 | **Loadout recovery** | The two community hand-edits, made safe: flip `bInsured` to free gear held by an offline host, and recreate stash items a loadout references but that vanished — exact GUID and item row, so the loadout is whole again. |
 | **Mount rescue** | Clone a roster mount (its binary stats blob carried byte-for-byte), and rename mounts deployed *inside* a prospect. |
@@ -102,7 +103,12 @@ iuut prospect-report    # per-prospect mission + quest-step state, trapped-item 
 iuut quest-reset        # reset a prospect's mission (preview; --apply to write)
 iuut homestead-move     # list your builds; relocate one (preview; --apply to write)
                         #   --snap sits the build on the estimated ground height
+iuut return-to-stash    # pull items trapped in a prospect back to your orbital stash
+iuut rescue-character   # move a stranded character somewhere reachable (--snap, --revive)
 ```
+
+`iuut check` names both rescue commands whenever it finds items or characters sitting inside a
+prospect — the point being that you find them at the moment something has gone wrong, not later.
 
 ## Get IUUT
 
@@ -185,7 +191,7 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **385 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+- **390 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
   catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
   test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
 - **Adversarial review** before releases: multi-agent passes that must confirm a finding against

@@ -12,6 +12,48 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.14.0] — 2026-08-07
+
+### Added
+
+- **Get a stranded character back.** When a zone resets behind you, or a boss glitches and pins your
+  body somewhere you cannot reach, the game offers no way to your gear. `iuut rescue-character`
+  lists everyone recorded in a prospect and moves one somewhere reachable, with `--snap` to drop
+  them on the ground and `--revive` if they died down there. Their carried inventory travels with
+  them — the gear is on the body.
+
+  ```
+  2 character(s) in 'PGH-5':
+    [0] player …2784 · character slot 3 · alive · 124 hp · at (-1,608, -687, -64) m
+         carrying 59 item slot(s); 1 respawn(s) used
+  ```
+
+  This is host-side by nature: a character's position and carried items live in the host's prospect
+  world save, not in any player's own profile, so one person with the file can free the whole group.
+  Everyone must be out of the prospect first, or the running session will overwrite it.
+
+- **`iuut return-to-stash`.** Pulling trapped items back to the orbital stash has worked in the app
+  since v2.1.0 but had no CLI verb at all. Now it has one, preview-first like everything else.
+
+### Changed
+
+- **Rescue features you can actually find.** IUUT could already recover items trapped in a prospect,
+  and its own author could not find that when he needed it — which makes it, in practice, a feature
+  that does not exist. Fixed at the two places someone actually looks:
+
+  - `iuut check` — the first thing anyone runs when something has gone wrong — now reports what is
+    sitting inside each prospect (items, characters, and whether any are dead), then names the way
+    out: `return-to-stash`, `rescue-character`, and where to find them in the app.
+  - The app's RESCUE entry is renamed from **"Return to Stash"** to **"Stuck in a prospect?"**, and
+    describes the situations it solves rather than the mechanism it uses. Someone who just lost a
+    body to a zone reset searches for "stuck", not for the name of the fix.
+
+Both rescue writes are in-place and size-preserving, the same low-risk class as the quest reset and
+the base relocation: `Location` is a natively serialised `Vector`, and `bIsAlive`'s value byte lives
+in the property tag. Gated on a real 17 MB two-player save copied to scratch — the target landed
+where asked with all 59 carried slots, and the other player's position, health, and 52 slots were
+untouched, alongside 885 item slots, 13 quest steps, 460 structures, and the blob's exact length.
+
 ## [2.13.0] — 2026-08-07
 
 ### Added

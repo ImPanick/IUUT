@@ -408,10 +408,15 @@ public sealed class CustomViewModel : ObservableObject
         new()
         {
             Key = "returntostash",
+            // Named for the problem, not the mechanism. Someone who has just lost a body to a zone
+            // reset searches for "stuck", not for "Return to Stash" — the old label was accurate
+            // and unfindable at the one moment it mattered.
             Group = "RESCUE",
             Glyph = SymbolRegular.Box24,
-            Label = "Return to Stash",
-            Description = "Recover items trapped in a prospect's world save back to the orbital stash.",
+            Label = "Stuck in a prospect?",
+            Description = "Gear stranded in a world you can't get back into — host gone, world won't "
+                        + "resume, a zone reset behind you, a boss glitched. Pull the items back to your "
+                        + "orbital stash (Return to Stash).",
             Status = "Wired — ProspectReturnFileService.",
         },
         new()

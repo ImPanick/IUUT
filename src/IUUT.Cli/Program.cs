@@ -35,6 +35,10 @@ try
         "quest-reset" => await QuestResetAsync(ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
         "homestead-move" => await HomesteadMoveAsync(
             ParseOptions(args, ["--prospect", "--profile", "--root", "--build", "--by", "--radius"], ["--apply", "--snap"])).ConfigureAwait(false),
+        "rescue-character" => await RescueCharacterAsync(
+            ParseOptions(args, ["--prospect", "--profile", "--root", "--character", "--to"], ["--apply", "--snap", "--revive"])).ConfigureAwait(false),
+        "return-to-stash" => await ReturnToStashAsync(
+            ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
         "recover" => Recover(),
         _ => UnknownCommand(args[0]),
     };
@@ -80,6 +84,18 @@ static void PrintUsage()
     Console.WriteLine("                   how sure it is; --snap picks the z offset that lands the");
     Console.WriteLine("                   build on it. Preview by default; --apply writes (backup");
     Console.WriteLine("                   first, atomic, size-preserving).");
+    Console.WriteLine();
+    Console.WriteLine("  STUCK IN A PROSPECT? (host-side — everyone must be out of the prospect first)");
+    Console.WriteLine("  return-to-stash  --prospect <name> [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   Pull items trapped in a prospect back into your orbital stash —");
+    Console.WriteLine("                   for when the host is gone or the world will not resume. The stash");
+    Console.WriteLine("                   is written first, so an interrupted return can only duplicate.");
+    Console.WriteLine("  rescue-character --prospect <name> [--character <n>] [--to <x,y,z>] [--snap]");
+    Console.WriteLine("                   [--revive] [--profile <steamid-or-path>] [--apply]");
+    Console.WriteLine("                   List the characters recorded in a prospect and move one somewhere");
+    Console.WriteLine("                   reachable — for a zone that reset behind you, or a boss that");
+    Console.WriteLine("                   glitched and stranded a body. Carried gear travels with them.");
+    Console.WriteLine();
     Console.WriteLine("  recover          Guided save recovery lives in the IUUT app — it needs the UI.");
     Console.WriteLine();
     Console.WriteLine("  --root defaults to %LOCALAPPDATA%\\Icarus\\Saved.");
@@ -138,6 +154,11 @@ static int Check(Dictionary<string, string?> options)
     var scanner = new HealthScanService();
     var totalIssues = 0;
 
+    // A healthy save can still be holding your gear hostage. `check` is the first thing anyone
+    // runs when something has gone wrong, so it has to name the way out — a recovery feature you
+    // cannot find at the moment you need it may as well not exist.
+    var stranded = new List<string>();
+
     foreach (var profile in profiles)
     {
         var report = scanner.ScanProfile(profile.FolderPath);
@@ -147,12 +168,93 @@ static int Check(Dictionary<string, string?> options)
         {
             Console.WriteLine($"  {issue.Status}: {issue.RelativePath}{(issue.Detail is null ? "" : " — " + issue.Detail)}");
         }
+
+        stranded.AddRange(ScanForStrandedGear(profile.FolderPath));
     }
 
     Console.WriteLine(totalIssues == 0
         ? $"All healthy ({profiles.Count} profiles)."
         : $"{totalIssues} issue(s) across {profiles.Count} profiles.");
+
+    if (stranded.Count > 0)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Items and characters are sitting inside prospects:");
+        foreach (var line in stranded)
+        {
+            Console.WriteLine($"  {line}");
+        }
+
+        Console.WriteLine();
+        Console.WriteLine("  That is normal for a prospect you can still get back into. If you CANNOT —");
+        Console.WriteLine("  the host is gone, the world will not resume, a zone reset behind you, or a boss");
+        Console.WriteLine("  glitched and stranded your body — you can get it back without the game:");
+        Console.WriteLine("    iuut return-to-stash  --prospect <name>   pull the items into your orbital stash");
+        Console.WriteLine("    iuut rescue-character --prospect <name>   move a stranded character somewhere reachable");
+        Console.WriteLine("  Both preview by default. In the app: RESCUE → \"Stuck in a prospect?\".");
+    }
+
     return totalIssues == 0 ? 0 : 2;
+}
+
+// Per-prospect summary of what is stranded, for `check`. Resilient by design: a prospect that
+// will not parse is exactly the case the user needs help with, so it must not abort the scan.
+static IEnumerable<string> ScanForStrandedGear(string profileFolder)
+{
+    var prospects = Path.Combine(profileFolder, "Prospects");
+    if (!Directory.Exists(prospects))
+    {
+        yield break;
+    }
+
+    var returns = new ProspectReturnService(new StashEditService(new SystemGuidProvider()));
+    var characters = new IUUT.Core.Prospects.World.ProspectCharacterReader();
+
+    foreach (var file in Directory.EnumerateFiles(prospects, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
+    {
+        if (file.Contains(BackupManager.BackupInfix, StringComparison.Ordinal))
+        {
+            continue;
+        }
+
+        string? line = null;
+#pragma warning disable CA1031 // An unreadable prospect is the Recovery screen's problem, not this summary's.
+        try
+        {
+            var model = IUUT.Core.Parsers.ProspectFileParser.Parse(File.ReadAllText(file));
+            var items = returns.Preview(model);
+            var people = characters.ReadBlob(model.ProspectBlob);
+            var dead = people.Count(p => !p.IsAlive);
+            var carrying = people.Sum(p => p.CarriedSlots);
+
+            if (items.Count > 0 || carrying > 0 || dead > 0)
+            {
+                var parts = new List<string>();
+                if (items.Count > 0)
+                {
+                    parts.Add($"{items.Sum(i => i.TotalQuantity)} item(s) in {items.Count} kind(s)");
+                }
+
+                if (people.Count > 0)
+                {
+                    parts.Add($"{people.Count} character(s){(dead > 0 ? $", {dead} DEAD" : "")}"
+                            + $"{(carrying > 0 ? $" carrying {carrying} slot(s)" : "")}");
+                }
+
+                line = $"{Path.GetFileNameWithoutExtension(file)}: {string.Join("; ", parts)}";
+            }
+        }
+        catch (Exception)
+        {
+            line = null;
+        }
+#pragma warning restore CA1031
+
+        if (line is not null)
+        {
+            yield return line;
+        }
+    }
 }
 
 static int BackupAll(Dictionary<string, string?> options)
@@ -644,6 +746,201 @@ static double ParseMetres(string text, string option) =>
     double.TryParse(text.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var value)
         ? value
         : throw new ArgumentException($"{option} takes a distance in metres, not '{text.Trim()}'");
+
+// Pulls the items trapped in a prospect back into the orbital stash. This shipped in the app in
+// v2.1.0 but had no CLI verb, which is half of why nobody could find it when they needed it.
+static async Task<int> ReturnToStashAsync(Dictionary<string, string?> options)
+{
+    var prospectName = options.GetValueOrDefault("--prospect")
+        ?? throw new ArgumentException("return-to-stash requires --prospect <name> (see prospect-report for names)");
+    var folder = ResolveProfileFolder(options);
+    var path = Path.Combine(folder, "Prospects", prospectName + ".json");
+    if (!File.Exists(path))
+    {
+        Console.Error.WriteLine($"prospect not found: '{path}'");
+        return 1;
+    }
+
+    var clock = new SystemClock();
+    var service = new ProspectReturnFileService(
+        new CustomFileService(
+            new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
+            new BackupManager(clock)),
+        new ProspectReturnService(new StashEditService(new SystemGuidProvider())));
+
+    var trapped = await service.PreviewAsync(path).ConfigureAwait(false);
+    if (trapped.Count == 0)
+    {
+        Console.WriteLine("Nothing is trapped in this prospect.");
+        return 0;
+    }
+
+    Console.WriteLine($"{trapped.Sum(t => t.TotalQuantity)} item(s) across {trapped.Count} kind(s) in '{prospectName}':");
+    foreach (var item in trapped.OrderByDescending(t => t.TotalQuantity).Take(20))
+    {
+        Console.WriteLine($"  {item.TotalQuantity,6} x {item.RowName}  ({item.SlotCount} slot(s))");
+    }
+
+    if (trapped.Count > 20)
+    {
+        Console.WriteLine($"  … {trapped.Count - 20} more kind(s)");
+    }
+
+    if (!options.ContainsKey("--apply"))
+    {
+        Console.WriteLine("\nPreview only. Re-run with --apply to move these into your orbital stash");
+        Console.WriteLine("(the stash is written FIRST, so an interrupted return can only duplicate, never lose).");
+        return 0;
+    }
+
+    var result = await service.ReturnAsync(path, folder).ConfigureAwait(false);
+    if (!result.Ok)
+    {
+        Console.Error.WriteLine($"Return failed; nothing was lost. {result.Error}");
+        return 1;
+    }
+
+    Console.WriteLine($"APPLIED: {result.Moved?.TotalQuantity ?? 0} item(s) returned to the orbital stash "
+        + $"as {result.Moved?.StashStacksAdded ?? 0} stack(s).");
+    Console.WriteLine("Everyone must be OUT of the prospect when you do this, or the running session will overwrite it.");
+    return 0;
+}
+
+// Frees a character the game has stranded — a zone that reset behind you, a boss that glitched and
+// pinned bodies somewhere unreachable. The state lives only in the host's prospect save.
+static async Task<int> RescueCharacterAsync(Dictionary<string, string?> options)
+{
+    var prospectName = options.GetValueOrDefault("--prospect")
+        ?? throw new ArgumentException("rescue-character requires --prospect <name> (see prospect-report for names)");
+    var folder = ResolveProfileFolder(options);
+    var path = Path.Combine(folder, "Prospects", prospectName + ".json");
+    if (!File.Exists(path))
+    {
+        Console.Error.WriteLine($"prospect not found: '{path}'");
+        return 1;
+    }
+
+    var model = IUUT.Core.Parsers.ProspectFileParser.Parse(await File.ReadAllTextAsync(path).ConfigureAwait(false));
+    var reader = new IUUT.Core.Prospects.World.ProspectCharacterReader();
+    var characters = reader.ReadBlob(model.ProspectBlob);
+    if (characters.Count == 0)
+    {
+        Console.WriteLine("No characters are recorded in this prospect.");
+        return 0;
+    }
+
+    Console.WriteLine($"{characters.Count} character(s) in '{prospectName}':");
+    for (var i = 0; i < characters.Count; i++)
+    {
+        var c = characters[i];
+        var where = c.Location is null ? "position unknown" : FormattableString.Invariant(
+            $"at ({c.Location.Metres.X:N0}, {c.Location.Metres.Y:N0}, {c.Location.Metres.Z:N0}) m");
+        Console.WriteLine($"  [{i}] player {c.MaskedPlayerId} · character slot {c.CharacterSlot} · "
+            + $"{(c.IsAlive ? "alive" : "DEAD")} · {c.Health} hp · {where}");
+        Console.WriteLine($"       carrying {c.CarriedSlots} item slot(s); {c.RespawnCount} respawn(s) used");
+    }
+
+    if (options.GetValueOrDefault("--to") is not { } toText)
+    {
+        Console.WriteLine("\nPass --character <n> --to <x,y,z> (metres) to move one somewhere reachable.");
+        Console.WriteLine("Add --snap to drop them on the estimated ground, and --revive if they are dead.");
+        return 0;
+    }
+
+    var parts = toText.Split(',');
+    if (parts.Length != 3)
+    {
+        throw new ArgumentException("--to takes a world position in metres: --to <x,y,z> (e.g. --to -890,815,-235)");
+    }
+
+    var tx = ParseMetres(parts[0], "--to x");
+    var ty = ParseMetres(parts[1], "--to y");
+    var tz = ParseMetres(parts[2], "--to z");
+
+    var index = options.GetValueOrDefault("--character") is { } text
+        ? (int.TryParse(text, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed)
+            ? parsed
+            : throw new ArgumentException($"--character takes a number from the list above, not '{text}'"))
+        : 0;
+    if (index < 0 || index >= characters.Count)
+    {
+        throw new ArgumentException($"--character {index} does not exist — pick 0..{characters.Count - 1} from the list above");
+    }
+
+    var target = characters[index];
+    var terrain = IUUT.Core.Prospects.World.TerrainHeightField.FromProspect(model);
+    var ground = terrain.EstimateAt(tx, ty);
+
+    if (options.ContainsKey("--snap"))
+    {
+        if (ground is null)
+        {
+            Console.Error.WriteLine("--snap needs a ground estimate and this prospect has too few world features. "
+                                  + "Give an explicit z instead.");
+            return 1;
+        }
+
+        // Stand them just above the ground rather than exactly on it, so they settle rather than clip.
+        tz = ground.HeightMetres + 1;
+    }
+
+    var revive = options.ContainsKey("--revive");
+    Console.WriteLine($"\nMove player {target.MaskedPlayerId} (character slot {target.CharacterSlot})"
+        + $"{(revive ? " and revive them" : "")}:");
+    if (target.Location is not null)
+    {
+        Console.WriteLine(FormattableString.Invariant(
+            $"  from ({target.Location.Metres.X:N0}, {target.Location.Metres.Y:N0}, {target.Location.Metres.Z:N0}) m"));
+    }
+
+    Console.WriteLine(FormattableString.Invariant($"  to   ({tx:N0}, {ty:N0}, {tz:N0}) m"));
+    Console.WriteLine($"  Their {target.CarriedSlots} carried item slot(s) travel with them — the gear is on the body.");
+
+    if (ground is not null)
+    {
+        Console.WriteLine($"  Ground there is about {ground.HeightMetres:N0} m ({ground.Confidence} confidence) — "
+            + $"{ground.Explanation}.");
+        if (!options.ContainsKey("--snap") && Math.Abs(tz - ground.HeightMetres) > 5)
+        {
+            Console.WriteLine("  That z is well off the ground; --snap would place them on it.");
+        }
+    }
+
+    if (!target.IsAlive && !revive)
+    {
+        Console.WriteLine("  This character is DEAD — moving the body alone may not be enough. Add --revive.");
+    }
+
+    var result = IUUT.Core.Prospects.World.ProspectCharacterEditor.Rescue(model, target, tx, ty, tz, revive);
+    if (!result.Changed)
+    {
+        Console.Error.WriteLine("Nothing was changed — the character record could not be matched.");
+        return 1;
+    }
+
+    if (!options.ContainsKey("--apply"))
+    {
+        Console.WriteLine("Preview only. Re-run with --apply to write (a backup is taken first).");
+        return 0;
+    }
+
+    var clock = new SystemClock();
+    var files = new CustomFileService(
+        new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
+        new BackupManager(clock));
+    var save = await files
+        .SaveJsonTextAsync(path, IUUT.Core.Serializers.ProspectFileSerializer.Serialize(model))
+        .ConfigureAwait(false);
+    if (!save.Ok)
+    {
+        Console.Error.WriteLine($"Write failed; the original prospect is unchanged. {save.Error?.Message}");
+        return 1;
+    }
+
+    Console.WriteLine($"APPLIED{(result.Revived ? " (moved and revived)" : " (moved)")} — backup at {save.BackupPath}");
+    Console.WriteLine("Everyone must be OUT of the prospect when you do this, or the running session will overwrite it.");
+    return 0;
+}
 
 static int Recover()
 {
