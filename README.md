@@ -105,6 +105,7 @@ iuut homestead-move     # list your builds; relocate one (preview; --apply to wr
                         #   --snap sits the build on the estimated ground height
 iuut return-to-stash    # pull items trapped in a prospect back to your orbital stash
 iuut rescue-character   # move a stranded character somewhere reachable (--snap, --revive)
+                        #   --inventory shows what they carry, laid out as the game does
 ```
 
 `iuut check` names both rescue commands whenever it finds items or characters sitting inside a
@@ -191,7 +192,7 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **390 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+- **395 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
   catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
   test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
 - **Adversarial review** before releases: multi-agent passes that must confirm a finding against

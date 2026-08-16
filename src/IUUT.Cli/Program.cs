@@ -36,7 +36,7 @@ try
         "homestead-move" => await HomesteadMoveAsync(
             ParseOptions(args, ["--prospect", "--profile", "--root", "--build", "--by", "--radius"], ["--apply", "--snap"])).ConfigureAwait(false),
         "rescue-character" => await RescueCharacterAsync(
-            ParseOptions(args, ["--prospect", "--profile", "--root", "--character", "--to"], ["--apply", "--snap", "--revive"])).ConfigureAwait(false),
+            ParseOptions(args, ["--prospect", "--profile", "--root", "--character", "--to"], ["--apply", "--snap", "--revive", "--inventory"])).ConfigureAwait(false),
         "return-to-stash" => await ReturnToStashAsync(
             ParseOptions(args, ["--prospect", "--profile", "--root"], applyFlag)).ConfigureAwait(false),
         "recover" => Recover(),
@@ -840,10 +840,40 @@ static async Task<int> RescueCharacterAsync(Dictionary<string, string?> options)
         Console.WriteLine($"       carrying {c.CarriedSlots} item slot(s); {c.RespawnCount} respawn(s) used");
     }
 
+    if (options.ContainsKey("--inventory"))
+    {
+        var pick = options.GetValueOrDefault("--character") is { } who
+            && int.TryParse(who, NumberStyles.Integer, CultureInfo.InvariantCulture, out var whoIndex) ? whoIndex : 0;
+        if (pick < 0 || pick >= characters.Count)
+        {
+            throw new ArgumentException($"--character {pick} does not exist — pick 0..{characters.Count - 1}");
+        }
+
+        var blob = IUUT.Core.ProspectBlob.ProspectBlobCodec.Decompress(model.ProspectBlob.BinaryBlob);
+        var inventories = new IUUT.Core.Prospects.World.ProspectInventoryReader().Read(blob, characters[pick]);
+        Console.WriteLine($"\nplayer {characters[pick].MaskedPlayerId} — what they are carrying:");
+        foreach (var inv in inventories)
+        {
+            Console.WriteLine($"\n  {inv.Label}  (inventory {inv.InventoryId}) — {inv.OccupiedCount} item(s), "
+                + $"grid at least {inv.MinimumCapacity} slot(s)");
+            foreach (var item in inv.Items.Where(i => i.HasItem).OrderBy(i => i.Location))
+            {
+                var named = inv.SlotName(item.Location);
+                Console.WriteLine($"      [{item.Location,2}]{(named is null ? "" : $" {named,-10}")} {item.RowName}");
+            }
+        }
+
+        Console.WriteLine("\n  Slot counts are what is CARRIED. The save never records how much fits — capacity is");
+        Console.WriteLine("  base plus what your gear grants (an Envirosuit_Larkwell_Alpha adds 6 inventory and");
+        Console.WriteLine("  4 module slots), which lives in the game's data rather than the save.");
+        return 0;
+    }
+
     if (options.GetValueOrDefault("--to") is not { } toText)
     {
         Console.WriteLine("\nPass --character <n> --to <x,y,z> (metres) to move one somewhere reachable.");
         Console.WriteLine("Add --snap to drop them on the estimated ground, and --revive if they are dead.");
+        Console.WriteLine("Pass --inventory to see everything a character is carrying, laid out as the game does.");
         return 0;
     }
 

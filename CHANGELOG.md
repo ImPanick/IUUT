@@ -12,6 +12,46 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.15.0] — 2026-08-07
+
+### Added
+
+- **See what a character is carrying, laid out the way the game shows it.**
+  `iuut rescue-character --prospect <name> --inventory` reads all six of a character's inventories
+  and prints them as the game's own panels — Toolbelt, Inventory, the character doll with named
+  body slots, the Oxygen/Food/Water column, **Auxiliary** modules, and the light slot.
+
+  ```
+    Character  (inventory 5) — 9 item(s)
+        [ 0] Head       Meta_Carbon_Head_Alpha
+        [ 5] Envirosuit Envirosuit_Larkwell_Alpha
+        [ 8] Backpack   Basic_Quiver
+
+    Auxiliary  (inventory 11) — 3 item(s)
+        [ 0] Meta_Module_Temperature
+  ```
+
+This is the groundwork for editing a live inventory in a panel that mirrors the game screen, and
+the decode is the hard half. The six inventory ids were identified from real saves by what each one
+contains rather than assumed: **2** toolbelt (it holds the axe, the bow, and the bare-fist entry),
+**3** the main grid, **4** the consumable column, **5** the equipment doll in a fixed order
+(`Head, Chest, Arms, Legs, Feet, Envirosuit, Skin, Cap, Backpack`), **11** the suit's Auxiliary
+module bay, **12** the lantern.
+
+**Slots are stored sparsely** — only occupied ones, each carrying its own `Location` — which a real
+character proves by holding exactly two consumables, at Location 0 and Location 2. So the save
+records what is carried and *never how much fits*.
+
+Real capacity is base plus what your gear grants, and both live in the game's data rather than the
+save. `InventoryInfo.StartingSlots` gives the base (a backpack starts at 24), and an equipped suit
+grants more through its armour stats: `Envirosuit_Larkwell_Alpha` resolves to
+`Undersuit_Larkwell_Alpha`, whose `ArmourStats` carry `BaseBackpackSlots_+ = 6` and
+`BaseUpgradeSlots_+ = 4` — exactly the +6 inventory and +4 module slots the game displays.
+
+Talents add more still. A real character holds items as far out as Location 35 despite 24 + 6 = 30
+from base and suit, which is why the grid is drawn as `max(occupied + 1, base + granted)`: an
+unmodelled bonus can never hide someone's items.
+
 ## [2.14.0] — 2026-08-07
 
 ### Added
