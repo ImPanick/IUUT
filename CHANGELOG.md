@@ -12,6 +12,45 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.19.0] — 2026-10-18
+
+### Added
+
+- **IUUT finds the game and your saves on its own — and lets you point it anywhere when it can't.**
+  Home now has a **GAME** row beside **SAVE ROOT**, each with **BROWSE…** and **AUTO**, a one-line
+  note saying *where* it was found ("Found automatically in your Steam library on D:\SteamLibrary"),
+  and a status dot. Auto-detection covers the default Steam install, every Steam library on every
+  drive, the standard save folder, and Icarus Dedicated Server installs. Your choices are remembered.
+
+  Browse is forgiving about which folder you pick: for the game, the install, its `Content` folder,
+  `steamapps\common`, or a whole Steam library; for saves, `Saved`, `PlayerData`, one profile, or
+  its `Prospects` folder. A folder with no game or no saves is refused with a reason rather than
+  half-loaded. If a folder you chose later disappears, IUUT tells you instead of quietly switching to
+  a different one — editing saves you didn't mean to is worse than editing none.
+
+### Fixed
+
+- **The save folder you chose on Home was forgotten on every restart.** The setting existed but
+  nothing loaded or wrote it.
+- **No way to tell IUUT where the game was.** If auto-detection missed it, catalogs silently stayed on
+  the shipped snapshot. Choosing a game folder now also refreshes the catalogs from it.
+
+### Changed — game data (patch build 25956278)
+
+- **+105 talents**: the **settlement hub** expansion (Radio Tower I–III, Kitchen, Hunting Hut, Builders
+  Hut, Fishing Dock, Water Purifier, Greenhouse, Mess Hall, Hunting Lodge, plus 50 reroute nodes), the
+  **Kiwi** combat pet and its talent tree, and the **Powerbank**, Electric Seed Extractor, and Poultice
+  Bandage. Two weapon racks were retired and are kept as unreleased.
+- **Stash picker**: +`Meta_Powerbank`. **Field Guide**: +Shark.
+- Missions are unchanged — the long-teased mission rework still isn't in the game's data.
+- The inventory layout IUUT's world readers rely on was re-checked against this build and is unchanged.
+
+### Dependencies
+
+- `xunit.runner.visualstudio` 3.1.5 → **4.0.0** (major — verified all 433 tests are still discovered,
+  not silently skipped), `Microsoft.NET.Test.Sdk` 18.9.0, `Microsoft.Extensions.*` 10.0.11,
+  `actions/checkout` v7, `actions/setup-dotnet` v6. FluentAssertions stays on 6.12.0 (license hold).
+
 ## [2.18.0] — 2026-08-07
 
 ### Changed

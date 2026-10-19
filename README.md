@@ -195,7 +195,7 @@ Quality is gated, not assumed:
 - **`dotnet format --verify-no-changes`** style gate in CI.
 - **Governance linter** (`scripts/governance-lint.ps1`) — blocks committed PII (SteamID/persona),
   BOM-emitting encoders, and contract violations on every PR.
-- **400 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
+- **433 xUnit tests** — round-trip parse/serialize, edit services, recovery, blob codecs,
   catalog-refresh merge rules, and **surgical write gates** for every blob edit (the quest-reset
   test counts the exact bytes that change and re-verifies that neighbouring records are untouched).
 - **Adversarial review** before releases: multi-agent passes that must confirm a finding against
