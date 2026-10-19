@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-live-2026-08-07",
+  "catalogVersion": "datapak-live-2026-10-16",
   "dataTable": "D_FishData",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-28. Self-refreshes at runtime from the local pak (DATA-PROVENANCE.md).",
   "rows": [
@@ -357,6 +357,11 @@
       "rowName": "Fish_20",
       "displayName": null,
       "lore": "Heavily affected by radiation, this odd looking fish is known for its strange mutation of its eyes. "
+    },
+    {
+      "rowName": "Shark",
+      "displayName": null,
+      "lore": "These fish have spots as a form of camouflage, which helps them blend in with their surroundings and avoid predators."
     }
   ]
 }

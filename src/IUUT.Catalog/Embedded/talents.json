@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "datapak-live-2026-08-07",
+  "catalogVersion": "datapak-live-2026-10-16",
   "dataTable": "D_Talents",
   "source": "Re-mined directly from the live game\u0027s Content/Data/data.pak (zlib-block JSON DataTables) for IUUT, 2026-07-24. Re-mine per weekly patch via scripts (DATA-PROVENANCE.md). Live counts; indices/flags may grow.",
   "rows": [
@@ -9805,7 +9805,8 @@
     },
     {
       "rowName": "T2_Weapon_Rack",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "T3_Weapon_Rack",
@@ -9813,10 +9814,448 @@
     },
     {
       "rowName": "T4_Weapon_Rack",
-      "displayName": null
+      "displayName": null,
+      "live": false
     },
     {
       "rowName": "T4_Decoration_Reroute",
+      "displayName": null
+    },
+    {
+      "rowName": "Workshop_Powerbank",
+      "displayName": null
+    },
+    {
+      "rowName": "Electric_Seed_Extractor",
+      "displayName": "Electric Seed Extractor"
+    },
+    {
+      "rowName": "CombatPet_Base_Kiwi",
+      "displayName": "Kiwi",
+      "maxRank": 1
+    },
+    {
+      "rowName": "CombatPet_Health_Kiwi",
+      "displayName": "Wild Fortitude",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_HealthRegeneration_Kiwi",
+      "displayName": "Nurtured Recovery",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_Damage_Kiwi",
+      "displayName": "Natural Ferocity",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_ReducedFoodConsumption_Kiwi",
+      "displayName": "Metabolic Preservation",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_ReducedWaterUsage_Kiwi",
+      "displayName": "Hydration Elasticity ",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_FoodBuffDuration_Kiwi",
+      "displayName": "Perfect Pasturage",
+      "maxRank": 4
+    },
+    {
+      "rowName": "CombatPet_FoodSlot_Kiwi",
+      "displayName": "Large Stomach",
+      "maxRank": 4
+    },
+    {
+      "rowName": "Creature_Kiwi_MinorHemorrhage",
+      "displayName": "Ripping Talons",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Creature_Kiwi_Vulnerable",
+      "displayName": "Probing Beak",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Creature_Kiwi_PackForager",
+      "displayName": "Pack Forager",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Creature_Kiwi_LayingSpeed",
+      "displayName": "Prolific Layer",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Settlement_Hub_RadioTower",
+      "displayName": "Radio Tower"
+    },
+    {
+      "rowName": "Settlement_Hub_RadioTower_2",
+      "displayName": "Radio Tower II",
+      "maxRank": 1
+    },
+    {
+      "rowName": "Settlement_Hub_RadioTower_3",
+      "displayName": "Radio Tower III",
+      "maxRank": 1
+    },
+    {
+      "rowName": "Settlement_Hub_Kitchen",
+      "displayName": "Building: Kitchen"
+    },
+    {
+      "rowName": "Settlement_Hub_HuntingHut",
+      "displayName": "Building: Hunting Hut"
+    },
+    {
+      "rowName": "Settlement_Hub_BuildersHut",
+      "displayName": "Building: Builders Hut"
+    },
+    {
+      "rowName": "Settlement_Hub_FishingDock",
+      "displayName": "Building: Fishing Dock"
+    },
+    {
+      "rowName": "Settlement_Hub_WaterPurifier",
+      "displayName": "Building: Water Purifier"
+    },
+    {
+      "rowName": "Settlement_Hub_Greenhouse",
+      "displayName": "Building: Greenhouse"
+    },
+    {
+      "rowName": "Settlement_Hub_MessHall",
+      "displayName": "Building: Mess Hall"
+    },
+    {
+      "rowName": "Settlement_Hub_HuntingLodge",
+      "displayName": "Building: Hunting Lodge"
+    },
+    {
+      "rowName": "Settlement_Hub_Clinic",
+      "displayName": "Building: Clinic"
+    },
+    {
+      "rowName": "Settlement_Hub_Quarters_2",
+      "displayName": "Building: Quarters II"
+    },
+    {
+      "rowName": "Settlement_Hub_DeepMine",
+      "displayName": "Building: Deep Mine"
+    },
+    {
+      "rowName": "Settlement_Hub_ElectricPump",
+      "displayName": "Building: Electric Pump"
+    },
+    {
+      "rowName": "Settlement_Hub_Hydroponics",
+      "displayName": "Building: Hydroponics"
+    },
+    {
+      "rowName": "Settlement_Hub_Cafeteria",
+      "displayName": "Building: Cafeteria"
+    },
+    {
+      "rowName": "Settlement_Hub_Infirmary",
+      "displayName": "Building: Infirmary"
+    },
+    {
+      "rowName": "Settlement_Hub_Quarters_3",
+      "displayName": "Building: Quarters III"
+    },
+    {
+      "rowName": "Settlement_Hub_Stockpile_3",
+      "displayName": "Building: Stockpile III"
+    },
+    {
+      "rowName": "Settlement_Hub_FabricationBay",
+      "displayName": "Building: Fabrication Bay"
+    },
+    {
+      "rowName": "Settlement_Hub_OxygenGenerator",
+      "displayName": "Building: Oxygen Generator"
+    },
+    {
+      "rowName": "Settlement_Hub_Decomposer",
+      "displayName": "Building: Decomposer"
+    },
+    {
+      "rowName": "Settlement_Hub_TimberMill",
+      "displayName": "Building: Timber Mill"
+    },
+    {
+      "rowName": "Settlement_Hub_TradingPost",
+      "displayName": "Building: Trading Post"
+    },
+    {
+      "rowName": "Settlement_Hub_OilMine",
+      "displayName": "Building: Oil Mine"
+    },
+    {
+      "rowName": "Settlement_Hub_Ranch",
+      "displayName": "Building: Ranch"
+    },
+    {
+      "rowName": "Settlement_Hub_Reactor",
+      "displayName": "Building: Reactor"
+    },
+    {
+      "rowName": "Settlement_Hub_AtmospherePlant",
+      "displayName": "Building: Atmosphere Plant"
+    },
+    {
+      "rowName": "Settlement_Hub_Bioprocessor",
+      "displayName": "Building: Bioprocessor"
+    },
+    {
+      "rowName": "Settlement_Hub_AlloyFurnace",
+      "displayName": "Building: Alloy Furnace"
+    },
+    {
+      "rowName": "Settlement_Hub_Marketplace",
+      "displayName": "Building: Marketplace"
+    },
+    {
+      "rowName": "Settlement_Hub_SolarArray",
+      "displayName": "Building: Solar Array"
+    },
+    {
+      "rowName": "Settlement_Hub_Turret",
+      "displayName": "Building: Turret"
+    },
+    {
+      "rowName": "Settlement_Hub_LandingPad",
+      "displayName": "Building: Landing Pad"
+    },
+    {
+      "rowName": "Settlement_Hub_MicrochipFabrication",
+      "displayName": "Building: Microchip Fabrication"
+    },
+    {
+      "rowName": "Settlement_Hub_ScoutOutpost",
+      "displayName": "Building: Scout Outpost"
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_01",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_02",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_03",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_04",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_05",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_06",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_07",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_08",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_09",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_10",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_11",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_12",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_13",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_14",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_15",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_16",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_17",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_18",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_19",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_20",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_21",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_22",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_23",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_24",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T2_25",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_01",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_02",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_03",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_04",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_05",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_06",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_07",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_08",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_09",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_10",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_11",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_12",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_13",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_14",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_15",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_16",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_17",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_18",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_19",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_20",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_21",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_22",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_23",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_24",
+      "displayName": null
+    },
+    {
+      "rowName": "Settlement_Hub_Re_T3_25",
+      "displayName": null
+    },
+    {
+      "rowName": "Creature_Kiwi_Night_Combat_Buffs",
+      "displayName": "Nocturnal Nature",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Creature_Kiwi_Night_YIeld_Aura",
+      "displayName": "Night Yields",
+      "maxRank": 3
+    },
+    {
+      "rowName": "Creature_Kiwi_DamageReduction",
+      "displayName": "Tough as Feather",
+      "maxRank": 4
+    },
+    {
+      "rowName": "Bandage_Poultice",
       "displayName": null
     }
   ]
