@@ -12,6 +12,21 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.20.0] — 2026-10-18
+
+### Added
+
+- **IUUT has a real icon.** `IUUT.exe` previously had none, so Windows showed it as a blank
+  generic program. It now carries an amber **wing** — Icarus — crossed by a blue **wrench** for what
+  IUUT does: repair, rescue, edit. It's drawn in the app's own theme colours on its dark tile, and it
+  shows on the exe in Explorer, desktop shortcuts, the taskbar, Alt-Tab, and the window's title bar
+  (replacing the small placeholder hexagon).
+
+  Every size from 16 to 256 pixels was checked on light and dark backgrounds; the small sizes use a
+  simplified mark so the wing still reads at 16px. Verified in the single-file Release exe that
+  users download, not just the debug build. The generator lives in `scripts/branding/make-icon.py`
+  (dev-only; the generated files are committed, so building IUUT needs nothing new).
+
 ## [2.19.1] — 2026-10-18
 
 ### Fixed

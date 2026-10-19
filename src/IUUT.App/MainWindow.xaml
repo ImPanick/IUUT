@@ -8,6 +8,7 @@
                  xmlns:views="clr-namespace:IUUT.App.Views"
                  mc:Ignorable="d"
                  Title="Icarus Ultimate Utility Tool (IUUT)"
+                 Icon="pack://application:,,,/Assets/IUUT.ico"
                  Width="1120"
                  Height="740"
                  MinWidth="920"
@@ -53,7 +54,7 @@
 
             <ui:TitleBar Grid.Row="0" Title="IUUT · Icarus Ultimate Utility Tool">
                 <ui:TitleBar.Icon>
-                    <ui:ImageIcon Source="{StaticResource AppGlyphImage}" Width="16" Height="16" />
+                    <ui:ImageIcon Source="pack://application:,,,/Assets/IUUT-256.png" Width="18" Height="18" />
                 </ui:TitleBar.Icon>
             </ui:TitleBar>
 

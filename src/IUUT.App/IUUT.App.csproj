@@ -18,6 +18,9 @@
     <RootNamespace>IUUT.App</RootNamespace>
     <AssemblyName>IUUT</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- The exe's own icon (Explorer, desktop shortcuts, the taskbar before the window paints).
+         Source art and the generator: scripts/branding/make-icon.py. -->
+    <ApplicationIcon>Assets\IUUT.ico</ApplicationIcon>
     <Description>IUUT desktop application — WPF shell for Icarus save editing.</Description>
 
     <!-- Single-file publish defaults; CI / release pipeline can override.
@@ -30,6 +33,12 @@
     <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
     <EnableCompressionInSingleFile Condition="'$(Configuration)' == 'Release'">true</EnableCompressionInSingleFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Window/taskbar icon and the title-bar mark, loaded as WPF pack resources. -->
+    <Resource Include="Assets\IUUT.ico" />
+    <Resource Include="Assets\IUUT-256.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\IUUT.Core\IUUT.Core.csproj" />

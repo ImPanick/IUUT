@@ -1,3 +1,5 @@
+<img src="docs/images/iuut-icon.png" alt="IUUT icon: an amber wing crossed by a blue wrench" width="96" align="right" />
+
 # Icarus Ultimate Utility Tool (IUUT)
 
 A free, **offline**, open-source Windows tool that **repairs broken [Icarus](https://www.surviveicarus.com/) (RocketWerkz) save files**, **rescues what the game has trapped**, and lets players **safely edit their own local progression** — with automatic backups, atomic writes, and **zero telemetry**.
