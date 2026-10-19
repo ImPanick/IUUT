@@ -19,6 +19,7 @@ public sealed class HomeViewModel : ObservableObject
     private readonly INavigationService _navigation;
     private readonly Services.SaveRootState _saveRootState;
     private readonly IUUT.Core.Catalog.GameCatalogs _catalogs;
+    private readonly Services.LocationState _locations;
 
     private string _saveRoot;
     private bool _isBusy;
@@ -35,8 +36,10 @@ public sealed class HomeViewModel : ObservableObject
     private string _statusMessage = "Ready.";
 
     /// <summary>Creates the Home view-model over the Home + Lazy Max services and the navigation shell.</summary>
-    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation, Services.SaveRootState saveRootState, IUUT.Core.Catalog.GameCatalogs catalogs)
+    public HomeViewModel(HomeService home, LazyMaxApplyService apply, INavigationService navigation, Services.SaveRootState saveRootState, IUUT.Core.Catalog.GameCatalogs catalogs, Services.LocationState locations)
     {
+        ArgumentNullException.ThrowIfNull(locations);
+        _locations = locations;
         ArgumentNullException.ThrowIfNull(home);
         ArgumentNullException.ThrowIfNull(apply);
         ArgumentNullException.ThrowIfNull(navigation);
@@ -58,6 +61,99 @@ public sealed class HomeViewModel : ObservableObject
         OpenRecoveryCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.RecoveryKey));
         OpenCustomCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.CustomKey));
         OpenGameTunerCommand = new RelayCommand(() => _navigation.NavigateTo(ShellViewModel.GameTunerKey));
+        AutoGameCommand = new RelayCommand(AutoGame);
+        AutoSavesCommand = new AsyncRelayCommand(AutoSavesAsync);
+    }
+
+    /// <summary>Forgets a manual game location and auto-detects again.</summary>
+    public IRelayCommand AutoGameCommand { get; }
+
+    /// <summary>Forgets a manual save location and auto-detects again.</summary>
+    public IAsyncRelayCommand AutoSavesCommand { get; }
+
+    /// <summary>The game folder in use, or a clear "not found".</summary>
+    public string GameLocation => _locations.Game.Path is { } pak ? InstallFolder(pak) : "Not found";
+
+    /// <summary>How the game was located (auto, which library, or chosen by you), or how to fix it.</summary>
+    public string GameLocationDetail => _locations.Game.Detail;
+
+    /// <summary>Whether the game was located (drives the status dot).</summary>
+    public bool GameFound => _locations.Game.Found;
+
+    /// <summary>How the save folder was located, or how to fix it.</summary>
+    public string SavesLocationDetail => _locations.Saves.Detail;
+
+    /// <summary>
+    /// Points IUUT at the game folder the user browsed to. Refuses a folder without Icarus (and says
+    /// so), otherwise remembers it and refreshes the catalog cache from it in the background.
+    /// </summary>
+    public async Task ChooseGameAsync(string picked)
+    {
+        if (_locations.ChooseGame(picked) is { } refusal)
+        {
+            StatusMessage = refusal;
+            return;
+        }
+
+        RaiseLocations();
+        StatusMessage = "Game location saved. Checking its data…";
+        StatusMessage = await Task.Run(_locations.RefreshCatalogs);
+    }
+
+    /// <summary>
+    /// Points IUUT at the save folder the user browsed to, accepting Saved, PlayerData, a profile,
+    /// or a folder that contains them. Refuses a folder with no Icarus saves rather than loading nothing.
+    /// </summary>
+    public async Task ChooseSavesAsync(string picked)
+    {
+        if (_locations.ChooseSaves(picked) is not { } saved)
+        {
+            StatusMessage = $"No Icarus saves in {picked}. Pick the “Saved” folder, or the PlayerData / profile folder inside it.";
+            return;
+        }
+
+        SaveRoot = saved;
+        RaiseLocations();
+        await LoadAsync();
+    }
+
+    private void AutoGame()
+    {
+        _locations.AutoGame();
+        RaiseLocations();
+        StatusMessage = _locations.Game.Found ? "Game location set back to automatic." : _locations.Game.Detail;
+    }
+
+    private async Task AutoSavesAsync()
+    {
+        _locations.AutoSaves();
+        if (_locations.Saves.Path is { } saved)
+        {
+            SaveRoot = saved;
+        }
+
+        RaiseLocations();
+        await LoadAsync();
+    }
+
+    private void RaiseLocations()
+    {
+        OnPropertyChanged(nameof(GameLocation));
+        OnPropertyChanged(nameof(GameLocationDetail));
+        OnPropertyChanged(nameof(GameFound));
+        OnPropertyChanged(nameof(SavesLocationDetail));
+    }
+
+    // ...\Icarus\Icarus\Content\Data\data.pak -> ...\Icarus (the folder a person recognises).
+    private static string InstallFolder(string pak)
+    {
+        var dir = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(pak) ?? pak);
+        for (var i = 0; i < 3 && dir.Parent is not null; i++)
+        {
+            dir = dir.Parent;
+        }
+
+        return dir.FullName;
     }
 
     /// <summary>Discovered save profiles for the dropdown.</summary>
@@ -151,6 +247,13 @@ public sealed class HomeViewModel : ObservableObject
             }
 
             SaveRootFound = state.SaveRootFound;
+            if (state.SaveRootFound)
+            {
+                // Typed or browsed, it loaded — remember it for next launch.
+                _locations.Remember(SaveRoot);
+                RaiseLocations();
+            }
+
             SelectedSlot = Slots.Count > 0 ? Slots[0] : null;
             GameRunning = state.Game.IsRunning;
             GameStatus = state.Game.IsRunning

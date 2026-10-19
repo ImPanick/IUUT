@@ -37,12 +37,13 @@ public partial class App : Application
         base.OnExit(e);
     }
 
-    private static void TryRefreshCatalogCache(AppPaths paths)
+    private static void TryRefreshCatalogCache(AppPaths paths, Services.LocationState locations)
     {
 #pragma warning disable CA1031 // Best-effort by design: any refresh failure must leave startup on the shipped snapshots.
         try
         {
-            if (CatalogRefreshRunner.LocatePak() is { } pak)
+            // The user's manual game location wins over auto-detection; see LocationState.
+            if (locations.Game.Path is { } pak)
             {
                 new CatalogRefreshRunner(paths).RefreshIfStale(pak);
             }
@@ -70,10 +71,11 @@ public partial class App : Application
         // catalog cache before loading (offline, sanity-gated, failure-safe). Fresh stamp costs
         // ~1ms; a real refresh runs once per game update (~1s). Any failure falls back to the
         // cache/embedded snapshots — startup can never break because of the pak.
+        services.AddSingleton<IUUT.App.Services.LocationState>();
         services.AddSingleton(sp =>
         {
             var paths = sp.GetRequiredService<AppPaths>();
-            TryRefreshCatalogCache(paths);
+            TryRefreshCatalogCache(paths, sp.GetRequiredService<IUUT.App.Services.LocationState>());
             return GameCatalogs.LoadWithCache(paths.CatalogCacheDirectory);
         });
         services.AddSingleton<LazyMaxService>();
@@ -127,7 +129,9 @@ public partial class App : Application
         services.AddSingleton<GameTuningService>();
 
         // --- UI shell + pages -------------------------------------------------
-        services.AddSingleton<IUUT.App.Services.SaveRootState>();
+        // Starts on the remembered (or auto-detected) save folder rather than always the default.
+        services.AddSingleton(sp => new IUUT.App.Services.SaveRootState(
+            sp.GetRequiredService<IUUT.App.Services.LocationState>().Saves.Path ?? HomeService.DefaultSaveRoot));
         services.AddSingleton<ShellViewModel>();
         services.AddSingleton<INavigationService>(sp => sp.GetRequiredService<ShellViewModel>());
         services.AddSingleton<HomeViewModel>();

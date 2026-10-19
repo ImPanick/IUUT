@@ -11,7 +11,19 @@ namespace IUUT.App.Services;
 /// </summary>
 public sealed class SaveRootState
 {
-    private string _current = HomeService.DefaultSaveRoot;
+    private string _current;
+
+    /// <summary>Starts at the standard save location.</summary>
+    public SaveRootState()
+        : this(HomeService.DefaultSaveRoot)
+    {
+    }
+
+    /// <summary>Starts at <paramref name="initial"/> — the remembered or auto-detected save folder.</summary>
+    public SaveRootState(string initial)
+    {
+        _current = string.IsNullOrWhiteSpace(initial) ? HomeService.DefaultSaveRoot : initial;
+    }
 
     /// <summary>
     /// Bumps every time <see cref="Current"/> actually changes. Consumers record the version they

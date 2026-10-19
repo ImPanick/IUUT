@@ -27,26 +27,50 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="SAVE ROOT" Style="{StaticResource LabelText}"
-                           VerticalAlignment="Center" Margin="0,0,12,6" />
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding SaveRoot, UpdateSourceTrigger=PropertyChanged}"
-                         VerticalAlignment="Center" Margin="0,0,10,6" />
-                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Margin="0,0,0,6">
-                    <Button Content="BROWSE…" Click="OnBrowse" Margin="0,0,6,0" />
+                <!-- Game install: auto-detected through every Steam library, or chosen by hand. -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="GAME" Style="{StaticResource LabelText}"
+                           VerticalAlignment="Center" Margin="0,0,12,0" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding GameLocation, Mode=OneWay}" IsReadOnly="True"
+                         VerticalAlignment="Center" Margin="0,0,10,0"
+                         ToolTip="Where IUUT reads the game's own data from, to keep its item and talent lists current with every patch." />
+                <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal">
+                    <Button Content="BROWSE…" Click="OnBrowseGame" Margin="0,0,6,0"
+                            ToolTip="Point IUUT at the folder Icarus is installed in — or your whole Steam library; it will find the game inside." />
+                    <Button Content="AUTO" Command="{Binding AutoGameCommand}"
+                            ToolTip="Forget the folder you chose and search your Steam libraries again." />
+                </StackPanel>
+                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding GameLocationDetail}"
+                           Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,3,0,10" />
+
+                <!-- Saves: auto-detected (standard folder, then dedicated-server installs), or chosen by hand. -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="SAVE ROOT" Style="{StaticResource LabelText}"
+                           VerticalAlignment="Center" Margin="0,0,12,0" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SaveRoot, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalAlignment="Center" Margin="0,0,10,0" />
+                <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Horizontal">
+                    <Button Content="BROWSE…" Click="OnBrowse" Margin="0,0,6,0"
+                            ToolTip="Point IUUT at your saves — the Saved folder, PlayerData, or one profile all work. Use this for a host's or server's saves copied to this PC." />
+                    <Button Content="AUTO" Command="{Binding AutoSavesCommand}" Margin="0,0,6,0"
+                            ToolTip="Forget the folder you chose and look in the standard places again." />
                     <Button Content="RELOAD" Command="{Binding LoadCommand}" />
                 </StackPanel>
+                <TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding SavesLocationDetail}"
+                           Style="{StaticResource MutedText}" TextWrapping="Wrap" Margin="0,3,0,6" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="PROFILE" Style="{StaticResource LabelText}"
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="PROFILE" Style="{StaticResource LabelText}"
                            VerticalAlignment="Center" Margin="0,6,12,6" />
-                <ComboBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                <ComboBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2"
                           ItemsSource="{Binding Slots}"
                           SelectedItem="{Binding SelectedSlot, Mode=TwoWay}"
                           DisplayMemberPath="DisplayLabel"
                           Margin="0,6,0,6" />
 
-                <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal"
+                <StackPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal"
                             DataContext="{Binding SelectedSlot}" Margin="0,0,0,6">
                     <TextBlock Text="{Binding SteamId64}" Style="{StaticResource MonoText}" />
                     <TextBlock Text="  ·  " Style="{StaticResource MonoText}" />
@@ -54,7 +78,21 @@
                                Text="{Binding CharacterCount, StringFormat={}{0} characters, TargetNullValue=character count unknown}" />
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,8,0,0">
+                <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" Margin="0,8,0,0">
+                    <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
+                        <Ellipse VerticalAlignment="Center" Margin="0,0,7,0">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse" BasedOn="{StaticResource ChannelDot}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding GameFound}" Value="False">
+                                            <Setter Property="Fill" Value="{StaticResource StateDangerBrush}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                        <TextBlock Text="Game files" Style="{StaticResource MutedText}" VerticalAlignment="Center" />
+                    </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,20,0">
                         <Ellipse VerticalAlignment="Center" Margin="0,0,7,0">
                             <Ellipse.Style>

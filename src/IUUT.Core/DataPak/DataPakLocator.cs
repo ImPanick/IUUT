@@ -39,13 +39,30 @@ public static class DataPakLocator
             yield return overridePath;
         }
 
-        var root = string.IsNullOrWhiteSpace(steamRoot) ? DefaultSteamRoot() : steamRoot;
-        yield return Path.Combine(root, RelativePakPath);
-
-        foreach (var library in LibrariesFrom(Path.Combine(root, "steamapps", "libraryfolders.vdf")))
+        foreach (var library in Libraries(steamRoot))
         {
             yield return Path.Combine(library, RelativePakPath);
         }
+    }
+
+    /// <summary>
+    /// Every Steam library root on this machine: the Steam install itself first, then each library
+    /// in <c>libraryfolders.vdf</c> (duplicates of the root removed). Shared by the game and the
+    /// dedicated-server save searches so both see the same drives.
+    /// </summary>
+    public static IReadOnlyList<string> Libraries(string? steamRoot = null)
+    {
+        var root = string.IsNullOrWhiteSpace(steamRoot) ? DefaultSteamRoot() : steamRoot;
+        var libraries = new List<string> { root };
+        foreach (var library in LibrariesFrom(Path.Combine(root, "steamapps", "libraryfolders.vdf")))
+        {
+            if (!libraries.Contains(library, StringComparer.OrdinalIgnoreCase))
+            {
+                libraries.Add(library);
+            }
+        }
+
+        return libraries;
     }
 
     private static string DefaultSteamRoot()

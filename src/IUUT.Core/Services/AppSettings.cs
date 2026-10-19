@@ -14,6 +14,12 @@ public sealed class AppSettings
     /// <summary>Manual save-root override (master doc §7.1). Null = use the auto-detected root.</summary>
     public string? SaveRootOverride { get; set; }
 
+    /// <summary>
+    /// Manual game-install override — the folder (or <c>data.pak</c>) the user pointed IUUT at when
+    /// auto-detection could not find the game. Null = auto-detect through Steam's libraries.
+    /// </summary>
+    public string? GamePathOverride { get; set; }
+
     /// <summary>Master toggle for Steam name resolution (master doc §7.5.1 Settings).</summary>
     public bool EnableSteamNameResolution { get; set; } = true;
 

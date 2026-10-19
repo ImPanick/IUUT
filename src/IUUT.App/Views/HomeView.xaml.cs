@@ -67,14 +67,17 @@ public partial class HomeView : UserControl
         }
     }
 
-    private void OnBrowse(object sender, RoutedEventArgs e)
+    private async void OnBrowse(object sender, RoutedEventArgs e)
     {
         if (DataContext is not HomeViewModel vm)
         {
             return;
         }
 
-        var dialog = new OpenFolderDialog { Title = "Select your Icarus “Saved” folder" };
+        var dialog = new OpenFolderDialog
+        {
+            Title = "Select your Icarus saves — the “Saved” folder, PlayerData, or a profile folder",
+        };
         if (Directory.Exists(vm.SaveRoot))
         {
             dialog.InitialDirectory = vm.SaveRoot;
@@ -82,8 +85,30 @@ public partial class HomeView : UserControl
 
         if (dialog.ShowDialog() == true)
         {
-            vm.SaveRoot = dialog.FolderName;
-            vm.LoadCommand.Execute(null);
+            // Normalised and validated: a folder with no saves is refused with a reason.
+            await vm.ChooseSavesAsync(dialog.FolderName);
+        }
+    }
+
+    private async void OnBrowseGame(object sender, RoutedEventArgs e)
+    {
+        if (DataContext is not HomeViewModel vm)
+        {
+            return;
+        }
+
+        var dialog = new OpenFolderDialog
+        {
+            Title = "Select the folder Icarus is installed in (or your Steam library)",
+        };
+        if (Directory.Exists(vm.GameLocation))
+        {
+            dialog.InitialDirectory = vm.GameLocation;
+        }
+
+        if (dialog.ShowDialog() == true)
+        {
+            await vm.ChooseGameAsync(dialog.FolderName);
         }
     }
 }
