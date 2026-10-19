@@ -25,7 +25,9 @@ public sealed class ProspectReturnFileServiceTests : IDisposable
         new BackupManager(FixedClock.Default));
 
     private ProspectReturnFileService NewService() =>
-        new(_files, new ProspectReturnService(new StashEditService(new SystemGuidProvider())));
+        new(_files, new ProspectReturnService(
+            new StashEditService(new SystemGuidProvider()),
+            row => row.StartsWith("Meta_", StringComparison.Ordinal)));
 
     private string WriteProspect(string name, params byte[][] slots)
     {
@@ -45,27 +47,46 @@ public sealed class ProspectReturnFileServiceTests : IDisposable
         UeFixtureBuilder.InventorySlot(row, (ProspectWorldEditor.StackIndex, stack));
 
     [Fact]
-    public async Task ReturnAsync_MovesItemsToStash_RewritesProspect_AndBacksUpBoth()
+    public async Task ReturnAsync_MovesWorkshopItemsToStash_LeavesTheRest_AndBacksUpBoth()
     {
         WriteEmptyStash();
-        var prospectPath = WriteProspect("Olympus.json", Slot("Wood", 100), Slot("Wood", 100), Slot("Stone", 20));
+        var prospectPath = WriteProspect("Olympus.json", Slot("Meta_Arrow", 12), Slot("Meta_Bolt", 8), Slot("Wood", 100));
 
         var result = await NewService().ReturnAsync(prospectPath, _temp.Path);
 
         result.Ok.Should().BeTrue();
-        result.Moved!.TotalQuantity.Should().Be(220);
+        result.Moved!.TotalQuantity.Should().Be(20);
+        result.Moved.LeftBehind.Should().ContainSingle(i => i.RowName == "Wood");
         result.StashBackupPath.Should().NotBeNull();
         result.ProspectBackupPath.Should().NotBeNull();
 
-        // Stash received the items (quantity conserved).
+        // Only workshop rows reached the stash; quantity conserved.
         var stash = MetaInventoryParser.Parse(File.ReadAllText(Path.Combine(_temp.Path, CustomFileService.StashFile)));
-        stash.Items.Sum(StashEditService.GetStack).Should().Be(220);
+        stash.Items.Sum(StashEditService.GetStack).Should().Be(20);
+        stash.Items.Should().OnlyContain(i => i.ItemStaticData!.RowName.StartsWith("Meta_", StringComparison.Ordinal));
 
-        // Prospect was emptied and still passes the game's hash check.
+        // The Wood is still in the world, and the world still passes the game's hash check.
         var prospect = ProspectFileParser.Parse(File.ReadAllText(prospectPath));
         ProspectBlobVerifier.VerifyHash(prospect.ProspectBlob).Should().BeTrue();
         new ProspectWorldEditor(UeBlob.Parse(ProspectBlobCodec.Decompress(prospect.ProspectBlob.BinaryBlob)))
-            .FindItemSlots().Should().BeEmpty();
+            .FindItemSlots().Should().ContainSingle(s => s.RowName == "Wood");
+    }
+
+    [Fact]
+    public async Task ReturnAsync_WithNothingStashable_WritesNeitherFile()
+    {
+        WriteEmptyStash();
+        var stashPath = Path.Combine(_temp.Path, CustomFileService.StashFile);
+        var prospectPath = WriteProspect("Raw.json", Slot("Wood", 100), Slot("Stone", 20));
+        var prospectBefore = File.ReadAllText(prospectPath);
+        var stashBefore = File.ReadAllText(stashPath);
+
+        var result = await NewService().ReturnAsync(prospectPath, _temp.Path);
+
+        result.Ok.Should().BeTrue();
+        result.Moved!.SlotsRemoved.Should().Be(0);
+        File.ReadAllText(prospectPath).Should().Be(prospectBefore, "nothing moved, so the world file is untouched");
+        File.ReadAllText(stashPath).Should().Be(stashBefore);
     }
 
     [Fact]

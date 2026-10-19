@@ -118,7 +118,10 @@ public partial class App : Application
 
         // --- Tier 2: surfacing the finished Core (roadmap Tier 2) --------------
         services.AddSingleton(sp => new MissionCompletionService(sp.GetRequiredService<GameCatalogs>().Missions));
-        services.AddSingleton<ProspectReturnService>();
+        // The orbital stash only holds Item.Meta rows; the items catalog is exactly that set.
+        services.AddSingleton(sp => new ProspectReturnService(
+            sp.GetRequiredService<StashEditService>(),
+            sp.GetRequiredService<GameCatalogs>().Items.Contains));
         services.AddSingleton<ProspectReturnFileService>();
         services.AddSingleton<BackupInventoryService>();
         services.AddSingleton<LoadoutRecoveryService>();

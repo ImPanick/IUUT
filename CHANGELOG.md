@@ -12,6 +12,38 @@ in `docs/GOVERNANCE_CHANGELOG.md`.
 
 ## [Unreleased]
 
+## [2.19.1] — 2026-10-18
+
+### Fixed
+
+- **Return to Stash no longer pushes items into the stash that the game doesn't allow there.** The
+  orbital stash holds workshop gear (`Item.Meta`) and nothing else: across the live
+  `MetaInventory.json` and all seven of its backups, the game has never written a single non-workshop
+  row. Return to Stash moved *everything*. On real saves that is overwhelmingly raw material: one
+  world held 146 workshop items next to **41,378** pieces of Charcoal, Fiber, Wood and the like, and a
+  return would have pushed all of it into the stash file and deleted it from the world.
+
+  Now only workshop items move. Everything else is **never touched**: it stays exactly where it is in
+  the world, and the panel says so per item ("→ stash" / "stays in the world") and in the totals,
+  pointing you to *Stranded in a prospect?* to reach the rest. The button reads **RETURN WORKSHOP
+  ITEMS TO STASH**, and the confirmation counts only what will actually move. If nothing in a world
+  can go to the stash, neither file is written.
+
+- **Returned items come back as they were in the world.** Each world slot becomes its own stash
+  entry with its own stack, instead of being merged into stacks the game never made (six arrows here
+  and four there no longer become one stack of ten). A tool keeps its wear instead of being silently
+  repaired. A slot larger than the stash's stack limit is split rather than clamped, so no quantity is
+  lost.
+
+The check is now a **required** part of the return service — there is no way to construct one that
+skips it — and the previous tests, which asserted that returning Wood put Wood in the stash, are
+replaced with tests asserting the opposite.
+
+Verified on a copy of a real 885-slot world: all 71 workshop slots returned, zero non-workshop rows
+added to the stash, all 814 other slots still in the world, and the world still passes the game's
+hash check. One path is unit-tested only: no workshop item in the available saves carries durability,
+so "keeps its wear" has not yet been seen on real data.
+
 ## [2.19.0] — 2026-10-18
 
 ### Added

@@ -7,7 +7,11 @@ using IUUT.Core.Editing;
 namespace IUUT.App.ViewModels;
 
 /// <summary>One kind of trapped item shown in the Return-to-Stash preview.</summary>
-public sealed record TrappedItemViewModel(string RowName, string Label, int SlotCount, int TotalQuantity);
+public sealed record TrappedItemViewModel(string RowName, string Label, int SlotCount, int TotalQuantity, bool CanGoToStash)
+{
+    /// <summary>Where this item ends up, in plain words.</summary>
+    public string Destination => CanGoToStash ? "→ stash" : "stays in the world";
+}
 
 /// <summary>
 /// Return to Stash (Tier 2 RESCUE): lists the items trapped in a prospect's world save and
@@ -75,13 +79,26 @@ public sealed class ReturnToStashViewModel : ObservableObject
         }
     }
 
-    /// <summary>Whether the selected prospect holds anything to return (enables the button).</summary>
+    /// <summary>Whether the selected prospect holds anything at all (drives the empty state).</summary>
     public bool HasTrapped => TrappedItems.Count > 0;
 
-    /// <summary>Preview totals for the confirm dialog and header.</summary>
-    public string Summary => HasTrapped
-        ? $"{TrappedItems.Count:N0} item kind(s) · {TrappedItems.Sum(t => t.SlotCount):N0} slot(s) · {TrappedItems.Sum(t => t.TotalQuantity):N0} total quantity"
-        : "Nothing trapped in this prospect.";
+    /// <summary>Whether anything here can actually go to the orbital stash (enables the button).</summary>
+    public bool HasReturnable => TrappedItems.Any(t => t.CanGoToStash);
+
+    /// <summary>Slots that would move to the stash.</summary>
+    public int ReturnableSlots => TrappedItems.Where(t => t.CanGoToStash).Sum(t => t.SlotCount);
+
+    /// <summary>Quantity that would move to the stash.</summary>
+    public int ReturnableQuantity => TrappedItems.Where(t => t.CanGoToStash).Sum(t => t.TotalQuantity);
+
+    /// <summary>Quantity that stays in the world because the stash can't hold it.</summary>
+    public int StayingQuantity => TrappedItems.Where(t => !t.CanGoToStash).Sum(t => t.TotalQuantity);
+
+    /// <summary>Preview totals: what can come home, and what can't.</summary>
+    public string Summary => !HasTrapped
+        ? "Nothing trapped in this prospect."
+        : $"{ReturnableQuantity:N0} workshop item(s) can go to your orbital stash · "
+          + $"{StayingQuantity:N0} other item(s) can't — the stash only holds workshop gear, so those stay in the world.";
 
     /// <summary>True while loading, previewing, or returning.</summary>
     public bool IsBusy
@@ -157,9 +174,13 @@ public sealed class ReturnToStashViewModel : ObservableObject
                 return;
             }
 
+            var left = result.Moved?.LeftBehind.Sum(i => i.TotalQuantity) ?? 0;
+            var leftNote = left > 0
+                ? $" {left:N0} other item(s) stayed in the world — to reach them, use “Stranded in a prospect?” to bring the body or the character to them."
+                : "";
             StatusMessage = result.Moved is { SlotsRemoved: > 0 } moved
-                ? $"Returned {moved.TotalQuantity:N0} item(s) from {moved.SlotsRemoved:N0} slot(s) to the stash (+{moved.StashStacksAdded:N0} stacks) — backups were taken."
-                : "Nothing to return — the prospect holds no trapped items.";
+                ? $"Returned {moved.TotalQuantity:N0} workshop item(s) from {moved.SlotsRemoved:N0} slot(s) to the stash — backups were taken.{leftNote}"
+                : $"Nothing could go to the stash.{leftNote}";
         }
 #pragma warning disable CA1031 // UI boundary: surface, never crash.
         catch (Exception ex)
@@ -198,7 +219,8 @@ public sealed class ReturnToStashViewModel : ObservableObject
                     item.RowName,
                     _catalogs.Items.Label(item.RowName),
                     item.SlotCount,
-                    item.TotalQuantity));
+                    item.TotalQuantity,
+                    item.CanGoToStash));
             }
 
             StatusMessage = HasTrapped
@@ -214,6 +236,10 @@ public sealed class ReturnToStashViewModel : ObservableObject
         finally
         {
             OnPropertyChanged(nameof(HasTrapped));
+            OnPropertyChanged(nameof(HasReturnable));
+            OnPropertyChanged(nameof(ReturnableSlots));
+            OnPropertyChanged(nameof(ReturnableQuantity));
+            OnPropertyChanged(nameof(StayingQuantity));
             OnPropertyChanged(nameof(Summary));
             IsBusy = false;
         }

@@ -196,7 +196,8 @@ static int Check(Dictionary<string, string?> options)
         Console.WriteLine("  That is normal for a prospect you can still get back into. If you CANNOT —");
         Console.WriteLine("  the host is gone, the world will not resume, a zone reset behind you, or a boss");
         Console.WriteLine("  glitched and stranded your body — you can get it back without the game:");
-        Console.WriteLine("    iuut return-to-stash  --prospect <name>   pull the items into your orbital stash");
+        Console.WriteLine("    iuut return-to-stash  --prospect <name>   pull the workshop gear into your orbital stash");
+        Console.WriteLine("                                              (the stash holds nothing else — the rest stays in the world)");
         Console.WriteLine("    iuut rescue-character --prospect <name>   move a stranded character somewhere reachable");
         Console.WriteLine("  Both preview by default. In the app: RESCUE → \"Stuck in a prospect?\".");
     }
@@ -214,7 +215,7 @@ static IEnumerable<string> ScanForStrandedGear(string profileFolder)
         yield break;
     }
 
-    var returns = new ProspectReturnService(new StashEditService(new SystemGuidProvider()));
+    var returns = NewReturnService();
     var characters = new IUUT.Core.Prospects.World.ProspectCharacterReader();
 
     foreach (var file in Directory.EnumerateFiles(prospects, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
@@ -239,7 +240,8 @@ static IEnumerable<string> ScanForStrandedGear(string profileFolder)
                 var parts = new List<string>();
                 if (items.Count > 0)
                 {
-                    parts.Add($"{items.Sum(i => i.TotalQuantity)} item(s) in {items.Count} kind(s)");
+                    var stashable = items.Where(i => i.CanGoToStash).Sum(i => i.TotalQuantity);
+                    parts.Add($"{items.Sum(i => i.TotalQuantity)} item(s) in {items.Count} kind(s), {stashable} of them workshop gear");
                 }
 
                 if (people.Count > 0)
@@ -263,6 +265,12 @@ static IEnumerable<string> ScanForStrandedGear(string profileFolder)
         }
     }
 }
+
+// The orbital stash only holds Item.Meta rows; the items catalog (refreshed from the user's own game
+// when possible) is exactly that set. Every return goes through this so none can skip the check.
+static ProspectReturnService NewReturnService() =>
+    new(new StashEditService(new SystemGuidProvider()),
+        GameCatalogs.LoadWithCache(AppPaths.Resolve().CatalogCacheDirectory).Items.Contains);
 
 static int BackupAll(Dictionary<string, string?> options)
 {
@@ -416,7 +424,7 @@ static int ProspectReport(Dictionary<string, string?> options)
     }
 
     var quests = new IUUT.Core.Prospects.World.ProspectQuestReader();
-    var trappedPreview = new ProspectReturnService(new StashEditService(new SystemGuidProvider()));
+    var trappedPreview = NewReturnService();
 
     foreach (var file in Directory.EnumerateFiles(prospectsDir, "*.json").OrderBy(f => f, StringComparer.OrdinalIgnoreCase))
     {
@@ -773,7 +781,7 @@ static async Task<int> ReturnToStashAsync(Dictionary<string, string?> options)
         new CustomFileService(
             new SafeSaveWriter(new BackupManager(clock), new SystemGuidProvider()),
             new BackupManager(clock)),
-        new ProspectReturnService(new StashEditService(new SystemGuidProvider())));
+        NewReturnService());
 
     var trapped = await service.PreviewAsync(path).ConfigureAwait(false);
     if (trapped.Count == 0)

@@ -29,19 +29,25 @@ public partial class ReturnToStashView : UserControl
             return;
         }
 
+        var staying = vm.StayingQuantity > 0
+            ? $"\n\n{vm.StayingQuantity:N0} other item(s) — resources, building pieces, food — can't go to the orbital " +
+              "stash (the game only keeps workshop gear there), so they stay exactly where they are in the world, untouched."
+            : "";
+
         var message =
-            $"Return every trapped item from “{vm.SelectedProspect.Name}” to the orbital stash?\n\n" +
-            "The items are removed from the prospect's world save and added to MetaInventory.json. " +
-            "The stash is written FIRST, so a mid-operation failure can only duplicate items " +
-            "(recoverable from backup), never lose them. Both files are backed up and re-validated.";
+            $"Return the workshop items in “{vm.SelectedProspect.Name}” to your orbital stash?\n\n" +
+            "Each comes back as it was in the world — its own stack and its own wear. They are removed from the " +
+            "prospect's world save and added to MetaInventory.json. The stash is written FIRST, so a mid-operation " +
+            "failure can only duplicate items (recoverable from backup), never lose them. Both files are backed up " +
+            "and re-validated." + staying;
 
         var changes = new List<Dialogs.ConfirmChange>
         {
-            new("MetaInventory.json", $"+{vm.TrappedItems.Sum(t => t.TotalQuantity):N0} item(s)"),
-            new(vm.SelectedProspect.Name, $"-{vm.TrappedItems.Sum(t => t.SlotCount):N0} slot(s)"),
+            new("MetaInventory.json", $"+{vm.ReturnableQuantity:N0} workshop item(s)"),
+            new(vm.SelectedProspect.Name, $"-{vm.ReturnableSlots:N0} slot(s)"),
         };
 
-        if (Dialogs.ConfirmDialog.Show(this, "Return items to stash", message, confirmLabel: "RETURN ALL", changes: changes))
+        if (Dialogs.ConfirmDialog.Show(this, "Return workshop items to stash", message, confirmLabel: "RETURN", changes: changes))
         {
             await vm.ReturnAllAsync();
         }
